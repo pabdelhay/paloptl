@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import dj_database_url
 import django_heroku
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -122,3 +123,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 django_heroku.settings(locals())
+# override DATABASE_URL set by django_heroku because it forces SSL mode locally
+ssl_require = os.environ.get('ENV', 'production') != 'dev'
+locals()['DATABASES']['default'] = dj_database_url.config(
+    conn_max_age=django_heroku.MAX_CONN_AGE, ssl_require=ssl_require)
