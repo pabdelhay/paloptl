@@ -1,0 +1,5 @@
+.page-index { text-align: center; }
+.page-index h1 { text-align: center; }
+.page-index .country-list { border: 1px; margin-left:auto; margin-right:auto; }
+.page-index .country-list td { width: 150px; }
+.page-index .country-list img { width: 100px; height: 67px; }

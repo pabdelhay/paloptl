@@ -1,0 +1,22 @@
+{% extends 'frontend/base.html' %}
+
+{% block content %}
+<div class="page-index">
+    <h1>PALOP-TL CSO online budget platform</h1>
+    <table class="country-list">
+        <tr>
+            {% for country in countries %}
+            <td>
+                <div>
+                    <a href="{% url 'country-details' country.slug %}">
+                        <img src="{{ country.flag.url }}" /><br>
+                        {{ country.name }}
+                    </a>
+                </div>
+            </td>
+            {% endfor %}
+        </tr>
+    </table>
+
+</div>
+{% endblock %}
