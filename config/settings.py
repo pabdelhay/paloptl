@@ -15,7 +15,7 @@ SECRET_KEY = env('SECRET_KEY', default='#thisisarandomstringandshouldbereplacedi
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 ENV = os.environ.get('ENV', 'production')
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 INTERNAL_IPS = [
     '127.0.0.1',
