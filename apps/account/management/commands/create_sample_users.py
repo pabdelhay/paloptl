@@ -26,9 +26,9 @@ class Command(BaseCommand):
             except User.DoesNotExist:
                 user = User(**fields)
                 print(f"Creating user {user.username}")
-            user.groups.add(group)
             for k, v in fields.items():
                 setattr(user, k, v)
             user.save()
+            user.groups.add(group)
             user.profile.country = c
             user.profile.save()
