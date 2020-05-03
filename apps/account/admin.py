@@ -28,6 +28,7 @@ class CustomUserAdmin(CountryPermissionMixin, UserAdmin):
         if obj.profile:
             return obj.profile.country
         return ""
+    country.short_description = 'país'
 
 
 admin.site.site_header = "PALOP-TL CSO online budget platform"
