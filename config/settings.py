@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'debug_toolbar',
+    'admin_honeypot',
 
     'apps.account',
     'apps.geo',
