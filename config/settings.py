@@ -27,7 +27,7 @@ SECRET_KEY = 'gk&9h%a(yj&-whae+x%))^izjjdqffmy5vmb-x1ueisv50v7)i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+ENV = os.environ.get('ENV', 'production')
 ALLOWED_HOSTS = []
 
 INTERNAL_IPS = [
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'debug_toolbar',
+    'cloudinary',
 
     'apps.account',
     'apps.geo',
@@ -144,6 +145,12 @@ MEDIA_URL = '/media/'
 
 django_heroku.settings(locals())
 # override DATABASE_URL set by django_heroku because it forces SSL mode locally
-ssl_require = os.environ.get('ENV', 'production') != 'dev'
+ssl_require = ENV != 'dev'
 locals()['DATABASES']['default'] = dj_database_url.config(
     conn_max_age=django_heroku.MAX_CONN_AGE, ssl_require=ssl_require)
+
+AWS_ACCESS_KEY_ID=os.environ.get('AWS_ACCESS_KEY_ID', None)
+AWS_SECRET_ACCESS_KEY=os.environ.get('AWS_SECRET_ACCESS_KEY', None)
+AWS_STORAGE_BUCKET_NAME=os.environ.get('AWS_STORAGE_BUCKET_NAME', None)
+if AWS_STORAGE_BUCKET_NAME:
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
