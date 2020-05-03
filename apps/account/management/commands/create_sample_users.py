@@ -14,14 +14,21 @@ class Command(BaseCommand):
             fields = {
                 'username': f"user_{c.slug}".lower(),
                 'first_name': "CSO member",
-                'last_name': "CSO member",
+                'last_name': c.name,
                 'is_staff': True,
                 'is_active': True,
                 'password': make_password('PalopTLtests')
             }
+            group = Group.objects.get(name='CSO team')
             try:
-                user = User.objects.get(slug=fields['username'])
+                user = User.objects.get(username=fields['username'])
+                print(f"Updating user {user.username}")
             except User.DoesNotExist:
-                user = User.objects.create(**fields)
-                group = Group.objects.get(name='CSO team')
-
+                user = User(**fields)
+                print(f"Creating user {user.username}")
+            user.groups.add(group)
+            for k, v in fields.items():
+                setattr(user, k, v)
+            user.save()
+            user.profile.country = c
+            user.profile.save()
