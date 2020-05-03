@@ -3,6 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User, Group
 
 from apps.account.models import Profile
+from common.admin import CountryPermissionMixin
 
 
 class ProfileInline(admin.StackedInline):
@@ -12,7 +13,8 @@ class ProfileInline(admin.StackedInline):
     fk_name = 'user'
 
 
-class CustomUserAdmin(UserAdmin):
+class CustomUserAdmin(CountryPermissionMixin, UserAdmin):
+    country_lookup_field = 'profile__country'
     inlines = (ProfileInline, )
     list_display = ('username', 'email', 'first_name', 'last_name', 'is_active', 'is_superuser', 'country')
     list_select_related = ('profile',)
@@ -30,5 +32,4 @@ class CustomUserAdmin(UserAdmin):
 
 admin.site.site_header = "PALOP-TL CSO online budget platform"
 admin.site.unregister(User)
-admin.site.unregister(Group)
 admin.site.register(User, CustomUserAdmin)
