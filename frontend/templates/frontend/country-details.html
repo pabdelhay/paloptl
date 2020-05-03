@@ -2,8 +2,11 @@
 
 {% block content %}
 <div class="page-country-detail">
-    <h1><img src="{{ country.flag.url }}" /> {{ country.name }}</h1>
+    <h1>
+        <img src="{{ country.flag.url }}" /><br>
+        {{ country.name }}
+    </h1>
 
-    <div class="temp-info">Aqui entrará a ferramenta interativa para visualização do orçamento deste país.</div>
+    <div class="temp-info">Nesta página estará a ferramenta interativa para visualização do orçamento deste país.</div>
 </div>
 {% endblock %}
