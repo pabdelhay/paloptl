@@ -1,3 +1,12 @@
 {% extends "admin:admin/index.html" %}
 
-{% block sidebar %}{% endblock %}
+{% block sidebar %}
+<div id="content-related">
+    <div class="module" id="recent-actions-module">
+        <h2>Shortcuts</h2>
+        <div class="shortcuts">
+            <a href="{% url 'api_admin-test-celery-works' %}" class="shortcut">Test celery</a><br>
+        </div>
+    </div>
+</div>
+{% endblock %}

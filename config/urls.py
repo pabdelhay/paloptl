@@ -21,7 +21,9 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
     path('cso_admin/', admin.site.urls),
-    path('', include('frontend.urls'))
+
+    path('', include('frontend.urls')),
+    path('api/', include('api.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

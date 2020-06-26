@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'debug_toolbar',
+    'rest_framework',
     'admin_honeypot',
 
     'apps.account',
@@ -126,3 +127,24 @@ AWS_SECRET_ACCESS_KEY=os.environ.get('AWS_SECRET_ACCESS_KEY', None)
 AWS_STORAGE_BUCKET_NAME=os.environ.get('AWS_STORAGE_BUCKET_NAME', None)
 if AWS_STORAGE_BUCKET_NAME:
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+
+# Cache
+if env('REDIS_URL', default=None):
+    CACHES = {
+        "default": {
+             "BACKEND": "redis_cache.RedisCache",
+             "LOCATION": env('REDIS_URL'),
+        }
+    }
+
+
+# Celery
+CELERY_BROKER_URL = os.environ.get("REDIS_URL", None)
+CELERY_TASK_SERIALIZER = 'json'
+#CELERY_TASK_IGNORE_RESULT = True
+CELERY_TASK_STORE_ERRORS_EVEN_IF_IGNORED = True
+CELERY_RESULT_BACKEND = os.environ.get("REDIS_URL", None)
+#CELERY_TASK_ALWAYS_EAGER = ENV == 'dev'
+#CELERY_BROKER_POOL_LIMIT = 30
+#CELERY_BROKER_TRANSPORT_OPTIONS = {'socket_timeout': 3600}

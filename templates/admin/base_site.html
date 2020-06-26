@@ -12,4 +12,9 @@
     | <img class="header-flag" src="{{ user.profile.country.flag.url }}" /> {{ user.profile.country.name }}
     {% endif %}
 </h1>
+
+    {% if request.session.test_var %}
+        <div>Importando relatório...</div>
+    {% endif %}
+
 {% endblock %}
