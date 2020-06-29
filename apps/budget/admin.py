@@ -7,7 +7,7 @@ from common.admin import CountryPermissionMixin
 class UploadInline(admin.TabularInline):
     model = Upload
     extra = 1
-    can_delete = False
+    #can_delete = False
     readonly_fields = ('uploaded_by', 'uploaded_on')
 
 
