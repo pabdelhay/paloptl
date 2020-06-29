@@ -10,5 +10,9 @@ class Upload(models.Model):
     file = models.FileField(verbose_name=_("file"), upload_to='uploads')
     report = models.CharField(verbose_name=_("report"), max_length=5, choices=UploadReportChoices.choices)
 
-    upload_time = models.DateTimeField(verbose_name=_("upload time"), auto_now_add=True)
-    upload_by = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("upload by"), on_delete=models.PROTECT)
+    uploaded_on = models.DateTimeField(verbose_name=_("uploaded on"), auto_now_add=True)
+    uploaded_by = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("uploaded by"), on_delete=models.PROTECT,
+                                    editable=False)
+
+    def __str__(self):
+        return f"{self.get_report_display()}"

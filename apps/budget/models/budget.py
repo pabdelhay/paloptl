@@ -9,3 +9,6 @@ class Budget(CountryMixin, models.Model):
     A (year, country) aggregation of budget data.
     """
     year = models.IntegerField(verbose_name=_("year"))
+
+    def __str__(self):
+        return f"{self.country.name} - {self.year}"

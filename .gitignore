@@ -5,3 +5,4 @@ __pycache__
 .env
 .devops
 db.sqlite3
+.media
