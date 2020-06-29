@@ -1,14 +1,18 @@
-from celery import task
-from django.utils import timezone
-from django.utils.text import slugify
+import codecs
+import csv
 
-from apps.geo.models import Country
+from celery import task
+
+from apps.budget.choices import UploadStatusChoices
+from apps.budget.models import Upload
 
 
 @task
-def test_celery():
-    now = timezone.now()
-    name = f"test country {now.hour}:{now.minute}"
+def import_file(upload_id):
+    upload = Upload.objects.get(id=upload_id)
+    upload.validate()
 
-    country = Country.objects.create(name=name, slug=slugify(name))
-    return country.id
+    # TODO: VALIDATE AND IMPORT
+
+    upload.status = UploadStatusChoices.SUCCESS
+    upload.save()
