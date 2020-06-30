@@ -10,5 +10,9 @@ class Budget(CountryMixin, models.Model):
     """
     year = models.IntegerField(verbose_name=_("year"))
 
+    class Meta:
+        verbose_name = _("budget")
+        verbose_name_plural = _("budgets")
+
     def __str__(self):
         return f"{self.country.name} - {self.year}"

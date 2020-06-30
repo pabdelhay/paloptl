@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'rest_framework',
     'admin_honeypot',
+    'mptt',
 
     'apps.account',
     'apps.geo',
