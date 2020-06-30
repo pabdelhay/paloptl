@@ -1,13 +1,12 @@
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 from mptt.admin import MPTTModelAdmin
 
-from apps.budget.choices import UploadStatusChoices
 from apps.budget.models import Upload, Budget
 from apps.budget.models.agency import Agency
 from apps.budget.models.function import Function
 from apps.budget.tasks import import_file
 from common.admin import CountryPermissionMixin
-from django.utils.translation import gettext_lazy as _
 
 
 class UploadInline(admin.TabularInline):
@@ -24,21 +23,30 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
     def save_formset(self, request, form, formset, change):
         if formset.model != Upload:
             return super().save_formset(request, form, formset, change)
+
         instances = formset.save(commit=False)
         for instance in instances:
             is_new = not instance.pk
             if is_new:
                 instance.uploaded_by = request.user
-                instance.status = UploadStatusChoices.VALIDATING
             instance.save()
             if is_new:
-                import_file.delay(instance.id)
-        formset.save_m2m()
+                async_task = import_file.delay(instance.id)
+                if async_task.status == 'SUCCESS':
+                    # For easter execution of import_file (synchronous)
+                    upload = async_task.result
+                    instance.status = upload.status
+                    instance.errors = upload.errors
+                    instance.log = upload.log
+                    instance.save()
+        formset.save(commit=True)
 
 
-class BudgetAccountAdmin(admin.ModelAdmin):
+class BudgetAccountAdmin(CountryPermissionMixin, MPTTModelAdmin):
     country_lookup_field = 'budget__country'
-    list_display = ('country', 'year', 'get_level_0_taxonomy', 'get_level_1_taxonomy', 'last_update')
+    list_display = ('country', 'year', 'get_level_0_taxonomy', 'get_level_1_taxonomy', 'budget_investment',
+                    'budget_operation', 'budget_aggregated', 'execution_investment', 'execution_operation',
+                    'execution_aggregated', 'last_update')
     list_filter = ('budget',)
 
     def country(self, obj):

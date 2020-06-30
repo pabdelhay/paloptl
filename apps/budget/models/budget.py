@@ -13,6 +13,7 @@ class Budget(CountryMixin, models.Model):
     class Meta:
         verbose_name = _("budget")
         verbose_name_plural = _("budgets")
+        ordering = ['country', '-year']
 
     def __str__(self):
         return f"{self.country.name} - {self.year}"
