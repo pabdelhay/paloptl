@@ -107,3 +107,6 @@ class Upload(models.Model):
                 level_0_group.execution_operation = data['execution_operation'],
                 level_0_group.execution_aggregated = data['execution_aggregated']
                 level_0_group.save()
+
+        # TODO: Update aggregated budget and execution for group
+        # TODO: Write log.

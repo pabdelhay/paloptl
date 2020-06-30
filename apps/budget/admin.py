@@ -15,9 +15,39 @@ class UploadInline(admin.TabularInline):
     readonly_fields = ('status', 'uploaded_by', 'uploaded_on')
 
 
+class BudgetAccountInline(admin.TabularInline):
+    extra = 0
+    readonly_fields = ('get_level_0_taxonomy', 'get_level_1_taxonomy', 'last_update')
+    fields = ('get_level_0_taxonomy', 'get_level_1_taxonomy', 'budget_investment', 'budget_operation',
+              'budget_aggregated', 'execution_investment', 'execution_operation', 'execution_aggregated', 'last_update')
+
+
+class FunctionInline(BudgetAccountInline):
+    model = Function
+
+    def get_level_0_taxonomy(self, obj):
+        return obj.parent.name if obj.parent else obj.name
+    get_level_0_taxonomy.short_description = Agency.get_taxonomy(level=0)
+
+    def get_level_1_taxonomy(self, obj):
+        return obj.name if obj.parent else ""
+    get_level_1_taxonomy.short_description = Agency.get_taxonomy(level=1)
+
+
+class AgencyInline(BudgetAccountInline):
+    model = Agency
+
+    def get_level_0_taxonomy(self, obj):
+        return obj.parent.name if obj.parent else obj.name
+    get_level_0_taxonomy.short_description = Agency.get_taxonomy(level=0)
+
+    def get_level_1_taxonomy(self, obj):
+        return obj.name if obj.parent else ""
+    get_level_1_taxonomy.short_description = Agency.get_taxonomy(level=1)
+
 @admin.register(Budget)
 class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
-    inlines = (UploadInline, )
+    inlines = (UploadInline, FunctionInline, AgencyInline)
     list_display = ('country', 'year')
 
     def save_formset(self, request, form, formset, change):
@@ -65,7 +95,7 @@ class AgencyAdmin(BudgetAccountAdmin):
     get_level_0_taxonomy.short_description = Agency.get_taxonomy(level=0)
 
     def get_level_1_taxonomy(self, obj):
-        return obj.name if obj.parent else None
+        return obj.name if obj.parent else ""
     get_level_1_taxonomy.short_description = Agency.get_taxonomy(level=1)
 
 
@@ -76,5 +106,5 @@ class FunctionAdmin(BudgetAccountAdmin):
     get_level_0_taxonomy.short_description = Function.get_taxonomy(level=0)
 
     def get_level_1_taxonomy(self, obj):
-        return obj.name if obj.parent else None
+        return obj.name if obj.parent else ""
     get_level_1_taxonomy.short_description = Function.get_taxonomy(level=1)
