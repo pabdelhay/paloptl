@@ -37,3 +37,9 @@ class BudgetAccount(MPTTModel):
         if not getattr(cls, 'TAXONOMY_LEVELS', None):
             raise cls.TaxonomyLevelsNotSet()
         return cls.TAXONOMY_LEVELS[level]
+
+    def get_hierarchy_name(self):
+        name = self.name
+        if self.parent is not None:
+            name = self.parent.name + f" > {name}"
+        return name

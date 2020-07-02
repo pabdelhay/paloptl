@@ -34,8 +34,8 @@ class Upload(models.Model):
     status = models.CharField(verbose_name=_("status"), max_length=20, choices=UploadStatusChoices.choices,
                               editable=False)
 
-    errors = ArrayField(models.CharField(max_length=255), verbose_name=_("errors"), null=True, blank=True)
-    log = ArrayField(models.CharField(max_length=255), verbose_name=_("log"), null=True, blank=True)
+    errors = ArrayField(models.CharField(max_length=1000), verbose_name=_("errors"), default=list, editable=False)
+    log = ArrayField(models.CharField(max_length=1000), verbose_name=_("log"), default=list, editable=False)
 
     uploaded_on = models.DateTimeField(verbose_name=_("uploaded on"), auto_now_add=True)
     uploaded_by = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("uploaded by"), on_delete=models.PROTECT,
@@ -71,48 +71,79 @@ class Upload(models.Model):
         from api.api_admin import BudgetUploadSerializer
 
         self.errors = list()
+        self.log = list()
         content = self.file.read()
         reader = csv.DictReader(codecs.iterdecode(content.splitlines(), 'utf-8'), dialect=csv.excel,
                                 delimiter=self.CSV_DELIMITER)
+
+        def update_category(instance, attr, new_value):
+            old_value = getattr(instance, attr)
+            field_name = instance.__class__._meta.get_field(attr).verbose_name
+            level = 1 if instance.parent else 0
+            if old_value != new_value:
+                setattr(instance, attr, new_value)
+                self.log.append(_("Updated {taxonomy} <strong>{name}</strong> <i>{field_name}</i> from {old_value} "
+                                  "to {new_value}".format(taxonomy=instance.get_taxonomy(level=level),
+                                                          name=instance.get_hierarchy_name(), field_name=field_name,
+                                                          old_value=old_value or _("(empty)"), new_value=new_value)))
+
         for row in reader:
             serializer = BudgetUploadSerializer(data=empty_string_to_none(row))
             serializer.is_valid()
             data = serializer.data
 
+            row_report_type = data['report_type']
+            row_category = data['category']
+            row_subcategory = data['subcategory']
+
             # Check if report is organic or functional.
-            if data['report_type'] == 'organic':
-                group_class = self.budget.agencies
-            elif data['report_type'] == 'functional':
-                group_class = self.budget.functions
+            if row_report_type == 'organic':
+                category_set = self.budget.agencies
+                category_model = self.budget.agencies.model
+            elif row_report_type == 'functional':
+                category_set = self.budget.functions
+                category_model = self.budget.functions.model
 
             try:
-                level_0_group = group_class.get(name__iexact=data['group'], parent__isnull=True)
+                category = category_set.get(name__iexact=row_category, parent__isnull=True)
             except ObjectDoesNotExist:
-                level_0_group = group_class.create(name=data['group'])
+                category = category_set.create(name=row_category)
+                self.log.append(_("Created {taxonomy} <strong>{name}</strong>"
+                                  .format(taxonomy=category_model.get_taxonomy(level=0), name=row_category)))
 
-            if data['subgroup'] is not None:
+            if row_subcategory is not None:
                 # Budget for a subgroup
                 try:
-                    level_1_group = group_class.get(name=data['subgroup'], parent=level_0_group)
+                    subcategory = category_set.get(name=row_subcategory, parent=category)
                 except ObjectDoesNotExist:
-                    level_1_group = group_class.model(name=data['subgroup'], parent=level_0_group)
-                level_1_group.budget_investment = data['budget_investment']
-                level_1_group.budget_operation = data['budget_operation']
-                level_1_group.budget_aggregated = data['budget_aggregated']
-                level_1_group.execution_investment = data['execution_investment']
-                level_1_group.execution_operation = data['execution_operation']
-                level_1_group.execution_aggregated = data['execution_aggregated']
-                level_1_group.save()
+                    subcategory = category_model(name=row_subcategory, parent=category, budget=self.budget)
+                    self.log.append(_("Created {taxonomy} <strong>{name}</strong>"
+                                      .format(taxonomy=category_model.get_taxonomy(level=1),
+                                              name=subcategory.get_hierarchy_name())))
+
+                update_category(instance=subcategory, attr='budget_investment', new_value=data['budget_investment'])
+                update_category(instance=subcategory, attr='budget_operation', new_value=data['budget_operation'])
+                update_category(instance=subcategory, attr='budget_aggregated', new_value=data['budget_aggregated'])
+                update_category(instance=subcategory, attr='execution_investment',
+                                new_value=data['execution_investment'])
+                update_category(instance=subcategory, attr='execution_operation', new_value=data['execution_operation'])
+                update_category(instance=subcategory, attr='execution_aggregated',
+                                new_value=data['execution_aggregated'])
+                subcategory.save()
             else:
                 # Budget for the root group.
-                level_0_group.budget_investment = data['budget_investment'],
-                level_0_group.budget_operation = data['budget_operation'],
-                level_0_group.budget_aggregated = data['budget_aggregated'],
-                level_0_group.execution_investment = data['execution_investment'],
-                level_0_group.execution_operation = data['execution_operation'],
-                level_0_group.execution_aggregated = data['execution_aggregated']
-                level_0_group.save()
+                update_category(instance=category, attr='budget_investment', new_value=data['budget_investment'])
+                update_category(instance=category, attr='budget_operation', new_value=data['budget_operation'])
+                update_category(instance=category, attr='budget_aggregated', new_value=data['budget_aggregated'])
+                update_category(instance=category, attr='execution_investment', new_value=data['execution_investment'])
+                update_category(instance=category, attr='execution_operation', new_value=data['execution_operation'])
+                update_category(instance=category, attr='execution_aggregated', new_value=data['execution_aggregated'])
+                category.save()
 
-        # TODO: Update aggregated budget and execution for group
-        # TODO: Write log.
-        return True
+        try:
+            self.save()
+        except Exception as exc:
+            self.errors.append(str(exc))
+            return False
+
+        return self

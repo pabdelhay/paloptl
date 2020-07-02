@@ -21,8 +21,8 @@ class UploadInline(admin.TabularInline):
     def get_log(self, obj):
         if not obj.id:
             return "-"
-        link_text = _("Log")
-        log = obj.log
+        link_text = _("Log") + f" ({len(obj.log)})"
+        log = "<br>".join(obj.log) if obj.log else ""
         if obj.status in UploadStatusChoices.get_error_status():
             link_text = _("Errors") + f" ({len(obj.errors)})"
             log = "<br>".join(obj.errors)
@@ -80,6 +80,7 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
             is_new = not instance.pk
             if is_new:
                 instance.uploaded_by = request.user
+                instance.status = UploadStatusChoices.VALIDATING
             instance.save()
             if is_new:
                 async_task = import_file.delay(instance.id)

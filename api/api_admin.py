@@ -7,8 +7,8 @@ from apps.account.tasks import test_celery
 
 class BudgetUploadSerializer(serializers.Serializer):
     report_type = serializers.ChoiceField(choices=('organic', 'functional'))
-    group = serializers.CharField(max_length=255)
-    subgroup = serializers.CharField(required=False, max_length=255)
+    category = serializers.CharField(max_length=255)
+    subcategory = serializers.CharField(required=False, max_length=255)
 
     budget_operation = serializers.FloatField(required=False, allow_null=True)
     budget_investment = serializers.FloatField(required=False, allow_null=True)
