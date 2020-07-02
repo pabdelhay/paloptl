@@ -12,12 +12,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='budget',
-            name='country',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='geo.Country', verbose_name='country'),
-            preserve_default=False,
-        ),
         migrations.AlterField(
             model_name='upload',
             name='report',
