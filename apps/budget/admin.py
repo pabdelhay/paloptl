@@ -19,7 +19,7 @@ class UploadInline(admin.TabularInline):
 
     @mark_safe
     def get_log(self, obj):
-        if not obj.id:
+        if not obj.id or obj.status == UploadStatusChoices.VALIDATING:
             return "-"
         link_text = _("Log") + f" ({len(obj.log)})"
         log = "<br>".join(obj.log) if obj.log else ""
