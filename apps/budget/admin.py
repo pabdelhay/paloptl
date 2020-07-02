@@ -86,10 +86,7 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
                 async_task = import_file.delay(instance.id)
                 if async_task.status == 'SUCCESS':
                     # For easter execution of import_file (synchronous)
-                    upload = async_task.result
-                    instance.status = upload.status
-                    instance.errors = upload.errors
-                    instance.log = upload.log
+                    instance.refresh_from_db()
                     instance.save()
         formset.save(commit=True)
 

@@ -28,4 +28,3 @@ def import_file(upload_id):
 
     upload.status = UploadStatusChoices.SUCCESS
     upload.save()
-    return upload
