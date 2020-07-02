@@ -54,7 +54,16 @@ class Upload(models.Model):
         header_fields = list(BudgetUploadSerializer._declared_fields.keys())
 
         if reader.fieldnames != header_fields:
-            self.errors.append(_("Header are not standard. They must be exact as {}".format(str(header_fields))))
+            self.errors.append(_("<strong>Line {line}:</strong> Header is not in standard. "
+                                 "It must be exact as <i>{header_fields}</i>"
+                                 .format(line=reader.line_num, header_fields=str(header_fields))))
+        for row in reader:
+            serializer = BudgetUploadSerializer(data=empty_string_to_none(row))
+            if not serializer.is_valid():
+                for field, errors_list in serializer.errors.items():
+                    error_msg = "; ".join(errors_list)
+                    self.errors.append(_("<strong>Line {line} ({column})</strong>: {error_msg}"
+                                         .format(line=reader.line_num, column=field, error_msg=error_msg)))
 
         return not bool(len(self.errors))
 
@@ -70,34 +79,30 @@ class Upload(models.Model):
             serializer.is_valid()
             data = serializer.data
 
+            # Check if report is organic or functional.
             if data['report_type'] == 'organic':
                 group_class = self.budget.agencies
             elif data['report_type'] == 'functional':
                 group_class = self.budget.functions
 
             try:
-                level_0_group = group_class.get(name__iexact=data['group'])
+                level_0_group = group_class.get(name__iexact=data['group'], parent__isnull=True)
             except ObjectDoesNotExist:
-                level_0_group = group_class.create(
-                    name=data['group'],
-                    parent=None
-                )
+                level_0_group = group_class.create(name=data['group'])
 
             if data['subgroup'] is not None:
                 # Budget for a subgroup
                 try:
-                    level_1_group = group_class.get(name=data['subgroup'])
+                    level_1_group = group_class.get(name=data['subgroup'], parent=level_0_group)
                 except ObjectDoesNotExist:
-                    level_1_group = group_class.create(
-                        name=data['subgroup'],
-                        parent=level_0_group,
-                        budget_investment=data['budget_investment'],
-                        budget_operation=data['budget_operation'],
-                        budget_aggregated=data['budget_aggregated'],
-                        execution_investment=data['execution_investment'],
-                        execution_operation=data['execution_operation'],
-                        execution_aggregated=data['execution_aggregated']
-                    )
+                    level_1_group = group_class.model(name=data['subgroup'], parent=level_0_group)
+                level_1_group.budget_investment = data['budget_investment']
+                level_1_group.budget_operation = data['budget_operation']
+                level_1_group.budget_aggregated = data['budget_aggregated']
+                level_1_group.execution_investment = data['execution_investment']
+                level_1_group.execution_operation = data['execution_operation']
+                level_1_group.execution_aggregated = data['execution_aggregated']
+                level_1_group.save()
             else:
                 # Budget for the root group.
                 level_0_group.budget_investment = data['budget_investment'],
@@ -110,3 +115,4 @@ class Upload(models.Model):
 
         # TODO: Update aggregated budget and execution for group
         # TODO: Write log.
+        return True
