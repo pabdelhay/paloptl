@@ -19,7 +19,7 @@ class UploadInline(admin.TabularInline):
 
     @mark_safe
     def get_log(self, obj):
-        if not obj.id or obj.status == UploadStatusChoices.VALIDATING:
+        if not obj.id:
             return "-"
         link_text = _("Log") + f" ({len(obj.log)})"
         log = "<br>".join(obj.log) if obj.log else ""
@@ -27,11 +27,16 @@ class UploadInline(admin.TabularInline):
             link_text = _("Errors") + f" ({len(obj.errors)})"
             log = "<br>".join(obj.errors)
 
-        return f'<div class="upload-log-wrapper">' \
-               f'   <input type="hidden" name="status-{obj.id}" class="status-input" value="{obj.status}">' \
+        html = f'<div class="upload-log-wrapper">' \
+               f'   <input type="hidden" name="status-{obj.id}" class="status-input" value="{obj.status}">'
+        if obj.status != UploadStatusChoices.VALIDATING:
+            html += \
                f'   <div class="upload-log" id="upload-dialog-{obj.id}">{log}</div>' \
-               f'   <a href="#" class="log-link" data-upload_id="{obj.id}">{link_text}</a>' \
-               f'</div>'
+               f'   <a href="#" class="log-link" data-upload_id="{obj.id}">{link_text}</a>'
+        else:
+            html += f'-'
+        html += f'</div>'
+        return html
     get_log.short_description = "log"
 
 
