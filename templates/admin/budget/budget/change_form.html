@@ -1,0 +1,48 @@
+{% extends "admin/change_form.html" %}
+{% load i18n admin_urls %}
+
+{% block extrahead %}{{ block.super }}
+<style>
+    .upload-log { display: none; }
+    .upload-validating { background-color: #ffffcf; }
+    .upload-error { background-color: #ffcfcf; }
+    .upload-success { background-color: #d3ffd3; }
+</style>
+
+<script type="text/javascript">
+    $(function () {
+        $(".log-link").click(function(ev){
+            ev.preventDefault();
+            var upload_id = $(this).data('upload_id');
+            var $dialog = $('#upload-dialog-' + upload_id);
+            var title = $(this).html();
+            $dialog.dialog({
+                minWidth: 600,
+                title: title
+            });
+        });
+        $('.status-input').each(function(){
+            var val = $(this).val();
+            var $tr = $(this).closest('.form-row');
+            switch(val){
+                case 'validate':
+                case 'importing':
+                    $tr.addClass('upload-validating');
+                    break
+                case 'validation_error':
+                case 'import_error':
+                    $tr.addClass('upload-error');
+                    break
+                case 'success':
+                    $tr.addClass('upload-success');
+                    break
+            }
+
+        })
+    });
+</script>
+{% endblock %}
+
+{% block field_sets %}
+{{ block.super }}
+{% endblock %}

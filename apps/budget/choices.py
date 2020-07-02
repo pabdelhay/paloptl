@@ -14,3 +14,7 @@ class UploadStatusChoices(models.TextChoices):
     SUCCESS = 'success', _("Success")
     VALIDATION_ERROR = 'validation_error', _("Validation error")
     IMPORT_ERROR = 'import_error', _("Import error")
+
+    @classmethod
+    def get_error_status(cls):
+        return [cls.VALIDATION_ERROR, cls.IMPORT_ERROR]

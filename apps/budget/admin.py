@@ -1,7 +1,9 @@
 from django.contrib import admin
+from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 from mptt.admin import MPTTModelAdmin
 
+from apps.budget.choices import UploadStatusChoices
 from apps.budget.models import Upload, Budget
 from apps.budget.models.agency import Agency
 from apps.budget.models.function import Function
@@ -12,7 +14,25 @@ from common.admin import CountryPermissionMixin
 class UploadInline(admin.TabularInline):
     model = Upload
     extra = 1
-    readonly_fields = ('status', 'uploaded_by', 'uploaded_on')
+    fields = ('file', 'report', 'status', 'get_log', 'uploaded_by', 'uploaded_on')
+    readonly_fields = ('status', 'uploaded_by', 'uploaded_on', 'get_log')
+
+    @mark_safe
+    def get_log(self, obj):
+        if not obj.id:
+            return "-"
+        link_text = _("Log")
+        log = obj.log
+        if obj.status in UploadStatusChoices.get_error_status():
+            link_text = _("Errors") + f" ({len(obj.errors)})"
+            log = "<br>".join(obj.errors)
+
+        return f'<div class="upload-log-wrapper">' \
+               f'   <input type="hidden" name="status-{obj.id}" class="status-input" value="{obj.status}">' \
+               f'   <div class="upload-log" id="upload-dialog-{obj.id}">{log}</div>' \
+               f'   <a href="#" class="log-link" data-upload_id="{obj.id}">{link_text}</a>' \
+               f'</div>'
+    get_log.short_description = "log"
 
 
 class BudgetAccountInline(admin.TabularInline):
@@ -44,6 +64,7 @@ class AgencyInline(BudgetAccountInline):
     def get_level_1_taxonomy(self, obj):
         return obj.name if obj.parent else ""
     get_level_1_taxonomy.short_description = Agency.get_taxonomy(level=1)
+
 
 @admin.register(Budget)
 class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
