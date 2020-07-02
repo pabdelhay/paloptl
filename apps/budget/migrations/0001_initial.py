@@ -33,6 +33,6 @@ class Migration(migrations.Migration):
                 ('budget', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='budget.Budget', verbose_name='budget')),
                 ('upload_by', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL, verbose_name='upload by')),
             ],
-            bases=(common.mixins.CountryMixin, models.Model),
+            bases=(models.Model,),
         ),
     ]
