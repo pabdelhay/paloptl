@@ -9,7 +9,6 @@
 {% block extrahead %}
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
 {% endblock %}
 
 {% block branding %}
@@ -21,6 +20,7 @@
 </h1>
 
 {% if request.session.upload_in_progress %}
+    <script src="{% static 'js/beep.js' %}"></script>
     <div class="upload-in-progress">
         <img src="{% static 'img/loading.gif' %}" />
         Importando relatório...
@@ -45,6 +45,7 @@
                         var msg = "The <strong>" + data['get_report_display'] + "</strong> report has validation errors.";
                         var link_text = "Check and fix errors";
                     }
+                    beep();
                     $('.upload-in-progress').hide();
                     $('.upload-result').html(msg);
                     $('.upload-result').dialog({

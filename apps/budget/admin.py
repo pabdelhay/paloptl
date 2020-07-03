@@ -90,9 +90,8 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
             if is_new:
                 request.session['upload_in_progress'] = instance.id
                 async_task = import_file.delay(instance.id)
-                # TODO: uncomment before commit
-                # if async_task.status == 'SUCCESS':
-                #     # For easter execution of import_file (synchronous)
-                #     instance.refresh_from_db()
-                #     instance.save()
+                if async_task.status == 'SUCCESS':
+                    # For easter execution of import_file (synchronous)
+                    instance.refresh_from_db()
+                    instance.save()
         formset.save(commit=True)
