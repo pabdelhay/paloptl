@@ -21,3 +21,7 @@ img.header-flag { width: 50px; }
     opacity: 0.94;
 }
 .upload-in-progress img { width: 50px; vertical-align: middle; }
+
+body.login { background: url("../img/background.png") no-repeat !important;  }
+body.login #container { margin: 300px auto; border: 1px solid #bcbcbc; }
+#header { background-color: #234a5e; }
