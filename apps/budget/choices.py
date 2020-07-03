@@ -18,3 +18,7 @@ class UploadStatusChoices(models.TextChoices):
     @classmethod
     def get_error_status(cls):
         return [cls.VALIDATION_ERROR, cls.IMPORT_ERROR]
+
+    @classmethod
+    def get_in_progress_status(cls):
+        return [cls.VALIDATING, cls.IMPORTING]

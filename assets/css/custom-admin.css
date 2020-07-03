@@ -1,4 +1,23 @@
 img.header-flag { width: 50px; }
 
-.ui-widget.ui-widget-content { background-color: #f4f2f2; }
+.ui-widget-content { background-color: #f4f4f4; }
+
 .ui-dialog-titlebar { background-color: #79aec8; color: #FFF; }
+
+.upload-result { display: none; }
+.upload-in-progress {
+    position: fixed;
+    bottom: 60px;
+    right: -200px;
+    width: 200px;
+    margin-left: -100px;
+    text-align: center;
+    background: #e6e6e6;
+    color: #585858;
+    vertical-align: middle;
+    z-index: 9999;
+    padding: 10px 20px;
+    box-shadow: -1px 3px 7px 0px #c3c3c3;
+    opacity: 0.94;
+}
+.upload-in-progress img { width: 50px; vertical-align: middle; }

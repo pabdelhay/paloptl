@@ -9,6 +9,7 @@
 {% block extrahead %}
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 {% endblock %}
 
 {% block branding %}
@@ -19,8 +20,50 @@
     {% endif %}
 </h1>
 
-    {% if request.session.test_var %}
-        <div>Importando relatório...</div>
-    {% endif %}
+{% if request.session.upload_in_progress %}
+    <div class="upload-in-progress">
+        <img src="{% static 'img/loading.gif' %}" />
+        Importando relatório...
+    </div>
+    <div class="upload-result"></div>
+    <script type="text/javascript">
+        $('.upload-in-progress').animate({ "left": "-=200px" }, "slow" );
+        var status = 'validating';
+        var url = '{% url 'api_admin-check-in-progress-upload' request.session.upload_in_progress %}';
+        var check_in_progress = setInterval(function () {
+            $.get(url, function( data ) {
+                if(!Object.keys(data).length){
+                    return;
+                }
+                if(data['status'] != 'validating' && data['status'] != 'importing'){
+                    var link = '{% url "admin:budget_budget_changelist" %}' + data['budget_id'];
+                    var link_text = "See results";
+                    // Upload finished
+                    if(data['status'] == 'success'){
+                        var msg = "The <strong>" + data['get_report_display'] + "</strong> report has been imported with success.";
+                    } else {
+                        var msg = "The <strong>" + data['get_report_display'] + "</strong> report has validation errors.";
+                        var link_text = "Check and fix errors";
+                    }
+                    $('.upload-in-progress').hide();
+                    $('.upload-result').html(msg);
+                    $('.upload-result').dialog({
+                        title: "Upload finished",
+                        buttons: [{
+                            text: link_text,
+                            icon: "ui-icon-document",
+                            click: function() {
+                                window.location.href = link;
+                            }
+                        }]
+                    })
+                    clearInterval(check_in_progress);
+                }
+            }).fail(function() {
+                clearInterval(check_in_progress);
+            });
+        }, 10000)
+    </script>
+{% endif %}
 
 {% endblock %}

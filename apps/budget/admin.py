@@ -42,33 +42,33 @@ class UploadInline(admin.TabularInline):
 
 class BudgetAccountInline(admin.TabularInline):
     extra = 0
-    readonly_fields = ('get_level_0_taxonomy', 'get_level_1_taxonomy', 'last_update')
-    fields = ('get_level_0_taxonomy', 'get_level_1_taxonomy', 'budget_investment', 'budget_operation',
+    readonly_fields = ('get_group_taxonomy', 'get_subgroup_taxonomy', 'last_update')
+    fields = ('get_group_taxonomy', 'get_subgroup_taxonomy', 'budget_investment', 'budget_operation',
               'budget_aggregated', 'execution_investment', 'execution_operation', 'execution_aggregated', 'last_update')
 
 
 class FunctionInline(BudgetAccountInline):
     model = Function
 
-    def get_level_0_taxonomy(self, obj):
+    def get_group_taxonomy(self, obj):
         return obj.parent.name if obj.parent else obj.name
-    get_level_0_taxonomy.short_description = Agency.get_taxonomy(level=0)
+    get_group_taxonomy.short_description = Agency.get_taxonomy(level=0)
 
-    def get_level_1_taxonomy(self, obj):
+    def get_subgroup_taxonomy(self, obj):
         return obj.name if obj.parent else ""
-    get_level_1_taxonomy.short_description = Agency.get_taxonomy(level=1)
+    get_subgroup_taxonomy.short_description = Agency.get_taxonomy(level=1)
 
 
 class AgencyInline(BudgetAccountInline):
     model = Agency
 
-    def get_level_0_taxonomy(self, obj):
+    def get_group_taxonomy(self, obj):
         return obj.parent.name if obj.parent else obj.name
-    get_level_0_taxonomy.short_description = Agency.get_taxonomy(level=0)
+    get_group_taxonomy.short_description = Agency.get_taxonomy(level=0)
 
-    def get_level_1_taxonomy(self, obj):
+    def get_subgroup_taxonomy(self, obj):
         return obj.name if obj.parent else ""
-    get_level_1_taxonomy.short_description = Agency.get_taxonomy(level=1)
+    get_subgroup_taxonomy.short_description = Agency.get_taxonomy(level=1)
 
 
 @admin.register(Budget)
@@ -88,47 +88,11 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
                 instance.status = UploadStatusChoices.VALIDATING
             instance.save()
             if is_new:
+                request.session['upload_in_progress'] = instance.id
                 async_task = import_file.delay(instance.id)
-                if async_task.status == 'SUCCESS':
-                    # For easter execution of import_file (synchronous)
-                    instance.refresh_from_db()
-                    instance.save()
+                # TODO: uncomment before commit
+                # if async_task.status == 'SUCCESS':
+                #     # For easter execution of import_file (synchronous)
+                #     instance.refresh_from_db()
+                #     instance.save()
         formset.save(commit=True)
-
-
-class BudgetAccountAdmin(CountryPermissionMixin, MPTTModelAdmin):
-    country_lookup_field = 'budget__country'
-    list_display = ('country', 'year', 'get_level_0_taxonomy', 'get_level_1_taxonomy', 'budget_investment',
-                    'budget_operation', 'budget_aggregated', 'execution_investment', 'execution_operation',
-                    'execution_aggregated', 'last_update')
-    list_filter = ('budget',)
-
-    def country(self, obj):
-        return obj.budget.country.name
-    country.short_description = _("country")
-
-    def year(self, obj):
-        return obj.budget.year
-    year.short_description = _("year")
-
-
-@admin.register(Agency)
-class AgencyAdmin(BudgetAccountAdmin):
-    def get_level_0_taxonomy(self, obj):
-        return obj.parent.name if obj.parent else obj.name
-    get_level_0_taxonomy.short_description = Agency.get_taxonomy(level=0)
-
-    def get_level_1_taxonomy(self, obj):
-        return obj.name if obj.parent else ""
-    get_level_1_taxonomy.short_description = Agency.get_taxonomy(level=1)
-
-
-@admin.register(Function)
-class FunctionAdmin(BudgetAccountAdmin):
-    def get_level_0_taxonomy(self, obj):
-        return obj.parent.name if obj.parent else obj.name
-    get_level_0_taxonomy.short_description = Function.get_taxonomy(level=0)
-
-    def get_level_1_taxonomy(self, obj):
-        return obj.name if obj.parent else ""
-    get_level_1_taxonomy.short_description = Function.get_taxonomy(level=1)
