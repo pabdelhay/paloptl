@@ -21,6 +21,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
     path('cso_admin/', admin.site.urls),
+    path('baton/', include('baton.urls')),
 
     path('', include('frontend.urls')),
     path('api/', include('api.urls')),

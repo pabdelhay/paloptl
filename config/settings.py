@@ -1,5 +1,6 @@
 import os
 import environ
+from django.utils.translation import gettext_lazy as _
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -23,6 +24,7 @@ INTERNAL_IPS = [
 
 # Application definition
 INSTALLED_APPS = [
+    'baton',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,7 +40,8 @@ INSTALLED_APPS = [
     'apps.account',
     'apps.geo',
     'apps.budget',
-    'frontend'
+    'frontend',
+    'baton.autodiscover',
 ]
 
 MIDDLEWARE = [
@@ -150,3 +153,37 @@ CELERY_RESULT_BACKEND = os.environ.get("REDIS_URL", None)
 CELERY_TASK_ALWAYS_EAGER = ENV == 'dev'
 #CELERY_BROKER_POOL_LIMIT = 30
 #CELERY_BROKER_TRANSPORT_OPTIONS = {'socket_timeout': 3600}
+
+BATON = {
+    'SITE_HEADER': _('PALOP-TL CSO online budget platform'),
+    'SITE_TITLE': _('PALOP-TL CSO online budget platform'),
+    'INDEX_TITLE': 'Site administration',
+    'SUPPORT_HREF': 'https://github.com/otto-torino/django-baton/issues',
+    'COPYRIGHT': 'copyright © 2017 <a href="https://www.otto.to.it">Otto srl</a>', # noqa
+    'POWERED_BY': '<a href="https://www.otto.to.it">Otto srl</a>',
+    'CONFIRM_UNSAVED_CHANGES': True,
+    'SHOW_MULTIPART_UPLOADING': True,
+    'ENABLE_IMAGES_PREVIEW': True,
+    'MENU_ALWAYS_COLLAPSED': False,
+    'MENU_TITLE': 'Menu',
+    'MENU': (
+        {
+            'type': 'app',
+            'name': 'auth',
+            'label': _('Authentication'),
+            'icon': 'fa fa-lock',
+            'default_open': True
+        },
+        {
+            'type': 'app',
+            'name': 'budget',
+            'label': _('Budget'),
+            'icon': 'fa fa-bar-chart',
+            'default_open': True
+        }
+    ),
+    # 'ANALYTICS': {
+    #     'CREDENTIALS': os.path.join(BASE_DIR, 'credentials.json'),
+    #     'VIEW_ID': '12345678',
+    # }
+}
