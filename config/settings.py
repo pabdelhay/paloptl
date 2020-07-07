@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'apps.geo',
     'apps.budget',
     'frontend',
+    'common',
     'baton.autodiscover',
 ]
 
@@ -158,29 +159,19 @@ BATON = {
     'SITE_HEADER': _('PALOP-TL CSO online budget platform'),
     'SITE_TITLE': _('PALOP-TL CSO online budget platform'),
     'INDEX_TITLE': 'Site administration',
-    'SUPPORT_HREF': 'https://github.com/otto-torino/django-baton/issues',
-    'COPYRIGHT': 'copyright © 2017 <a href="https://www.otto.to.it">Otto srl</a>', # noqa
-    'POWERED_BY': '<a href="https://www.otto.to.it">Otto srl</a>',
+    'SUPPORT_HREF': None,
+    'COPYRIGHT': '',
+    'POWERED_BY': '',
     'CONFIRM_UNSAVED_CHANGES': True,
     'SHOW_MULTIPART_UPLOADING': True,
     'ENABLE_IMAGES_PREVIEW': True,
     'MENU_ALWAYS_COLLAPSED': False,
     'MENU_TITLE': 'Menu',
     'MENU': (
-        {
-            'type': 'app',
-            'name': 'auth',
-            'label': _('Authentication'),
-            'icon': 'fa fa-lock',
-            'default_open': True
+        {'type': 'app', 'label': _('Authentication'), 'name': 'auth', 'icon': 'fa fa-lock', 'default_open': False
         },
-        {
-            'type': 'app',
-            'name': 'budget',
-            'label': _('Budget'),
-            'icon': 'fa fa-bar-chart',
-            'default_open': True
-        }
+        {'type': 'model', 'label': _("Countries"), 'name': 'country', 'app': 'geo', 'icon': 'fa fa-flag'},
+        {'type': 'model', 'label': _("Budgets"), 'name': 'budget', 'app': 'budget', 'icon': 'fa fa-chart-pie'}
     ),
     # 'ANALYTICS': {
     #     'CREDENTIALS': os.path.join(BASE_DIR, 'credentials.json'),

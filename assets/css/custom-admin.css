@@ -1,4 +1,4 @@
-img.header-flag { width: 50px; }
+img.header-flag { width: 50px; margin-left: 20px; }
 
 .ui-widget-content { background-color: #f4f4f4; }
 
@@ -8,8 +8,8 @@ img.header-flag { width: 50px; }
 .upload-in-progress {
     position: fixed;
     bottom: 60px;
-    right: -200px;
-    width: 200px;
+    right: -300px;
+    width: 300px;
     margin-left: -100px;
     text-align: center;
     background: #e6e6e6;

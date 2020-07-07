@@ -1,5 +1,5 @@
 {% extends "baton:admin/base_site.html" %}
-{% load static %}
+{% load static i18n baton_tags custom_tags %}
 
 {% block extrastyle %}
 {{ block.super }}
@@ -8,16 +8,16 @@
 {% endblock %}
 
 {% block extrahead %}
-{{ block.super }}
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    {{ block.super }}
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 {% endblock %}
 
 {% block branding %}
 <h1 id="site-name">
     <a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a>
     {% if user.profile.country %}
-    | <img class="header-flag" src="{{ user.profile.country.flag.url }}" /> {{ user.profile.country.name }}
+        <img class="header-flag" src="{{ user.profile.country.flag.url }}" /> {{ user.profile.country.name }}
     {% endif %}
 </h1>
 
@@ -29,7 +29,7 @@
     </div>
     <div class="upload-result"></div>
     <script type="text/javascript">
-        $('.upload-in-progress').animate({ "left": "-=200px" }, "slow" );
+        $('.upload-in-progress').animate({ "left": "-=300px" }, "slow" );
         var status = 'validating';
         var url = '{% url 'api_admin-check-in-progress-upload' request.session.upload_in_progress %}';
         var check_in_progress = setInterval(function () {
@@ -68,5 +68,21 @@
         }, 10000)
     </script>
 {% endif %}
+{% endblock %}
 
+{% block footer %}
+{# Overrided from baton/footer.html #}
+<div id="footer" class="site-footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 col-sm-4 text-center"></div>
+            <div class="col-xs-12 col-sm-4 text-center">
+                <p>
+                    {% blocktrans %}PALOP-TL CSO online budget platform{% endblocktrans %}
+                </p>
+            </div>
+            <div class="col-xs-12 col-sm-4 text-center"></div>
+        </div>
+    </div>
+</div>
 {% endblock %}
