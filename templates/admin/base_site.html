@@ -2,20 +2,20 @@
 {% load static %}
 
 {% block extrastyle %}
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" type="text/css" href="{% static 'css/custom-admin.css' %}">
+    <link rel="stylesheet" href="{% static 'external/jquery-ui-1.12.1/jquery-ui.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom-admin.css' %}">
 {% endblock %}
 
 {% block extrahead %}
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="{% static 'external/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static 'external/jquery-ui-1.12.1/jquery-ui.min.js' %}"></script>
 {% endblock %}
 
 {% block branding %}
 <h1 id="site-name">
     <a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a>
     {% if user.profile.country %}
-    | <img class="header-flag" src="{{ user.profile.country.flag.url }}" /> {{ user.profile.country.name }}
+        <img class="header-flag" src="{{ user.profile.country.flag.url }}" /> {{ user.profile.country.name }}
     {% endif %}
 </h1>
 
@@ -27,7 +27,7 @@
     </div>
     <div class="upload-result"></div>
     <script type="text/javascript">
-        $('.upload-in-progress').animate({ "left": "-=200px" }, "slow" );
+        $('.upload-in-progress').animate({ "left": "-=260px" }, "slow" );
         var status = 'validating';
         var url = '{% url 'api_admin-check-in-progress-upload' request.session.upload_in_progress %}';
         var check_in_progress = setInterval(function () {

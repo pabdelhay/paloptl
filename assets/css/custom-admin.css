@@ -1,4 +1,5 @@
-img.header-flag { width: 50px; }
+#header { background-color: #234a5e; }
+img.header-flag { width: 50px; margin-left: 20px; }
 
 .ui-widget-content { background-color: #f4f4f4; }
 
@@ -8,8 +9,8 @@ img.header-flag { width: 50px; }
 .upload-in-progress {
     position: fixed;
     bottom: 60px;
-    right: -200px;
-    width: 200px;
+    right: -260px;
+    width: 260px;
     margin-left: -100px;
     text-align: center;
     background: #e6e6e6;
@@ -24,4 +25,10 @@ img.header-flag { width: 50px; }
 
 body.login { background: url("../img/background.png") no-repeat !important;  }
 body.login #container { margin: 300px auto; border: 1px solid #bcbcbc; }
-#header { background-color: #234a5e; }
+
+.shortcuts { padding: 10px 20px 10px 20px; }
+.shortcuts div { margin-bottom: 20px; }
+a.button.create { background-color: #cbbf3e; }
+a.button.create:hover { background-color: #a69a1e; }
+
+#content-related { width: 270px; }

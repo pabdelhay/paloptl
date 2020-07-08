@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'apps.account',
     'apps.geo',
     'apps.budget',
-    'frontend'
+    'frontend',
+    'common'
 ]
 
 MIDDLEWARE = [

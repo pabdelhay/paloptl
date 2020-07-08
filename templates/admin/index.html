@@ -1,11 +1,27 @@
 {% extends "admin:admin/index.html" %}
+{% load custom_tags i18n %}
 
 {% block sidebar %}
+{% get_latest_budgets user as latest_budgets %}
+{% get_current_budget user as current_budget %}
 <div id="content-related">
     <div class="module" id="recent-actions-module">
-        <h2>Shortcuts</h2>
+        <h2>{% trans "Shortcuts" %}</h2>
         <div class="shortcuts">
-            <a href="{% url 'api_admin-test-celery-works' %}" class="shortcut">Test celery</a><br>
+            {% for budget in latest_budgets %}
+                <div>
+                    <a class="button" href="{% url "admin:budget_budget_change" budget.id %}">
+                        {% trans "Budget" %} {{ budget.country }} {{ budget.year }}
+                    </a>
+                </div>
+            {% endfor %}
+            {% if not current_budget or user.is_superuser %}
+                <div>
+                    <a class="button create" href="{% url "admin:budget_budget_add" %}">
+                        {% trans "Add new budget" %}
+                    </a>
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>
