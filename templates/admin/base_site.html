@@ -27,7 +27,7 @@
     </div>
     <div class="upload-result"></div>
     <script type="text/javascript">
-        $('.upload-in-progress').animate({ "left": "-=260px" }, "slow" );
+        $('.upload-in-progress').animate({ "left": "-=220px" }, "slow" );
         var status = 'validating';
         var url = '{% url 'api_admin-check-in-progress-upload' request.session.upload_in_progress %}';
         var check_in_progress = setInterval(function () {

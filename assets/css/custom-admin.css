@@ -9,10 +9,9 @@ img.header-flag { width: 50px; margin-left: 20px; }
 .upload-in-progress {
     position: fixed;
     bottom: 60px;
-    right: -260px;
-    width: 260px;
-    margin-left: -100px;
-    text-align: center;
+    right: -220px;
+    width: 220px;
+    text-align: left;
     background: #e6e6e6;
     color: #585858;
     vertical-align: middle;
