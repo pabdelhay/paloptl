@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from apps.budget.choices import UploadStatusChoices
 from apps.budget.models import Upload, Budget
 from apps.budget.models.agency import Agency
+from apps.budget.models.budget_account import BudgetAccount
 from apps.budget.models.function import Function
 from apps.budget.tasks import import_file
 from common.admin import CountryPermissionMixin
@@ -58,17 +59,48 @@ class BudgetAccountInline(admin.TabularInline):
     @staticmethod
     def _get_budget_field(obj, field):
         current_value = getattr(obj, field)
+
         if not current_value:
-            return "-"
+            # No explicit value set. Try to infer value from the whole category.
 
+            if obj.parent is not None:
+                # Inferring only root categories for now.
+                return "-"
+
+            try:
+                inferred_value = obj.infer_aggregated_value(field)
+            except BudgetAccount.NotAllDescendantsHaveValueSet:
+                return "-"
+            if not inferred_value:
+                return "-"
+
+            inferred_value_text = _("Automatically calculated from descendants.")
+            html = f'{inferred_value} ' \
+                   f'<span class="ui-icon ui-icon-calculator" title="{inferred_value_text}"></span>'
+            return html
+
+        value_class, value_title = '', ''
+        if not obj.parent:
+            try:
+                inferred_value = obj.infer_aggregated_value(field)
+            except BudgetAccount.NotAllDescendantsHaveValueSet:
+                pass
+            if inferred_value != current_value:
+                value_class = 'inferred-different-from-current'
+                value_title = _("Explicit given value differs from descendants sum")
+                value_title += f" ({inferred_value})"
+
+        html = f'{current_value}'
+        if value_class and value_title:
+            html = f'<span class="{value_class}" title="{value_title}">{current_value}</span>'
+
+        # Value different from initial.
         initial_value = getattr(obj, f"initial_{field}", None)
-        if not initial_value or initial_value == current_value:
-            return current_value
-
-        value_updated_text = _("Showing updated value. Initial value was")
-        html = f'{current_value} <span class="ui-icon ui-icon-arrowrefresh-1-e" ' \
-               f'title="{value_updated_text}: {initial_value}"></span>' \
-               f'<span class="initial-value"> | initial: {initial_value}</span>'
+        if initial_value and initial_value != current_value:
+            value_updated_text = _("Showing updated value. Initial value was")
+            html += f' <span class="ui-icon ui-icon-arrowrefresh-1-e trigger-initial-value" ' \
+                    f'title="{value_updated_text}: {initial_value}"></span>' \
+                    f'<span class="initial-value"> | initial: {initial_value}</span>'
 
         return html
 

@@ -8,6 +8,8 @@
     .upload-error { background-color: #f8d7da !important; }
     .upload-success { background-color: #d4edda !important; }
     .initial-value { color: #a5a5a5; display: none; }
+    .inferred-value { color: #f5dd5d; }
+    .inferred-different-from-current { color: #ff5654; }
 
     .inline-group .ui-icon { cursor: help; }
     #functions-group.inline-group .tabular tr.has_original td[class^="field-"],
@@ -66,9 +68,9 @@
             }
         });
 
-        $('body').on('click', '.toggle-initial-budgets, .ui-icon', function(ev){
+        $('body').on('click', '.toggle-initial-budgets, .trigger-initial-value', function(ev){
             ev.preventDefault();
-            $('.inline-group').find('.ui-icon').toggle();
+            $('.inline-group').find('.trigger-initial-value').toggle();
             $('.inline-group').find('.initial-value').toggle();
             $('.inline-group').find('.toggle-initial-budgets').toggle();
         });

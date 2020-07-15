@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Sum
 from django.utils.translation import gettext_lazy as _
 from mptt.fields import TreeForeignKey
 from mptt.models import MPTTModel
@@ -6,6 +7,9 @@ from mptt.models import MPTTModel
 
 class BudgetAccount(MPTTModel):
     class TaxonomyLevelsNotSet(Exception):
+        pass
+
+    class NotAllDescendantsHaveValueSet(Exception):
         pass
 
     budget = models.ForeignKey('budget.Budget', verbose_name=_("budget"), on_delete=models.CASCADE)
@@ -47,3 +51,21 @@ class BudgetAccount(MPTTModel):
         if self.parent is not None:
             name = self.parent.name + f" > {name}"
         return name
+
+    def infer_aggregated_value(self, field):
+        """
+        Sum all descendants values from this field. Every descendant MUST have this field set, otherwise raises
+        exception.
+
+        return float or None
+        """
+        descendants_qs = self.get_descendants()
+        descendants_count = descendants_qs.count()
+        if not descendants_count:
+            return None
+
+        descendants_with_value = descendants_qs.exclude(**{f'{field}__isnull': True}).count()
+        if descendants_with_value != descendants_count:
+            raise self.NotAllDescendantsHaveValueSet()
+
+        return descendants_qs.aggregate(total=Sum(field))['total']
