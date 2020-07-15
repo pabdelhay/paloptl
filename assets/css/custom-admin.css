@@ -1,9 +1,11 @@
 #header { background-color: #234a5e; }
+.hide { display: none; }
+
 img.header-flag { width: 50px; margin-left: 20px; }
 
-.ui-widget-content { background-color: #f4f4f4; }
+.ui-widget-content { background-color: #eaeaea; }
 
-.ui-dialog-titlebar { background-color: #79aec8; color: #FFF; }
+.ui-dialog-titlebar { background-color: #234a5e; color: #FFF; }
 
 .upload-result { display: none; }
 .upload-in-progress {
@@ -31,3 +33,7 @@ a.button.create { background-color: #cbbf3e; }
 a.button.create:hover { background-color: #a69a1e; }
 
 #content-related { width: 270px; }
+
+.inline-actions { float: right; }
+.inline-actions a { color: #f5dd5d; }
+.inline-actions a:hover { color: #e8d616; }

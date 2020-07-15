@@ -41,18 +41,72 @@ class UploadInline(admin.TabularInline):
 
 class BudgetAccountInline(admin.TabularInline):
     extra = 0
-    readonly_fields = ('get_group_taxonomy', 'get_subgroup_taxonomy', 'last_update', 'budget_investment',
-                       'budget_operation', 'budget_aggregated', 'execution_investment', 'execution_operation',
-                       'execution_aggregated')
-    fields = ('get_group_taxonomy', 'get_subgroup_taxonomy', 'budget_investment', 'budget_operation',
-              'budget_aggregated', 'execution_investment', 'execution_operation', 'execution_aggregated', 'last_update')
+    readonly_fields = ('get_group_taxonomy', 'get_subgroup_taxonomy', 'last_update',
+                       'get_budget_investment', 'get_budget_operation', 'get_budget_aggregated',
+                       'get_execution_investment', 'get_execution_operation', 'get_execution_aggregated')
+    fields = ('get_group_taxonomy', 'get_subgroup_taxonomy', 'get_budget_investment', 'get_budget_operation',
+              'get_budget_aggregated', 'get_execution_investment', 'get_execution_operation',
+              'get_execution_aggregated', 'last_update')
     classes = ['collapse']
 
     def has_add_permission(self, request, obj):
         return False
 
     def has_delete_permission(self, request, obj):
-        return False
+        return request.user.is_superuser
+
+    @staticmethod
+    def _get_budget_field(obj, field):
+        current_value = getattr(obj, field)
+        if not current_value:
+            return "-"
+
+        initial_value = getattr(obj, f"initial_{field}", None)
+        if not initial_value or initial_value == current_value:
+            return current_value
+
+        value_updated_text = _("Showing updated value. Initial value was")
+        html = f'{current_value} <span class="ui-icon ui-icon-arrowrefresh-1-e" ' \
+               f'title="{value_updated_text}: {initial_value}"></span>' \
+               f'<span class="initial-value"> | initial: {initial_value}</span>'
+
+        return html
+
+    @mark_safe
+    def get_budget_investment(self, obj):
+        return self._get_budget_field(obj, 'budget_investment')
+
+    get_budget_investment.short_description = _("investment budget")
+
+    @mark_safe
+    def get_budget_operation(self, obj):
+        return self._get_budget_field(obj, 'budget_operation')
+
+    get_budget_operation.short_description = _("operation budget")
+
+    @mark_safe
+    def get_budget_aggregated(self, obj):
+        return self._get_budget_field(obj, 'budget_aggregated')
+
+    get_budget_aggregated.short_description = _("total budget")
+
+    @mark_safe
+    def get_execution_investment(self, obj):
+        return self._get_budget_field(obj, 'execution_investment')
+
+    get_execution_investment.short_description = _("investment execution")
+
+    @mark_safe
+    def get_execution_operation(self, obj):
+        return self._get_budget_field(obj, 'execution_operation')
+
+    get_execution_operation.short_description = _("operation execution")
+
+    @mark_safe
+    def get_execution_aggregated(self, obj):
+        return self._get_budget_field(obj, 'execution_aggregated')
+
+    get_execution_aggregated.short_description = _("total execution")
 
 
 class FunctionInline(BudgetAccountInline):

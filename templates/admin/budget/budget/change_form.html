@@ -7,9 +7,13 @@
     .upload-validating { background-color: #fff3cd !important; }
     .upload-error { background-color: #f8d7da !important; }
     .upload-success { background-color: #d4edda !important; }
+    .initial-value { color: #a5a5a5; display: none; }
 
+    .inline-group .ui-icon { cursor: help; }
     #functions-group.inline-group .tabular tr.has_original td[class^="field-"],
     #agencies-group.inline-group .tabular tr.has_original td[class^="field-"] { padding: 0 0 0 8px; }
+    #functions-group.inline-group .tabular tr.has_original td.delete,
+    #agencies-group.inline-group .tabular tr.has_original td.delete { padding: 4px 0 0 8px; }
 </style>
 
 <script type="text/javascript">
@@ -45,9 +49,29 @@
             }
 
         });
+        {% if add %}
+        $('#functions-group, #agencies-group').hide();
+        {% endif %}
 
         // Remove __str__ for each row on Function and Agencies inlines.
         $('#functions-group, #agencies-group').find('.form-row .original p').remove();
+
+        var categories_group = ['#functions-group', '#agencies-group'];
+        categories_group.forEach(function(item, index, arr){
+            if($(item).find('.initial-value').length){
+                var $h2 = $(item).find('h2');
+                $h2.append('<span class="inline-actions"></span>');
+                $h2.find('.inline-actions').append('<a href="#" class="toggle-initial-budgets">{% trans "Show initial budgets" %}</a>')
+                $h2.find('.inline-actions').append('<a href="#" class="toggle-initial-budgets hide">{% trans "Hide initial budgets" %}</a>')
+            }
+        });
+
+        $('body').on('click', '.toggle-initial-budgets, .ui-icon', function(ev){
+            ev.preventDefault();
+            $('.inline-group').find('.ui-icon').toggle();
+            $('.inline-group').find('.initial-value').toggle();
+            $('.inline-group').find('.toggle-initial-budgets').toggle();
+        });
     });
 </script>
 {% endblock %}
