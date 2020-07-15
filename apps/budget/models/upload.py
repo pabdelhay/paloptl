@@ -111,6 +111,7 @@ class Upload(models.Model):
                 self.log.append(_("Created {taxonomy} <strong>{name}</strong>"
                                   .format(taxonomy=category_model.get_taxonomy(level=0), name=row_category)))
 
+            instance = category
             if row_subcategory is not None:
                 # Budget for a subgroup
                 try:
@@ -120,25 +121,23 @@ class Upload(models.Model):
                     self.log.append(_("Created {taxonomy} <strong>{name}</strong>"
                                       .format(taxonomy=category_model.get_taxonomy(level=1),
                                               name=subcategory.get_hierarchy_name())))
+                instance = subcategory
 
-                update_category(instance=subcategory, attr='budget_investment', new_value=data['budget_investment'])
-                update_category(instance=subcategory, attr='budget_operation', new_value=data['budget_operation'])
-                update_category(instance=subcategory, attr='budget_aggregated', new_value=data['budget_aggregated'])
-                update_category(instance=subcategory, attr='execution_investment',
-                                new_value=data['execution_investment'])
-                update_category(instance=subcategory, attr='execution_operation', new_value=data['execution_operation'])
-                update_category(instance=subcategory, attr='execution_aggregated',
-                                new_value=data['execution_aggregated'])
-                subcategory.save()
-            else:
-                # Budget for the root group.
-                update_category(instance=category, attr='budget_investment', new_value=data['budget_investment'])
-                update_category(instance=category, attr='budget_operation', new_value=data['budget_operation'])
-                update_category(instance=category, attr='budget_aggregated', new_value=data['budget_aggregated'])
-                update_category(instance=category, attr='execution_investment', new_value=data['execution_investment'])
-                update_category(instance=category, attr='execution_operation', new_value=data['execution_operation'])
-                update_category(instance=category, attr='execution_aggregated', new_value=data['execution_aggregated'])
-                category.save()
+            update_category(instance=instance, attr='budget_investment', new_value=data['budget_investment'])
+            update_category(instance=instance, attr='budget_operation', new_value=data['budget_operation'])
+            update_category(instance=instance, attr='budget_aggregated', new_value=data['budget_aggregated'])
+            update_category(instance=instance, attr='execution_investment', new_value=data['execution_investment'])
+            update_category(instance=instance, attr='execution_operation', new_value=data['execution_operation'])
+            update_category(instance=instance, attr='execution_aggregated', new_value=data['execution_aggregated'])
+            if self.report == UploadReportChoices.OGE:
+                # If is OGE report, save also initial budget values
+                update_category(instance=instance, attr='initial_budget_investment',
+                                new_value=data['budget_investment'])
+                update_category(instance=instance, attr='initial_budget_operation',
+                                new_value=data['budget_operation'])
+                update_category(instance=instance, attr='initial_budget_aggregated',
+                                new_value=data['budget_aggregated'])
+            instance.save()
 
         try:
             self.save()

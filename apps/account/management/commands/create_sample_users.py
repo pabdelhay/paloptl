@@ -19,7 +19,7 @@ class Command(BaseCommand):
                 'is_active': True,
                 'password': make_password('PalopTLtests')
             }
-            group = Group.objects.get(name='CSO team')
+            group = Group.objects.get(name='CSO Team')
             try:
                 user = User.objects.get(username=fields['username'])
                 print(f"Updating user {user.username}")

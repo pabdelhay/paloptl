@@ -13,9 +13,13 @@ class BudgetAccount(MPTTModel):
     parent = TreeForeignKey('self', verbose_name=_("parent"), null=True, blank=True, related_name='children',
                             db_index=True, on_delete=models.CASCADE)
 
-    budget_investment = models.FloatField(verbose_name=_("initial budget for investment"), null=True, blank=True)
-    budget_operation = models.FloatField(verbose_name=_("initial budget for operation"), null=True, blank=True)
-    budget_aggregated = models.FloatField(verbose_name=_("initial budget"), null=True, blank=True)
+    initial_budget_investment = models.FloatField(verbose_name=_("initial budget for investment"), null=True, blank=True)
+    initial_budget_operation = models.FloatField(verbose_name=_("initial budget for operation"), null=True, blank=True)
+    initial_budget_aggregated = models.FloatField(verbose_name=_("initial budget"), null=True, blank=True)
+
+    budget_investment = models.FloatField(verbose_name=_("updated budget for investment"), null=True, blank=True)
+    budget_operation = models.FloatField(verbose_name=_("updated budget for operation"), null=True, blank=True)
+    budget_aggregated = models.FloatField(verbose_name=_("updated budget"), null=True, blank=True)
 
     execution_investment = models.FloatField(verbose_name=_("execution for investment"), null=True, blank=True)
     execution_operation = models.FloatField(verbose_name=_("execution for operation"), null=True, blank=True)
