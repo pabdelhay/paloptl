@@ -11,7 +11,7 @@ from apps.budget.models import Upload
 class BudgetUploadSerializer(serializers.Serializer):
     report_type = serializers.ChoiceField(choices=('organic', 'functional'))
     category = serializers.CharField(max_length=255)
-    subcategory = serializers.CharField(required=False, max_length=255)
+    subcategory = serializers.CharField(required=False, allow_null=True, max_length=255)
 
     budget_operation = serializers.FloatField(required=False, allow_null=True)
     budget_investment = serializers.FloatField(required=False, allow_null=True)

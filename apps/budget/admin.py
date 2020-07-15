@@ -1,7 +1,6 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
-from mptt.admin import MPTTModelAdmin
 
 from apps.budget.choices import UploadStatusChoices
 from apps.budget.models import Upload, Budget
@@ -42,9 +41,18 @@ class UploadInline(admin.TabularInline):
 
 class BudgetAccountInline(admin.TabularInline):
     extra = 0
-    readonly_fields = ('get_group_taxonomy', 'get_subgroup_taxonomy', 'last_update')
+    readonly_fields = ('get_group_taxonomy', 'get_subgroup_taxonomy', 'last_update', 'budget_investment',
+                       'budget_operation', 'budget_aggregated', 'execution_investment', 'execution_operation',
+                       'execution_aggregated')
     fields = ('get_group_taxonomy', 'get_subgroup_taxonomy', 'budget_investment', 'budget_operation',
               'budget_aggregated', 'execution_investment', 'execution_operation', 'execution_aggregated', 'last_update')
+    classes = ['collapse']
+
+    def has_add_permission(self, request, obj):
+        return False
+
+    def has_delete_permission(self, request, obj):
+        return False
 
 
 class FunctionInline(BudgetAccountInline):
@@ -52,11 +60,11 @@ class FunctionInline(BudgetAccountInline):
 
     def get_group_taxonomy(self, obj):
         return obj.parent.name if obj.parent else obj.name
-    get_group_taxonomy.short_description = Agency.get_taxonomy(level=0)
+    get_group_taxonomy.short_description = Function.get_taxonomy(level=0)
 
     def get_subgroup_taxonomy(self, obj):
         return obj.name if obj.parent else ""
-    get_subgroup_taxonomy.short_description = Agency.get_taxonomy(level=1)
+    get_subgroup_taxonomy.short_description = Function.get_taxonomy(level=1)
 
 
 class AgencyInline(BudgetAccountInline):

@@ -7,10 +7,14 @@
     .upload-validating { background-color: #fff3cd !important; }
     .upload-error { background-color: #f8d7da !important; }
     .upload-success { background-color: #d4edda !important; }
+
+    #functions-group.inline-group .tabular tr.has_original td[class^="field-"],
+    #agencies-group.inline-group .tabular tr.has_original td[class^="field-"] { padding: 0 0 0 8px; }
 </style>
 
 <script type="text/javascript">
     $(function () {
+        // Log modal
         $(".log-link").click(function(ev){
             ev.preventDefault();
             var upload_id = $(this).data('upload_id');
@@ -21,6 +25,8 @@
                 title: title
             });
         });
+
+        // Uploads background colors
         $('.status-input').each(function(){
             var val = $(this).val();
             var $tr = $(this).closest('.form-row');
@@ -38,7 +44,10 @@
                     break
             }
 
-        })
+        });
+
+        // Remove __str__ for each row on Function and Agencies inlines.
+        $('#functions-group, #agencies-group').find('.form-row .original p').remove();
     });
 </script>
 {% endblock %}
