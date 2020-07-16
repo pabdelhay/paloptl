@@ -7,12 +7,12 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         countries = [
-            {'name': "Angola", 'slug': 'angola'},
-            {'name': "Cabo Verde", 'slug': 'cabo-verde'},
-            {'name': "Guinea Bissau", 'slug': 'guinea-bissau'},
-            {'name': "Mozambique", 'slug': 'mozambique'},
-            {'name': "São Tomé e Príncipe", 'slug': 'sao-tome-e-principe'},
-            {'name': "Timor Leste", 'slug': 'timor-leste'},
+            {'name': "Angola", 'slug': 'angola', 'currency': 'AOA'},
+            {'name': "Cabo Verde", 'slug': 'cabo-verde', 'currency': 'CVE'},
+            {'name': "Guinea Bissau", 'slug': 'guinea-bissau', 'currency': 'XOF'},
+            {'name': "Mozambique", 'slug': 'mozambique', 'currency': 'MZN'},
+            {'name': "São Tomé e Príncipe", 'slug': 'sao-tome-e-principe', 'currency': 'STD'},
+            {'name': "Timor Leste", 'slug': 'timor-leste', 'currency': 'USD'},
         ]
         print("Creating Palop-TL countries...")
         for c in countries:
@@ -24,6 +24,7 @@ class Command(BaseCommand):
                 print(f"Creating {c['name']}.")
             if not bool(country.flag):
                 country.flag = f"countries/{c['slug']}.png"
+            country.currency = c['currency']
             country.save()
 
         print("=== FINISHED ===")

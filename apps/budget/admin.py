@@ -108,36 +108,31 @@ class BudgetAccountInline(admin.TabularInline):
     def get_budget_investment(self, obj):
         return self._get_budget_field(obj, 'budget_investment')
 
-    get_budget_investment.short_description = _("investment budget")
-
     @mark_safe
     def get_budget_operation(self, obj):
         return self._get_budget_field(obj, 'budget_operation')
-
-    get_budget_operation.short_description = _("operation budget")
 
     @mark_safe
     def get_budget_aggregated(self, obj):
         return self._get_budget_field(obj, 'budget_aggregated')
 
-    get_budget_aggregated.short_description = _("total budget")
-
     @mark_safe
     def get_execution_investment(self, obj):
         return self._get_budget_field(obj, 'execution_investment')
-
-    get_execution_investment.short_description = _("investment execution")
 
     @mark_safe
     def get_execution_operation(self, obj):
         return self._get_budget_field(obj, 'execution_operation')
 
-    get_execution_operation.short_description = _("operation execution")
-
     @mark_safe
     def get_execution_aggregated(self, obj):
         return self._get_budget_field(obj, 'execution_aggregated')
 
+    get_budget_investment.short_description = _("investment budget")
+    get_budget_operation.short_description = _("operation budget")
+    get_budget_aggregated.short_description = _("total budget")
+    get_execution_investment.short_description = _("investment execution")
+    get_execution_operation.short_description = _("operation execution")
     get_execution_aggregated.short_description = _("total execution")
 
 
@@ -169,6 +164,7 @@ class AgencyInline(BudgetAccountInline):
 class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
     inlines = (UploadInline, FunctionInline, AgencyInline)
     list_display = ('country', 'year')
+    readonly_fields = ('currency', )
 
     def save_formset(self, request, form, formset, change):
         if formset.model != Upload:

@@ -51,9 +51,6 @@
             }
 
         });
-        {% if add %}
-        $('#functions-group, #agencies-group').hide();
-        {% endif %}
 
         // Remove __str__ for each row on Function and Agencies inlines.
         $('#functions-group, #agencies-group').find('.form-row .original p').remove();
@@ -74,6 +71,10 @@
             $('.inline-group').find('.initial-value').toggle();
             $('.inline-group').find('.toggle-initial-budgets').toggle();
         });
+
+        {% if add %}
+            $('#functions-group, #agencies-group').hide();
+        {% endif %}
     });
 </script>
 {% endblock %}

@@ -1,4 +1,4 @@
-from rest_framework import viewsets, permissions, serializers
+from rest_framework import viewsets, permissions, serializers, status
 from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from apps.account.tasks import test_celery
 from apps.budget.choices import UploadStatusChoices
 from apps.budget.models import Upload
+from apps.geo.models import Country
 
 
 class BudgetUploadSerializer(serializers.Serializer):
@@ -57,3 +58,9 @@ class AdminViewset(viewsets.ViewSet):
 
         serializer = UploadInProgressSerializer(instance=upload)
         return Response(serializer.data)
+
+    @action(methods=['get'], detail=True)
+    def get_currency_from_country(self, request, pk=None):
+        country_id = pk
+        country = Country.objects.get(id=country_id)
+        return Response(country.currency)

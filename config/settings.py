@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'admin_honeypot',
     'mptt',
+    'djmoney',
 
     'apps.account',
     'apps.geo',
@@ -151,3 +152,15 @@ CELERY_RESULT_BACKEND = os.environ.get("REDIS_URL", None)
 CELERY_TASK_ALWAYS_EAGER = ENV == 'dev'
 #CELERY_BROKER_POOL_LIMIT = 30
 #CELERY_BROKER_TRANSPORT_OPTIONS = {'socket_timeout': 3600}
+
+
+# Django-money
+CURRENCIES = ('USD', 'AOA', 'CVE', 'XOF', 'MZN', 'STD')
+CURRENCY_CHOICES = [
+    ('USD', 'USD $'),
+    ('AOA', 'AOA Kz'),
+    ('CVE', 'CVE $'),
+    ('XOF', 'XOF (CFA)'),
+    ('MZN', 'MZN MT'),
+    ('STD', 'STD Db')
+]
