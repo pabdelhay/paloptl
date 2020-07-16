@@ -27,7 +27,8 @@ def empty_string_to_none(row):
 class Upload(models.Model):
     CSV_DELIMITER = ','
 
-    budget = models.ForeignKey('budget.Budget', verbose_name=_("budget"), on_delete=models.CASCADE)
+    budget = models.ForeignKey('budget.Budget', verbose_name=_("budget"), related_name='uploads',
+                               on_delete=models.CASCADE)
     file = models.FileField(verbose_name=_("file"), upload_to=get_upload_path,
                             validators=[FileExtensionValidator(allowed_extensions=['csv', 'txt'])])
     report = models.CharField(verbose_name=_("report"), max_length=5, choices=UploadReportChoices.choices)

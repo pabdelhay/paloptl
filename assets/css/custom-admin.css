@@ -34,6 +34,7 @@ a.button.create:hover { background-color: #a69a1e; }
 
 #content-related { width: 270px; }
 
+.inline-description { padding: 8px; background-color: #ededed; color: #6a6a6a; }
 .inline-actions { float: right; }
 .inline-actions a { color: #f5dd5d; }
 .inline-actions a:hover { color: #e8d616; }

@@ -1,0 +1,8 @@
+report_type,category,subcategory,budget_operation,budget_investment,budget_aggregated,execution_operation,execution_investment,execution_aggregated
+organic,ministério da justiça,,,,220,,,
+organic,ministério da justiça,secretaria de segurança pública,,,100,,,
+organic,ministério da justiça,gabinete presidencial,,,30,,,
+organic,ministério da justiça,polícia federal,,,70,,,
+functional,segurança,presidencial,80,,,,,
+functional,segurança,rodovias,90,,,,,
+functional,segurança,fronteiras,50,,,,,
