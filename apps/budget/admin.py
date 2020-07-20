@@ -74,7 +74,7 @@ class BudgetAccountInline(admin.TabularInline):
             if not inferred_value:
                 return "-"
 
-            inferred_value_text = _("Automatically calculated from descendants.")
+            inferred_value_text = _("Automatically calculated from descendants")
             html = f'{inferred_value} ' \
                    f'<span class="ui-icon ui-icon-calculator" title="{inferred_value_text}"></span>'
             return html

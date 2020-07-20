@@ -14,4 +14,4 @@ class Function(BudgetAccount):
 
     class Meta:
         verbose_name = _("function")
-        verbose_name_plural = _("functions")
+        verbose_name_plural = _("functional data")

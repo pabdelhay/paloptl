@@ -1,0 +1,329 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-07-20 18:44-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\apps\account\admin.py:26
+msgid "Personal info"
+msgstr "Dados pessoais"
+
+#: .\apps\account\admin.py:27
+msgid "Permissions"
+msgstr "Permissões"
+
+#: .\apps\account\admin.py:30
+msgid "Important dates"
+msgstr "Datas importantes"
+
+#: .\apps\account\models.py:16
+msgid "Profile"
+msgstr ""
+
+#: .\apps\account\models.py:17
+msgid "Profiles"
+msgstr ""
+
+#: .\apps\budget\admin.py:24
+msgid "Log"
+msgstr ""
+
+#: .\apps\budget\admin.py:27
+msgid "Errors"
+msgstr "Erros"
+
+#: .\apps\budget\admin.py:77
+msgid "Automatically calculated from descendants"
+msgstr "Calculado automaticamente a partir dos descendentes"
+
+#: .\apps\budget\admin.py:90
+msgid "Explicit given value differs from descendants sum"
+msgstr "Valor explicitamente passado difere da soma dos descendentes"
+
+#: .\apps\budget\admin.py:100
+msgid "Showing updated value. Initial value was"
+msgstr "Mostrando valor atualizado. Valor inicial era"
+
+#: .\apps\budget\admin.py:131
+msgid "investment budget"
+msgstr "orçamento de investimento"
+
+#: .\apps\budget\admin.py:132
+msgid "operation budget"
+msgstr "orçamento de operação"
+
+#: .\apps\budget\admin.py:133
+msgid "total budget"
+msgstr "orçamento total"
+
+#: .\apps\budget\admin.py:134
+msgid "investment execution"
+msgstr "execução de investimento"
+
+#: .\apps\budget\admin.py:135
+msgid "operation execution"
+msgstr "execução de operação"
+
+#: .\apps\budget\admin.py:136
+msgid "total execution"
+msgstr "execução total"
+
+#: .\apps\budget\choices.py:6
+msgid "OGE - Orçamento Geral do Estado"
+msgstr ""
+
+#: .\apps\budget\choices.py:7
+msgid "REO - Relatório de Execução Orçamentária"
+msgstr ""
+
+#: .\apps\budget\choices.py:8
+msgid "CGE - Conta Geral do Estado"
+msgstr ""
+
+#: .\apps\budget\choices.py:12
+msgid "Validating"
+msgstr "Validando"
+
+#: .\apps\budget\choices.py:13
+msgid "Importing"
+msgstr "Importando"
+
+#: .\apps\budget\choices.py:14
+msgid "Success"
+msgstr "Sucesso"
+
+#: .\apps\budget\choices.py:15
+msgid "Validation error"
+msgstr "Erro de validação"
+
+#: .\apps\budget\choices.py:16
+msgid "Import error"
+msgstr "Erro de importação"
+
+#: .\apps\budget\models\agency.py:9 .\apps\budget\models\agency.py:16
+msgid "agency"
+msgstr "orgão"
+
+#: .\apps\budget\models\agency.py:10
+msgid "budget unit"
+msgstr "unidade orçamentária"
+
+#: .\apps\budget\models\agency.py:12 .\apps\budget\models\budget.py:18
+#: .\apps\budget\models\budget_account.py:15
+#: .\apps\budget\models\function.py:12 .\apps\budget\models\upload.py:30
+msgid "budget"
+msgstr "orçamento"
+
+#: .\apps\budget\models\agency.py:17
+msgid "agencies data"
+msgstr "dados orgânicos"
+
+#: .\apps\budget\models\budget.py:13
+msgid "year"
+msgstr "ano"
+
+#: .\apps\budget\models\budget.py:14
+msgid "currency"
+msgstr "moeda"
+
+#: .\apps\budget\models\budget.py:15
+msgid "All values from budget presented in this currency"
+msgstr "Todos os valores do orçamento apresentados nesta moeda"
+
+#: .\apps\budget\models\budget.py:19
+msgid "budgets"
+msgstr "orçamentos"
+
+#: .\apps\budget\models\budget_account.py:16 .\apps\geo\models.py:8
+msgid "name"
+msgstr "nome"
+
+#: .\apps\budget\models\budget_account.py:17
+msgid "parent"
+msgstr "pai"
+
+#: .\apps\budget\models\budget_account.py:20
+msgid "initial budget for investment"
+msgstr "orçamento inicial para investimento"
+
+#: .\apps\budget\models\budget_account.py:21
+msgid "initial budget for operation"
+msgstr "orçamento inicial para operação"
+
+#: .\apps\budget\models\budget_account.py:22
+msgid "initial budget"
+msgstr "orçamento inicial"
+
+#: .\apps\budget\models\budget_account.py:24
+msgid "updated budget for investment"
+msgstr "orçamento atualizado para investimento"
+
+#: .\apps\budget\models\budget_account.py:25
+msgid "updated budget for operation"
+msgstr "orçamento atualizado para operação"
+
+#: .\apps\budget\models\budget_account.py:26
+msgid "updated budget"
+msgstr "orçamento inicial"
+
+#: .\apps\budget\models\budget_account.py:28
+msgid "execution for investment"
+msgstr "execução para investimento"
+
+#: .\apps\budget\models\budget_account.py:29
+msgid "execution for operation"
+msgstr "execução para operação"
+
+#: .\apps\budget\models\budget_account.py:30
+msgid "execution"
+msgstr "execução"
+
+#: .\apps\budget\models\budget_account.py:32
+msgid "last update"
+msgstr "última atualização"
+
+#: .\apps\budget\models\function.py:9 .\apps\budget\models\function.py:16
+msgid "function"
+msgstr "função"
+
+#: .\apps\budget\models\function.py:10
+msgid "sub-function"
+msgstr "sub-função"
+
+#: .\apps\budget\models\function.py:17
+msgid "functional data"
+msgstr "dados funcionais"
+
+#: .\apps\budget\models\upload.py:32
+msgid "file"
+msgstr "arquivo"
+
+#: .\apps\budget\models\upload.py:34
+msgid "report"
+msgstr "relatório"
+
+#: .\apps\budget\models\upload.py:35
+msgid "status"
+msgstr ""
+
+#: .\apps\budget\models\upload.py:38
+msgid "errors"
+msgstr "erros"
+
+#: .\apps\budget\models\upload.py:39
+msgid "log"
+msgstr ""
+
+#: .\apps\budget\models\upload.py:41
+msgid "uploaded on"
+msgstr "enviado em"
+
+#: .\apps\budget\models\upload.py:42
+msgid "uploaded by"
+msgstr "enviado por"
+
+#: .\apps\budget\models\upload.py:58
+#, python-brace-format
+msgid ""
+"<strong>Line {line}:</strong> Header is not in standard. It must be exact as "
+"<i>{header_fields}</i>"
+msgstr ""
+"<strong>Linha {line}:</strong> Cabeçalho não segue o padrão. O cabeçalho "
+"deve ter exatamente os seguintes campos: <i>{header_fields}</i>"
+
+#: .\apps\budget\models\upload.py:66
+#, python-brace-format
+msgid "<strong>Line {line} ({column})</strong>: {error_msg}"
+msgstr "<strong>Linha {line} ({column})</strong>: {error_msg}"
+
+#: .\apps\budget\models\upload.py:89
+msgid "(empty)"
+msgstr "(vazio)"
+
+#: .\apps\budget\models\upload.py:86
+#, python-brace-format
+msgid ""
+"Updated {taxonomy} <strong>{name}</strong> <i>{field_name}</i> from "
+"{old_value} to {new_value}"
+msgstr ""
+"Atualizado {taxonomy} <strong>{name}</strong> <i>{field_name}</i> de "
+"{old_value} para {new_value}"
+
+#: .\apps\budget\models\upload.py:112 .\apps\budget\models\upload.py:122
+#, python-brace-format
+msgid "Created {taxonomy} <strong>{name}</strong>"
+msgstr "Criado {taxonomy} <strong>{name}</strong>"
+
+#: .\apps\geo\models.py:10
+msgid "flag"
+msgstr "bandeira"
+
+#: .\apps\geo\models.py:14 .\common\mixins.py:6
+msgid "country"
+msgstr "país"
+
+#: .\apps\geo\models.py:15
+msgid "countries"
+msgstr "países"
+
+#: .\config\settings.py:119
+msgid "Portuguese"
+msgstr "Português"
+
+#: .\config\settings.py:120
+msgid "English"
+msgstr "Inglês"
+
+#: .\templates\admin\base_site.html:33
+msgid "Django administration"
+msgstr "Administração do Django"
+
+#: .\templates\admin\budget\budget\change_form.html:63
+msgid "Show initial budgets"
+msgstr "Mostrar orçamentos iniciais"
+
+#: .\templates\admin\budget\budget\change_form.html:64
+msgid "Hide initial budgets"
+msgstr "Esconder orçamentos iniciais"
+
+#: .\templates\admin\budget\budget\change_form.html:91
+#, python-format
+msgid ""
+"\n"
+"        Download the <a href=\"%(sample_upload_url)s\">sample CSV report</"
+"a>, modify according to your country's\n"
+"        budget information and upload back here in this section.\n"
+"        "
+msgstr ""
+"\n"
+"        Faça o download do <a href=\"%(sample_upload_url)s\">arquivo CSV de "
+"exemplo</a>, efetue as modificações de acordo os dados orçamentários de seu "
+"país\n"
+"        e envie novamente o arquivo nesta seção.\n"
+"        "
+
+#: .\templates\admin\index.html:9
+msgid "Shortcuts"
+msgstr "Atalhos"
+
+#: .\templates\admin\index.html:14
+msgid "Budget"
+msgstr "Orçamento"
+
+#: .\templates\admin\index.html:21
+msgid "Add new budget"
+msgstr "Adicionar novo orçamento"

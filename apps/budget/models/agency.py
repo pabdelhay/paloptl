@@ -14,4 +14,4 @@ class Agency(BudgetAccount):
 
     class Meta:
         verbose_name = _("agency")
-        verbose_name_plural = _("agencies")
+        verbose_name_plural = _("agencies data")
