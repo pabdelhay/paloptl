@@ -14,16 +14,22 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf import settings
+from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-urlpatterns = [
+urlpatterns = i18n_patterns(
     path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
     path('cso_admin/', admin.site.urls),
 
+    prefix_default_language=True
+)
+
+urlpatterns += [
     path('', include('frontend.urls')),
     path('api/', include('api.urls')),
+    path('i18n/', include('django.conf.urls.i18n')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
