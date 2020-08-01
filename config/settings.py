@@ -49,12 +49,12 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -119,6 +119,8 @@ LANGUAGES = [
     ('pt', _('Portuguese')),
     ('en', _('English')),
 ]
+# Locale
+LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
@@ -147,10 +149,6 @@ if env('REDIS_URL', default=None):
              "LOCATION": env('REDIS_URL'),
         }
     }
-
-
-# Locale
-LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 
 
 # Celery

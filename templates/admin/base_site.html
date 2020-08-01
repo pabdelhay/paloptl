@@ -40,7 +40,7 @@
     <script src="{% static 'js/beep.js' %}"></script>
     <div class="upload-in-progress">
         <img src="{% static 'img/loading.gif' %}" />
-        Importando relatório...
+        {% trans "Importing report..." %}
     </div>
     <div class="upload-result"></div>
     <script type="text/javascript">
@@ -53,20 +53,19 @@
                     return;
                 }
                 if(data['status'] != 'validating' && data['status'] != 'importing'){
-                    var link = '{% url "admin:budget_budget_changelist" %}' + data['budget_id'];
-                    var link_text = "See results";
                     // Upload finished
-                    if(data['status'] == 'success'){
-                        var msg = "The <strong>" + data['get_report_display'] + "</strong> report has been imported with success.";
-                    } else {
-                        var msg = "The <strong>" + data['get_report_display'] + "</strong> report has validation errors.";
-                        var link_text = "Check and fix errors";
+                    var link = '{% url "admin:budget_budget_changelist" %}' + data['budget_id'];
+                    var link_text = "{% trans 'See results' %}";
+                    var message = "{% trans 'The report has been imported with success.' %}";
+                    if(data['status'] != 'success'){
+                        link_text = "{% trans 'Check and fix errors' %}";
+                        message = "{% trans 'The report has validation errors.' %}";
                     }
-                    beep();
+                    message = "<strong>" + data['get_report_display'] + "</strong><br>" + message;
                     $('.upload-in-progress').hide();
-                    $('.upload-result').html(msg);
+                    $('.upload-result').html(message);
                     $('.upload-result').dialog({
-                        title: "Upload finished",
+                        title: "{% trans 'Upload finished' %}",
                         buttons: [{
                             text: link_text,
                             icon: "ui-icon-document",
@@ -74,7 +73,8 @@
                                 window.location.href = link;
                             }
                         }]
-                    })
+                    });
+                    beep();
                     clearInterval(check_in_progress);
                 }
             }).fail(function() {

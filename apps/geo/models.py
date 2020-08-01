@@ -8,7 +8,7 @@ class Country(models.Model):
     name = models.CharField(verbose_name=_("name"), max_length=100)
     slug = models.SlugField()
     flag = models.ImageField(verbose_name=_("flag"), upload_to='countries', null=True, blank=True)
-    currency = CurrencyField(choices=settings.CURRENCY_CHOICES)
+    currency = CurrencyField(verbose_name=_("currency"), choices=settings.CURRENCY_CHOICES)
 
     class Meta:
         verbose_name = _("country")
@@ -17,3 +17,4 @@ class Country(models.Model):
 
     def __str__(self):
         return self.name
+

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-20 18:44-0300\n"
+"POT-Creation-Date: 2020-08-01 15:57-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -81,6 +81,10 @@ msgstr "execução de operação"
 #: .\apps\budget\admin.py:136
 msgid "total execution"
 msgstr "execução total"
+
+#: .\apps\budget\apps.py:7 .\templates\admin\index.html:14
+msgid "Budget"
+msgstr "Orçamento"
 
 #: .\apps\budget\choices.py:6
 msgid "OGE - Orçamento Geral do Estado"
@@ -268,6 +272,10 @@ msgstr ""
 msgid "Created {taxonomy} <strong>{name}</strong>"
 msgstr "Criado {taxonomy} <strong>{name}</strong>"
 
+#: .\apps\geo\apps.py:7
+msgid "Geo"
+msgstr ""
+
 #: .\apps\geo\models.py:10
 msgid "flag"
 msgstr "bandeira"
@@ -291,6 +299,30 @@ msgstr "Inglês"
 #: .\templates\admin\base_site.html:33
 msgid "Django administration"
 msgstr "Administração do Django"
+
+#: .\templates\admin\base_site.html:43
+msgid "Importing report..."
+msgstr "Importando relatório..."
+
+#: .\templates\admin\base_site.html:58
+msgid "See results"
+msgstr "Ver resultados"
+
+#: .\templates\admin\base_site.html:59
+msgid "The report has been imported with success."
+msgstr "O relatório foi importado com sucesso."
+
+#: .\templates\admin\base_site.html:61
+msgid "Check and fix errors"
+msgstr "Verificar e corrigir erros"
+
+#: .\templates\admin\base_site.html:62
+msgid "The report has validation errors."
+msgstr "O relatório possui erros de validação."
+
+#: .\templates\admin\base_site.html:68
+msgid "Upload finished"
+msgstr "Carregmento finalizado"
 
 #: .\templates\admin\budget\budget\change_form.html:63
 msgid "Show initial budgets"
@@ -320,10 +352,47 @@ msgstr ""
 msgid "Shortcuts"
 msgstr "Atalhos"
 
-#: .\templates\admin\index.html:14
-msgid "Budget"
-msgstr "Orçamento"
-
 #: .\templates\admin\index.html:21
 msgid "Add new budget"
 msgstr "Adicionar novo orçamento"
+
+
+# Override wrong translations from Django 3.0.8
+
+#, python-brace-format
+msgid "The {name} “{obj}” was added successfully."
+msgstr "O {name} “{obj}” foi adicionado com sucesso."
+
+#, python-brace-format
+msgid ""
+"The {name} “{obj}” was added successfully. You may add another {name} "
+"below."
+msgstr ""
+"O {name} “{obj}” foi adicionado com sucesso. Pode adicionar um novo {name} "
+"abaixo."
+
+#, python-brace-format
+msgid ""
+"The {name} “{obj}” was changed successfully. You may edit it again below."
+msgstr ""
+"O {name} “{obj}” foi modificado com sucesso. Pode voltar a editar "
+"novamente abaixo."
+
+#, python-brace-format
+msgid ""
+"The {name} “{obj}” was added successfully. You may edit it again below."
+msgstr ""
+"O {name} “{obj}” foi adicionado com sucesso. Pode voltar a editar "
+"novamente abaixo."
+
+#, python-brace-format
+msgid ""
+"The {name} “{obj}” was changed successfully. You may add another {name} "
+"below."
+msgstr ""
+"O {name} “{obj}” foi modificado com sucesso. Pode adicionar um novo {name} "
+"abaixo."
+
+#, python-brace-format
+msgid "The {name} “{obj}” was changed successfully."
+msgstr "O {name} “{obj}” foi modificado com sucesso."

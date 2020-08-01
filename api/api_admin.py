@@ -1,8 +1,7 @@
-from rest_framework import viewsets, permissions, serializers, status
+from django.utils.translation import gettext_lazy as _
+from rest_framework import viewsets, permissions, serializers
 from rest_framework.decorators import action
-from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
-
 from apps.account.tasks import test_celery
 from apps.budget.choices import UploadStatusChoices
 from apps.budget.models import Upload
@@ -23,6 +22,7 @@ class BudgetUploadSerializer(serializers.Serializer):
 
 
 class UploadInProgressSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Upload
         fields = ('id', 'status', 'get_report_display', 'budget_id')
@@ -54,9 +54,9 @@ class AdminViewset(viewsets.ViewSet):
 
         if upload.status not in UploadStatusChoices.get_in_progress_status():
             # Found in progress upload an it's already finished validating/importing.
-            request.session.pop('upload_in_progress')
+            request.session.pop('upload_in_progress', None)
 
-        serializer = UploadInProgressSerializer(instance=upload)
+        serializer = UploadInProgressSerializer(instance=upload, context={'request': request})
         return Response(serializer.data)
 
     @action(methods=['get'], detail=True)
