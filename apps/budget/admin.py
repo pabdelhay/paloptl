@@ -1,6 +1,8 @@
+from django.conf import settings
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
+from djmoney.money import Money
 
 from apps.budget.choices import UploadStatusChoices
 from apps.budget.models import Upload, Budget
@@ -9,6 +11,7 @@ from apps.budget.models.budget_account import BudgetAccount
 from apps.budget.models.function import Function
 from apps.budget.tasks import import_file
 from common.admin import CountryPermissionMixin
+from common.methods import raw_money_display
 
 
 class UploadInline(admin.TabularInline):
@@ -75,7 +78,7 @@ class BudgetAccountInline(admin.TabularInline):
                 return "-"
 
             inferred_value_text = _("Automatically calculated from descendants")
-            html = f'{inferred_value} ' \
+            html = f'{raw_money_display(inferred_value)} ' \
                    f'<span class="ui-icon ui-icon-calculator" title="{inferred_value_text}"></span>'
             return html
 
@@ -85,22 +88,24 @@ class BudgetAccountInline(admin.TabularInline):
                 inferred_value = obj.infer_aggregated_value(field)
             except BudgetAccount.NotAllDescendantsHaveValueSet:
                 pass
-            if inferred_value != current_value:
+            if inferred_value and inferred_value != current_value:
                 value_class = 'inferred-different-from-current'
                 value_title = _("Explicit given value differs from descendants sum")
-                value_title += f" ({inferred_value})"
+                value_title += f" ({raw_money_display(inferred_value)})"
 
-        html = f'{current_value}'
+        current_value_money = raw_money_display(current_value)
+        html = f'{current_value_money}'
         if value_class and value_title:
-            html = f'<span class="{value_class}" title="{value_title}">{current_value}</span>'
+            html = f'<span class="{value_class}" title="{value_title}">{current_value_money}</span>'
 
         # Value different from initial.
         initial_value = getattr(obj, f"initial_{field}", None)
         if initial_value and initial_value != current_value:
             value_updated_text = _("Showing updated value. Initial value was")
+            raw_initial_value = raw_money_display(initial_value)
             html += f' <span class="ui-icon ui-icon-arrowrefresh-1-e trigger-initial-value" ' \
-                    f'title="{value_updated_text}: {initial_value}"></span>' \
-                    f'<span class="initial-value"> | initial: {initial_value}</span>'
+                    f'title="{value_updated_text}: {raw_initial_value}"></span>' \
+                    f'<span class="initial-value"> | initial: {raw_initial_value}</span>'
 
         return html
 

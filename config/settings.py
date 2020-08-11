@@ -1,5 +1,8 @@
 import os
 import environ
+import moneyed
+from moneyed.localization import _FORMATTER
+from decimal import ROUND_HALF_EVEN
 from django.utils.translation import gettext_lazy as _
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -163,6 +166,25 @@ CELERY_TASK_ALWAYS_EAGER = ENV == 'dev'
 
 
 # Django-money
+RAW_CURRENCY = moneyed.add_currency(
+    code='RAW',
+    numeric='999',
+    name='Raw currency',
+    countries=[]
+)
+_FORMATTER.add_sign_definition(
+    'default',
+    RAW_CURRENCY,
+    prefix=''
+)
+_FORMATTER.add_formatting_definition(
+    'RAW_CURRENCY',
+    group_size=3, group_separator=".", decimal_point=",",
+    positive_sign="",  trailing_positive_sign="",
+    negative_sign="-", trailing_negative_sign="",
+    rounding_method=ROUND_HALF_EVEN
+)
+
 CURRENCIES = ('USD', 'AOA', 'CVE', 'XOF', 'MZN', 'STD')
 CURRENCY_CHOICES = [
     ('USD', 'USD $'),
