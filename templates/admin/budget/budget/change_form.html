@@ -3,7 +3,7 @@
 
 {% block extrahead %}{{ block.super }}
 <style>
-    .upload-log { display: none; }
+    .upload-log { display: none; line-height: 20px; }
     .upload-validating { background-color: #fff3cd !important; }
     .upload-error { background-color: #f8d7da !important; }
     .upload-success { background-color: #d4edda !important; }
@@ -34,7 +34,7 @@
             var $dialog = $('#upload-dialog-' + upload_id);
             var title = $(this).html();
             $dialog.dialog({
-                minWidth: 600,
+                minWidth: 1000,
                 title: title
             });
         });

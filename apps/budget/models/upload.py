@@ -8,6 +8,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from djmoney.money import Money
+from moneyed.localization import format_money
 
 from apps.budget.choices import UploadReportChoices, UploadStatusChoices
 
@@ -70,6 +72,7 @@ class Upload(models.Model):
 
     def do_import(self):
         from api.api_admin import BudgetUploadSerializer
+        currency = self.budget.currency
 
         self.errors = list()
         self.log = list()
@@ -77,16 +80,21 @@ class Upload(models.Model):
         reader = csv.DictReader(codecs.iterdecode(content.splitlines(), 'utf-8'), dialect=csv.excel,
                                 delimiter=self.CSV_DELIMITER)
 
-        def update_category(instance, attr, new_value):
+        def update_category(instance, attr, new_value, add_log=True):
             old_value = getattr(instance, attr)
             field_name = instance.__class__._meta.get_field(attr).verbose_name
             level = 1 if instance.parent else 0
             if old_value != new_value:
                 setattr(instance, attr, new_value)
-                self.log.append(_("Updated {taxonomy} <strong>{name}</strong> <i>{field_name}</i> from {old_value} "
-                                  "to {new_value}".format(taxonomy=instance.get_taxonomy(level=level),
-                                                          name=instance.get_hierarchy_name(), field_name=field_name,
-                                                          old_value=old_value or _("(empty)"), new_value=new_value)))
+                new_value_display = format_money(Money(new_value, currency=currency), include_symbol=False)
+                old_value_display = format_money(Money(old_value, currency=currency), include_symbol=False) \
+                    if old_value is not None else _("(empty)")
+                if add_log:
+                    msg = _("Updated {taxonomy} <strong>{name}</strong> <i>{field_name}</i> from {old_value} "
+                            "to <span class='log-featured'>{new_value}</span>"
+                            .format(taxonomy=instance.get_taxonomy(level=level), name=instance.get_hierarchy_name(),
+                                    field_name=field_name, old_value=old_value_display, new_value=new_value_display))
+                    self.log.append(msg)
 
         for row in reader:
             serializer = BudgetUploadSerializer(data=empty_string_to_none(row))
@@ -124,12 +132,6 @@ class Upload(models.Model):
                                               name=subcategory.get_hierarchy_name())))
                 instance = subcategory
 
-            update_category(instance=instance, attr='budget_investment', new_value=data['budget_investment'])
-            update_category(instance=instance, attr='budget_operation', new_value=data['budget_operation'])
-            update_category(instance=instance, attr='budget_aggregated', new_value=data['budget_aggregated'])
-            update_category(instance=instance, attr='execution_investment', new_value=data['execution_investment'])
-            update_category(instance=instance, attr='execution_operation', new_value=data['execution_operation'])
-            update_category(instance=instance, attr='execution_aggregated', new_value=data['execution_aggregated'])
             if self.report == UploadReportChoices.OGE:
                 # If is OGE report, save also initial budget values
                 update_category(instance=instance, attr='initial_budget_investment',
@@ -138,6 +140,20 @@ class Upload(models.Model):
                                 new_value=data['budget_operation'])
                 update_category(instance=instance, attr='initial_budget_aggregated',
                                 new_value=data['budget_aggregated'])
+                update_category(instance=instance, attr='budget_investment', new_value=data['budget_investment'],
+                                add_log=False)
+                update_category(instance=instance, attr='budget_operation', new_value=data['budget_operation'],
+                                add_log=False)
+                update_category(instance=instance, attr='budget_aggregated', new_value=data['budget_aggregated'],
+                                add_log=False)
+            else:
+                update_category(instance=instance, attr='budget_investment', new_value=data['budget_investment'])
+                update_category(instance=instance, attr='budget_operation', new_value=data['budget_operation'])
+                update_category(instance=instance, attr='budget_aggregated', new_value=data['budget_aggregated'])
+            update_category(instance=instance, attr='execution_investment', new_value=data['execution_investment'])
+            update_category(instance=instance, attr='execution_operation', new_value=data['execution_operation'])
+            update_category(instance=instance, attr='execution_aggregated', new_value=data['execution_aggregated'])
+
             instance.save()
 
         try:

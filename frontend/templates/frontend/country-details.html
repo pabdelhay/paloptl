@@ -1,4 +1,94 @@
 {% extends 'frontend/base.html' %}
+{% load static %}
+
+{% block extrastyle %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/country-details.css" %}">
+{% endblock %}
+
+{% block extrahead %}
+    <script src="//cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="//cdn.amcharts.com/lib/4/charts.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        var chart = am4core.create("chart-wrapper", am4charts.TreeMap);
+        chart.data = [{
+            "name": "Segurança E Ordem Pública",
+            "children": [
+                {"name": "A1", "value": 100},
+                {"name": "A2", "value": 60},
+                {"name": "A3", "value": 30}
+            ]
+        }, {
+            "name": "Defesa",
+            "children": [
+                {"name": "B1", "value": 135},
+                {"name": "B2", "value": 98},
+                {"name": "B3", "value": 56}
+            ]
+        }, {
+            "name": "Serviços Públicos Gerais",
+            "children": [
+                {"name": "C1", "value": 335},
+                {"name": "C2", "value": 148},
+                {"name": "C3", "value": 126},
+                {"name": "C4", "value": 26}
+            ]
+        }, {
+            "name": "Assembleia Nacional",
+            "children": [
+                {"name": "D1", "value": 415},
+                {"name": "D2", "value": 148},
+                {"name": "D3", "value": 89},
+                {"name": "D4", "value": 64},
+                {"name": "D5", "value": 16}
+            ]
+        }, {
+            "name": "Entidade Reguladora Da Comunicação Social",
+            //"color": 'red',
+            "children": [
+                {"name": "E1", "value": 687},
+                {"name": "E2", "value": 148}
+            ]
+        }];
+
+        /* Define data fields */
+        chart.dataFields.value = "value";
+        chart.dataFields.name = "name";
+        chart.dataFields.children = "children";
+        chart.dataFields.color = "color";
+        chart.maxLevels = 1;
+        chart.homeText = "Título do chart";
+        //chart.layoutAlgorithm = chart.slice;
+
+        chart.navigationBar = new am4charts.NavigationBar();
+        chart.navigationBar.links.template.fill = am4core.color("#691E06");
+        chart.navigationBar.activeLink.fill = am4core.color("#8F250C");
+
+        // Labels
+        var series_templates = []; var level_columns = [];
+        function config_label(level){
+            series_templates[level] = chart.seriesTemplates.create(level);
+            series_templates[level].columns.template.events.on("hit", function(ev) {
+                var data = ev.target.dataItem.dataContext;
+                console.log(data);
+                $('#secondary-info').html(data['name'] + "<br>" + data['value']);
+
+            }, this);
+            var bullet = series_templates[level].bullets.push(new am4charts.LabelBullet());
+            level_columns[level] = series_templates[level].columns.template;
+            level_columns[level].tooltipText = "{name}\n{color}";
+
+            bullet.locationX = 0.5;
+            bullet.locationY = 0.5;
+            bullet.label.textAlign = 'start';
+            bullet.label.text = "{name}";
+            bullet.label.fill = am4core.color("#ffffff");
+        }
+        config_label('0');
+        config_label('1');
+    })
+    </script>
+{% endblock %}
 
 {% block content %}
 <div class="page-country-detail">
@@ -7,6 +97,7 @@
         {{ country.name }}
     </h1>
 
-    <div class="temp-info">Nesta página estará a ferramenta interativa para visualização do orçamento deste país.</div>
+    <div id="chart-wrapper"></div>
+    <div id="secondary-info"></div>
 </div>
 {% endblock %}

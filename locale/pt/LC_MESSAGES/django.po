@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-01 15:57-0300\n"
+"POT-Creation-Date: 2020-08-11 16:12-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,47 +38,47 @@ msgstr ""
 msgid "Profiles"
 msgstr ""
 
-#: .\apps\budget\admin.py:24
+#: .\apps\budget\admin.py:27
 msgid "Log"
 msgstr ""
 
-#: .\apps\budget\admin.py:27
+#: .\apps\budget\admin.py:30
 msgid "Errors"
 msgstr "Erros"
 
-#: .\apps\budget\admin.py:77
+#: .\apps\budget\admin.py:80
 msgid "Automatically calculated from descendants"
 msgstr "Calculado automaticamente a partir dos descendentes"
 
-#: .\apps\budget\admin.py:90
+#: .\apps\budget\admin.py:93
 msgid "Explicit given value differs from descendants sum"
 msgstr "Valor explicitamente passado difere da soma dos descendentes"
 
-#: .\apps\budget\admin.py:100
+#: .\apps\budget\admin.py:104
 msgid "Showing updated value. Initial value was"
 msgstr "Mostrando valor atualizado. Valor inicial era"
 
-#: .\apps\budget\admin.py:131
+#: .\apps\budget\admin.py:136
 msgid "investment budget"
 msgstr "orçamento de investimento"
 
-#: .\apps\budget\admin.py:132
+#: .\apps\budget\admin.py:137
 msgid "operation budget"
 msgstr "orçamento de operação"
 
-#: .\apps\budget\admin.py:133
+#: .\apps\budget\admin.py:138
 msgid "total budget"
 msgstr "orçamento total"
 
-#: .\apps\budget\admin.py:134
+#: .\apps\budget\admin.py:139
 msgid "investment execution"
 msgstr "execução de investimento"
 
-#: .\apps\budget\admin.py:135
+#: .\apps\budget\admin.py:140
 msgid "operation execution"
 msgstr "execução de operação"
 
-#: .\apps\budget\admin.py:136
+#: .\apps\budget\admin.py:141
 msgid "total execution"
 msgstr "execução total"
 
@@ -140,7 +140,7 @@ msgstr "dados orgânicos"
 msgid "year"
 msgstr "ano"
 
-#: .\apps\budget\models\budget.py:14
+#: .\apps\budget\models\budget.py:14 .\apps\geo\models.py:11
 msgid "currency"
 msgstr "moeda"
 
@@ -182,7 +182,7 @@ msgstr "orçamento atualizado para operação"
 
 #: .\apps\budget\models\budget_account.py:26
 msgid "updated budget"
-msgstr "orçamento inicial"
+msgstr "orçamento atualizado"
 
 #: .\apps\budget\models\budget_account.py:28
 msgid "execution for investment"
@@ -288,11 +288,11 @@ msgstr "país"
 msgid "countries"
 msgstr "países"
 
-#: .\config\settings.py:119
+#: .\config\settings.py:122
 msgid "Portuguese"
 msgstr "Português"
 
-#: .\config\settings.py:120
+#: .\config\settings.py:123
 msgid "English"
 msgstr "Inglês"
 
@@ -324,15 +324,15 @@ msgstr "O relatório possui erros de validação."
 msgid "Upload finished"
 msgstr "Carregmento finalizado"
 
-#: .\templates\admin\budget\budget\change_form.html:63
+#: .\templates\admin\budget\budget\change_form.html:70
 msgid "Show initial budgets"
 msgstr "Mostrar orçamentos iniciais"
 
-#: .\templates\admin\budget\budget\change_form.html:64
+#: .\templates\admin\budget\budget\change_form.html:71
 msgid "Hide initial budgets"
 msgstr "Esconder orçamentos iniciais"
 
-#: .\templates\admin\budget\budget\change_form.html:91
+#: .\templates\admin\budget\budget\change_form.html:98
 #, python-format
 msgid ""
 "\n"
@@ -356,43 +356,35 @@ msgstr "Atalhos"
 msgid "Add new budget"
 msgstr "Adicionar novo orçamento"
 
-
 # Override wrong translations from Django 3.0.8
-
-#, python-brace-format
 msgid "The {name} “{obj}” was added successfully."
 msgstr "O {name} “{obj}” foi adicionado com sucesso."
 
-#, python-brace-format
 msgid ""
 "The {name} “{obj}” was added successfully. You may add another {name} "
 "below."
 msgstr ""
-"O {name} “{obj}” foi adicionado com sucesso. Pode adicionar um novo {name} "
-"abaixo."
+"O {name} “{obj}” foi adicionado com sucesso. Pode adicionar um novo "
+"{name} abaixo."
 
-#, python-brace-format
 msgid ""
 "The {name} “{obj}” was changed successfully. You may edit it again below."
 msgstr ""
 "O {name} “{obj}” foi modificado com sucesso. Pode voltar a editar "
 "novamente abaixo."
 
-#, python-brace-format
 msgid ""
 "The {name} “{obj}” was added successfully. You may edit it again below."
 msgstr ""
 "O {name} “{obj}” foi adicionado com sucesso. Pode voltar a editar "
 "novamente abaixo."
 
-#, python-brace-format
 msgid ""
 "The {name} “{obj}” was changed successfully. You may add another {name} "
 "below."
 msgstr ""
-"O {name} “{obj}” foi modificado com sucesso. Pode adicionar um novo {name} "
-"abaixo."
+"O {name} “{obj}” foi modificado com sucesso. Pode adicionar um novo "
+"{name} abaixo."
 
-#, python-brace-format
 msgid "The {name} “{obj}” was changed successfully."
 msgstr "O {name} “{obj}” foi modificado com sucesso."

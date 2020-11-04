@@ -42,3 +42,5 @@ a.button.create:hover { background-color: #a69a1e; }
 .language-selector { margin-right: 10px; background-color: #234a5e; color: #FFF; margin-right: 10px; border: 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.25); border-radius: 0; }
 .language-separator { color: rgba(255, 255, 255, 0.25); margin: 0 10px; }
+
+.log-featured { color: #a3a447; font-weight: bold; }

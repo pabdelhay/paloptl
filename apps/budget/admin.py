@@ -105,7 +105,7 @@ class BudgetAccountInline(admin.TabularInline):
             raw_initial_value = raw_money_display(initial_value)
             html += f' <span class="ui-icon ui-icon-arrowrefresh-1-e trigger-initial-value" ' \
                     f'title="{value_updated_text}: {raw_initial_value}"></span>' \
-                    f'<span class="initial-value"> | initial: {raw_initial_value}</span>'
+                    f'<span class="initial-value"><br>initial: {raw_initial_value}</span>'
 
         return html
 
