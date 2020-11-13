@@ -1,2 +1,10 @@
 #chart-wrapper { width: 80%; margin: 0 auto; height: 600px; }
 #secondary-info { margin: 0 auto; text-align: center; }
+
+.budget-account-selector { }
+.budget-account-selector a { }
+.budget-account-selector a.active { font-weight: bold; }
+
+.budget-selector { }
+.budget-selector a { }
+.budget-selector a.active { font-weight: bold; }

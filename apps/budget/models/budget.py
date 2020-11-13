@@ -10,6 +10,8 @@ class Budget(CountryMixin, models.Model):
     """
     A (year, country) aggregation of budget data.
     """
+    country = models.ForeignKey('geo.Country', verbose_name=_("country"), on_delete=models.CASCADE,
+                                related_name='budgets')
     year = models.IntegerField(verbose_name=_("year"))
     currency = CurrencyField(verbose_name=_("currency"), choices=settings.CURRENCY_CHOICES, editable=False,
                              help_text=_("All values from budget presented in this currency"))

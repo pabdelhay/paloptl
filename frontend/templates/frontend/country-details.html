@@ -9,55 +9,40 @@
     <script src="//cdn.amcharts.com/lib/4/core.js"></script>
     <script src="//cdn.amcharts.com/lib/4/charts.js"></script>
     <script type="text/javascript">
-    $(document).ready(function () {
+
+    var last_budget_id = {{ last_budget.id }};
+    var current_budget_id = last_budget_id;
+    var current_budget_account = 'functions';
+    var treemap_title_map = {
+        'agencies': "Visualização por Órgão",
+        'functions': "Visualização por Função",
+    }
+
+    function get_budget_data(budget_id, budget_account, callback){
+        var url = '/api/budgets/' + budget_id + '/' + budget_account + '/';
+        $.get(url, function (data) {
+            callback(data);
+        }).fail(function () {
+            alert("error");
+        }).always(function () {
+            //alert("finished");
+        });
+    }
+
+    function plot_treemap(budget_id, budget_account){
         var chart = am4core.create("chart-wrapper", am4charts.TreeMap);
-        chart.data = [{
-            "name": "Segurança E Ordem Pública",
-            "children": [
-                {"name": "A1", "value": 100},
-                {"name": "A2", "value": 60},
-                {"name": "A3", "value": 30}
-            ]
-        }, {
-            "name": "Defesa",
-            "children": [
-                {"name": "B1", "value": 135},
-                {"name": "B2", "value": 98},
-                {"name": "B3", "value": 56}
-            ]
-        }, {
-            "name": "Serviços Públicos Gerais",
-            "children": [
-                {"name": "C1", "value": 335},
-                {"name": "C2", "value": 148},
-                {"name": "C3", "value": 126},
-                {"name": "C4", "value": 26}
-            ]
-        }, {
-            "name": "Assembleia Nacional",
-            "children": [
-                {"name": "D1", "value": 415},
-                {"name": "D2", "value": 148},
-                {"name": "D3", "value": 89},
-                {"name": "D4", "value": 64},
-                {"name": "D5", "value": 16}
-            ]
-        }, {
-            "name": "Entidade Reguladora Da Comunicação Social",
-            //"color": 'red',
-            "children": [
-                {"name": "E1", "value": 687},
-                {"name": "E2", "value": 148}
-            ]
-        }];
+
+        get_budget_data(budget_id, budget_account, function(data){
+            chart.data = data;
+        });
 
         /* Define data fields */
-        chart.dataFields.value = "value";
+        chart.dataFields.value = "budget_aggregated";
         chart.dataFields.name = "name";
         chart.dataFields.children = "children";
         chart.dataFields.color = "color";
         chart.maxLevels = 1;
-        chart.homeText = "Título do chart";
+        chart.homeText = treemap_title_map[budget_account];
         //chart.layoutAlgorithm = chart.slice;
 
         chart.navigationBar = new am4charts.NavigationBar();
@@ -72,7 +57,6 @@
                 var data = ev.target.dataItem.dataContext;
                 console.log(data);
                 $('#secondary-info').html(data['name'] + "<br>" + data['value']);
-
             }, this);
             var bullet = series_templates[level].bullets.push(new am4charts.LabelBullet());
             level_columns[level] = series_templates[level].columns.template;
@@ -86,7 +70,37 @@
         }
         config_label('0');
         config_label('1');
-    })
+    }
+
+    function toggle_budget_account(budget_account){
+        plot_treemap(current_budget_id, budget_account);
+        $('.budget-account-selector a').removeClass('active');
+        $('.budget-account-selector a[data-budget_account="'+budget_account+'"]').addClass('active');
+        current_budget_account = budget_account;
+    }
+    function toggle_budget(budget_id){
+        plot_treemap(budget_id, current_budget_account);
+        $('.budget-selector a').removeClass('active');
+        $('.budget-selector a[data-budget_id="'+budget_id+'"]').addClass('active');
+    }
+
+    $(document).ready(function () {
+
+        // Binds
+        $('.budget-account-selector a').on('click', function (ev) {
+            ev.preventDefault();
+            var budget_account = $(this).data('budget_account');
+            toggle_budget_account(budget_account);
+        });
+        $('.budget-selector a').on('click', function (ev) {
+            ev.preventDefault();
+            var budget_id = $(this).data('budget_id');
+            toggle_budget(budget_id);
+        });
+
+        toggle_budget_account(current_budget_account)
+    });
+
     </script>
 {% endblock %}
 
@@ -96,6 +110,18 @@
         <img src="{{ country.flag.url }}" /><br>
         {{ country.name }}
     </h1>
+
+    <div class="budget-account-selector">
+        <a href="#" data-budget_account="functions">Por Função</a>
+        <a href="#" data-budget_account="agencies">Por Órgão</a>
+    </div>
+    <div class="budget-selector">
+        {% for budget in budgets %}
+            <a href="#" {% if budget.id == last_budget.id %}class="active"{% endif %} data-budget_id="{{ budget.id }}">
+                {{ budget.year }}
+            </a>
+        {% endfor %}
+    </div>
 
     <div id="chart-wrapper"></div>
     <div id="secondary-info"></div>

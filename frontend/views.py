@@ -13,18 +13,17 @@ class IndexView(View):
         }
         return render(request, 'frontend/index.html', context=ctx)
 
-    def post(self, request):
-        ctx = {}
-        return render(request, 'frontend/index.html', context=ctx)
-
 
 class CountryView(SingleObjectMixin, View):
     model = Country
 
     def get(self, request, *args, **kwargs):
-        # Look up the author we're interested in.
-        self.object = self.get_object()
+        country = self.get_object()
+        budgets = country.budgets.all().order_by('year')
+        last_budget = country.budgets.order_by('year').last()
         ctx = {
-            'country': self.object
+            'country': country,
+            'budgets': budgets,
+            'last_budget': last_budget,
         }
         return render(request, 'frontend/country-details.html', context=ctx)
