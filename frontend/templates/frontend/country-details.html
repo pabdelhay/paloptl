@@ -8,14 +8,15 @@
 {% block extrahead %}
     <script src="//cdn.amcharts.com/lib/4/core.js"></script>
     <script src="//cdn.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
     <script type="text/javascript">
 
     var last_budget_id = {{ last_budget.id }};
     var current_budget_id = last_budget_id;
     var current_budget_account = 'functions';
     var treemap_title_map = {
-        'agencies': "Visualização por Órgão",
-        'functions': "Visualização por Função",
+        'agencies': "Órgão",
+        'functions': "Função",
     }
 
     function get_budget_data(budget_id, budget_account, callback){
@@ -27,6 +28,15 @@
         }).always(function () {
             //alert("finished");
         });
+    }
+
+    function plot_budget_account_info(budget_account_data){
+        var data = budget_account_data;
+        console.log(data);
+        var source = $('#template-budget_account-info').html();
+        var template = Handlebars.compile(source);
+        var rendered = template(data);
+        $('#budget_account-info').html(rendered);
     }
 
     function plot_treemap(budget_id, budget_account){
@@ -42,7 +52,7 @@
         chart.dataFields.children = "children";
         chart.dataFields.color = "color";
         chart.maxLevels = 1;
-        chart.homeText = treemap_title_map[budget_account];
+        chart.homeText = "Visualização por " + treemap_title_map[budget_account];
         //chart.layoutAlgorithm = chart.slice;
 
         chart.navigationBar = new am4charts.NavigationBar();
@@ -54,10 +64,13 @@
         function config_label(level){
             series_templates[level] = chart.seriesTemplates.create(level);
             series_templates[level].columns.template.events.on("hit", function(ev) {
-                var data = ev.target.dataItem.dataContext;
-                console.log(data);
-                $('#secondary-info').html(data['name'] + "<br>" + data['value']);
+                var data = ev.target.dataItem.dataContext._dataContext;
+                plot_budget_account_info(data);
             }, this);
+            /*series_templates[level].columns.template.events.on("over", function(ev) {
+                var data = ev.target.dataItem.dataContext._dataContext;
+                plot_budget_account_info(data);
+            }, this); */
             var bullet = series_templates[level].bullets.push(new am4charts.LabelBullet());
             level_columns[level] = series_templates[level].columns.template;
             level_columns[level].tooltipText = "{name}\n{value}";
@@ -70,6 +83,7 @@
         }
         config_label('0');
         config_label('1');
+        config_label('2');
     }
 
     function toggle_budget_account(budget_account){
@@ -105,26 +119,107 @@
 {% endblock %}
 
 {% block content %}
-<div class="page-country-detail">
+<div class="page-country-detail container-fluid">
     <h1>
         <img src="{{ country.flag.url }}" /><br>
         {{ country.name }}
     </h1>
 
-    <div class="budget-account-selector">
-        <a href="#" data-budget_account="functions">Por Função</a>
-        <a href="#" data-budget_account="agencies">Por Órgão</a>
-    </div>
-    <div class="budget-selector">
-        {% for budget in budgets %}
-            <a href="#" {% if budget.id == last_budget.id %}class="active"{% endif %} data-budget_id="{{ budget.id }}">
-                {{ budget.year }}
-            </a>
-        {% endfor %}
+    <div class="row">
+        <div class="col-md-6"></div>
+        <div class="col-md-6">
+            <div class="budget-account-selector">
+                <a href="#" data-budget_account="functions">Por Função</a>
+                <a href="#" data-budget_account="agencies">Por Órgão</a>
+            </div>
+            <div class="budget-selector">
+                {% for budget in budgets %}
+                    <a href="#" {% if budget.id == last_budget.id %}class="active"{% endif %} data-budget_id="{{ budget.id }}">
+                        {{ budget.year }}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 
-    <div id="chart-wrapper"></div>
-    <div id="secondary-info"></div>
+    <div class="row">
+        <div class="col-md-2 pr-0">
+            <div id="budget_account-info"></div>
+        </div>
+        <div class="col-md-10 px-0">
+            <div id="chart-wrapper"></div>
+        </div>
+    </div>
 
 </div>
+
+{% verbatim %}
+<script id="template-budget_account-info" type="text/x-handlebars-template">
+<div class="budget_account-info">
+    <div class="budget_account-info-box">
+        <h3>{{ label }}</h3>
+        <h4>{{ name }}</h4>
+        <div class="my-4">
+            <div>Dotação inicial: {{ budget_aggregated_initial }}</div>
+            <div>Dotação atualizada: {{ budget_aggregated }}</div>
+        </div>
+        <div>
+            <div>Execução: {{ execution_aggregated }}</div>
+            <table class="color-legend-table">
+                <tr class="group-1">
+                    <td>20%</td>
+                    <td><div class="color-legend">&nbsp;</div></td>
+                    <td></td>
+                </tr>
+                <tr class="group-2">
+                    <td>40%</td>
+                    <td><div class="color-legend">&nbsp;</div></td>
+                    <td></td>
+                </tr>
+                <tr class="group-3">
+                    <td>60%</td>
+                    <td><div class="color-legend">&nbsp;</div></td>
+                    <td></td>
+                </tr>
+                <tr class="group-4">
+                    <td>80%</td>
+                    <td><div class="color-legend">&nbsp;</div></td>
+                    <td></td>
+                </tr>
+                <tr class="group-5">
+                    <td>100%</td>
+                    <td><div class="color-legend">&nbsp;</div></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <hr>
+    <div class="budget_account-info-box py-3">
+        <h4>DADOS SECUNDÁRIOS</h4>
+    </div>
+    <div class="budget_account-info-box mt-3">
+        <table>
+            <tr>
+                <td>Dotação atualizada de investimento</td>
+                <td>{{ budget_investment }}</td>
+            </tr>
+            <tr>
+                <td>Dotação atualizada de funcionamento</td>
+                <td>{{ budget_operation }}</td>
+            </tr>
+            <tr>
+                <td>Execução de investimento</td>
+                <td>{{ execution_investment }}</td>
+            </tr>
+            <tr>
+                <td>Execução de funcionamento</td>
+                <td>{{ execution_operation }}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+</script>
+{% endverbatim %}
+
 {% endblock %}

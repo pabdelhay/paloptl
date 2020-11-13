@@ -15,12 +15,16 @@ class BudgetSerializer(serializers.ModelSerializer):
 
 class BudgetAccountSerializer(serializers.ModelSerializer):
     children = serializers.ListSerializer(child=RecursiveField())
+    label = serializers.SerializerMethodField()
 
     class Meta:
         fields = ('id', 'name', 'initial_budget_investment', 'initial_budget_operation', 'initial_budget_aggregated',
                   'budget_investment', 'budget_operation', 'budget_aggregated',
                   'execution_investment', 'execution_operation', 'execution_aggregated',
-                  'last_update', 'children')
+                  'last_update', 'children', 'label')
+
+    def get_label(self, obj):
+        return obj.get_taxonomy_label()
 
 
 class FunctionSerializer(BudgetAccountSerializer):
