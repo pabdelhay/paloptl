@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views import View
+from django.views.generic import ListView, CreateView
 from django.views.generic.detail import SingleObjectMixin
 
 from apps.geo.models import Country
@@ -10,6 +11,10 @@ class IndexView(View):
         ctx = {
             'countries': Country.objects.all()
         }
+        return render(request, 'frontend/index.html', context=ctx)
+
+    def post(self, request):
+        ctx = {}
         return render(request, 'frontend/index.html', context=ctx)
 
 

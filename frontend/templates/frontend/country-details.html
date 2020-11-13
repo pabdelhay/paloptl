@@ -76,7 +76,7 @@
             }, this);
             var bullet = series_templates[level].bullets.push(new am4charts.LabelBullet());
             level_columns[level] = series_templates[level].columns.template;
-            level_columns[level].tooltipText = "{name}\n{color}";
+            level_columns[level].tooltipText = "{name}\n{value}";
 
             bullet.locationX = 0.5;
             bullet.locationY = 0.5;
@@ -99,5 +99,6 @@
 
     <div id="chart-wrapper"></div>
     <div id="secondary-info"></div>
+
 </div>
 {% endblock %}
