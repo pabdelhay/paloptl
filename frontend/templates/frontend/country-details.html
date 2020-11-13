@@ -67,10 +67,15 @@
                 var data = ev.target.dataItem.dataContext._dataContext;
                 plot_budget_account_info(data);
             }, this);
-            /*series_templates[level].columns.template.events.on("over", function(ev) {
+            series_templates[level].columns.template.events.on("over", function(ev) {
                 var data = ev.target.dataItem.dataContext._dataContext;
                 plot_budget_account_info(data);
-            }, this); */
+            }, this);
+            series_templates[level].columns.template.events.on("out", function(ev) {
+                var parent_data = ev.target.dataItem._dataContext.parent._dataContext;
+                plot_budget_account_info(parent_data);
+                console.log("OUT", ev.target.dataItem);
+            }, this);
             var bullet = series_templates[level].bullets.push(new am4charts.LabelBullet());
             level_columns[level] = series_templates[level].columns.template;
             level_columns[level].tooltipText = "{name}\n{value}";
@@ -164,7 +169,7 @@
             <div>Dotação atualizada: {{ budget_aggregated }}</div>
         </div>
         <div>
-            <div>Execução: {{ execution_aggregated }}</div>
+            <div class="mb-2">Execução: {{ execution_aggregated }}</div>
             <table class="color-legend-table">
                 <tr class="group-1">
                     <td>20%</td>
