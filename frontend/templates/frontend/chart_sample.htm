@@ -1,309 +1,310 @@
 {% load static %}<!DOCTYPE html>
 <!-- saved from url=(0060)http://localhost:23974/session/rChartsabb34a657d1/index.html -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-  
-    
+
     <link rel="stylesheet" href="{% static 'chart-sample/nv.d3.css' %}">
-    
+
     <link rel="stylesheet" href="{% static 'chart-sample/rNVD3.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static "css/frontend.css" %}">
-    
-    
+
+
     <script src="{% static 'chart-sample/jquery-1.8.2.min.js' %}" type="text/javascript"></script>
-    
     <script src="{% static 'chart-sample/d3.v3.min.js' %}" type="text/javascript"></script>
-    
     <script src="{% static 'chart-sample/nv.d3.min-new.js' %}" type="text/javascript"></script>
-    
     <script src="{% static 'chart-sample/fisheye.js' %}" type="text/javascript"></script>
-    
-    
+
+
     <style>
-    .rChart {
-      display: block;
-      margin-left: auto; 
-      margin-right: auto;
-      width: 800px;
-      height: 400px;
-    }
-        h1 { text-align: center; }
-    </style>
-    
-  </head>
-  <body>
-    <h1>Pro PALOP-TL dataviz comparativo</h1>
-
-    <div id="chartabb6c7604b4" class="rChart nvd3"><svg><g class="nvd3 nv-wrap nv-multiBarWithLegend" transform="translate(60,90)"><g><g class="nv-x nv-axis" transform="translate(0,260)"><g class="nvd3 nv-wrap nv-axis"><g><g class="tick major" transform="translate(96.58536585365854,0)" style="opacity: 1;"><line y2="-260" x2="0" style="opacity: 1;"></line><text y="7" dy=".71em" x="0" style="text-anchor: middle; opacity: 1;">Angola</text></g><g class="tick major" transform="translate(272.19512195121956,0)" style="opacity: 1;"><line y2="-260" x2="0" style="opacity: 1;"></line><text y="7" dy=".71em" x="0" style="text-anchor: middle; opacity: 1;">Cabo Verde</text></g><g class="tick major" transform="translate(447.80487804878055,0)" style="opacity: 1;"><line y2="-260" x2="0" style="opacity: 1;"></line><text y="7" dy=".71em" x="0" style="text-anchor: middle; opacity: 1;">Moçambique</text></g><g class="tick major" transform="translate(623.4146341463415,0)" style="opacity: 1;"><line y2="-260" x2="0" style="opacity: 1;"></line><text y="7" dy=".71em" x="0" style="text-anchor: middle; opacity: 1;">São Tomé e Príncipe</text></g><path class="domain" d="M0,0V0H720V0"></path><text class="nv-axislabel" text-anchor="middle" y="36" x="360.00000000000006" style="opacity: 1;"></text></g></g></g><g class="nv-y nv-axis"><g class="nvd3 nv-wrap nv-axis"><g><g class="tick major" transform="translate(0,260)" style="opacity: 1;"><line x2="720" y2="0"></line><text x="-3" dy=".32em" opacity="0" style="text-anchor: end;" y="0">0.0</text></g><g class="tick major" transform="translate(0,228.86525841835513)" style="opacity: 1;"><line x2="720" y2="0"></line><text x="-3" dy=".32em" opacity="1" style="text-anchor: end;" y="0">50.0</text></g><g class="tick major" transform="translate(0,197.73051683671025)" style="opacity: 1;"><line x2="720" y2="0"></line><text x="-3" dy=".32em" opacity="1" style="text-anchor: end;" y="0">100.0</text></g><g class="tick major" transform="translate(0,166.59577525506538)" style="opacity: 1;"><line x2="720" y2="0"></line><text x="-3" dy=".32em" opacity="1" style="text-anchor: end;" y="0">150.0</text></g><g class="tick major" transform="translate(0,135.4610336734205)" style="opacity: 1;"><line x2="720" y2="0"></line><text x="-3" dy=".32em" opacity="1" style="text-anchor: end;" y="0">200.0</text></g><g class="tick major" transform="translate(0,104.32629209177563)" style="opacity: 1;"><line x2="720" y2="0"></line><text x="-3" dy=".32em" opacity="1" style="text-anchor: end;" y="0">250.0</text></g><g class="tick major" transform="translate(0,73.19155051013075)" style="opacity: 1;"><line x2="720" y2="0"></line><text x="-3" dy=".32em" opacity="1" style="text-anchor: end;" y="0">300.0</text></g><g class="tick major" transform="translate(0,42.05680892848588)" style="opacity: 1;"><line x2="720" y2="0"></line><text x="-3" dy=".32em" opacity="1" style="text-anchor: end;" y="0">350.0</text></g><g class="tick major" transform="translate(0,10.922067346841033)" style="opacity: 1;"><line x2="720" y2="0"></line><text x="-3" dy=".32em" opacity="1" style="text-anchor: end;" y="0">400.0</text></g><path class="domain" d="M0,0H0V260H0"></path><text class="nv-axislabel" transform="rotate(-90)" y="-63" x="-130" style="text-anchor: middle;"></text></g><g class="nv-axisMaxMin" transform="translate(0,260)"><text dy=".32em" y="0" x="-3" text-anchor="end" style="opacity: 1;">0.0</text></g><g class="nv-axisMaxMin" transform="translate(0,0)"><text dy=".32em" y="0" x="-3" text-anchor="end" style="opacity: 1;">417.5</text></g></g></g><g class="nv-barsWrap"><g class="nvd3 nv-wrap nv-multibar" transform="translate(0,0)"><defs><clippath id="nv-edge-clip-9013"><rect width="720" height="260"></rect></clippath></defs><g clip-path="url(#nv-edge-clip-9013)"><g class="nv-groups"><g class="nv-group nv-series-0" style="stroke-opacity: 1; fill-opacity: 0.75; fill: rgb(31, 119, 180); stroke: rgb(31, 119, 180);"><rect class="nv-bar positive" x="0" y="221.8537146141687" height="38.146285385831305" width="14.368070953436808" transform="translate(17.5609756097561,0)" style="fill: rgb(31, 119, 180); stroke: rgb(31, 119, 180);"></rect><rect class="nv-bar positive" x="0" y="151.13426258562055" height="108.86573741437945" width="14.368070953436808" transform="translate(193.1707317073171,0)" style="fill: rgb(31, 119, 180); stroke: rgb(31, 119, 180);"></rect><rect class="nv-bar positive" x="0" y="247.59591895387268" height="12.404081046127317" width="14.368070953436808" transform="translate(368.7804878048781,0)" style="fill: rgb(31, 119, 180); stroke: rgb(31, 119, 180);"></rect><rect class="nv-bar positive" x="0" y="185.46342865354217" height="74.53657134645783" width="14.368070953436808" transform="translate(544.3902439024391,0)" style="fill: rgb(31, 119, 180); stroke: rgb(31, 119, 180);"></rect></g><g class="nv-group nv-series-1" style="stroke-opacity: 1; fill-opacity: 0.75; fill: rgb(174, 199, 232); stroke: rgb(174, 199, 232);"><rect class="nv-bar positive" x="14.368070953436808" y="238.1247305647363" height="21.875269435263704" width="14.368070953436808" transform="translate(17.5609756097561,0)" style="fill: rgb(174, 199, 232); stroke: rgb(174, 199, 232);"></rect><rect class="nv-bar positive" x="14.368070953436808" y="247.19739426162764" height="12.802605738372364" width="14.368070953436808" transform="translate(193.1707317073171,0)" style="fill: rgb(174, 199, 232); stroke: rgb(174, 199, 232);"></rect><rect class="nv-bar positive" x="14.368070953436808" y="255.84039852469223" height="4.159601475307767" width="14.368070953436808" transform="translate(368.7804878048781,0)" style="fill: rgb(174, 199, 232); stroke: rgb(174, 199, 232);"></rect><rect class="nv-bar positive" x="14.368070953436808" y="238.21190784116493" height="21.78809215883507" width="14.368070953436808" transform="translate(544.3902439024391,0)" style="fill: rgb(174, 199, 232); stroke: rgb(174, 199, 232);"></rect></g><g class="nv-group nv-series-2" style="stroke-opacity: 1; fill-opacity: 0.75; fill: rgb(255, 127, 14); stroke: rgb(255, 127, 14);"><rect class="nv-bar positive" x="28.736141906873616" y="235.222972649327" height="24.777027350672995" width="14.368070953436808" transform="translate(17.5609756097561,0)" style="fill: rgb(255, 127, 14); stroke: rgb(255, 127, 14);"></rect><rect class="nv-bar positive" x="28.736141906873616" y="97.66345739330362" height="162.33654260669638" width="14.368070953436808" transform="translate(193.1707317073171,0)" style="fill: rgb(255, 127, 14); stroke: rgb(255, 127, 14);"></rect><rect class="nv-bar positive" x="28.736141906873616" y="240.0986731810126" height="19.9013268189874" width="14.368070953436808" transform="translate(368.7804878048781,0)" style="fill: rgb(255, 127, 14); stroke: rgb(255, 127, 14);"></rect><rect class="nv-bar positive" x="28.736141906873616" y="179.04344493940698" height="80.95655506059302" width="14.368070953436808" transform="translate(544.3902439024391,0)" style="fill: rgb(255, 127, 14); stroke: rgb(255, 127, 14);"></rect></g><g class="nv-group nv-series-3" style="stroke-opacity: 1; fill-opacity: 0.75; fill: rgb(255, 187, 120); stroke: rgb(255, 187, 120);"><rect class="nv-bar positive" x="43.104212860310426" y="251.03319442448628" height="8.966805575513717" width="14.368070953436808" transform="translate(17.5609756097561,0)" style="fill: rgb(255, 187, 120); stroke: rgb(255, 187, 120);"></rect><rect class="nv-bar positive" x="43.104212860310426" y="223.54744455621017" height="36.452555443789834" width="14.368070953436808" transform="translate(193.1707317073171,0)" style="fill: rgb(255, 187, 120); stroke: rgb(255, 187, 120);"></rect><rect class="nv-bar positive" x="43.104212860310426" y="255.26129233127364" height="4.738707668726363" width="14.368070953436808" transform="translate(368.7804878048781,0)" style="fill: rgb(255, 187, 120); stroke: rgb(255, 187, 120);"></rect><rect class="nv-bar positive" x="43.104212860310426" y="242.8073956986157" height="17.192604301384307" width="14.368070953436808" transform="translate(544.3902439024391,0)" style="fill: rgb(255, 187, 120); stroke: rgb(255, 187, 120);"></rect></g><g class="nv-group nv-series-4" style="stroke-opacity: 1; fill-opacity: 0.75; fill: rgb(44, 160, 44); stroke: rgb(44, 160, 44);"><rect class="nv-bar positive" x="57.47228381374723" y="259" height="1" width="14.368070953436808" transform="translate(17.5609756097561,0)" style="fill: rgb(44, 160, 44); stroke: rgb(44, 160, 44);"></rect><rect class="nv-bar positive" x="57.47228381374723" y="236.9416103846338" height="23.058389615366195" width="14.368070953436808" transform="translate(193.1707317073171,0)" style="fill: rgb(44, 160, 44); stroke: rgb(44, 160, 44);"></rect><rect class="nv-bar positive" x="57.47228381374723" y="257.8579297791828" height="2.1420702208171747" width="14.368070953436808" transform="translate(368.7804878048781,0)" style="fill: rgb(44, 160, 44); stroke: rgb(44, 160, 44);"></rect><rect class="nv-bar positive" x="57.47228381374723" y="259" height="1" width="14.368070953436808" transform="translate(544.3902439024391,0)" style="fill: rgb(44, 160, 44); stroke: rgb(44, 160, 44);"></rect></g><g class="nv-group nv-series-5" style="stroke-opacity: 1; fill-opacity: 0.75; fill: rgb(152, 223, 138); stroke: rgb(152, 223, 138);"><rect class="nv-bar positive" x="71.84035476718404" y="239.66278679886958" height="20.337213201130425" width="14.368070953436808" transform="translate(17.5609756097561,0)" style="fill: rgb(152, 223, 138); stroke: rgb(152, 223, 138);"></rect></g><g class="nv-group nv-series-6" style="stroke-opacity: 1; fill-opacity: 0.75; fill: rgb(214, 39, 40); stroke: rgb(214, 39, 40);"><rect class="nv-bar positive" x="86.20842572062085" y="258.59270968050964" height="1.4072903194903574" width="14.368070953436808" transform="translate(17.5609756097561,0)" style="fill: rgb(214, 39, 40); stroke: rgb(214, 39, 40);"></rect><rect class="nv-bar positive" x="86.20842572062085" y="249.66949274321024" height="10.330507256789758" width="14.368070953436808" transform="translate(193.1707317073171,0)" style="fill: rgb(214, 39, 40); stroke: rgb(214, 39, 40);"></rect><rect class="nv-bar positive" x="86.20842572062085" y="259" height="1" width="14.368070953436808" transform="translate(368.7804878048781,0)" style="fill: rgb(214, 39, 40); stroke: rgb(214, 39, 40);"></rect><rect class="nv-bar positive" x="86.20842572062085" y="244.73774967667768" height="15.26225032332232" width="14.368070953436808" transform="translate(544.3902439024391,0)" style="fill: rgb(214, 39, 40); stroke: rgb(214, 39, 40);"></rect></g><g class="nv-group nv-series-7" style="stroke-opacity: 1; fill-opacity: 0.75; fill: rgb(255, 152, 150); stroke: rgb(255, 152, 150);"><rect class="nv-bar positive" x="100.57649667405767" y="236.84197921157255" height="23.15802078842745" width="14.368070953436808" transform="translate(17.5609756097561,0)" style="fill: rgb(255, 152, 150); stroke: rgb(255, 152, 150);"></rect><rect class="nv-bar positive" x="100.57649667405767" y="176.1043253340997" height="83.89567466590029" width="14.368070953436808" transform="translate(193.1707317073171,0)" style="fill: rgb(255, 152, 150); stroke: rgb(255, 152, 150);"></rect><rect class="nv-bar positive" x="100.57649667405767" y="251.52512334147627" height="8.474876658523726" width="14.368070953436808" transform="translate(368.7804878048781,0)" style="fill: rgb(255, 152, 150); stroke: rgb(255, 152, 150);"></rect><rect class="nv-bar positive" x="100.57649667405767" y="199.1564880011496" height="60.8435119988504" width="14.368070953436808" transform="translate(544.3902439024391,0)" style="fill: rgb(255, 152, 150); stroke: rgb(255, 152, 150);"></rect></g><g class="nv-group nv-series-8" style="stroke-opacity: 1; fill-opacity: 0.75; fill: rgb(148, 103, 189); stroke: rgb(148, 103, 189);"><rect class="nv-bar positive" x="114.94456762749446" y="242.47114048953392" height="17.528859510466077" width="14.368070953436808" transform="translate(17.5609756097561,0)" style="fill: rgb(148, 103, 189); stroke: rgb(148, 103, 189);"></rect><rect class="nv-bar positive" x="114.94456762749446" y="186.26047803803226" height="73.73952196196774" width="14.368070953436808" transform="translate(193.1707317073171,0)" style="fill: rgb(148, 103, 189); stroke: rgb(148, 103, 189);"></rect><rect class="nv-bar positive" x="114.94456762749446" y="247.56478421229104" height="12.435215787708955" width="14.368070953436808" transform="translate(368.7804878048781,0)" style="fill: rgb(148, 103, 189); stroke: rgb(148, 103, 189);"></rect><rect class="nv-bar positive" x="114.94456762749446" y="253.71078220050774" height="6.289217799492263" width="14.368070953436808" transform="translate(544.3902439024391,0)" style="fill: rgb(148, 103, 189); stroke: rgb(148, 103, 189);"></rect></g><g class="nv-group nv-series-9" style="stroke-opacity: 1; fill-opacity: 0.75; fill: rgb(197, 176, 213); stroke: rgb(197, 176, 213);"><rect class="nv-bar positive" x="129.31263858093126" y="216.672893614983" height="43.327106385017004" width="14.368070953436808" transform="translate(17.5609756097561,0)" style="fill: rgb(197, 176, 213); stroke: rgb(197, 176, 213);"></rect><rect class="nv-bar positive" x="129.31263858093126" y="0" height="260" width="14.368070953436808" transform="translate(193.1707317073171,0)" style="fill: rgb(197, 176, 213); stroke: rgb(197, 176, 213);"></rect><rect class="nv-bar positive" x="129.31263858093126" y="227.38947166738515" height="32.61052833261485" width="14.368070953436808" transform="translate(368.7804878048781,0)" style="fill: rgb(197, 176, 213); stroke: rgb(197, 176, 213);"></rect><rect class="nv-bar positive" x="129.31263858093126" y="107.75734061407289" height="152.2426593859271" width="14.368070953436808" transform="translate(544.3902439024391,0)" style="fill: rgb(197, 176, 213); stroke: rgb(197, 176, 213);"></rect></g><g class="nv-group nv-series-10" style="stroke-opacity: 1; fill-opacity: 0.75; fill: rgb(140, 86, 75); stroke: rgb(140, 86, 75);"><rect class="nv-bar positive" x="143.68070953436808" y="161.30286918618575" height="98.69713081381425" width="14.368070953436808" transform="translate(193.1707317073171,0)" style="fill: rgb(140, 86, 75); stroke: rgb(140, 86, 75);"></rect><rect class="nv-bar positive" x="143.68070953436808" y="253.773051683671" height="6.226948316328986" width="14.368070953436808" transform="translate(368.7804878048781,0)" style="fill: rgb(140, 86, 75); stroke: rgb(140, 86, 75);"></rect><rect class="nv-bar positive" x="143.68070953436808" y="255.0184413469368" height="4.981558653063189" width="14.368070953436808" transform="translate(544.3902439024391,0)" style="fill: rgb(140, 86, 75); stroke: rgb(140, 86, 75);"></rect></g></g></g></g></g><g class="nv-legendWrap" transform="translate(180,-90)"><g class="nvd3 nv-legend" transform="translate(0,5)"><g transform="translate(4.447265625,5)"><g class="nv-series" transform="translate(0,5)"><circle class="nv-legend-symbol" r="5" style="stroke-width: 2; fill: rgb(31, 119, 180); stroke: rgb(31, 119, 180);"></circle><text text-anchor="start" class="nv-legend-text" dy=".32em" dx="8">Assuntos Económicos</text></g><g class="nv-series" transform="translate(216.748046875,5)"><circle class="nv-legend-symbol" r="5" style="stroke-width: 2; fill: rgb(174, 199, 232); stroke: rgb(174, 199, 232);"></circle><text text-anchor="start" class="nv-legend-text" dy=".32em" dx="8">Defesa</text></g><g class="nv-series" transform="translate(355.47265625,5)"><circle class="nv-legend-symbol" r="5" style="stroke-width: 2; fill: rgb(255, 127, 14); stroke: rgb(255, 127, 14);"></circle><text text-anchor="start" class="nv-legend-text" dy=".32em" dx="8">Educação</text></g><g class="nv-series" transform="translate(0,25)"><circle class="nv-legend-symbol" r="5" style="stroke-width: 2; fill: rgb(255, 187, 120); stroke: rgb(255, 187, 120);"></circle><text text-anchor="start" class="nv-legend-text" dy=".32em" dx="8">Habitação E Serviços Comunitários</text></g><g class="nv-series" transform="translate(216.748046875,25)"><circle class="nv-legend-symbol" r="5" style="stroke-width: 2; fill: rgb(44, 160, 44); stroke: rgb(44, 160, 44);"></circle><text text-anchor="start" class="nv-legend-text" dy=".32em" dx="8">Protecção Ambiental</text></g><g class="nv-series" transform="translate(355.47265625,25)"><circle class="nv-legend-symbol" r="5" style="stroke-width: 2; fill: rgb(152, 223, 138); stroke: rgb(152, 223, 138);"></circle><text text-anchor="start" class="nv-legend-text" dy=".32em" dx="8">Protecção Social</text></g><g class="nv-series" transform="translate(0,45)"><circle class="nv-legend-symbol" r="5" style="stroke-width: 2; fill: rgb(214, 39, 40); stroke: rgb(214, 39, 40);"></circle><text text-anchor="start" class="nv-legend-text" dy=".32em" dx="8">Recreação, Cultura E Religião</text></g><g class="nv-series" transform="translate(216.748046875,45)"><circle class="nv-legend-symbol" r="5" style="stroke-width: 2; fill: rgb(255, 152, 150); stroke: rgb(255, 152, 150);"></circle><text text-anchor="start" class="nv-legend-text" dy=".32em" dx="8">Saúde</text></g><g class="nv-series" transform="translate(355.47265625,45)"><circle class="nv-legend-symbol" r="5" style="stroke-width: 2; fill: rgb(148, 103, 189); stroke: rgb(148, 103, 189);"></circle><text text-anchor="start" class="nv-legend-text" dy=".32em" dx="8">Segurança E Ordem Pública</text></g><g class="nv-series" transform="translate(0,65)"><circle class="nv-legend-symbol" r="5" style="stroke-width: 2; fill: rgb(197, 176, 213); stroke: rgb(197, 176, 213);"></circle><text text-anchor="start" class="nv-legend-text" dy=".32em" dx="8">Serviços Públicos Gerais</text></g><g class="nv-series" transform="translate(216.748046875,65)"><circle class="nv-legend-symbol" r="5" style="stroke-width: 2; fill: rgb(140, 86, 75); stroke: rgb(140, 86, 75);"></circle><text text-anchor="start" class="nv-legend-text" dy=".32em" dx="8">Protecção social</text></g></g></g></g><g class="nv-controlsWrap" transform="translate(0,-90)"><g class="nvd3 nv-legend" transform="translate(0,5)"><g transform="translate(33.94140625,5)"><g class="nv-series" transform="translate(0,5)"><circle class="nv-legend-symbol" r="5" style="stroke-width: 2; fill: rgb(68, 68, 68); stroke: rgb(68, 68, 68);"></circle><text text-anchor="start" class="nv-legend-text" dy=".32em" dx="8">Grouped</text></g><g class="nv-series disabled" transform="translate(74.69921875,5)"><circle class="nv-legend-symbol" r="5" style="stroke-width: 2; fill: rgb(68, 68, 68); stroke: rgb(68, 68, 68);"></circle><text text-anchor="start" class="nv-legend-text" dy=".32em" dx="8">Stacked</text></g></g></g></g></g></g></svg></div>    
-    <script type="text/javascript">
- $(document).ready(function(){
-      drawchartabb6c7604b4()
-    });
-    function drawchartabb6c7604b4(){  
-      var opts = {
- "dom": "chartabb6c7604b4",
-"width":      800,
-"height":      400,
-"x": "país",
-"y": "X..hab",
-"group": "função",
-"type": "multiBarChart",
-"id": "chartabb6c7604b4" 
-},
-        data = [
- {
- "país": "Angola",
-"função": "Assuntos Económicos",
-"X..hab":          61.26 
-},
-{
- "país": "Angola",
-"função": "Defesa",
-"X..hab":          35.13 
-},
-{
- "país": "Angola",
-"função": "Educação",
-"X..hab":          39.79 
-},
-{
- "país": "Angola",
-"função": "Habitação E Serviços Comunitários",
-"X..hab":           14.4 
-},
-{
- "país": "Angola",
-"função": "Protecção Ambiental",
-"X..hab":           0.36 
-},
-{
- "país": "Angola",
-"função": "Protecção Social",
-"X..hab":          32.66 
-},
-{
- "país": "Angola",
-"função": "Recreação, Cultura E Religião",
-"X..hab":           2.26 
-},
-{
- "país": "Angola",
-"função": "Saúde",
-"X..hab":          37.19 
-},
-{
- "país": "Angola",
-"função": "Segurança E Ordem Pública",
-"X..hab":          28.15 
-},
-{
- "país": "Angola",
-"função": "Serviços Públicos Gerais",
-"X..hab":          69.58 
-},
-{
- "país": "Cabo Verde",
-"função": "Assuntos Económicos",
-"X..hab":         174.83 
-},
-{
- "país": "Cabo Verde",
-"função": "Defesa",
-"X..hab":          20.56 
-},
-{
- "país": "Cabo Verde",
-"função": "Educação",
-"X..hab":          260.7 
-},
-{
- "país": "Cabo Verde",
-"função": "Habitação E Serviços Comunitários",
-"X..hab":          58.54 
-},
-{
- "país": "Cabo Verde",
-"função": "Protecção Ambiental",
-"X..hab":          37.03 
-},
-{
- "país": "Cabo Verde",
-"função": "Protecção social",
-"X..hab":          158.5 
-},
-{
- "país": "Cabo Verde",
-"função": "Saúde",
-"X..hab":         134.73 
-},
-{
- "país": "Cabo Verde",
-"função": "Segurança E Ordem Pública",
-"X..hab":         118.42 
-},
-{
- "país": "Cabo Verde",
-"função": "Recreação, Cultura E Religião",
-"X..hab":          16.59 
-},
-{
- "país": "Cabo Verde",
-"função": "Serviços Públicos Gerais",
-"X..hab":         417.54 
-},
-{
- "país": "Moçambique",
-"função": "Assuntos Económicos",
-"X..hab":          19.92 
-},
-{
- "país": "Moçambique",
-"função": "Defesa",
-"X..hab":           6.68 
-},
-{
- "país": "Moçambique",
-"função": "Educação",
-"X..hab":          31.96 
-},
-{
- "país": "Moçambique",
-"função": "Habitação E Serviços Comunitários",
-"X..hab":           7.61 
-},
-{
- "país": "Moçambique",
-"função": "Protecção Ambiental",
-"X..hab":           3.44 
-},
-{
- "país": "Moçambique",
-"função": "Recreação, Cultura E Religião",
-"X..hab":           0.71 
-},
-{
- "país": "Moçambique",
-"função": "Saúde",
-"X..hab":          13.61 
-},
-{
- "país": "Moçambique",
-"função": "Segurança E Ordem Pública",
-"X..hab":          19.97 
-},
-{
- "país": "Moçambique",
-"função": "Serviços Públicos Gerais",
-"X..hab":          52.37 
-},
-{
- "país": "Moçambique",
-"função": "Protecção social",
-"X..hab":             10 
-},
-{
- "país": "São Tomé e Príncipe",
-"função": "Assuntos Económicos",
-"X..hab":          119.7 
-},
-{
- "país": "São Tomé e Príncipe",
-"função": "Protecção Ambiental",
-"X..hab":           0.65 
-},
-{
- "país": "São Tomé e Príncipe",
-"função": "Recreação, Cultura E Religião",
-"X..hab":          24.51 
-},
-{
- "país": "São Tomé e Príncipe",
-"função": "Defesa",
-"X..hab":          34.99 
-},
-{
- "país": "São Tomé e Príncipe",
-"função": "Educação",
-"X..hab":         130.01 
-},
-{
- "país": "São Tomé e Príncipe",
-"função": "Habitação E Serviços Comunitários",
-"X..hab":          27.61 
-},
-{
- "país": "São Tomé e Príncipe",
-"função": "Saúde",
-"X..hab":          97.71 
-},
-{
- "país": "São Tomé e Príncipe",
-"função": "Segurança E Ordem Pública",
-"X..hab":           10.1 
-},
-{
- "país": "São Tomé e Príncipe",
-"função": "Serviços Públicos Gerais",
-"X..hab":         244.49 
-},
-{
- "país": "São Tomé e Príncipe",
-"função": "Protecção social",
-"X..hab":              8 
-} 
-]
-  
-      if(!(opts.type==="pieChart" || opts.type==="sparklinePlus" || opts.type==="bulletChart")) {
-        var data = d3.nest()
-          .key(function(d){
-            //return opts.group === undefined ? 'main' : d[opts.group]
-            //instead of main would think a better default is opts.x
-            return opts.group === undefined ? opts.y : d[opts.group];
-          })
-          .entries(data);
-      }
-      
-      if (opts.disabled != undefined){
-        data.map(function(d, i){
-          d.disabled = opts.disabled[i]
-        })
-      }
-      
-      nv.addGraph(function() {
-        var chart = nv.models[opts.type]()
-          .width(opts.width)
-          .height(opts.height)
-          
-        if (opts.type != "bulletChart"){
-          chart
-            .x(function(d) { return d[opts.x] })
-            .y(function(d) { return d[opts.y] })
+        .rChart {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 800px;
+            height: 400px;
         }
-          
-         
-        chart
-  .showControls(true)
-          
-        
 
-        
-        
-        
-      
-       d3.select("#" + opts.id)
-        .append('svg')
-        .datum(data)
-        .transition().duration(500)
-        .call(chart);
+        h1 {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+    </style>
 
-       nv.utils.windowResize(chart.update);
-       return chart;
-      });
+</head>
+<body>
+<h1>Pro PALOP-TL dataviz comparativo</h1>
+
+<div id="chartabb6c7604b4" class="rChart nvd3"></div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        drawchartabb6c7604b4()
+    });
+
+    function drawchartabb6c7604b4() {
+        var opts = {
+                "dom": "chartabb6c7604b4",
+                "width": 800,
+                "height": 400,
+                "x": "país",
+                "y": "X..hab",
+                "group": "função",
+                "type": "multiBarChart",
+                "id": "chartabb6c7604b4"
+            },
+            data = [
+                {
+                    "país": "Angola",
+                    "função": "Assuntos Económicos",
+                    "X..hab": 61.26
+                },
+                {
+                    "país": "Angola",
+                    "função": "Defesa",
+                    "X..hab": 35.13
+                },
+                {
+                    "país": "Angola",
+                    "função": "Educação",
+                    "X..hab": 39.79
+                },
+                {
+                    "país": "Angola",
+                    "função": "Habitação E Serviços Comunitários",
+                    "X..hab": 14.4
+                },
+                {
+                    "país": "Angola",
+                    "função": "Protecção Ambiental",
+                    "X..hab": 0.36
+                },
+                {
+                    "país": "Angola",
+                    "função": "Protecção Social",
+                    "X..hab": 32.66
+                },
+                {
+                    "país": "Angola",
+                    "função": "Recreação, Cultura E Religião",
+                    "X..hab": 2.26
+                },
+                {
+                    "país": "Angola",
+                    "função": "Saúde",
+                    "X..hab": 37.19
+                },
+                {
+                    "país": "Angola",
+                    "função": "Segurança E Ordem Pública",
+                    "X..hab": 28.15
+                },
+                {
+                    "país": "Angola",
+                    "função": "Serviços Públicos Gerais",
+                    "X..hab": 69.58
+                },
+                {
+                    "país": "Cabo Verde",
+                    "função": "Assuntos Económicos",
+                    "X..hab": 174.83
+                },
+                {
+                    "país": "Cabo Verde",
+                    "função": "Defesa",
+                    "X..hab": 20.56
+                },
+                {
+                    "país": "Cabo Verde",
+                    "função": "Educação",
+                    "X..hab": 260.7
+                },
+                {
+                    "país": "Cabo Verde",
+                    "função": "Habitação E Serviços Comunitários",
+                    "X..hab": 58.54
+                },
+                {
+                    "país": "Cabo Verde",
+                    "função": "Protecção Ambiental",
+                    "X..hab": 37.03
+                },
+                {
+                    "país": "Cabo Verde",
+                    "função": "Protecção social",
+                    "X..hab": 158.5
+                },
+                {
+                    "país": "Cabo Verde",
+                    "função": "Saúde",
+                    "X..hab": 134.73
+                },
+                {
+                    "país": "Cabo Verde",
+                    "função": "Segurança E Ordem Pública",
+                    "X..hab": 118.42
+                },
+                {
+                    "país": "Cabo Verde",
+                    "função": "Recreação, Cultura E Religião",
+                    "X..hab": 16.59
+                },
+                {
+                    "país": "Cabo Verde",
+                    "função": "Serviços Públicos Gerais",
+                    "X..hab": 417.54
+                },
+                {
+                    "país": "Moçambique",
+                    "função": "Assuntos Económicos",
+                    "X..hab": 19.92
+                },
+                {
+                    "país": "Moçambique",
+                    "função": "Defesa",
+                    "X..hab": 6.68
+                },
+                {
+                    "país": "Moçambique",
+                    "função": "Educação",
+                    "X..hab": 31.96
+                },
+                {
+                    "país": "Moçambique",
+                    "função": "Habitação E Serviços Comunitários",
+                    "X..hab": 7.61
+                },
+                {
+                    "país": "Moçambique",
+                    "função": "Protecção Ambiental",
+                    "X..hab": 3.44
+                },
+                {
+                    "país": "Moçambique",
+                    "função": "Recreação, Cultura E Religião",
+                    "X..hab": 0.71
+                },
+                {
+                    "país": "Moçambique",
+                    "função": "Saúde",
+                    "X..hab": 13.61
+                },
+                {
+                    "país": "Moçambique",
+                    "função": "Segurança E Ordem Pública",
+                    "X..hab": 19.97
+                },
+                {
+                    "país": "Moçambique",
+                    "função": "Serviços Públicos Gerais",
+                    "X..hab": 52.37
+                },
+                {
+                    "país": "Moçambique",
+                    "função": "Protecção social",
+                    "X..hab": 10
+                },
+                {
+                    "país": "São Tomé e Príncipe",
+                    "função": "Assuntos Económicos",
+                    "X..hab": 119.7
+                },
+                {
+                    "país": "São Tomé e Príncipe",
+                    "função": "Protecção Ambiental",
+                    "X..hab": 0.65
+                },
+                {
+                    "país": "São Tomé e Príncipe",
+                    "função": "Recreação, Cultura E Religião",
+                    "X..hab": 24.51
+                },
+                {
+                    "país": "São Tomé e Príncipe",
+                    "função": "Defesa",
+                    "X..hab": 34.99
+                },
+                {
+                    "país": "São Tomé e Príncipe",
+                    "função": "Educação",
+                    "X..hab": 130.01
+                },
+                {
+                    "país": "São Tomé e Príncipe",
+                    "função": "Habitação E Serviços Comunitários",
+                    "X..hab": 27.61
+                },
+                {
+                    "país": "São Tomé e Príncipe",
+                    "função": "Saúde",
+                    "X..hab": 97.71
+                },
+                {
+                    "país": "São Tomé e Príncipe",
+                    "função": "Segurança E Ordem Pública",
+                    "X..hab": 10.1
+                },
+                {
+                    "país": "São Tomé e Príncipe",
+                    "função": "Serviços Públicos Gerais",
+                    "X..hab": 244.49
+                },
+                {
+                    "país": "São Tomé e Príncipe",
+                    "função": "Protecção social",
+                    "X..hab": 8
+                }
+            ]
+
+        if (!(opts.type === "pieChart" || opts.type === "sparklinePlus" || opts.type === "bulletChart")) {
+            var data = d3.nest()
+                .key(function (d) {
+                    //return opts.group === undefined ? 'main' : d[opts.group]
+                    //instead of main would think a better default is opts.x
+                    return opts.group === undefined ? opts.y : d[opts.group];
+                })
+                .entries(data);
+        }
+
+        if (opts.disabled != undefined) {
+            data.map(function (d, i) {
+                d.disabled = opts.disabled[i]
+            })
+        }
+
+        nv.addGraph(function () {
+            var chart = nv.models[opts.type]()
+                .width(opts.width)
+                .height(opts.height)
+
+            if (opts.type != "bulletChart") {
+                chart
+                    .x(function (d) {
+                        return d[opts.x]
+                    })
+                    .y(function (d) {
+                        return d[opts.y]
+                    })
+            }
+
+
+            chart
+                .showControls(true)
+
+
+            d3.select("#" + opts.id)
+                .append('svg')
+                .datum(data)
+                .transition().duration(500)
+                .call(chart);
+
+            nv.utils.windowResize(chart.update);
+            return chart;
+        });
     };
 </script>
-    
-    <script></script>    
-  
 
-</body></html>
+
+</body>
+</html>
