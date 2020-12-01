@@ -1,25 +1,48 @@
 {% extends 'frontend/base.html' %}
+{% load static %}
 
 {% block content %}
 <div class="page-index">
-    <h1>PALOP-TL CSO online budget platform</h1>
-    <table class="country-list">
-        <tr>
-            {% for country in countries %}
-            <td>
-                <div>
-                    <a href="{% url 'country-details' country.slug %}">
-                        <img src="{{ country.flag.url }}" /><br>
-                        {{ country.name }}
-                    </a>
-                </div>
-            </td>
-            {% endfor %}
-        </tr>
-    </table>
-    <div class="temp-info">
-        Esta será a <strong>página pública</strong> inicial do site,<br>
-        visível para qualquer usuário.
+    <div class="hero">
+        <img src="{% static 'img/hero.jpg' %}" />
     </div>
+    <div class="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-4">
+                    <h2>Sobre o Projeto</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    text
+                </div>
+                <div class="col-3">
+                    text
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="countries">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">Escolha um país para entender como ele gasta seu orçamento.</div>
+            </div>
+        </div>
+        <table cellspacing="0" cellpadding="0">
+            <tr>
+                <td><img src="{% static 'img/angola.gif' %}" /></td>
+                <td><img src="{% static 'img/caboverde.gif' %}" /></td>
+                <td><img src="{% static 'img/guineabissau.gif' %}" /></td>
+            </tr>
+            <tr>
+                <td><img src="{% static 'img/mozambique.gif' %}" /></td>
+                <td><img src="{% static 'img/saothome.gif' %}" /></td>
+                <td><img src="{% static 'img/timorleste.gif' %}" /></td>
+            </tr>
+        </table>
+    </div>
+
 </div>
 {% endblock %}
