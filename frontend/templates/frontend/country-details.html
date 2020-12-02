@@ -5,11 +5,13 @@
     <script src="//cdn.amcharts.com/lib/4/core.js"></script>
     <script src="//cdn.amcharts.com/lib/4/charts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
+    <script src="{% static 'js/handlebars-helpers.js' %}"></script>
     <script type="text/javascript">
 
     var last_budget_id = {{ last_budget.id }};
     var current_budget_id = last_budget_id;
     var current_budget_account = 'functions';
+    var current_budget_data = {};  // {'functions': [...], 'agencies': [...]}
     var treemap_title_map = {
         'agencies': "Órgão",
         'functions': "Função",
@@ -26,9 +28,45 @@
         });
     }
 
+    function get_budget_account_aggregated_data(budget_data){
+        var aggregated_data = $.extend(true, {}, budget_data[0]);
+        var fields = ['budget_aggregated', 'budget_investment', 'budget_operation', 'execution_aggregated',
+            'execution_investment', 'execution_operation', 'initial_budget_aggregated', 'initial_budget_investment',
+            'initial_budget_operation'];
+        aggregated_data['label'] = "Orçamento agregado " + get_budget_year_by_id(current_budget_id);
+        aggregated_data['name'] = "{{ country.name }}";
+        for(var i = 1; i < budget_data.length; i++){
+            fields.forEach(function(item, index){
+                var new_value = budget_data[i][item];
+                if(!new_value){
+                    return;
+                }
+                if(!aggregated_data[item]){
+                    aggregated_data[item] = 0
+                }
+                aggregated_data[item] += new_value;
+            });
+        }
+        return aggregated_data;
+    }
+
     function plot_budget_account_info(budget_account_data){
         var data = budget_account_data;
         console.log(data);
+        var execution_percent = data['execution_aggregated'] / data['budget_aggregated'];
+        var execution_group = 1;
+        if(execution_percent <= 0.2)
+            execution_group = 1;
+        else if(0.2 < execution_percent <= 0.4)
+            execution_group = 2;
+        else if(0.4 < execution_percent <= 0.6)
+            execution_group = 3;
+        else if(0.6 < execution_percent <= 0.8)
+            execution_group = 4;
+        else if(0.8 < execution_percent)
+            execution_group = 5;
+        data['execution_group'] = execution_group;
+
         var source = $('#template-budget_account-info').html();
         var template = Handlebars.compile(source);
         var rendered = template(data);
@@ -37,9 +75,11 @@
 
     function plot_treemap(budget_id, budget_account){
         var chart = am4core.create("chart-treemap", am4charts.TreeMap);
-
+        var budget_data = null;
         get_budget_data(budget_id, budget_account, function(data){
-            chart.data = data;
+            budget_data = data;
+            chart.data = budget_data;
+            plot_budget_account_info(get_budget_account_aggregated_data(budget_data));
         });
 
         /* Define data fields */
@@ -52,8 +92,8 @@
         //chart.layoutAlgorithm = chart.slice;
 
         chart.navigationBar = new am4charts.NavigationBar();
-        chart.navigationBar.links.template.fill = am4core.color("#691E06");
-        chart.navigationBar.activeLink.fill = am4core.color("#8F250C");
+        chart.navigationBar.links.template.fill = am4core.color("#060c19");
+        chart.navigationBar.activeLink.fill = am4core.color("#080e1b");
 
         // Labels
         var series_templates = []; var level_columns = [];
@@ -85,6 +125,7 @@
         config_label('0');
         config_label('1');
         config_label('2');
+
     }
 
     function toggle_budget_account(budget_account){
@@ -97,6 +138,10 @@
         plot_treemap(budget_id, current_budget_account);
         $('.budget-selector a').removeClass('active');
         $('.budget-selector a[data-budget_id="'+budget_id+'"]').addClass('active');
+        current_budget_id = budget_id;
+    }
+    function get_budget_year_by_id(budget_id){
+        return $('.budget-selector a[data-budget_id="'+budget_id+'"]').html();
     }
 
     $(document).ready(function () {
@@ -175,37 +220,48 @@
     <div class="budget_account-info-box">
         <h3>{{ label }}</h3>
         <h4>{{ name }}</h4>
-        <div class="my-4">
-            <div>Dotação inicial: {{ budget_aggregated_initial }}</div>
-            <div>Dotação atualizada: {{ budget_aggregated }}</div>
+        <div class="aggregated-data">
+            <table class="primary-info" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>Dotação inicial</td>
+                    <td>{{formatCurrency budget_aggregated_initial}}</td>
+                </tr>
+                <tr>
+                    <td>Dotação atualizada</td>
+                    <td>{{formatCurrency budget_aggregated }}</td>
+                </tr>
+                <tr>
+                    <td>Execução</td>
+                    <td>{{formatCurrency execution_aggregated }}</td>
+                </tr>
+            </table>
         </div>
         <div>
-            <div class="mb-2">Execução: {{ execution_aggregated }}</div>
-            <table class="treemap-legend-table">
+            <table class="treemap-legend-table execution-group-{{ execution_group }}">
                 <tr class="group-1">
                     <td>20%</td>
                     <td><div class="treemap-legend">&nbsp;</div></td>
-                    <td></td>
+                    <td><div class="execution-group-indicator"></div></td>
                 </tr>
                 <tr class="group-2">
                     <td>40%</td>
                     <td><div class="treemap-legend">&nbsp;</div></td>
-                    <td></td>
+                    <td><div class="execution-group-indicator"></div></td>
                 </tr>
                 <tr class="group-3">
                     <td>60%</td>
                     <td><div class="treemap-legend">&nbsp;</div></td>
-                    <td></td>
+                    <td><div class="execution-group-indicator"></div></td>
                 </tr>
                 <tr class="group-4">
                     <td>80%</td>
                     <td><div class="treemap-legend">&nbsp;</div></td>
-                    <td></td>
+                    <td><div class="execution-group-indicator"></div></td>
                 </tr>
                 <tr class="group-5">
                     <td>100%</td>
                     <td><div class="treemap-legend">&nbsp;</div></td>
-                    <td></td>
+                    <td><div class="execution-group-indicator"></div></td>
                 </tr>
             </table>
         </div>
@@ -219,19 +275,19 @@
     <div class="budget_account-info-box">
         <table class="secondary-info">
             <tr>
-                <td>{{ budget_investment }}</td>
+                <td>{{formatCurrency budget_investment}}</td>
                 <td>Dotação atualizada de investimento</td>
             </tr>
             <tr>
-                <td>{{ budget_operation }}</td>
+                <td>{{formatCurrency budget_operation}}</td>
                 <td>Dotação atualizada de funcionamento</td>
             </tr>
             <tr>
-                <td>{{ execution_investment }}</td>
+                <td>{{formatCurrency execution_investment}}</td>
                 <td>Execução de investimento</td>
             </tr>
             <tr>
-                <td>{{ execution_operation }}</td>
+                <td>{{formatCurrency execution_operation}}</td>
                 <td>Execução de funcionamento</td>
             </tr>
         </table>

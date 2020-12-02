@@ -214,7 +214,7 @@ h3 {
         font-size: 16px;
         text-transform: uppercase;
         font-weight: bold;
-        margin-bottom: 0;
+        margin: 0;
       }
       h4 {
         font-size: 14px;
@@ -241,6 +241,25 @@ h3 {
         width: 30px;
         height: 30px;
       }
+
+      .execution-group-indicator {
+        width: 0;
+        height: 0;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        border-right: 10px solid $main_color;
+        display: none;
+        position: relative;
+        top: 2px;
+        left: 10px;
+
+      }
+      .execution-group-1 .group-1 .execution-group-indicator { display: inline-block; }
+      .execution-group-2 .group-1 .execution-group-indicator { display: inline-block; }
+      .execution-group-3 .group-1 .execution-group-indicator { display: inline-block; }
+      .execution-group-4 .group-1 .execution-group-indicator { display: inline-block; }
+      .execution-group-5 .group-1 .execution-group-indicator { display: inline-block; }
+
       .group-1 .treemap-legend {
         background-color: #f2cc05;
       }
@@ -257,13 +276,19 @@ h3 {
         background-color: #0f69a3;
       }
       .treemap-legend-table {
+        margin-top: 10px;
       }
       .treemap-legend-table tr td {
         padding: 1px;
       }
+      table.primary-info {
+        margin-top: 20px;
+        width: 100%;
+        td:first-child { width: 40%; padding-bottom: 5px; }
+      }
       table.secondary-info {
         width: 100%;
-        td:first-child { width: 60%; padding-bottom: 10px; }
+        td:first-child { width: 50%; padding-bottom: 10px; }
       }
     }
   }
