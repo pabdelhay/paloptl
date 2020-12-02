@@ -152,6 +152,7 @@ h3 .arrow {
   float: right;
   position: relative;
   bottom: -42px;
+  z-index: 999;
 }
 .page-country-detail .budget-account-selector-row a {
   display: inline-block;
