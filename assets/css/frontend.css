@@ -3,7 +3,7 @@ body {
 }
 
 .big-container {
-  margin: 0 20px;
+  margin: 0 30px;
 }
 
 a {
@@ -11,17 +11,37 @@ a {
   text-decoration: none;
 }
 
-h3 {
-  font-size: 30px;
-  color: #0f2843;
+hr {
+  border-bottom: 1px solid #d7d5d5;
+  border-top: 0;
+  box-shadow: 0px 2px 5px 1px #d2d2d2;
 }
-h3 .arrow {
+
+.arrow-right {
   height: 0;
   border-top: 7px solid transparent;
   border-bottom: 7px solid transparent;
   border-left: 7px solid #0f2843;
   display: inline-block;
   position: relative;
+  top: -4px;
+}
+
+.arrow-down {
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 7px solid #0f2843;
+  display: inline-block;
+  position: relative;
+  top: 0px;
+}
+
+h3 {
+  font-size: 30px;
+  color: #0f2843;
+}
+h3 .arrow {
   top: -4px;
 }
 
@@ -50,7 +70,7 @@ h3 .arrow {
 }
 
 .footer {
-  margin-top: 40px;
+  margin-top: 60px;
 }
 .footer .countries {
   margin-bottom: 20px;
@@ -128,6 +148,11 @@ h3 .arrow {
 .page-country-detail .flag-wrapper .flag {
   width: 100%;
 }
+.page-country-detail .budget-account-selector-row {
+  position: relative;
+  bottom: -60px;
+  z-index: 9999999;
+}
 .page-country-detail .budget-account-selector-row a {
   display: inline-block;
   background: #eae6e5;
@@ -142,8 +167,7 @@ h3 .arrow {
   color: #FFFFFF;
 }
 .page-country-detail .budget-account-selector-row a:hover {
-  background-color: #1c7cd5;
-  color: #FFFFFF;
+  background-color: #c5c1c0;
 }
 .page-country-detail .budget-account-selector-row a:last-child {
   border-right: 0;
@@ -161,6 +185,87 @@ h3 .arrow {
 .page-country-detail .budget-account-selector-row .budget-selector a {
   width: 40px;
   padding: 4px 10px;
+}
+.page-country-detail .treemap-wrapper hr.shaddow {
+  position: relative;
+  bottom: -61px;
+  z-index: 9;
+}
+.page-country-detail .treemap-wrapper .budget_account-info-wrapper {
+  width: 22% !important;
+  margin: 0 !important;
+}
+.page-country-detail .treemap-wrapper .chart-wrapper {
+  width: 78% !important;
+  margin: 0 !important;
+}
+.page-country-detail .treemap-wrapper #chart-treemap {
+  width: 100%;
+  margin: 0 auto;
+  height: 740px;
+}
+.page-country-detail .treemap-wrapper .budget_account-info {
+  color: #34495d;
+  margin-top: 53px;
+  font-size: 12px;
+}
+.page-country-detail .treemap-wrapper .budget_account-info h3 {
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+.page-country-detail .treemap-wrapper .budget_account-info h4 {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  margin-top: 0;
+}
+.page-country-detail .treemap-wrapper .budget_account-info hr {
+  border-top: 1px solid #34495d;
+  border-bottom: 0;
+  box-shadow: none;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .budget_account-info-box {
+  background-color: #eae6e5;
+  padding: 30px;
+  margin-bottom: 7px;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .budget_account-info-box h4 {
+  margin: 0;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .budget_account-info-box h4 span {
+  margin-left: 20px;
+  top: -2px;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .treemap-legend {
+  width: 30px;
+  height: 30px;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .group-1 .treemap-legend {
+  background-color: #f2cc05;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .group-2 .treemap-legend {
+  background-color: #f2571c;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .group-3 .treemap-legend {
+  background-color: #8c1717;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .group-4 .treemap-legend {
+  background-color: #66298c;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .group-5 .treemap-legend {
+  background-color: #0f69a3;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .treemap-legend-table tr td {
+  padding: 1px;
+}
+.page-country-detail .treemap-wrapper .budget_account-info table.secondary-info {
+  width: 100%;
+}
+.page-country-detail .treemap-wrapper .budget_account-info table.secondary-info td:first-child {
+  width: 60%;
+  padding-bottom: 10px;
 }
 
 .temp-info {

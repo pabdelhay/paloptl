@@ -36,7 +36,7 @@
     }
 
     function plot_treemap(budget_id, budget_account){
-        var chart = am4core.create("chart-wrapper", am4charts.TreeMap);
+        var chart = am4core.create("chart-treemap", am4charts.TreeMap);
 
         get_budget_data(budget_id, budget_account, function(data){
             chart.data = data;
@@ -139,7 +139,7 @@
             </div>
             <div class="col-10 ml-0">
                 <h3>
-                    <span class="arrow"></span>
+                    <span class="arrow-right"></span>
                     DADOS ORÇAMENTÁRIOS
                 </h3>
             </div>
@@ -154,31 +154,19 @@
             {% for budget in budgets %}<a href="#" {% if budget.id == last_budget.id %}class="active"{% endif %} data-budget_id="{{ budget.id }}">{{ budget.year }}</a>{% endfor %}
         </div>
     </div>
-    <div class="row">
-        <div class="col-6"></div>
-        <div class="col-w6">
-            <div class="budget-account-selector">
-                <a href="#" data-budget_account="functions">Por Função</a>
-                <a href="#" data-budget_account="agencies">Por Órgão</a>
+
+    <div class="treemap-wrapper">
+        <hr class="shaddow" />
+        <div class="row">
+            <div class="col-3 budget_account-info-wrapper">
+                <div id="budget_account-info"></div>
             </div>
-            <div class="budget-selector">
-                {% for budget in budgets %}
-                    <a href="#" {% if budget.id == last_budget.id %}class="active"{% endif %} data-budget_id="{{ budget.id }}">
-                        {{ budget.year }}
-                    </a>
-                {% endfor %}
+            <div class="col-9 chart-wrapper">
+                <div id="chart-treemap"></div>
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-2 pr-0">
-            <div id="budget_account-info"></div>
-        </div>
-        <div class="col-10 px-0">
-            <div id="chart-wrapper"></div>
-        </div>
-    </div>
 
 </div>
 
@@ -194,56 +182,58 @@
         </div>
         <div>
             <div class="mb-2">Execução: {{ execution_aggregated }}</div>
-            <table class="color-legend-table">
+            <table class="treemap-legend-table">
                 <tr class="group-1">
                     <td>20%</td>
-                    <td><div class="color-legend">&nbsp;</div></td>
+                    <td><div class="treemap-legend">&nbsp;</div></td>
                     <td></td>
                 </tr>
                 <tr class="group-2">
                     <td>40%</td>
-                    <td><div class="color-legend">&nbsp;</div></td>
+                    <td><div class="treemap-legend">&nbsp;</div></td>
                     <td></td>
                 </tr>
                 <tr class="group-3">
                     <td>60%</td>
-                    <td><div class="color-legend">&nbsp;</div></td>
+                    <td><div class="treemap-legend">&nbsp;</div></td>
                     <td></td>
                 </tr>
                 <tr class="group-4">
                     <td>80%</td>
-                    <td><div class="color-legend">&nbsp;</div></td>
+                    <td><div class="treemap-legend">&nbsp;</div></td>
                     <td></td>
                 </tr>
                 <tr class="group-5">
                     <td>100%</td>
-                    <td><div class="color-legend">&nbsp;</div></td>
+                    <td><div class="treemap-legend">&nbsp;</div></td>
                     <td></td>
                 </tr>
             </table>
         </div>
     </div>
-    <hr>
-    <div class="budget_account-info-box py-3">
-        <h4>DADOS SECUNDÁRIOS</h4>
+    <hr class="mt-0">
+    <div class="budget_account-info-box">
+        <h4>
+            DADOS SECUNDÁRIOS <span class="arrow-down"></span>
+        </h4>
     </div>
-    <div class="budget_account-info-box mt-3">
-        <table>
+    <div class="budget_account-info-box">
+        <table class="secondary-info">
             <tr>
-                <td>Dotação atualizada de investimento</td>
                 <td>{{ budget_investment }}</td>
+                <td>Dotação atualizada de investimento</td>
             </tr>
             <tr>
-                <td>Dotação atualizada de funcionamento</td>
                 <td>{{ budget_operation }}</td>
+                <td>Dotação atualizada de funcionamento</td>
             </tr>
             <tr>
-                <td>Execução de investimento</td>
                 <td>{{ execution_investment }}</td>
+                <td>Execução de investimento</td>
             </tr>
             <tr>
-                <td>Execução de funcionamento</td>
                 <td>{{ execution_operation }}</td>
+                <td>Execução de funcionamento</td>
             </tr>
         </table>
     </div>
