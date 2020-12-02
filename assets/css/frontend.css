@@ -149,9 +149,9 @@ h3 .arrow {
   width: 100%;
 }
 .page-country-detail .budget-account-selector-row {
+  float: right;
   position: relative;
-  bottom: -60px;
-  z-index: 9999999;
+  bottom: -42px;
 }
 .page-country-detail .budget-account-selector-row a {
   display: inline-block;

@@ -145,9 +145,10 @@ h3 {
     }
   }
   .budget-account-selector-row {
+    float: right;
     position: relative;
-    bottom: -60px;
-    z-index: 9999999;
+    bottom: -42px;
+
     a {
       display: inline-block;
       background: #eae6e5;
