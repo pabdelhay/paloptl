@@ -1,10 +1,6 @@
 {% extends 'frontend/base.html' %}
 {% load static %}
 
-{% block extrastyle %}
-    <link rel="stylesheet" type="text/css" href="{% static "css/country-details.css" %}">
-{% endblock %}
-
 {% block extrahead %}
     <script src="//cdn.amcharts.com/lib/4/core.js"></script>
     <script src="//cdn.amcharts.com/lib/4/charts.js"></script>
@@ -124,12 +120,40 @@
 {% endblock %}
 
 {% block content %}
-<div class="page-country-detail container-fluid">
-    <h1>
-        <img src="{{ country.flag.url }}" /><br>
-        {{ country.name }}
-    </h1>
+<div class="page-country-detail">
+    {% with bg_name=country.slug|add:".gif" %}
+    <div class="country-name-wrapper" style="background: url('{% static 'img/'|add:bg_name %}') no-repeat;">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1>{{ country.name }}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endwith %}
+    <div class="flag-wrapper big-container">
+        <div class="row middle">
+            <div class="col-2 ml-0">
+                <img class="flag" src="{{ country.flag.url }}" alt="{{ country.slug }} flag" />
+            </div>
+            <div class="col-10 ml-0">
+                <h3>
+                    <span class="arrow"></span>
+                    DADOS ORÇAMENTÁRIOS
+                </h3>
+            </div>
+        </div>
+    </div>
 
+    <div class="budget-account-selector-row big-container right">
+        <div class="budget-account-selector">
+            <a href="#" data-budget_account="functions">Por Função</a><a href="#" data-budget_account="agencies">Por Órgão</a>
+        </div>
+        <div class="budget-selector">
+            {% for budget in budgets %}<a href="#" {% if budget.id == last_budget.id %}class="active"{% endif %} data-budget_id="{{ budget.id }}">{{ budget.year }}</a>{% endfor %}
+        </div>
+    </div>
     <div class="row">
         <div class="col-6"></div>
         <div class="col-w6">

@@ -1,7 +1,33 @@
 body { font-family: 'Montserrat', sans-serif; }
 
+$main_color: #0f2843;
+
+.big-container { margin: 0 20px; }
+a { color: $main_color; text-decoration: none; }
+
+h3 {
+  font-size: 30px;
+  color: #0f2843;
+  .arrow {
+    height: 0;
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    border-left: 7px solid #0f2843;
+    display: inline-block;
+    position: relative;
+    top: -4px;
+  }
+}
+
 .header {
-  h1 { margin: 0; }
+  h1 {
+    margin: 0;
+    a {
+      color: #0f2843;
+      text-decoration: none;
+      &:active { color: #215c96; }
+    }
+  }
 
   hr {
     border-bottom: 1px solid #d7d5d5;
@@ -16,7 +42,7 @@ body { font-family: 'Montserrat', sans-serif; }
   margin-top: 40px;
 
   .countries {
-    margin-bottom: 20px; 
+    margin-bottom: 20px;
     a {
       text-decoration: none;
       font-size: 14px;
@@ -82,9 +108,61 @@ body { font-family: 'Montserrat', sans-serif; }
       }
     }
   }
-
 }
 
+.page-country-detail {
+  .country-name-wrapper {
+    margin-bottom: 20px;
+    h1 {
+      text-transform: uppercase;
+      color: #FFFFFF;
+      font-size: 60px;
+    }
+  }
+  .flag-wrapper {
+    .flag {
+      width: 100%;
+    }
+  }
+  .budget-account-selector-row {
+    a {
+      display: inline-block;
+      background: #eae6e5;
+      width: 100px;
+      text-align: center;
+      padding: 4px 40px;
+      font-size: 12px;
+      border-right: 1px solid #82aecb;
+
+      &.active {
+        background-color: #0f69a4;
+        color: #FFFFFF;
+      }
+      &:hover {
+        background-color: #1c7cd5;
+        color: #FFFFFF;
+      }
+      &:last-child {
+        border-right: 0;
+      }
+    }
+
+    .budget-account-selector {
+      display: inline-block;
+      border-right: 1px solid #82aecb;
+      padding-right: 10px;
+      margin-right: 10px;
+    }
+    .budget-selector {
+      display: inline-block;
+      margin-left: -5px;
+      a {
+        width: 40px;
+        padding: 4px 10px;
+      }
+    }
+  }
+}
 
 .temp-info {
   font-size: 24px;

@@ -22,8 +22,8 @@ class Command(BaseCommand):
             except:
                 country = Country(**c)
                 print(f"Creating {c['name']}.")
-            if not bool(country.flag):
-                country.flag = f"countries/{c['slug']}.png"
+
+            country.flag = f"countries/{c['slug']}.gif"
             country.currency = c['currency']
             country.save()
 

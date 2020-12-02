@@ -1,0 +1,28 @@
+.page-country-detail {
+
+  #chart-wrapper { width: 100%; margin: 0 auto; height: 600px; }
+  #secondary-info { margin: 0 auto; text-align: center; }
+
+  .budget-account-selector a { }
+  .budget-account-selector a.active { font-weight: bold; }
+
+  .budget-selector { }
+  .budget-selector a { }
+  .budget-selector a.active { font-weight: bold; }
+
+  .budget_account-info { color: #34495d; margin-top: 53px; font-size: 12px; }
+  .budget_account-info h3 { font-size: 16px; text-transform: uppercase; font-weight: bold; }
+  .budget_account-info h4 { font-size: 14px; font-weight: bold; margin-bottom: 0; }
+  .budget_account-info hr { border-color: #34495d; }
+  .budget_account-info-box { background-color: #eae6e5; padding: 30px; }
+  .budget_account-info .color-legend { width: 30px; height: 30px; }
+  .budget_account-info .group-1 .color-legend { background-color: #f2cc05; }
+  .budget_account-info .group-2 .color-legend { background-color: #f2571c; }
+  .budget_account-info .group-3 .color-legend { background-color: #8c1717; }
+  .budget_account-info .group-4 .color-legend { background-color: #66298c; }
+  .budget_account-info .group-5 .color-legend { background-color: #0f69a3; }
+  .budget_account-info .color-legend-table { }
+  .budget_account-info .color-legend-table tr td { padding: 1px; }
+
+
+}
