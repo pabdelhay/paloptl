@@ -257,16 +257,16 @@ h3 .arrow {
 .page-country-detail .treemap-wrapper .budget_account-info .execution-group-1 .group-1 .execution-group-indicator {
   display: inline-block;
 }
-.page-country-detail .treemap-wrapper .budget_account-info .execution-group-2 .group-1 .execution-group-indicator {
+.page-country-detail .treemap-wrapper .budget_account-info .execution-group-2 .group-2 .execution-group-indicator {
   display: inline-block;
 }
-.page-country-detail .treemap-wrapper .budget_account-info .execution-group-3 .group-1 .execution-group-indicator {
+.page-country-detail .treemap-wrapper .budget_account-info .execution-group-3 .group-3 .execution-group-indicator {
   display: inline-block;
 }
-.page-country-detail .treemap-wrapper .budget_account-info .execution-group-4 .group-1 .execution-group-indicator {
+.page-country-detail .treemap-wrapper .budget_account-info .execution-group-4 .group-4 .execution-group-indicator {
   display: inline-block;
 }
-.page-country-detail .treemap-wrapper .budget_account-info .execution-group-5 .group-1 .execution-group-indicator {
+.page-country-detail .treemap-wrapper .budget_account-info .execution-group-5 .group-5 .execution-group-indicator {
   display: inline-block;
 }
 .page-country-detail .treemap-wrapper .budget_account-info .group-1 .treemap-legend {
@@ -297,6 +297,9 @@ h3 .arrow {
 .page-country-detail .treemap-wrapper .budget_account-info table.primary-info td:first-child {
   width: 40%;
   padding-bottom: 5px;
+}
+.page-country-detail .treemap-wrapper .budget_account-info table.primary-info .execution-aggregated small {
+  color: #727272;
 }
 .page-country-detail .treemap-wrapper .budget_account-info table.secondary-info {
   width: 100%;

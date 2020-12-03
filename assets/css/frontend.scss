@@ -255,10 +255,10 @@ h3 {
 
       }
       .execution-group-1 .group-1 .execution-group-indicator { display: inline-block; }
-      .execution-group-2 .group-1 .execution-group-indicator { display: inline-block; }
-      .execution-group-3 .group-1 .execution-group-indicator { display: inline-block; }
-      .execution-group-4 .group-1 .execution-group-indicator { display: inline-block; }
-      .execution-group-5 .group-1 .execution-group-indicator { display: inline-block; }
+      .execution-group-2 .group-2 .execution-group-indicator { display: inline-block; }
+      .execution-group-3 .group-3 .execution-group-indicator { display: inline-block; }
+      .execution-group-4 .group-4 .execution-group-indicator { display: inline-block; }
+      .execution-group-5 .group-5 .execution-group-indicator { display: inline-block; }
 
       .group-1 .treemap-legend {
         background-color: #f2cc05;
@@ -285,6 +285,11 @@ h3 {
         margin-top: 20px;
         width: 100%;
         td:first-child { width: 40%; padding-bottom: 5px; }
+        .execution-aggregated {
+          small {
+            color: #727272;
+          }
+        }
       }
       table.secondary-info {
         width: 100%;

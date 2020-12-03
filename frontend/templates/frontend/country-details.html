@@ -4,6 +4,7 @@
 {% block extrahead %}
     <script src="//cdn.amcharts.com/lib/4/core.js"></script>
     <script src="//cdn.amcharts.com/lib/4/charts.js"></script>
+    <script src="//cdn.amcharts.com/lib/4/themes/animated.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
     <script src="{% static 'js/handlebars-helpers.js' %}"></script>
     <script type="text/javascript">
@@ -11,11 +12,12 @@
     var last_budget_id = {{ last_budget.id }};
     var current_budget_id = last_budget_id;
     var current_budget_account = 'functions';
-    var current_budget_data = {};  // {'functions': [...], 'agencies': [...]}
+    var current_budget_data = null;
     var treemap_title_map = {
         'agencies': "Órgão",
         'functions': "Função",
     }
+    am4core.useTheme(am4themes_animated);
 
     function get_budget_data(budget_id, budget_account, callback){
         var url = '/api/budgets/' + budget_id + '/' + budget_account + '/';
@@ -33,7 +35,7 @@
         var fields = ['budget_aggregated', 'budget_investment', 'budget_operation', 'execution_aggregated',
             'execution_investment', 'execution_operation', 'initial_budget_aggregated', 'initial_budget_investment',
             'initial_budget_operation'];
-        aggregated_data['label'] = "Orçamento agregado " + get_budget_year_by_id(current_budget_id);
+        aggregated_data['label'] = "Orçamento " + get_budget_year_by_id(current_budget_id);
         aggregated_data['name'] = "{{ country.name }}";
         for(var i = 1; i < budget_data.length; i++){
             fields.forEach(function(item, index){
@@ -52,20 +54,24 @@
 
     function plot_budget_account_info(budget_account_data){
         var data = budget_account_data;
-        console.log(data);
-        var execution_percent = data['execution_aggregated'] / data['budget_aggregated'];
+        if(data === undefined || !(data)){
+            data = get_budget_account_aggregated_data(current_budget_data);
+        }
+        //console.log(data);
+        var execution_percentage = data['execution_aggregated'] / data['budget_aggregated'];
         var execution_group = 1;
-        if(execution_percent <= 0.2)
+        if(execution_percentage <= 0.2)
             execution_group = 1;
-        else if(0.2 < execution_percent <= 0.4)
+        else if(0.2 < execution_percentage <= 0.4)
             execution_group = 2;
-        else if(0.4 < execution_percent <= 0.6)
+        else if(0.4 < execution_percentage <= 0.6)
             execution_group = 3;
-        else if(0.6 < execution_percent <= 0.8)
+        else if(0.6 < execution_percentage <= 0.8)
             execution_group = 4;
-        else if(0.8 < execution_percent)
+        else if(0.8 < execution_percentage)
             execution_group = 5;
         data['execution_group'] = execution_group;
+        data['execution_percentage'] = execution_percentage;
 
         var source = $('#template-budget_account-info').html();
         var template = Handlebars.compile(source);
@@ -75,11 +81,11 @@
 
     function plot_treemap(budget_id, budget_account){
         var chart = am4core.create("chart-treemap", am4charts.TreeMap);
-        var budget_data = null;
+
         get_budget_data(budget_id, budget_account, function(data){
-            budget_data = data;
-            chart.data = budget_data;
-            plot_budget_account_info(get_budget_account_aggregated_data(budget_data));
+            current_budget_data = data;
+            plot_budget_account_info(get_budget_account_aggregated_data(current_budget_data));
+            chart.data = current_budget_data;
         });
 
         /* Define data fields */
@@ -94,9 +100,17 @@
         chart.navigationBar = new am4charts.NavigationBar();
         chart.navigationBar.links.template.fill = am4core.color("#060c19");
         chart.navigationBar.activeLink.fill = am4core.color("#080e1b");
+        chart.navigationBar.events.on('hit', function(ev){
+            // FIXME
+            var properties = ev.target;
+            console.log(properties, "ev.target on navigationBar hit: ");
+            if(properties['color'] === undefined){
+                plot_budget_account_info(undefined);
+            }
+        })
 
-        // Labels
-        var series_templates = []; var level_columns = [];
+        // Labels & tooltips
+        var series_templates = []; var level_columns = []; var bullets = [];
         function config_label(level){
             series_templates[level] = chart.seriesTemplates.create(level);
             series_templates[level].columns.template.events.on("hit", function(ev) {
@@ -109,18 +123,30 @@
             }, this);
             series_templates[level].columns.template.events.on("out", function(ev) {
                 var parent_data = ev.target.dataItem._dataContext.parent._dataContext;
+                //console.log("OUT", parent_data);
                 plot_budget_account_info(parent_data);
-                console.log("OUT", ev.target.dataItem);
             }, this);
-            var bullet = series_templates[level].bullets.push(new am4charts.LabelBullet());
-            level_columns[level] = series_templates[level].columns.template;
-            level_columns[level].tooltipText = "{name}\n{value}";
 
-            bullet.locationX = 0.5;
-            bullet.locationY = 0.5;
-            bullet.label.textAlign = 'start';
+            bullet = series_templates[level].bullets.push(new am4charts.LabelBullet());
+            bullet.locationX = 0.02;
+            //bullet.locationY = 0.5;
+            bullet.label.textAlign = 'left';
+            bullet.label.dx = 0;
+            bullet.label.dy = -10;
+            bullet.label.horizontalCenter = 'left';
+            bullet.label.verticalCenter = 'middle';
             bullet.label.text = "{name}";
             bullet.label.fill = am4core.color("#ffffff");
+
+            level_columns[level] = series_templates[level].columns.template;
+            level_columns[level].tooltipText = "{name}\n{value}";
+            series_templates[level].tooltip.dy = -15;
+            series_templates[level].tooltip.getFillFromObject = false;
+            series_templates[level].tooltip.background.propertyFields.stroke = am4core.color("#FFFFFF");
+            series_templates[level].tooltip.background.propertyFields.fill = "color";
+            series_templates[level].tooltip.pointerOrientation = "vertical";
+            series_templates[level].tooltip.label.fill = am4core.color("#FFFFFF");
+            series_templates[level].tooltip.label.fontSize = 18;
         }
         config_label('0');
         config_label('1');
@@ -231,8 +257,15 @@
                     <td>{{formatCurrency budget_aggregated }}</td>
                 </tr>
                 <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr class="execution-aggregated">
                     <td>Execução</td>
-                    <td>{{formatCurrency execution_aggregated }}</td>
+                    <td>
+                        {{formatCurrency execution_aggregated }}
+                        <small>({{formatPercent execution_percentage}})</small>
+                    </td>
                 </tr>
             </table>
         </div>

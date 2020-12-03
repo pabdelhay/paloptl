@@ -195,3 +195,5 @@ CURRENCY_CHOICES = [
     ('MZN', 'MZN MT'),
     ('STD', 'STD Db')
 ]
+
+TREEMAP_EXECUTION_COLORS = ['#f2cc05', '#f2571c', '#8c1717', '#66298c', '#0f69a3']
