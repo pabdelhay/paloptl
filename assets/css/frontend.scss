@@ -297,7 +297,36 @@ h3 {
       }
     }
   }
+  .datatable-wrapper {
+    margin-top: 80px;
 
+    table.datatable-info {
+      th, td { text-align: left; color: $main_color; padding: 10px; line-height: 20px; }
+      td.separator { background-color: #FFFFFF; height: 10px; padding: 0; }
+      th.vertical-separator { padding: 0; }
+      thead {
+        background-color: #eae6e5;
+      }
+      tbody {
+        background-color: #FFFFFF;
+        td {
+          background-color: #eae6e5;
+          border-left: 10px solid #FFFFFF;
+        }
+        td:first-child {
+          border-left: 0;
+          border-right: 0;
+        }
+        td.vertical-separator {
+          border-right: 1px solid #5d8aac;
+          padding: 0;
+          background-color: #FFF;
+          width: 0;
+          border-left: 10px solid #FFFFFF;
+        }
+      }
+    }
+  }
 }
 
 .temp-info {

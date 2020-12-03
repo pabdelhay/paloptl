@@ -52,8 +52,7 @@
         return aggregated_data;
     }
 
-    function plot_budget_account_info(budget_account_data){
-        var data = budget_account_data;
+    function plot_budget_account_info(data){
         if(data === undefined || !(data)){
             data = get_budget_account_aggregated_data(current_budget_data);
         }
@@ -79,14 +78,9 @@
         $('#budget_account-info').html(rendered);
     }
 
-    function plot_treemap(budget_id, budget_account){
+    function plot_treemap(data){
         var chart = am4core.create("chart-treemap", am4charts.TreeMap);
-
-        get_budget_data(budget_id, budget_account, function(data){
-            current_budget_data = data;
-            plot_budget_account_info(get_budget_account_aggregated_data(current_budget_data));
-            chart.data = current_budget_data;
-        });
+        chart.data = current_budget_data;
 
         /* Define data fields */
         chart.marginLeft = 0;
@@ -96,7 +90,7 @@
         chart.dataFields.children = "children";
         chart.dataFields.color = "color";
         chart.maxLevels = 1;
-        chart.homeText = "Visualização por " + treemap_title_map[budget_account];
+        chart.homeText = "Visualização por " + treemap_title_map[current_budget_account];
         //chart.layoutAlgorithm = chart.slice;
 
         chart.navigationBar = new am4charts.NavigationBar();
@@ -157,24 +151,43 @@
 
     }
 
+    function plot_datatable(data){
+        var template_data = {
+            'budget_account_label': treemap_title_map[current_budget_account],
+            'budget_accounts': data
+        }
+        var source = $('#template-budget_account-table').html();
+        var template = Handlebars.compile(source);
+        var rendered = template(template_data);
+        //console.log(data);
+        $('#datatable-info').html(rendered);
+    }
+
+    function get_budget_and_plot_views(budget_id, budget_account){
+        get_budget_data(budget_id, budget_account, function(data){
+            current_budget_data = data;
+            plot_treemap(data);
+            plot_budget_account_info();
+            plot_datatable(data);
+        });
+        current_budget_account = budget_account;
+        current_budget_id = budget_id;
+    }
     function toggle_budget_account(budget_account){
-        plot_treemap(current_budget_id, budget_account);
+        get_budget_and_plot_views(current_budget_id, budget_account);
         $('.budget-account-selector a').removeClass('active');
         $('.budget-account-selector a[data-budget_account="'+budget_account+'"]').addClass('active');
-        current_budget_account = budget_account;
     }
     function toggle_budget(budget_id){
-        plot_treemap(budget_id, current_budget_account);
+        get_budget_and_plot_views(budget_id, current_budget_account);
         $('.budget-selector a').removeClass('active');
         $('.budget-selector a[data-budget_id="'+budget_id+'"]').addClass('active');
-        current_budget_id = budget_id;
     }
     function get_budget_year_by_id(budget_id){
         return $('.budget-selector a[data-budget_id="'+budget_id+'"]').html();
     }
 
     $(document).ready(function () {
-
         // Binds
         $('.budget-account-selector a').on('click', function (ev) {
             ev.preventDefault();
@@ -220,14 +233,7 @@
         </div>
     </div>
 
-    <div class="budget-account-selector-row big-container right">
-        <div class="budget-account-selector">
-            <a href="#" data-budget_account="functions">Por Função</a><a href="#" data-budget_account="agencies">Por Órgão</a>
-        </div>
-        <div class="budget-selector">
-            {% for budget in budgets %}<a href="#" {% if budget.id == last_budget.id %}class="active"{% endif %} data-budget_id="{{ budget.id }}">{{ budget.year }}</a>{% endfor %}
-        </div>
-    </div>
+    {% include 'frontend/budget-selector.component.html' %}
 
     <div class="treemap-wrapper">
         <div class="row">
@@ -236,6 +242,15 @@
             </div>
             <div class="col-9 chart-wrapper">
                 <div id="chart-treemap"></div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'frontend/budget-selector.component.html' %}
+    <div class="datatable-wrapper">
+        <div class="container">
+            <div class="row-12">
+                <div id="datatable-info"></div>
             </div>
         </div>
     </div>
@@ -329,6 +344,52 @@
         </table>
     </div>
 </div>
+</script>
+
+<script id="template-budget_account-table" type="text/x-handlebars-template">
+<table class="datatable-info" cellpadding="0" cellspacing="0">
+    <thead>
+        <tr>
+            <th>{{ budget_account_label }}</th>
+            <th class="vertical-separator"></th>
+            <th>Dotação</th>
+            <th>Dotação de investimento</th>
+            <th>Dotação de funcionamento</th>
+            <th>Execução</th>
+            <th>Execução de investimento</th>
+            <th>Execução de funcionamento</th>
+        </tr>
+        <tr>
+            <td class="separator" colspan="8"></td>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each budget_accounts}}
+        <tr>
+            <td>{{ name }}</td>
+            <td class="vertical-separator"></td>
+            <td>{{formatCurrency budget_aggregated}}</td>
+            <td>{{formatCurrency budget_investment}}</td>
+            <td>{{formatCurrency budget_operation}}</td>
+            <td>{{formatCurrency execution_aggregated}}</td>
+            <td>{{formatCurrency execution_investment}}</td>
+            <td>{{formatCurrency execution_operation}}</td>
+        </tr>
+            {{#each children}}
+            <tr>
+                <td>{{ name }}</td>
+                <td class="vertical-separator"></td>
+                <td>{{formatCurrency budget_aggregated}}</td>
+                <td>{{formatCurrency budget_investment}}</td>
+                <td>{{formatCurrency budget_operation}}</td>
+                <td>{{formatCurrency execution_aggregated}}</td>
+                <td>{{formatCurrency execution_investment}}</td>
+                <td>{{formatCurrency execution_operation}}</td>
+            </tr>
+            {{/each}}
+        {{/each}}
+    </tbody>
+</table>
 </script>
 {% endverbatim %}
 
