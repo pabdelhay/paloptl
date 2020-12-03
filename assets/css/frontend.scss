@@ -132,7 +132,11 @@ h3 {
 
 .page-country-detail {
   .country-name-wrapper {
+    background-position-y: bottom;
+    background-repeat: no-repeat;
     margin-bottom: 20px;
+    -webkit-box-shadow: inset 680px 0px 160px 7px rgb(0 0 0 / 65%);
+    box-shadow: inset 680px 0px 160px 7px rgb(0 0 0 / 65%);
     h1 {
       text-transform: uppercase;
       color: #FFFFFF;
@@ -301,7 +305,7 @@ h3 {
     margin-top: 80px;
 
     table.datatable-info {
-      th, td { text-align: left; color: $main_color; padding: 10px; line-height: 20px; }
+      th, td { text-align: left; color: $main_color; padding: 5px 10px; line-height: 20px; }
       td.separator { background-color: #FFFFFF; height: 10px; padding: 0; }
       th.vertical-separator { padding: 0; }
       thead {
@@ -323,6 +327,9 @@ h3 {
           background-color: #FFF;
           width: 0;
           border-left: 10px solid #FFFFFF;
+        }
+        tr:hover {
+          td { background-color: #c5c1c0; }
         }
       }
     }

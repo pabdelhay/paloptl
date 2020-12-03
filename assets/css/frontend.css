@@ -138,7 +138,11 @@ h3 .arrow {
 }
 
 .page-country-detail .country-name-wrapper {
+  background-position-y: bottom;
+  background-repeat: no-repeat;
   margin-bottom: 20px;
+  -webkit-box-shadow: inset 680px 0px 160px 7px rgba(0, 0, 0, 0.65);
+  box-shadow: inset 680px 0px 160px 7px rgba(0, 0, 0, 0.65);
 }
 .page-country-detail .country-name-wrapper h1 {
   text-transform: uppercase;
@@ -314,7 +318,7 @@ h3 .arrow {
 .page-country-detail .datatable-wrapper table.datatable-info th, .page-country-detail .datatable-wrapper table.datatable-info td {
   text-align: left;
   color: #0f2843;
-  padding: 10px;
+  padding: 5px 10px;
   line-height: 20px;
 }
 .page-country-detail .datatable-wrapper table.datatable-info td.separator {
@@ -345,6 +349,9 @@ h3 .arrow {
   background-color: #FFF;
   width: 0;
   border-left: 10px solid #FFFFFF;
+}
+.page-country-detail .datatable-wrapper table.datatable-info tbody tr:hover td {
+  background-color: #c5c1c0;
 }
 
 .temp-info {

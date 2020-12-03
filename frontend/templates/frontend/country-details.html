@@ -13,9 +13,13 @@
     var current_budget_id = last_budget_id;
     var current_budget_account = 'functions';
     var current_budget_data = null;
-    var treemap_title_map = {
+    var budget_account_label_map = {
         'agencies': "Órgão",
         'functions': "Função",
+    }
+    var sub_budget_account_label_map = {
+        'agencies': "Unidade Orçamentária",
+        'functions': "Sub-função",
     }
     am4core.useTheme(am4themes_animated);
 
@@ -90,7 +94,7 @@
         chart.dataFields.children = "children";
         chart.dataFields.color = "color";
         chart.maxLevels = 1;
-        chart.homeText = "Visualização por " + treemap_title_map[current_budget_account];
+        chart.homeText = "Visualização por " + budget_account_label_map[current_budget_account];
         //chart.layoutAlgorithm = chart.slice;
 
         chart.navigationBar = new am4charts.NavigationBar();
@@ -153,7 +157,8 @@
 
     function plot_datatable(data){
         var template_data = {
-            'budget_account_label': treemap_title_map[current_budget_account],
+            'budget_account_label': budget_account_label_map[current_budget_account],
+            'sub_budget_account_label': sub_budget_account_label_map[current_budget_account],
             'budget_accounts': data
         }
         var source = $('#template-budget_account-table').html();
@@ -208,8 +213,8 @@
 
 {% block content %}
 <div class="page-country-detail">
-    {% with bg_name=country.slug|add:".gif" %}
-    <div class="country-name-wrapper" style="background: url('{% static 'img/'|add:bg_name %}') no-repeat;">
+    {% with bg_name="bg_"|add:country.slug|add:".png" %}
+    <div class="country-name-wrapper" style="background-image: url('{% static 'img/'|add:bg_name %}');">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -350,7 +355,7 @@
 <table class="datatable-info" cellpadding="0" cellspacing="0">
     <thead>
         <tr>
-            <th>{{ budget_account_label }}</th>
+            <th>{{ budget_account_label }} / {{ sub_budget_account_label }}</th>
             <th class="vertical-separator"></th>
             <th>Dotação</th>
             <th>Dotação de investimento</th>
@@ -377,7 +382,7 @@
         </tr>
             {{#each children}}
             <tr>
-                <td>{{ name }}</td>
+                <td style="padding-left: 40px;">{{ name }}</td>
                 <td class="vertical-separator"></td>
                 <td>{{formatCurrency budget_aggregated}}</td>
                 <td>{{formatCurrency budget_investment}}</td>
