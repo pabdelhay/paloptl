@@ -15,10 +15,28 @@
             </div>
             <div class="row">
                 <div class="col-3">
-                    text
+                    Lorem ipsum dolor sit amet,
+                    consectetuer adipiscing elit, sed
+                    diam nonummy nibh euismod
+                    tincidunt ut la metodologia
+                    aliquam erat consequat. Duis vel
+                    eum iriure dolor in hendrerit in
+                    vulputate velit esse molestie
+                    consequat, vel illum dolore eu
+                    feugiat nulla facilisis at vero nulla
+                    facilisi autem vel eum.
                 </div>
                 <div class="col-3">
-                    text
+                    Lorem ipsum dolor sit amet,
+                    consectetuer adipiscing elit, sed
+                    diam nonummy nibh euismod
+                    tincidunt ut la metodologia
+                    aliquam erat consequat. Duis vel
+                    eum iriure dolor in hendrerit in
+                    vulputate velit esse molestie
+                    consequat, vel illum dolore eu
+                    feugiat nulla facilisis at vero nulla
+                    facilisi autem vel eum.
                 </div>
             </div>
         </div>
@@ -30,18 +48,18 @@
                 <div class="col-12">Escolha um país para entender como ele gasta seu orçamento.</div>
             </div>
         </div>
-        <table cellspacing="0" cellpadding="0">
-            <tr>
-                <td><img src="{% static 'img/angola.gif' %}" /></td>
-                <td><img src="{% static 'img/caboverde.gif' %}" /></td>
-                <td><img src="{% static 'img/guineabissau.gif' %}" /></td>
-            </tr>
-            <tr>
-                <td><img src="{% static 'img/mozambique.gif' %}" /></td>
-                <td><img src="{% static 'img/saothome.gif' %}" /></td>
-                <td><img src="{% static 'img/timorleste.gif' %}" /></td>
-            </tr>
-        </table>
+        <div class="row full-width">
+            {% for country in countries %}
+            <div class="col">
+                <img src="{{ country.flag.url }}" />
+                <a href="{% url 'country-details' country.slug %}" class="overlay"><span>{{ country.name }}</span></a>
+            </div>
+                {% if forloop.counter == 3 %}
+                    </div><div class="row full-width">
+                {% endif %}
+            {% endfor %}
+        </div>
+
     </div>
 
 </div>

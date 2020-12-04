@@ -11,6 +11,48 @@ a {
   text-decoration: none;
 }
 
+.menu {
+  position: relative;
+  display: inline-block;
+  /* Dropdown Content (Hidden by Default) */
+}
+.menu .dropbtn div {
+  width: 35px;
+  height: 5px;
+  background-color: #0f2843;
+  margin: 6px 0;
+}
+.menu .dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #FFFFFF;
+  min-width: 220px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  right: 0;
+  text-align: left;
+  padding: 10px 0px;
+  text-transform: uppercase;
+  font-size: 12px;
+  border-radius: 10px 0 10px 10px;
+}
+.menu .dropdown-content a {
+  color: black;
+  padding: 12px 20px;
+  text-decoration: none;
+  display: block;
+}
+.menu .dropdown-content a:hover {
+  background-color: #e4e0df;
+}
+.menu .dropdown-content img {
+  height: 20px;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+.menu:hover .dropdown-content {
+  display: block;
+}
 hr {
   border-bottom: 1px solid #d7d5d5;
   border-top: 0;
@@ -121,26 +163,59 @@ h3 .arrow {
   width: 100%;
 }
 .page-index .about {
-  background: #1f5b8c url("../img/texture_bg.png") no-repeat right;
+  background-image: url("../img/texture_bg.png");
+  background-repeat: no-repeat;
+  background-position-x: right;
+  background-position-y: bottom;
+  background-color: #194262;
   height: 400px;
   color: #FFFFFF;
 }
-.page-index .countries table {
-  table-layout: fixed;
+.page-index .countries {
+  margin-top: 60px;
+}
+.page-index .countries .full-width {
+  margin: 0;
   width: 100%;
 }
-.page-index .countries table td {
-  height: auto;
+.page-index .countries .full-width .col {
+  padding: 0;
+  margin: 0;
+  width: 33.32%;
+  position: relative;
 }
-.page-index .countries table td img {
-  max-width: 100%;
+.page-index .countries .full-width .col img {
+  width: 100%;
   height: 100%;
+}
+.page-index .countries .full-width .col:hover .overlay {
+  display: flex;
+}
+.page-index .countries .overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 60px;
+  z-index: 99;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.65);
+  margin: 0 auto;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+}
+.page-index .countries .overlay a {
+  color: #FFF;
+  text-decoration: none;
 }
 
 .page-country-detail .country-name-wrapper {
   background-position-y: bottom;
   background-repeat: no-repeat;
-  margin-bottom: 20px;
   -webkit-box-shadow: inset 680px 0px 160px 7px rgba(0, 0, 0, 0.65);
   box-shadow: inset 680px 0px 160px 7px rgba(0, 0, 0, 0.65);
 }
@@ -149,8 +224,17 @@ h3 .arrow {
   color: #FFFFFF;
   font-size: 60px;
 }
+.page-country-detail .flag-wrapper {
+  background-image: url("../img/texture-1.png");
+  background-repeat: no-repeat;
+  background-position-x: right;
+  background-position-y: top;
+}
 .page-country-detail .flag-wrapper .flag {
   width: 100%;
+}
+.page-country-detail .flag-wrapper .big-container {
+  padding-top: 30px;
 }
 .page-country-detail .budget-account-selector-row {
   float: right;
@@ -235,6 +319,7 @@ h3 .arrow {
   background-color: #eae6e5;
   padding: 30px;
   margin-bottom: 7px;
+  font-size: 14px;
 }
 .page-country-detail .treemap-wrapper .budget_account-info .budget_account-info-box h4 {
   margin: 0;
@@ -338,6 +423,7 @@ h3 .arrow {
 .page-country-detail .datatable-wrapper table.datatable-info tbody td {
   background-color: #eae6e5;
   border-left: 10px solid #FFFFFF;
+  font-size: 12px;
 }
 .page-country-detail .datatable-wrapper table.datatable-info tbody td:first-child {
   border-left: 0;
@@ -352,6 +438,26 @@ h3 .arrow {
 }
 .page-country-detail .datatable-wrapper table.datatable-info tbody tr:hover td {
   background-color: #c5c1c0;
+}
+.page-country-detail .transparency-wrapper {
+  background-color: #194262;
+  background-image: url("../img/texture-2.png");
+  background-repeat: no-repeat;
+  background-position-x: left;
+  background-position-y: bottom;
+  height: 400px;
+  color: #FFFFFF;
+  margin-top: 100px;
+}
+.page-country-detail .transparency-wrapper h2 {
+  margin-top: 60px;
+}
+.page-country-detail .transparency-wrapper .img-wrapper {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.page-country-detail .transparency-wrapper .img-wrapper img {
+  max-height: 400px;
 }
 
 .temp-info {
