@@ -332,6 +332,11 @@ h3 .arrow {
   width: 30px;
   height: 30px;
 }
+.page-country-detail .treemap-wrapper .budget_account-info .execution-percentage {
+  display: none;
+  padding-left: 20px;
+  color: #aaaaaa;
+}
 .page-country-detail .treemap-wrapper .budget_account-info .execution-group-indicator {
   width: 0;
   height: 0;
@@ -346,17 +351,32 @@ h3 .arrow {
 .page-country-detail .treemap-wrapper .budget_account-info .execution-group-1 .group-1 .execution-group-indicator {
   display: inline-block;
 }
+.page-country-detail .treemap-wrapper .budget_account-info .execution-group-1 .group-1 .execution-percentage {
+  display: block;
+}
 .page-country-detail .treemap-wrapper .budget_account-info .execution-group-2 .group-2 .execution-group-indicator {
   display: inline-block;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .execution-group-2 .group-2 .execution-percentage {
+  display: block;
 }
 .page-country-detail .treemap-wrapper .budget_account-info .execution-group-3 .group-3 .execution-group-indicator {
   display: inline-block;
 }
+.page-country-detail .treemap-wrapper .budget_account-info .execution-group-3 .group-3 .execution-percentage {
+  display: block;
+}
 .page-country-detail .treemap-wrapper .budget_account-info .execution-group-4 .group-4 .execution-group-indicator {
   display: inline-block;
 }
+.page-country-detail .treemap-wrapper .budget_account-info .execution-group-4 .group-4 .execution-percentage {
+  display: block;
+}
 .page-country-detail .treemap-wrapper .budget_account-info .execution-group-5 .group-5 .execution-group-indicator {
   display: inline-block;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .execution-group-5 .group-5 .execution-percentage {
+  display: block;
 }
 .page-country-detail .treemap-wrapper .budget_account-info .group-1 .treemap-legend {
   background-color: #f2cc05;
@@ -405,6 +425,9 @@ h3 .arrow {
   color: #0f2843;
   padding: 5px 10px;
   line-height: 20px;
+}
+.page-country-detail .datatable-wrapper table.datatable-info th {
+  font-size: 14px;
 }
 .page-country-detail .datatable-wrapper table.datatable-info td.separator {
   background-color: #FFFFFF;

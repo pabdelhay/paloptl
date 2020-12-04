@@ -328,7 +328,11 @@ h3 {
         width: 30px;
         height: 30px;
       }
-
+      .execution-percentage {
+        display: none;
+        padding-left: 20px;
+        color: #aaaaaa;
+      }
       .execution-group-indicator {
         width: 0;
         height: 0;
@@ -339,13 +343,27 @@ h3 {
         position: relative;
         top: 2px;
         left: 10px;
-
       }
-      .execution-group-1 .group-1 .execution-group-indicator { display: inline-block; }
-      .execution-group-2 .group-2 .execution-group-indicator { display: inline-block; }
-      .execution-group-3 .group-3 .execution-group-indicator { display: inline-block; }
-      .execution-group-4 .group-4 .execution-group-indicator { display: inline-block; }
-      .execution-group-5 .group-5 .execution-group-indicator { display: inline-block; }
+      .execution-group-1 .group-1 {
+        .execution-group-indicator { display: inline-block; }
+        .execution-percentage { display: block; }
+      }
+      .execution-group-2 .group-2 {
+        .execution-group-indicator { display: inline-block; }
+        .execution-percentage { display: block; }
+      }
+      .execution-group-3 .group-3 {
+        .execution-group-indicator { display: inline-block; }
+        .execution-percentage { display: block; }
+      }
+      .execution-group-4 .group-4 {
+        .execution-group-indicator { display: inline-block; }
+        .execution-percentage { display: block; }
+      }
+      .execution-group-5 .group-5 {
+        .execution-group-indicator { display: inline-block; }
+        .execution-percentage { display: block; }
+      }
 
       .group-1 .treemap-legend {
         background-color: #f2cc05;
@@ -389,7 +407,7 @@ h3 {
 
     table.datatable-info {
       th, td { text-align: left; color: $main_color; padding: 5px 10px; line-height: 20px; }
-      th { font-size: font-size: 14px; }
+      th { font-size: 14px; }
       td.separator { background-color: #FFFFFF; height: 10px; padding: 0; }
       th.vertical-separator { padding: 0; }
       thead {
