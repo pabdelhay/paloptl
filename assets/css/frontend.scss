@@ -58,6 +58,7 @@ hr {
   border-bottom: 1px solid #d7d5d5;
   border-top: 0;
   box-shadow: 0px 2px 5px 1px #d2d2d2;
+  width: 99.9%;
 }
 
 .arrow-right {
@@ -221,6 +222,7 @@ h3 {
     }
   }
   .flag-wrapper {
+    padding: 40px 0;
     background-image: url("../img/texture-1.png");
     background-repeat: no-repeat;
     background-position-x: right;
@@ -230,50 +232,67 @@ h3 {
     }
     .big-container { padding-top: 30px; }
   }
-  .budget-account-selector-row {
-    float: right;
-    position: relative;
-    bottom: -42px;
-    z-index: 999;
+  .breadcrumb-row {
+    z-index: 99;
 
-    a {
-      display: inline-block;
-      background: #eae6e5;
-      width: 100px;
-      text-align: center;
-      padding: 4px 40px;
-      font-size: 12px;
-      border-right: 1px solid #82aecb;
+    .breadcrumb-wrapper {
+      .breadcrumb-link:last-child {
+        font-weight: bold;
+      }
+      .arrow-right {
+        top: 2px;
+        margin: 0 10px;
+      }
+      .arrow-right:last-child {
+        display: none;
+      }
 
-      &.active {
-        background-color: #0f69a4;
-        color: #FFFFFF;
-      }
-      &:hover {
-        background-color: #c5c1c0;
-      }
-      &:last-child {
-        border-right: 0;
-      }
     }
+    .budget-account-selector-row {
+      position: relative;
 
-    .budget-account-selector {
-      display: inline-block;
-      border-right: 1px solid #82aecb;
-      padding-right: 10px;
-      margin-right: 10px;
-    }
-    .budget-selector {
-      display: inline-block;
-      margin-left: -5px;
       a {
-        width: 40px;
-        padding: 4px 10px;
+        display: inline-block;
+        background: #eae6e5;
+        width: 100px;
+        text-align: center;
+        padding: 4px 40px;
+        font-size: 12px;
+        border-right: 1px solid #82aecb;
+
+        &.active {
+          background-color: #0f69a4;
+          color: #FFFFFF;
+        }
+        &:hover {
+          background-color: #c5c1c0;
+        }
+        &:last-child {
+          border-right: 0;
+        }
+      }
+
+      .budget-account-selector {
+        display: inline-block;
+        border-right: 1px solid #82aecb;
+        padding-right: 10px;
+        margin-right: 10px;
+      }
+      .budget-selector {
+        display: inline-block;
+        margin-left: -5px;
+        a {
+          width: 40px;
+          padding: 4px 10px;
+        }
       }
     }
   }
 
   .treemap-wrapper {
+    position: relative;
+    top: -24px;
+
     hr.shaddow {
       position: relative;
       bottom: -61px;
@@ -294,7 +313,7 @@ h3 {
     }
     .budget_account-info {
       color: #34495d;
-      margin-top: 53px;
+      margin-top: 16px;
       font-size: 12px;
       h3 {
         font-size: 16px;
@@ -403,8 +422,8 @@ h3 {
     }
   }
   .datatable-wrapper {
-    margin-top: 80px;
-
+    position: relative;
+    top: -16px;
     table.datatable-info {
       th, td { text-align: left; color: $main_color; padding: 5px 10px; line-height: 20px; }
       th { font-size: 14px; }

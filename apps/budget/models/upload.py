@@ -1,12 +1,15 @@
 import codecs
 import csv
+import operator
 import os
+from functools import reduce
 
 from django.conf import settings
 from django.contrib.postgres.fields import ArrayField
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.validators import FileExtensionValidator
 from django.db import models
+from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 from djmoney.money import Money
 from moneyed.localization import format_money
@@ -21,13 +24,14 @@ def get_upload_path(instance, filename):
 
 def empty_string_to_none(row):
     for k, v in row.items():
+        row[k] = row[k].strip()
         if v == '':
             row[k] = None
     return row
 
 
 class Upload(models.Model):
-    CSV_DELIMITER = ','
+    CSV_DELIMITER = ';'
 
     budget = models.ForeignKey('budget.Budget', verbose_name=_("budget"), related_name='uploads',
                                on_delete=models.CASCADE)
@@ -54,19 +58,22 @@ class Upload(models.Model):
         content = self.file.read()
         reader = csv.DictReader(codecs.iterdecode(content.splitlines(), 'utf-8'), dialect=csv.excel,
                                 delimiter=self.CSV_DELIMITER)
-        header_fields = list(BudgetUploadSerializer._declared_fields.keys())
 
-        if reader.fieldnames != header_fields:
-            self.errors.append(_("<strong>Line {line}:</strong> Header is not in standard. "
-                                 "It must be exact as <i>{header_fields}</i>"
-                                 .format(line=reader.line_num, header_fields=str(header_fields))))
+        # # Validate headers
+        # header_fields = list(BudgetUploadSerializer._declared_fields.keys())
+        #
+        # if reader.fieldnames != header_fields:
+        #     self.errors.append(_("<strong>Line {line}:</strong> Header is not in standard. "
+        #                          "It must be exact as <i>{header_fields}</i>"
+        #                          .format(line=reader.line_num, header_fields=str(header_fields))))
         for row in reader:
             serializer = BudgetUploadSerializer(data=empty_string_to_none(row))
             if not serializer.is_valid():
                 for field, errors_list in serializer.errors.items():
                     error_msg = "; ".join(errors_list)
-                    self.errors.append(_("<strong>Line {line} ({column})</strong>: {error_msg}"
-                                         .format(line=reader.line_num, column=field, error_msg=error_msg)))
+                    self.errors.append(_("<strong>Line {line} ({column})</strong>: {error_msg} Input was: {input}"
+                                         .format(line=reader.line_num, column=field, error_msg=error_msg,
+                                                 input=row[field])))
 
         return not bool(len(self.errors))
 
@@ -104,6 +111,8 @@ class Upload(models.Model):
             row_report_type = data['report_type']
             row_category = data['category']
             row_subcategory = data['subcategory']
+            row_category_code = data['category_code']
+            row_subcategory_code = data['subcategory_code']
 
             # Check if report is organic or functional.
             if row_report_type == 'organic':
@@ -114,9 +123,12 @@ class Upload(models.Model):
                 category_model = self.budget.functions.model
 
             try:
-                category = category_set.get(name__iexact=row_category, parent__isnull=True)
+                filters = [Q(name__iexact=row_category)]
+                if row_category_code:
+                    filters.append(Q(code=row_category_code))
+                category = category_set.filter(parent__isnull=True).get(reduce(operator.or_, filters))
             except ObjectDoesNotExist:
-                category = category_set.create(name=row_category)
+                category = category_set.create(name=row_category, code=row_category_code)
                 self.log.append(_("Created {taxonomy} <strong>{name}</strong>"
                                   .format(taxonomy=category_model.get_taxonomy(level=0), name=row_category)))
 
@@ -124,9 +136,13 @@ class Upload(models.Model):
             if row_subcategory is not None:
                 # Budget for a subgroup
                 try:
-                    subcategory = category_set.get(name=row_subcategory, parent=category)
+                    filters = [Q(name__iexact=row_subcategory)]
+                    if row_subcategory_code:
+                        filters.append(Q(code=row_subcategory_code))
+                    subcategory = category_set.filter(parent=category).get(reduce(operator.or_, filters))
                 except ObjectDoesNotExist:
-                    subcategory = category_model(name=row_subcategory, parent=category, budget=self.budget)
+                    subcategory = category_model(name=row_subcategory, parent=category, budget=self.budget,
+                                                 code=row_subcategory_code)
                     self.log.append(_("Created {taxonomy} <strong>{name}</strong>"
                                       .format(taxonomy=category_model.get_taxonomy(level=1),
                                               name=subcategory.get_hierarchy_name())))

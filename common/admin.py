@@ -17,7 +17,7 @@ class CountryPermissionMixin(object):
 
         user = request.user
         user_country = user.profile.country
-        if user.is_superuser and not user_country:
+        if user.is_superuser:
             return form_field
 
         form_field.queryset = form_field.queryset.filter(id=user_country.id)

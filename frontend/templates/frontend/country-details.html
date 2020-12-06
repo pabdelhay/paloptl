@@ -9,10 +9,16 @@
     <script src="{% static 'js/handlebars-helpers.js' %}"></script>
     <script type="text/javascript">
 
+    var treemap;
+    var series_templates = [];
     var last_budget_id = {{ last_budget.id }};
     var current_budget_id = last_budget_id;
     var current_budget_account = 'functions';
     var current_budget_data = null;
+    var breadcrumb = [
+        {'name': "Visualização por Função", 'id': null},
+        {'name': {{ last_budget.year }}, 'id': null},
+    ];
     var budget_account_label_map = {
         'agencies': "Órgão",
         'functions': "Função",
@@ -82,40 +88,57 @@
         $('#budget_account-info').html(rendered);
     }
 
+    function plot_breadcrumb(){
+        var source = $('#template-breadcrumb').html();
+        var template = Handlebars.compile(source);
+        var rendered = template({data: breadcrumb});
+        $('.breadcrumb-wrapper').html(rendered);
+    }
+    function init_breadcrumb(plot=false){
+        breadcrumb = []
+        breadcrumb.push({name: "Visualização por " + budget_account_label_map[current_budget_account], event: null});
+        breadcrumb.push({name: get_budget_year_by_id(current_budget_id), event: null});
+        if(plot){
+            plot_breadcrumb();
+        }
+    }
+    function update_breadcrumb(event=null){
+        if(event){
+            var data = event.target.dataItem.dataContext._dataContext;
+            if(data['level'] == 0){
+                init_breadcrumb();
+                breadcrumb.push({name: data['name'], event: event})
+            } else {
+                breadcrumb[3] = {name: data['name'], event: event};
+            }
+        }
+        plot_breadcrumb();
+    }
+
     function plot_treemap(data){
-        var chart = am4core.create("chart-treemap", am4charts.TreeMap);
-        chart.data = current_budget_data;
+        treemap = am4core.create("chart-treemap", am4charts.TreeMap);
+        treemap.data = current_budget_data;
 
         /* Define data fields */
-        chart.marginLeft = 0;
-        chart.marginRight = 0;
-        chart.dataFields.value = "budget_aggregated";
-        chart.dataFields.name = "name";
-        chart.dataFields.children = "children";
-        chart.dataFields.color = "color";
-        chart.maxLevels = 1;
-        chart.homeText = "Visualização por " + budget_account_label_map[current_budget_account];
-        //chart.layoutAlgorithm = chart.slice;
-
-        chart.navigationBar = new am4charts.NavigationBar();
-        chart.navigationBar.links.template.fill = am4core.color("#060c19");
-        chart.navigationBar.activeLink.fill = am4core.color("#080e1b");
-        chart.navigationBar.events.on('hit', function(ev){
-            // FIXME
-            var properties = ev.target;
-            console.log(properties, "ev.target on navigationBar hit: ");
-            if(properties['color'] === undefined){
-                plot_budget_account_info(undefined);
-            }
-        })
+        treemap.marginLeft = 0;
+        treemap.marginRight = 0;
+        treemap.dataFields.value = "budget_aggregated";
+        treemap.dataFields.name = "name";
+        treemap.dataFields.children = "children";
+        treemap.dataFields.color = "color";
+        treemap.maxLevels = 1;
+        treemap.homeText = "Visualização por " + budget_account_label_map[current_budget_account];
+        //treemap.layoutAlgorithm = treemap.slice;
 
         // Labels & tooltips
-        var series_templates = []; var level_columns = []; var bullets = [];
+        var level_columns = []; var bullets = [];
         function config_label(level){
-            series_templates[level] = chart.seriesTemplates.create(level);
+            series_templates[level] = treemap.seriesTemplates.create(level);
             series_templates[level].columns.template.events.on("hit", function(ev) {
                 var data = ev.target.dataItem.dataContext._dataContext;
+                console.log(ev.target.dataItem.dataContext);
                 plot_budget_account_info(data);
+                update_breadcrumb(ev);
             }, this);
             series_templates[level].columns.template.events.on("over", function(ev) {
                 var data = ev.target.dataItem.dataContext._dataContext;
@@ -168,12 +191,16 @@
         $('#datatable-info').html(rendered);
     }
 
+    function init_views(budget_data){
+        plot_treemap(budget_data);
+        plot_budget_account_info();
+        plot_datatable(budget_data);
+        init_breadcrumb(true);
+    }
     function get_budget_and_plot_views(budget_id, budget_account){
         get_budget_data(budget_id, budget_account, function(data){
             current_budget_data = data;
-            plot_treemap(data);
-            plot_budget_account_info();
-            plot_datatable(data);
+            init_views(current_budget_data);
         });
         current_budget_account = budget_account;
         current_budget_id = budget_id;
@@ -204,7 +231,15 @@
             var budget_id = $(this).data('budget_id');
             toggle_budget(budget_id);
         });
-
+        $(document).on('click', '.breadcrumb-link', function(ev){
+            ev.preventDefault();
+            var breadcrumb_index = parseInt($(this).data('breadcrumb_idx'));
+            if(breadcrumb_index <= 1){
+                init_views(current_budget_data);
+            } else {
+                breadcrumb[breadcrumb_index].event.target.dispatchImmediately('hit');
+            }
+        })
         toggle_budget_account(current_budget_account)
     });
 
@@ -225,17 +260,15 @@
     </div>
     {% endwith %}
     <div class="flag-wrapper">
-        <div class="big-container">
-            <div class="row middle">
-                <div class="col-2 ml-0">
-                    <img class="flag" src="{{ country.flag.url }}" alt="{{ country.slug }} flag" />
-                </div>
-                <div class="col-10 ml-0">
-                    <h3>
-                        <span class="arrow-right"></span>
-                        DADOS ORÇAMENTÁRIOS
-                    </h3>
-                </div>
+        <div class="row middle">
+            <div class="col-2 mr-0">
+                <img class="flag" src="{{ country.flag.url }}" alt="{{ country.slug }} flag" />
+            </div>
+            <div class="col-10">
+                <h3>
+                    <span class="arrow-right"></span>
+                    DADOS ORÇAMENTÁRIOS
+                </h3>
             </div>
         </div>
     </div>
@@ -430,6 +463,15 @@
     </tbody>
 </table>
 </script>
+
+<script id="template-breadcrumb" type="text/x-handlebars-template">
+{{#each data}}
+    <a href="#" class="breadcrumb-link" data-breadcrumb_idx="{{@index}}">{{ name }}</a>
+    <span class="arrow-right"></span>
+{{/each}}
+</script>
 {% endverbatim %}
+
+
 
 {% endblock %}

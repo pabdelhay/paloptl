@@ -45,10 +45,10 @@ class UploadInline(admin.TabularInline):
 
 class BudgetAccountInline(admin.TabularInline):
     extra = 0
-    readonly_fields = ('get_group_taxonomy', 'get_subgroup_taxonomy', 'last_update',
+    readonly_fields = ('code', 'get_group_taxonomy', 'get_subgroup_taxonomy', 'last_update',
                        'get_budget_investment', 'get_budget_operation', 'get_budget_aggregated',
                        'get_execution_investment', 'get_execution_operation', 'get_execution_aggregated')
-    fields = ('get_group_taxonomy', 'get_subgroup_taxonomy', 'get_budget_investment', 'get_budget_operation',
+    fields = ('code', 'get_group_taxonomy', 'get_subgroup_taxonomy', 'get_budget_investment', 'get_budget_operation',
               'get_budget_aggregated', 'get_execution_investment', 'get_execution_operation',
               'get_execution_aggregated', 'last_update')
     classes = ['collapse']

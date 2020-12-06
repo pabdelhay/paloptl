@@ -31,6 +31,11 @@ class BudgetAccountSerializer(serializers.ModelSerializer):
     def get_color(self, obj):
         color_index = 0
         execution_value = obj.execution_aggregated or 0
+
+        # TODO: REMOVE ME
+        if not obj.budget_aggregated:
+            return settings.TREEMAP_EXECUTION_COLORS[color_index]
+
         execution_percent = execution_value / obj.budget_aggregated
         if 0.2 < execution_percent <= 0.4:
             color_index = 1

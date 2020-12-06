@@ -12,6 +12,8 @@ class BudgetUploadSerializer(serializers.Serializer):
     report_type = serializers.ChoiceField(choices=('organic', 'functional'))
     category = serializers.CharField(max_length=255)
     subcategory = serializers.CharField(required=False, allow_null=True, max_length=255)
+    category_code = serializers.CharField(max_length=30, required=False, allow_null=True)
+    subcategory_code = serializers.CharField(max_length=30, required=False, allow_null=True)
 
     budget_operation = serializers.FloatField(required=False, allow_null=True)
     budget_investment = serializers.FloatField(required=False, allow_null=True)
