@@ -169,6 +169,7 @@ class AgencyInline(BudgetAccountInline):
 class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
     inlines = (UploadInline, FunctionInline, AgencyInline)
     list_display = ('country', 'year')
+    list_filter = ('year', )
     readonly_fields = ('currency', )
 
     def save_formset(self, request, form, formset, change):

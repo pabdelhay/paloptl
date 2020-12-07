@@ -167,10 +167,16 @@ h3 {
     background-color: $description_bg_color;
     height: 400px;
     color: #FFFFFF;
+    position: relative;
+    top: -6px;
   }
 
   .countries {
     margin-top: 60px;
+    .flags-wrapper {
+      position: relative;
+      top: -8px;
+    }
     .full-width {
       margin: 0;
       width: 100%;
@@ -292,6 +298,7 @@ h3 {
   .treemap-wrapper {
     position: relative;
     top: -24px;
+    margin-bottom: 40px;
 
     hr.shaddow {
       position: relative;
@@ -421,9 +428,27 @@ h3 {
       }
     }
   }
+
+  .historical-wrapper {
+    margin-top: 60px;
+    margin-bottom: 100px;
+    h4 {
+      margin-bottom: 40px;
+      text-transform: uppercase;
+      text-align: center;
+    }
+    #historical-info {
+      height: 500px;
+    }
+    #historical-legend {
+      position: absolute;
+      bottom: 30px;
+      border: 1px solid $main_color;
+    }
+  }
+
   .datatable-wrapper {
-    position: relative;
-    top: -16px;
+    margin-top: 40px;
     table.datatable-info {
       th, td { text-align: left; color: $main_color; padding: 5px 10px; line-height: 20px; }
       th { font-size: 14px; }

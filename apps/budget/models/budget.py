@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.db.models import Sum
 from djmoney.models.fields import CurrencyField
 
 from common.mixins import CountryMixin
@@ -29,3 +30,13 @@ class Budget(CountryMixin, models.Model):
         if is_new:
             self.currency = self.country.currency
         super().save(*args, **kwargs)
+
+    def get_aggregated_data(self, budget_account_model):
+        """
+        Return sum of budget_aggregated and execution_aggregated values for this Budget.
+        :param budget_account_model: model [budget.Agency, budget.Function]
+        :return: {'budget': Decimal, 'execution': Decimal}
+        """
+        qs = budget_account_model.objects.filter(level=0).aggregate(budget=Sum('budget_aggregated'),
+                                                                    execution=Sum('budget_execution'))
+        return qs

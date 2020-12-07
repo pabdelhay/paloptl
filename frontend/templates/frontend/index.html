@@ -48,16 +48,19 @@
                 <div class="col-12">Escolha um país para entender como ele gasta seu orçamento.</div>
             </div>
         </div>
-        <div class="row full-width">
-            {% for country in countries %}
-            <div class="col">
-                <img src="{{ country.flag.url }}" />
-                <a href="{% url 'country-details' country.slug %}" class="overlay"><span>{{ country.name }}</span></a>
+        <hr />
+        <div class="flags-wrapper">
+            <div class="row full-width">
+                {% for country in countries %}
+                <div class="col">
+                    <img src="{{ country.flag.url }}" />
+                    <a href="{% url 'country-details' country.slug %}" class="overlay"><span>{{ country.name }}</span></a>
+                </div>
+                    {% if forloop.counter == 3 %}
+                        </div><div class="row full-width">
+                    {% endif %}
+                {% endfor %}
             </div>
-                {% if forloop.counter == 3 %}
-                    </div><div class="row full-width">
-                {% endif %}
-            {% endfor %}
         </div>
 
     </div>

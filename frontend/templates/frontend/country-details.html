@@ -14,6 +14,7 @@
     var last_budget_id = {{ last_budget.id }};
     var current_budget_id = last_budget_id;
     var current_budget_account = 'functions';
+    var current_budget_account_id = null;
     var current_budget_data = null;
     var breadcrumb = [
         {'name': "Visualização por Função", 'id': null},
@@ -34,7 +35,21 @@
         $.get(url, function (data) {
             callback(data);
         }).fail(function () {
-            alert("error");
+            console.log("Error on fetching budget data.");
+        }).always(function () {
+            //alert("finished");
+        });
+    }
+    function get_historical_data(budget_id, budget_account, budget_account_id, callback){
+        var params = {
+            budget_account: budget_account,
+            budget_account_id: budget_account_id
+        }
+        var url = '/api/budgets/' + budget_id + '/historical/';
+        $.get(url, params, function (data) {
+            callback(data);
+        }).fail(function () {
+            console.log("Error on fetching historical data.");
         }).always(function () {
             //alert("finished");
         });
@@ -47,6 +62,7 @@
             'initial_budget_operation'];
         aggregated_data['label'] = "Orçamento " + get_budget_year_by_id(current_budget_id);
         aggregated_data['name'] = "{{ country.name }}";
+        aggregated_data['id'] = null;
         for(var i = 1; i < budget_data.length; i++){
             fields.forEach(function(item, index){
                 var new_value = budget_data[i][item];
@@ -66,6 +82,8 @@
         if(data === undefined || !(data)){
             data = get_budget_account_aggregated_data(current_budget_data);
         }
+        current_budget_account_id = data['id'];
+
         //console.log(data);
         var execution_percentage = data['execution_aggregated'] / data['budget_aggregated'];
         var execution_group = 1;
@@ -86,6 +104,8 @@
         var template = Handlebars.compile(source);
         var rendered = template(data);
         $('#budget_account-info').html(rendered);
+
+
     }
 
     function plot_breadcrumb(){
@@ -136,8 +156,8 @@
             series_templates[level] = treemap.seriesTemplates.create(level);
             series_templates[level].columns.template.events.on("hit", function(ev) {
                 var data = ev.target.dataItem.dataContext._dataContext;
-                console.log(ev.target.dataItem.dataContext);
-                plot_budget_account_info(data);
+                plot_budget_account_info(data); // data: api.BudgetAccountSerializer
+                get_historical_and_plot_view();
                 update_breadcrumb(ev);
             }, this);
             series_templates[level].columns.template.events.on("over", function(ev) {
@@ -175,7 +195,47 @@
         config_label('0');
         config_label('1');
         //config_label('2');
+    }
 
+    function plot_historical(data){
+        var chart = am4core.create('historical-info', am4charts.XYChart)
+        chart.colors.step = 2;
+
+        chart.legend = new am4charts.Legend();
+        chart.legend.position = 'right';
+        chart.legend.valign = 'bottom';
+        chart.legend.paddingLeft = 150;
+        chart.legend.paddingBottom = 30;
+        chart.legend.labels.template.maxWidth = 95;
+
+        var xAxis = chart.xAxes.push(new am4charts.CategoryAxis())
+        xAxis.dataFields.category = 'year'
+        xAxis.renderer.cellStartLocation = 0.1
+        xAxis.renderer.cellEndLocation = 0.9
+        xAxis.renderer.grid.template.disabled = true;
+
+        var yAxis = chart.yAxes.push(new am4charts.ValueAxis());
+        yAxis.min = 0;
+        yAxis.renderer.grid.template.disabled = true;
+
+        function createSeries(value, name) {
+            var series = chart.series.push(new am4charts.ColumnSeries())
+            series.dataFields.valueY = value
+            series.dataFields.categoryX = 'year'
+            series.name = name
+
+            var bullet = series.bullets.push(new am4charts.LabelBullet())
+            bullet.interactionsEnabled = false
+            bullet.dy = 30;
+            bullet.label.text = '{valueY}'
+            bullet.label.fill = am4core.color('#ffffff')
+
+            return series;
+        }
+        chart.data = data['data'];
+        $('.historical-title').html("Despesas discricionárias de<br>" + data['name']);
+        createSeries('budget_aggregated', 'Dotação');
+        createSeries('execution_aggregated', 'Execução');
     }
 
     function plot_datatable(data){
@@ -198,12 +258,19 @@
         init_breadcrumb(true);
     }
     function get_budget_and_plot_views(budget_id, budget_account){
+        current_budget_account = budget_account;
+        current_budget_id = budget_id;
+
         get_budget_data(budget_id, budget_account, function(data){
             current_budget_data = data;
             init_views(current_budget_data);
         });
-        current_budget_account = budget_account;
-        current_budget_id = budget_id;
+        get_historical_and_plot_view();
+    }
+    function get_historical_and_plot_view(){
+        get_historical_data(current_budget_id, current_budget_account, current_budget_account_id, function(data){
+            plot_historical(data);
+        });
     }
     function toggle_budget_account(budget_account){
         get_budget_and_plot_views(current_budget_id, budget_account);
@@ -274,7 +341,6 @@
     </div>
 
     {% include 'frontend/budget-selector.component.html' %}
-
     <div class="treemap-wrapper">
         <div class="row">
             <div class="col-3 budget_account-info-wrapper">
@@ -282,6 +348,19 @@
             </div>
             <div class="col-9 chart-wrapper">
                 <div id="chart-treemap"></div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'frontend/budget-selector.component.html' %}
+    <div class="historical-wrapper">
+        <h4 class="historical-title"></h4>
+        <div class="container">
+            <div class="row">
+                <div class="col-10">
+                    <div id="historical-info"></div>
+                </div>
+                <div class="col-2"></div>
             </div>
         </div>
     </div>

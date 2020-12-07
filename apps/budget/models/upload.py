@@ -31,7 +31,7 @@ def empty_string_to_none(row):
 
 
 class Upload(models.Model):
-    CSV_DELIMITER = ';'
+    CSV_DELIMITER = ','
 
     budget = models.ForeignKey('budget.Budget', verbose_name=_("budget"), related_name='uploads',
                                on_delete=models.CASCADE)
@@ -133,6 +133,7 @@ class Upload(models.Model):
                                   .format(taxonomy=category_model.get_taxonomy(level=0), name=row_category)))
 
             instance = category
+            instance.code = row_category_code
             if row_subcategory is not None:
                 # Budget for a subgroup
                 try:
@@ -147,6 +148,7 @@ class Upload(models.Model):
                                       .format(taxonomy=category_model.get_taxonomy(level=1),
                                               name=subcategory.get_hierarchy_name())))
                 instance = subcategory
+                instance.code = row_subcategory_code
 
             if self.report == UploadReportChoices.OGE:
                 # If is OGE report, save also initial budget values

@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.db.models import F, Sum
 from rest_framework import serializers
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -60,6 +61,23 @@ class AgencySerializer(BudgetAccountSerializer):
         fields = BudgetAccountSerializer.Meta.fields
 
 
+class HistoricalParamsSerializer(serializers.Serializer):
+    budget_account = serializers.ChoiceField(choices=['agencies', 'functions'])
+    budget_account_id = serializers.IntegerField(required=False)
+
+
+class HistoricalDataSerializer(serializers.Serializer):
+    year = serializers.CharField()
+    budget_aggregated = serializers.FloatField()
+    execution_aggregated = serializers.FloatField()
+
+
+class HistoricalSerializer(serializers.Serializer):
+    data = HistoricalDataSerializer()
+    name = serializers.CharField()
+    id = serializers.IntegerField()
+
+
 class BudgetViewset(ReadOnlyModelViewSet):
     model = Budget
     serializer_class = BudgetSerializer
@@ -78,3 +96,52 @@ class BudgetViewset(ReadOnlyModelViewSet):
         qs = Agency.objects.filter(budget=budget, level=0)
         serializer = AgencySerializer(qs, many=True)
         return Response(serializer.data)
+
+    @action(detail=True)
+    def historical(self, request, pk=None):
+        budget = self.get_object()
+        country = budget.country
+
+        params = HistoricalParamsSerializer(data=request.GET)
+        params.is_valid(raise_exception=True)
+
+        budget_account_model = None
+        budget_account_param = params.validated_data['budget_account']
+        budget_account_id = params.validated_data.get('budget_account_id', None)
+        if budget_account_param == 'agencies':
+            budget_account_model = Agency
+        elif budget_account_param == 'functions':
+            budget_account_model = Function
+
+        data = {'code': None, 'name': None, 'data': []}
+
+        if budget_account_id:
+            # Get historical data from a specific budget.
+            budget_account = budget_account_model.objects.select_related('budget').get(id=budget_account_id)
+            code = budget_account.code
+            name = budget_account.name
+            if not code:
+                # If BudgetAccount has no code, get historical data from parent.
+                name = budget_account.parent.name
+                code = budget_account.parent.code
+                if not code:
+                    # If parent has no code, return empty list
+                    return Response(data)
+
+            qs = budget_account_model.objects.filter(budget__country=country, code=code)\
+                .values('budget_aggregated', 'execution_aggregated', year=F('budget__year'))
+        else:
+            name = country.name
+            code = None
+            # Get aggregated historical data for the whole budget.
+            qs = budget_account_model.objects.filter(budget__country=country, level=0).values(year=F('budget__year')) \
+                .annotate(budget_aggregated=Sum('budget_aggregated'), execution_aggregated=Sum('execution_aggregated'))
+
+        data_serializer = HistoricalDataSerializer(qs, many=True)
+
+        data['name'] = name
+        data['code'] = code
+        data['data'] = data_serializer.data
+        serializer = HistoricalSerializer(data=data)
+
+        return Response(serializer.initial_data)
