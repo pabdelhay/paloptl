@@ -131,11 +131,12 @@ class BudgetViewset(ReadOnlyModelViewSet):
             qs = budget_account_model.objects.filter(budget__country=country, code=code)\
                 .values('budget_aggregated', 'execution_aggregated', year=F('budget__year'))
         else:
+            # Get aggregated historical data for the country.
             name = country.name
             code = None
-            # Get aggregated historical data for the whole budget.
             qs = budget_account_model.objects.filter(budget__country=country, level=0).values(year=F('budget__year')) \
-                .annotate(budget_aggregated=Sum('budget_aggregated'), execution_aggregated=Sum('execution_aggregated'))
+                .annotate(budget_aggregated=Sum('budget_aggregated'), execution_aggregated=Sum('execution_aggregated'))\
+                .order_by('year')
 
         data_serializer = HistoricalDataSerializer(qs, many=True)
 

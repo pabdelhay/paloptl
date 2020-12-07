@@ -220,7 +220,7 @@
         chart.legend.labels.template.maxWidth = 95;
         chart.colors.list = [
             am4core.color("#0f69a3"),
-            am4core.color("#9fc3da"),
+            am4core.color("#98ccda"),
         ];
 
         var xAxis = chart.xAxes.push(new am4charts.CategoryAxis())
@@ -276,10 +276,13 @@
     }
 
     function init_views(budget_data){
+        current_budget_account_id = null;
+
         plot_treemap(budget_data);
         plot_budget_account_info();
         plot_datatable(budget_data);
         init_breadcrumb(true);
+        get_historical_and_plot_view();
     }
     function get_budget_and_plot_views(budget_id, budget_account){
         current_budget_account = budget_account;
@@ -289,7 +292,6 @@
             current_budget_data = data;
             init_views(current_budget_data);
         });
-        get_historical_and_plot_view();
     }
     function get_historical_and_plot_view(){
         get_historical_data(current_budget_id, current_budget_account, current_budget_account_id, function(data){
