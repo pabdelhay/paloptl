@@ -200,13 +200,28 @@
     function plot_historical(data){
         var chart = am4core.create('historical-info', am4charts.XYChart)
         chart.colors.step = 2;
+        chart.numberFormatter.bigNumberPrefixes = [
+            {"number": 1e+3, "suffix": "K"},
+            {"number": 1e+6, "suffix": "Mi"},
+            {"number": 1e+9, "suffix": "Bi"},
+            {"number": 1e+12, "suffix": "Tri"},
+            {"number": 1e+15, "suffix": "Qua"}
+            /*{"number": 1e+18, "suffix": "E"},
+            {"number": 1e+21, "suffix": "Z"},
+            {"number": 1e+24, "suffix": "Y"}*/
+        ]
 
+        chart.paddingTop = 30;
         chart.legend = new am4charts.Legend();
         chart.legend.position = 'right';
         chart.legend.valign = 'bottom';
         chart.legend.paddingLeft = 150;
         chart.legend.paddingBottom = 30;
         chart.legend.labels.template.maxWidth = 95;
+        chart.colors.list = [
+            am4core.color("#0f69a3"),
+            am4core.color("#9fc3da"),
+        ];
 
         var xAxis = chart.xAxes.push(new am4charts.CategoryAxis())
         xAxis.dataFields.category = 'year'
@@ -216,6 +231,7 @@
 
         var yAxis = chart.yAxes.push(new am4charts.ValueAxis());
         yAxis.min = 0;
+        yAxis.numberFormatter.numberFormat = "#. a";
         yAxis.renderer.grid.template.disabled = true;
 
         function createSeries(value, name) {
@@ -223,12 +239,20 @@
             series.dataFields.valueY = value
             series.dataFields.categoryX = 'year'
             series.name = name
+            //series.labels.template.wrap = false;
 
+            // Tooltip
+            series.columns.template.tooltipText = "[{categoryX}: bold]{valueY.formatNumber('#,###')}[/]";
+
+            // Label
             var bullet = series.bullets.push(new am4charts.LabelBullet())
-            bullet.interactionsEnabled = false
-            bullet.dy = 30;
-            bullet.label.text = '{valueY}'
-            bullet.label.fill = am4core.color('#ffffff')
+            bullet.interactionsEnabled = false;
+            bullet.dy = -20;
+            bullet.fontSize = 12;
+            bullet.label.verticalCenter = 'top';
+            bullet.label.text = "{valueY.formatNumber('#,###')}"
+            bullet.label.fill = am4core.color('#0f2843');
+            //bullet.label.template.wrap = false;
 
             return series;
         }
