@@ -219,10 +219,13 @@ h3 .arrow {
 .page-index .ranking {
   background-color: #f7f5f5;
 }
-.page-index .ranking h2 {
+.page-index .ranking .ranking-header {
+  padding: 40px 0;
+}
+.page-index .ranking .ranking-header h2 {
   margin: 50px 0 20px 0;
 }
-.page-index .ranking h4 {
+.page-index .ranking .ranking-header h4 {
   color: #0f69a3;
   text-transform: uppercase;
   margin-top: 0;
@@ -238,6 +241,9 @@ h3 .arrow {
   margin-bottom: 40px;
   margin-top: 40px;
   position: relative;
+}
+.page-index .ranking .ranking-wrapper .sortable {
+  cursor: pointer;
 }
 .page-index .ranking .ranking-wrapper .row-dimensions-header {
   position: absolute;
@@ -305,6 +311,12 @@ h3 .arrow {
   top: 147px;
   height: 53px;
   line-height: 53px;
+}
+.page-index .ranking .ranking-wrapper .ranking-row.row-number-0 .f-dimension .arrow-down {
+  border-top-color: #d6d6d6;
+}
+.page-index .ranking .ranking-wrapper .ranking-row.row-number-0 .f-dimension.active .arrow-down {
+  border-top-color: #0f2843;
 }
 .page-index .ranking .ranking-wrapper .ranking-row.row-number-1 .f-dimension {
   top: 105px;

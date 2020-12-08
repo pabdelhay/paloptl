@@ -1,6 +1,21 @@
 {% extends 'frontend/base.html' %}
 {% load static %}
 
+{% block extrahead %}
+<script type="text/javascript">
+function sort_ranking(dimension){
+    $('.ranking-wrapper').find('.sortable').removeClass('active');
+    $('.ranking-wrapper').find("[data-dimension='" + dimension + "']").addClass('active');
+}
+$(document).ready(function(){
+    $(document).on('click', '.ranking-wrapper .sortable', function(ev){
+        var dimension = $(this).data('dimension');
+        sort_ranking(dimension);
+    });
+});
+</script>
+{% endblock extrahead %}
+
 {% block content %}
 <div class="page-index">
     <div class="hero">
@@ -46,8 +61,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h2><span class="arrow"></span>RANKING</h2>
-                    <h4>Índice PALOP-TL de Transparência<br>da Despesa Orçamentária</h4>
+                    <div class="ranking-header">
+                        <h2><span class="arrow"></span>RANKING</h2>
+                        <h4>Índice PALOP-TL de Transparência<br>da Despesa Orçamentária</h4>
+                    </div>
                 </div>
             </div>
         </div>
@@ -62,19 +79,19 @@
                 <div class="col-12">
                     <div class="ranking-wrapper">
                         <div class="row-dimensions-header">
-                            <div class="f-dimension f-dimension-1">
+                            <div class="f-dimension sortable" data-dimension="open_data">
                                 Dados Abertos<br>
                                 (0-100)
                             </div>
-                            <div class="f-dimension f-dimension-2">
+                            <div class="f-dimension sortable" data-dimension="budget_reports">
                                 Relatórios Orçamentários<br>
                                 (0-100)
                             </div>
-                            <div class="f-dimension f-dimension-3">
+                            <div class="f-dimension sortable" data-dimension="info_quality">
                                 Qualidade da Informação<br>
                                 (0-200)
                             </div>
-                            <div class="f-dimension f-dimension-4 active">
+                            <div class="f-dimension sortable active" data-dimension="overall_index">
                                 Indicador Geral de Transparência
                             </div>
                         </div>
@@ -82,10 +99,10 @@
                             <div class="f-position">Posiçao</div>
                             <div class="f-flag">Países</div>
                             <div class="f-name"></div>
-                            <div class="f-dimension f-dimension-1">Dimensão 1</div>
-                            <div class="f-dimension f-dimension-2">Dimensão 2</div>
-                            <div class="f-dimension f-dimension-3">Dimensão 3</div>
-                            <div class="f-dimension f-dimension-4">Dimensão 4</div>
+                            <div class="f-dimension sortable" data-dimension="open_data"><div class="arrow-down"></div></div>
+                            <div class="f-dimension sortable" data-dimension="budget_reports"><div class="arrow-down"></div></div>
+                            <div class="f-dimension sortable" data-dimension="info_quality"><div class="arrow-down"></div></div>
+                            <div class="f-dimension sortable active" data-dimension="overall_index"><div class="arrow-down"></div></div>
                         </div>
                         {% for country in countries %}
                             <div class="ranking-row row-number-{{ forloop.counter }}">
@@ -101,10 +118,10 @@
                         <div class="ranking-row row-number-7">
                             <div class="f-position"></div>
                             <div class="f-flag">Média</div>
-                            <div class="f-dimension f-dimension-1">Dimensão 1</div>
-                            <div class="f-dimension f-dimension-2">Dimensão 2</div>
-                            <div class="f-dimension f-dimension-3">Dimensão 3</div>
-                            <div class="f-dimension f-dimension-4">Dimensão 4</div>
+                            <div class="f-dimension f-dimension-1">10</div>
+                            <div class="f-dimension f-dimension-2">10</div>
+                            <div class="f-dimension f-dimension-3">10</div>
+                            <div class="f-dimension f-dimension-4">10</div>
                         </div>
                     </div>
                 </div>

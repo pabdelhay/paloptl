@@ -220,13 +220,17 @@ h3 {
 
   .ranking {
     background-color: #f7f5f5;
-    h2 {
-      margin: 50px 0 20px 0;
-    }
-    h4 {
-      color: $subtitle_color;
-      text-transform: uppercase;
-      margin-top: 0;
+
+    .ranking-header {
+      padding: 40px 0;
+      h2 {
+        margin: 50px 0 20px 0;
+      }
+      h4 {
+        color: $subtitle_color;
+        text-transform: uppercase;
+        margin-top: 0;
+      }
     }
     .ranking-wrapper {
       background-image: url("../img/ranking_bg.png");
@@ -240,6 +244,9 @@ h3 {
       margin-top: 40px;
       position: relative;
 
+      .sortable {
+        cursor: pointer;
+      }
       .row-dimensions-header {
         position: absolute;
         right: 0;
@@ -297,6 +304,14 @@ h3 {
             top: 147px;
             height: 53px;
             line-height: 53px;
+            .arrow-down {
+              border-top-color: #d6d6d6;
+            }
+            &.active {
+              .arrow-down {
+                border-top-color: $main_color;
+              }
+            }
           }
         }
         &.row-number-1 {
