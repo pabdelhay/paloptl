@@ -1,0 +1,12 @@
+@font-face {
+  font-family: CeraPro;
+  font-weight: normal;
+  src: url("./fonts/Cera Pro.otf");
+}
+@font-face {
+  font-family: CeraPro;
+  font-weight: 300;
+  src: url("./fonts/Cera Pro Light.otf");
+}
+
+/*# sourceMappingURL=font.css.map */

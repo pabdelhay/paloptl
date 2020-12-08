@@ -11,6 +11,44 @@ a {
   text-decoration: none;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: CeraPro;
+  position: relative;
+}
+
+h1 {
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 52px;
+}
+
+h2 {
+  font-family: CeraPro;
+  font-weight: normal;
+  line-height: 50px;
+  font-size: 49px;
+  text-transform: uppercase;
+  color: #0f2843;
+}
+h2 .arrow {
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 10px solid #0f2843;
+  display: inline-block;
+  position: absolute;
+  top: 18px;
+  left: -30px;
+}
+
+h4 {
+  font-family: CeraPro;
+  font-weight: 300;
+  line-height: 50px;
+  font-size: 42px;
+  text-transform: uppercase;
+}
+
 .menu {
   position: relative;
   display: inline-block;
@@ -89,6 +127,7 @@ h3 .arrow {
 }
 
 .header h1 {
+  padding: 36px 0;
   margin: 0;
 }
 .header h1 a {
@@ -107,11 +146,6 @@ h3 .arrow {
   height: 100px;
   margin-bottom: -10px;
 }
-.header .bottom-row {
-  height: 140px;
-  margin-top: -10px;
-}
-
 .footer {
   margin-top: 60px;
 }
@@ -121,7 +155,7 @@ h3 .arrow {
 .footer .countries a {
   text-decoration: none;
   font-size: 14px;
-  color: #6f7975;
+  color: #68736f;
   text-transform: uppercase;
 }
 .footer .countries a:hover {
@@ -172,14 +206,140 @@ h3 .arrow {
   height: 400px;
   color: #FFFFFF;
   position: relative;
-  top: -6px;
+  margin-top: -7px;
+  padding: 40px 0;
 }
-.page-index .countries {
-  margin-top: 60px;
+.page-index .about h2 {
+  color: #FFF;
+  margin-bottom: 20px;
+}
+.page-index .about h2 .arrow {
+  border-left-color: #FFF;
+}
+.page-index .ranking {
+  background-color: #f7f5f5;
+}
+.page-index .ranking h2 {
+  margin: 50px 0 20px 0;
+}
+.page-index .ranking h4 {
+  color: #0f69a3;
+  text-transform: uppercase;
+  margin-top: 0;
+}
+.page-index .ranking .ranking-wrapper {
+  background-image: url("../img/ranking_bg.png");
+  background-repeat: no-repeat;
+  background-position-x: left;
+  background-position-y: top;
+  background-size: 1370px;
+  width: 100%;
+  height: 957px;
+  margin-bottom: 40px;
+  margin-top: 40px;
+  position: relative;
+}
+.page-index .ranking .ranking-wrapper .row-dimensions-header {
+  position: absolute;
+  right: 0;
+  display: flex;
+}
+.page-index .ranking .ranking-wrapper .row-dimensions-header .f-dimension {
+  width: 181px;
+  text-align: center;
+  position: relative;
+  top: 60px;
+  font-size: 14px;
+  font-weight: bold;
+  border-bottom: 1px solid #0f2843;
+  padding-bottom: 20px;
+}
+.page-index .ranking .ranking-wrapper .row-dimensions-header .f-dimension.active {
+  border-bottom-width: 3px;
+}
+.page-index .ranking .ranking-wrapper .ranking-row {
+  display: flex;
+  align-items: center;
+  height: 86px;
+  margin-bottom: 23px;
+}
+.page-index .ranking .ranking-wrapper .ranking-row .f-position {
+  width: 136px;
+  text-align: center;
+  font-weight: bold;
+}
+.page-index .ranking .ranking-wrapper .ranking-row .f-flag {
+  margin-left: 9px;
+}
+.page-index .ranking .ranking-wrapper .ranking-row .f-flag img {
+  height: 83px;
+  vertical-align: middle;
+}
+.page-index .ranking .ranking-wrapper .ranking-row .f-name {
+  width: 343px;
+  padding-left: 20px;
+  text-transform: uppercase;
+}
+.page-index .ranking .ranking-wrapper .ranking-row .f-dimension {
+  width: 181px;
+  text-align: center;
+  position: relative;
+  height: 54px;
+  line-height: 54px;
+}
+.page-index .ranking .ranking-wrapper .ranking-row.row-number-0 {
+  height: 97px;
+  margin-bottom: 23px;
+}
+.page-index .ranking .ranking-wrapper .ranking-row.row-number-0 .f-position {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.page-index .ranking .ranking-wrapper .ranking-row.row-number-0 .f-flag {
+  width: 117px;
+  padding-left: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.page-index .ranking .ranking-wrapper .ranking-row.row-number-0 .f-dimension {
+  top: 147px;
+  height: 53px;
+  line-height: 53px;
+}
+.page-index .ranking .ranking-wrapper .ranking-row.row-number-1 .f-dimension {
+  top: 105px;
+}
+.page-index .ranking .ranking-wrapper .ranking-row.row-number-2 .f-dimension {
+  top: 70px;
+}
+.page-index .ranking .ranking-wrapper .ranking-row.row-number-3 .f-dimension {
+  top: 34px;
+}
+.page-index .ranking .ranking-wrapper .ranking-row.row-number-4 .f-dimension {
+  top: -1px;
+}
+.page-index .ranking .ranking-wrapper .ranking-row.row-number-5 .f-dimension {
+  top: -38px;
+}
+.page-index .ranking .ranking-wrapper .ranking-row.row-number-6 .f-dimension {
+  top: -73px;
+}
+.page-index .ranking .ranking-wrapper .ranking-row.row-number-7 .f-flag {
+  width: 390px;
+  margin-right: 111px;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.page-index .ranking .ranking-wrapper .ranking-row.row-number-7 .f-dimension {
+  top: -110px;
+}
+.page-index .ranking .countries-description {
+  padding-bottom: 10px;
 }
 .page-index .countries .flags-wrapper {
   position: relative;
-  top: -8px;
+  top: -18px;
 }
 .page-index .countries .full-width {
   margin: 0;
@@ -514,6 +674,10 @@ h3 .arrow {
 }
 .page-country-detail .transparency-wrapper h2 {
   margin-top: 60px;
+  color: #FFF;
+}
+.page-country-detail .transparency-wrapper h2 .arrow {
+  border-left-color: #FFF;
 }
 .page-country-detail .transparency-wrapper .img-wrapper {
   margin-top: 0;

@@ -9,8 +9,8 @@
     <div class="about">
         <div class="container">
             <div class="row">
-                <div class="col-4">
-                    <h2>Sobre o Projeto</h2>
+                <div class="col-12">
+                    <h2><span class="arrow"></span>Sobre o Projeto</h2>
                 </div>
             </div>
             <div class="row">
@@ -42,12 +42,82 @@
         </div>
     </div>
 
-    <div class="countries">
+    <div class="ranking">
         <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2><span class="arrow"></span>RANKING</h2>
+                    <h4>Índice PALOP-TL de Transparência<br>da Despesa Orçamentária</h4>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">Clique na tabela para ordenar o ranking por uma dimensão específica.</div>
+            </div>
+        </div>
+        <hr />
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="ranking-wrapper">
+                        <div class="row-dimensions-header">
+                            <div class="f-dimension f-dimension-1">
+                                Dados Abertos<br>
+                                (0-100)
+                            </div>
+                            <div class="f-dimension f-dimension-2">
+                                Relatórios Orçamentários<br>
+                                (0-100)
+                            </div>
+                            <div class="f-dimension f-dimension-3">
+                                Qualidade da Informação<br>
+                                (0-200)
+                            </div>
+                            <div class="f-dimension f-dimension-4 active">
+                                Indicador Geral de Transparência
+                            </div>
+                        </div>
+                        <div class="ranking-row row-number-0">
+                            <div class="f-position">Posiçao</div>
+                            <div class="f-flag">Países</div>
+                            <div class="f-name"></div>
+                            <div class="f-dimension f-dimension-1">Dimensão 1</div>
+                            <div class="f-dimension f-dimension-2">Dimensão 2</div>
+                            <div class="f-dimension f-dimension-3">Dimensão 3</div>
+                            <div class="f-dimension f-dimension-4">Dimensão 4</div>
+                        </div>
+                        {% for country in countries %}
+                            <div class="ranking-row row-number-{{ forloop.counter }}">
+                                <div class="f-position">{{ forloop.counter }}</div>
+                                <div class="f-flag"><img src="{{ country.flag.url }}" /></div>
+                                <div class="f-name">{{ country.name }}</div>
+                                <div class="f-dimension f-dimension-1">10</div>
+                                <div class="f-dimension f-dimension-2">10</div>
+                                <div class="f-dimension f-dimension-3">10</div>
+                                <div class="f-dimension f-dimension-4">10</div>
+                            </div>
+                        {% endfor %}
+                        <div class="ranking-row row-number-7">
+                            <div class="f-position"></div>
+                            <div class="f-flag">Média</div>
+                            <div class="f-dimension f-dimension-1">Dimensão 1</div>
+                            <div class="f-dimension f-dimension-2">Dimensão 2</div>
+                            <div class="f-dimension f-dimension-3">Dimensão 3</div>
+                            <div class="f-dimension f-dimension-4">Dimensão 4</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container countries-description">
             <div class="row">
                 <div class="col-12">Escolha um país para entender como ele gasta seu orçamento.</div>
             </div>
         </div>
+    </div>
+
+    <div class="countries">
         <hr />
         <div class="flags-wrapper">
             <div class="row full-width">

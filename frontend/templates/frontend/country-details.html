@@ -211,7 +211,7 @@
             {"number": 1e+24, "suffix": "Y"}*/
         ]
 
-        chart.paddingTop = 30;
+        chart.paddingTop = 50;
         chart.legend = new am4charts.Legend();
         chart.legend.position = 'right';
         chart.legend.valign = 'bottom';
@@ -250,7 +250,7 @@
             bullet.dy = -20;
             bullet.fontSize = 12;
             bullet.label.verticalCenter = 'top';
-            bullet.label.text = "{valueY.formatNumber('#,###')}"
+            bullet.label.text = "{valueY.formatNumber('#.# a')}"
             bullet.label.fill = am4core.color('#0f2843');
             //bullet.label.template.wrap = false;
 
@@ -406,7 +406,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-6">
-                    <h2>TRANSPARÊNCIA</h2>
+                    <h2><span class="arrow"></span>TRANSPARÊNCIA</h2>
                     <div>
                         Lorem ipsum dolor sit amet,
                         consectetuer adipiscing elit, sed
