@@ -167,8 +167,16 @@ class AgencyInline(BudgetAccountInline):
 
 @admin.register(Budget)
 class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
+    fieldsets = (
+        ("Base info", {
+            'fields': ('country', 'year', 'currency',)
+        }),
+        ("Transparency Index", {
+            'fields': (('score_open_data', 'score_reports', 'score_data_quality', 'transparency_index'),),
+        }),
+    )
     inlines = (UploadInline, FunctionInline, AgencyInline)
-    list_display = ('country', 'year')
+    list_display = ('country', 'year', 'transparency_index')
     list_filter = ('year', )
     readonly_fields = ('currency', )
 

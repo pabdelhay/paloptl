@@ -7,12 +7,20 @@ from rest_framework.viewsets import ReadOnlyModelViewSet
 from rest_framework_recursive.fields import RecursiveField
 
 from apps.budget.models import Budget, Function, Agency
+from apps.geo.models import Country
+
+
+class CountrySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Country
+        fields = ('id', 'name', 'slug', 'flag')
 
 
 class BudgetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Budget
-        fields = ('id', 'year', 'currency')
+        fields = ('id', 'year', 'currency', 'score_open_data', 'score_reports', 'score_data_quality',
+                  'transparency_index')
 
 
 class BudgetAccountSerializer(serializers.ModelSerializer):
@@ -78,10 +86,62 @@ class HistoricalSerializer(serializers.Serializer):
     id = serializers.IntegerField()
 
 
+class RankingParamsSerializer(serializers.Serializer):
+    year = serializers.IntegerField(required=False)
+
+
+class RankingSerializer(BudgetSerializer):
+    country = CountrySerializer()
+
+    class Meta:
+        model = Budget
+        fields = BudgetSerializer.Meta.fields + ('country', )
+
+
 class BudgetViewset(ReadOnlyModelViewSet):
     model = Budget
     serializer_class = BudgetSerializer
     queryset = Budget.objects.all()
+
+    @action(detail=False)
+    def ranking(self, request, pk=None):
+        """
+        Get ranking for budget's transparency_index and it's scores.
+        Optional filtered by 'year' (on querystring). If no year is passed, get the latest registered ranking from
+        the country.
+        :return: {
+            'budgets': [RankingSerializer],
+            'average': {'score_open_data', 'score_reports', 'score_data_quality', 'transparency_index'}
+        }
+        """
+        params = RankingParamsSerializer(data=request.GET)
+        params.is_valid(raise_exception=True)
+        filter_year = params.validated_data.get('year', None)
+
+        score_fields = ['score_open_data', 'score_reports', 'score_data_quality', 'transparency_index']
+
+        def get_average_dict(budget_list):
+            mean_dict = {}
+            for key in score_fields:
+                mean_dict[key] = sum(getattr(b, key) for b in budget_list) / len(budget_list)
+            return mean_dict
+
+        budget_list = []
+        for c in Country.objects.all():
+            filters = {'country': c}
+            if filter_year:
+                filters['year'] = filter_year
+            else:
+                filters['transparency_index__isnull'] = False
+            last_budget_with_index = Budget.objects.select_related('country').filter(**filters).order_by('year').last()
+            if last_budget_with_index:
+                budget_list.append(last_budget_with_index)
+
+        serializer = RankingSerializer(budget_list, many=True)
+        average_dict = get_average_dict(budget_list)
+        budgets = sorted(serializer.data, key=lambda i: i['transparency_index'], reverse=True)
+        return_data = {'budgets': budgets, 'average': average_dict}
+        return Response(return_data)
 
     @action(detail=True)
     def functions(self, request, pk=None):
