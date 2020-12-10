@@ -34,8 +34,6 @@
             callback(data);
         }).fail(function () {
             console.log("Error on fetching budget data.");
-        }).always(function () {
-            //alert("finished");
         });
     }
     function get_historical_data(budget_id, budget_account, budget_account_id, callback){
@@ -48,8 +46,6 @@
             callback(data);
         }).fail(function () {
             console.log("Error on fetching historical data.");
-        }).always(function () {
-            //alert("finished");
         });
     }
 
@@ -99,14 +95,10 @@
         data['execution_percentage'] = execution_percentage;
 
         renderTemplate('#template-budget_account-info', data, '#budget_account-info');
-
     }
 
     function plot_breadcrumb(){
-        var source = $('#template-breadcrumb').html();
-        var template = Handlebars.compile(source);
-        var rendered = template({data: breadcrumb});
-        $('.breadcrumb-wrapper').html(rendered);
+        renderTemplate('#template-breadcrumb', {data: breadcrumb}, '.breadcrumb-wrapper');
     }
     function init_breadcrumb(plot=false){
         breadcrumb = []
@@ -152,7 +144,7 @@
             var columnTemplate = series_templates[level].columns.template;
             var hoverState = columnTemplate.states.create("hover");
 
-            // darken
+            // Hover
             hoverState.adapter.add("fill", function (fill, target) {
                 var data = target.sprite.dataItem.dataContext._dataContext;
                 var hover_color = data.color_hover;
@@ -162,17 +154,17 @@
                 return fill;
             })
 
-            series_templates[level].columns.template.events.on("hit", function(ev) {
+            columnTemplate.events.on("hit", function(ev) {
                 var data = ev.target.dataItem.dataContext._dataContext;
                 plot_budget_account_info(data); // data: api.BudgetAccountSerializer
                 get_historical_and_plot_view();
                 update_breadcrumb(ev);
             }, this);
-            series_templates[level].columns.template.events.on("over", function(ev) {
+            columnTemplate.events.on("over", function(ev) {
                 var data = ev.target.dataItem.dataContext._dataContext;
                 plot_budget_account_info(data);
             }, this);
-            series_templates[level].columns.template.events.on("out", function(ev) {
+            columnTemplate.events.on("out", function(ev) {
                 var parent_data = ev.target.dataItem._dataContext.parent._dataContext;
                 //console.log("OUT", parent_data);
                 plot_budget_account_info(parent_data);
@@ -183,11 +175,12 @@
             bullet.locationX = 0.02;
             bullet.label.textAlign = 'left';
             bullet.label.dx = 0;
-            bullet.label.dy = -10;
+            bullet.label.dy = -14;
             bullet.label.horizontalCenter = 'left';
             bullet.label.verticalCenter = 'middle';
             bullet.label.text = "{name}";
             bullet.label.fill = am4core.color("#ffffff");
+            bullet.interactionsEnabled = false;
 
             // Tooltip
             level_columns[level] = series_templates[level].columns.template;
@@ -202,7 +195,7 @@
         }
         config_label('0');
         config_label('1');
-        //config_label('2');
+        config_label('2');
     }
 
     function plot_historical(data){
@@ -276,11 +269,7 @@
             'sub_budget_account_label': sub_budget_account_label_map[current_budget_account],
             'budget_accounts': data
         }
-        var source = $('#template-budget_account-table').html();
-        var template = Handlebars.compile(source);
-        var rendered = template(template_data);
-        //console.log(data);
-        $('#datatable-info').html(rendered);
+        renderTemplate('#template-budget_account-table', template_data, '#datatable-info');
     }
 
     function init_views(budget_data){
