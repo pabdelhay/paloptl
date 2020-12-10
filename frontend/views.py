@@ -1,3 +1,6 @@
+import json
+
+from django.conf import settings
 from django.shortcuts import render
 from django.views import View
 from django.views.generic.detail import SingleObjectMixin
@@ -24,5 +27,6 @@ class CountryView(SingleObjectMixin, View):
             'country': country,
             'budgets': budgets,
             'last_budget': last_budget,
+            'treemap_colors_map': json.dumps(settings.TREEMAP_EXECUTION_COLORS_HOVER)
         }
         return render(request, 'frontend/country-details.html', context=ctx)

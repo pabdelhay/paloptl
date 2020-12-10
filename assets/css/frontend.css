@@ -12,7 +12,6 @@ a {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: CeraPro;
   position: relative;
 }
 
@@ -201,7 +200,7 @@ h3 .arrow {
   background-image: url("../img/texture_bg.png");
   background-repeat: no-repeat;
   background-position-x: right;
-  background-position-y: bottom;
+  background-position-y: top;
   background-color: #194262;
   height: 400px;
   color: #FFFFFF;
@@ -486,23 +485,23 @@ h3 .arrow {
 .page-country-detail .treemap-wrapper #chart-treemap {
   width: 100%;
   margin: 0 auto;
-  height: 740px;
+  height: 729px;
 }
 .page-country-detail .treemap-wrapper .budget_account-info {
   color: #34495d;
   margin-top: 16px;
   font-size: 12px;
 }
-.page-country-detail .treemap-wrapper .budget_account-info h3 {
-  font-size: 16px;
+.page-country-detail .treemap-wrapper .budget_account-info .label-wrapper {
+  font-size: 18px;
   text-transform: uppercase;
   font-weight: bold;
   margin: 0;
 }
-.page-country-detail .treemap-wrapper .budget_account-info h4 {
+.page-country-detail .treemap-wrapper .budget_account-info .name-wrapper {
   font-size: 14px;
   font-weight: bold;
-  margin-bottom: 20px;
+  height: 25px;
   margin-top: 0;
 }
 .page-country-detail .treemap-wrapper .budget_account-info hr {
@@ -510,11 +509,22 @@ h3 .arrow {
   border-bottom: 0;
   box-shadow: none;
 }
+.page-country-detail .treemap-wrapper .budget_account-info .secondary-info-wrapper {
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 0;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .secondary-info-wrapper .arrow-down {
+  position: relative;
+  top: -2px;
+  margin-left: 20px;
+}
 .page-country-detail .treemap-wrapper .budget_account-info .budget_account-info-box {
   background-color: #eae6e5;
   padding: 30px;
   margin-bottom: 7px;
-  font-size: 14px;
 }
 .page-country-detail .treemap-wrapper .budget_account-info .budget_account-info-box h4 {
   margin: 0;
@@ -530,7 +540,7 @@ h3 .arrow {
 .page-country-detail .treemap-wrapper .budget_account-info .execution-percentage {
   display: none;
   padding-left: 20px;
-  color: #aaaaaa;
+  color: #0f2843;
 }
 .page-country-detail .treemap-wrapper .budget_account-info .execution-group-indicator {
   width: 0;
@@ -597,15 +607,23 @@ h3 .arrow {
 .page-country-detail .treemap-wrapper .budget_account-info table.primary-info {
   margin-top: 20px;
   width: 100%;
+  font-size: 13px;
 }
 .page-country-detail .treemap-wrapper .budget_account-info table.primary-info td:first-child {
   width: 40%;
   padding-bottom: 5px;
 }
+.page-country-detail .treemap-wrapper .budget_account-info table.primary-info td:nth-child(2) {
+  padding-left: 15px;
+}
+.page-country-detail .treemap-wrapper .budget_account-info table.primary-info .execution-aggregated td {
+  padding-top: 20px;
+}
 .page-country-detail .treemap-wrapper .budget_account-info table.primary-info .execution-aggregated small {
   color: #727272;
 }
 .page-country-detail .treemap-wrapper .budget_account-info table.secondary-info {
+  font-size: 13px;
   width: 100%;
 }
 .page-country-detail .treemap-wrapper .budget_account-info table.secondary-info td:first-child {

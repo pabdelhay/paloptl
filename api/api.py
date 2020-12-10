@@ -27,12 +27,13 @@ class BudgetAccountSerializer(serializers.ModelSerializer):
     children = serializers.ListSerializer(child=RecursiveField())
     label = serializers.SerializerMethodField()
     color = serializers.SerializerMethodField()
+    color_hover = serializers.SerializerMethodField()
 
     class Meta:
         fields = ('id', 'name', 'initial_budget_investment', 'initial_budget_operation', 'initial_budget_aggregated',
                   'budget_investment', 'budget_operation', 'budget_aggregated',
                   'execution_investment', 'execution_operation', 'execution_aggregated',
-                  'last_update', 'children', 'label', 'color', 'level', 'tree_id')
+                  'last_update', 'children', 'label', 'color', 'color_hover', 'level', 'tree_id')
 
     def get_label(self, obj):
         return obj.get_taxonomy_label()
@@ -55,6 +56,10 @@ class BudgetAccountSerializer(serializers.ModelSerializer):
         if 0.8 < execution_percent:
             color_index = 4
         return settings.TREEMAP_EXECUTION_COLORS[color_index]
+
+    def get_color_hover(self, obj):
+        color = self.get_color(obj)
+        return settings.TREEMAP_EXECUTION_COLORS_HOVER[color]
 
 
 class FunctionSerializer(BudgetAccountSerializer):

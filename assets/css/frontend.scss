@@ -3,14 +3,13 @@ body { font-family: 'Montserrat', sans-serif; }
 $main_color: #0f2843;
 $subtitle_color: #0f69a3;
 $description_bg_color: #194262;
-$treemap_height: 740px;
+$treemap_height: 729px;
 $hover_color: #e4e0df;
 
 .big-container { margin: 0 30px; }
 a { color: $main_color; text-decoration: none; }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: CeraPro;
   position: relative;
 }
 
@@ -202,7 +201,7 @@ h3 {
     background-image: url("../img/texture_bg.png");
     background-repeat: no-repeat;
     background-position-x: right;
-    background-position-y: bottom;
+    background-position-y: top;
     background-color: $description_bg_color;
     height: 400px;
     color: #FFFFFF;
@@ -499,16 +498,16 @@ h3 {
       color: #34495d;
       margin-top: 16px;
       font-size: 12px;
-      h3 {
-        font-size: 16px;
+      .label-wrapper {
+        font-size: 18px;
         text-transform: uppercase;
         font-weight: bold;
         margin: 0;
       }
-      h4 {
+      .name-wrapper {
         font-size: 14px;
         font-weight: bold;
-        margin-bottom: 20px;
+        height: 25px;
         margin-top: 0;
       }
       hr {
@@ -516,11 +515,18 @@ h3 {
         border-bottom: 0;
         box-shadow: none;
       }
+      .secondary-info-wrapper {
+        padding-top: 20px !important;
+        padding-bottom: 20px !important;
+        font-size: 14px;
+        font-weight: bold;
+        margin-top: 0;
+        .arrow-down { position: relative; top: -2px; margin-left: 20px; }
+      }
       .budget_account-info-box {
         background-color: #eae6e5;
         padding: 30px;
         margin-bottom: 7px;
-        font-size: 14px;
 
         h4 {
           margin: 0;
@@ -534,7 +540,7 @@ h3 {
       .execution-percentage {
         display: none;
         padding-left: 20px;
-        color: #aaaaaa;
+        color: $main_color;
       }
       .execution-group-indicator {
         width: 0;
@@ -592,14 +598,18 @@ h3 {
       table.primary-info {
         margin-top: 20px;
         width: 100%;
+        font-size: 13px;
         td:first-child { width: 40%; padding-bottom: 5px; }
+        td:nth-child(2) { padding-left: 15px; }
         .execution-aggregated {
+          td { padding-top: 20px; }
           small {
             color: #727272;
           }
         }
       }
       table.secondary-info {
+        font-size: 13px;
         width: 100%;
         td:first-child { width: 50%; padding-bottom: 10px; }
       }
