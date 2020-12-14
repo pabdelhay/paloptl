@@ -12,6 +12,17 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
         <script src="{% static 'js/common.js' %}"></script>
         <script src="{% static 'js/handlebars-helpers.js' %}"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('.language-selector-form').find('a').on('click', function(ev){
+                    ev.preventDefault();
+                    var $form = $(this).closest('form');
+                    var language = $(this).data('language_code');
+                    $form.find('input[name="language"]').val(language);
+                    $form.submit();
+                })
+            })
+        </script>
         {% block extrastyle %}{% endblock %}
         {% block extrahead %}{% endblock %}
     </head>
@@ -29,7 +40,7 @@
                         <img src="{% static 'img/logo_paloptl_ue.gif' %}" alt="Logo PALOP-TL UE" />
                     </div>
                     <div class="col-6 right">
-                        Language selector
+                        {% include 'frontend/language-selector.component.html' %}
                     </div>
                 </div>
             </div>
@@ -65,16 +76,21 @@
     {% block footer %}
         <div class="footer">
             <div class="container">
-                <div class="row countries">
-                {% for country in all_countries %}
-                    <div class="col-2">
-                        <a href="{% url 'country-details' country.slug %}" >
-                            <img src="{{ country.flag.url }}" /> {{ country.name }}
-                        </a>
-                    </div>
-                {% endfor %}
-                </div>
                 <div class="row">
+                    <div class="col-12">
+                        <div class="countries">
+                        {% for country in all_countries %}
+                            <div>
+                                <a href="{% url 'country-details' country.slug %}" >
+                                    <img src="{{ country.flag.url }}" /> {{ country.name }}
+                                </a>
+                            </div>
+                        {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row sponsors">
                     <div class="col-8 first-col">
                         <div class="row upper-row middle">
                             <div class="col-5 ml-0">
@@ -102,9 +118,14 @@
             <hr />
             <div class="container">
                 <div class="row last-line middle">
-                    <div class="col-2">Language selector</div>
+                    <div class="col-2">{% include 'frontend/language-selector.component.html' %}</div>
                     <div class="col-8 center">2020 ©PALOP-TL ISC Todos os direitos reservados</div>
-                    <div class="col-2 right">social</div>
+                    <div class="col-2 right social">
+                        <a target="_blank" href="{% get_social_network_url 'facebook' %}"><img src="{% static 'img/icon_facebook.png' %}" alt="facebook icon" /></a>
+                        <a target="_blank" href="{% get_social_network_url 'youtube' %}"><img src="{% static 'img/icon_youtube.png' %}" alt="youtube icon" /></a>
+                        <a target="_blank" href="{% get_social_network_url 'twitter' %}"><img src="{% static 'img/icon_twitter.png' %}" alt="twitter icon" /></a>
+                        <a target="_blank" href="{% get_social_network_url 'instagram' %}"><img src="{% static 'img/icon_instagram.png' %}" alt="instagram icon" /></a>
+                    </div>
                 </div>
             </div>
         </div>

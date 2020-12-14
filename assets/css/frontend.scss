@@ -45,6 +45,25 @@ h4 {
   text-transform: uppercase;
 }
 
+.language-selector {
+
+  .lang {
+    display: inline-block;
+    border-left: 1px solid #586460;
+    padding: 0 16px;
+    &:first-child { border-left: 0; padding-left: 0; }
+    &:last-child { padding-right: 0; }
+    a {
+      font-size: 12px;
+      color: #9ba2a0;
+      &.active {
+        font-weight: bold;
+        color: #586460;
+      }
+    }
+  }
+}
+
 .menu {
   .dropbtn {
     div {
@@ -63,7 +82,7 @@ h4 {
     display: none;
     position: absolute;
     background-color: #FFFFFF;
-    min-width: 220px;
+    min-width: 230px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
     right: 0;
@@ -149,20 +168,34 @@ h3 {
   margin-top: 60px;
 
   .countries {
-    margin-bottom: 20px;
+    margin-bottom: 40px;
+    display: flex;
+    div {
+      flex-basis: 100%;
+      text-align: center;
+      text-align: left;
+      &:last-child {
+        padding-left: 40px;
+      }
+    }
     a {
       text-decoration: none;
       font-size: 14px;
+      font-weight: 500;
       color: #68736f;
       text-transform: uppercase;
       &:hover { color: #232323; }
     }
     img {
-      height: 30px;
-      width: 50px;
+      height: 28px;
+      width: 42px;
       vertical-align: middle;
       margin-right: 5px;
     }
+  }
+
+  .sponsors {
+    margin-bottom: 40px;
   }
 
   .first-col {
@@ -188,6 +221,9 @@ h3 {
     margin-top: -10px;
     height: 54px;
     font-size: 11px;
+  }
+  .social {
+    a { margin-left: 10px; }
   }
 }
 
@@ -276,7 +312,7 @@ h3 {
         .f-position { width: 136px; text-align: center; font-weight: bold; }
         .f-flag {
           margin-left: 9px;
-          img { height: 83px; vertical-align: middle }
+          img { height: 83px; width: 140px; vertical-align: middle }
         }
         .f-name { width: 343px; padding-left: 20px; text-transform: uppercase; }
         .f-dimension {

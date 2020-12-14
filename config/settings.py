@@ -204,3 +204,8 @@ TREEMAP_EXECUTION_COLORS_HOVER = {
     TREEMAP_EXECUTION_COLORS[3]: '#66298c',
     TREEMAP_EXECUTION_COLORS[4]: '#0f69a3',
 }
+
+TWITTER_URL = 'https://twitter.com/ProPALOP'
+FACEBOOK_URL = 'https://www.facebook.com/propalop.tl/'
+INSTAGRAM_URL = 'https://www.instagram.com/propaloptlisc/'
+YOUTUBE_URL = 'https://www.youtube.com/channel/UCqQShed9k1_1tQqqduF_tcg'

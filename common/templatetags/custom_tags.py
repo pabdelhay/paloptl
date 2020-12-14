@@ -1,4 +1,5 @@
 from django import template
+from django.conf import settings
 from django.utils import timezone
 
 from apps.budget.models import Budget
@@ -28,3 +29,8 @@ def get_current_budget(user):
 @register.simple_tag
 def get_countries():
     return Country.objects.all().order_by('name')
+
+
+@register.simple_tag
+def get_social_network_url(social_network):
+    return getattr(settings, f"{social_network.upper()}_URL", "")
