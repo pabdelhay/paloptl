@@ -34,6 +34,7 @@ class Budget(CountryMixin, models.Model):
     class Meta:
         verbose_name = _("budget")
         verbose_name_plural = _("budgets")
+        unique_together = ('country', 'year')
         ordering = ['country', '-year']
 
     def __str__(self):
