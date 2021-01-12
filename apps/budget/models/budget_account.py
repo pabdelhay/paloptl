@@ -13,7 +13,7 @@ class BudgetAccount(MPTTModel):
         pass
 
     budget = models.ForeignKey('budget.Budget', verbose_name=_("budget"), on_delete=models.CASCADE)
-    name = models.CharField(verbose_name=_("name"), max_length=100)
+    name = models.CharField(verbose_name=_("name"), max_length=255)
     code = models.CharField(verbose_name=_("code"), max_length=20, null=True, blank=True)
     parent = TreeForeignKey('self', verbose_name=_("parent"), null=True, blank=True, related_name='children',
                             db_index=True, on_delete=models.CASCADE)

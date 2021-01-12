@@ -31,7 +31,7 @@ def empty_string_to_none(row):
 
 
 class Upload(models.Model):
-    CSV_DELIMITER = ','
+    CSV_DELIMITER = ';'
 
     budget = models.ForeignKey('budget.Budget', verbose_name=_("budget"), related_name='uploads',
                                on_delete=models.CASCADE)
@@ -51,12 +51,19 @@ class Upload(models.Model):
     def __str__(self):
         return f"{self.get_report_display()}"
 
+    @classmethod
+    def get_enconding_from_content(cls, content):
+        if content[:1] == b'\xef':
+            return 'utf-8-sig'
+        return 'utf-8'
+
     def validate(self):
         from api.api_admin import BudgetUploadSerializer
 
         self.errors = list()
         content = self.file.read()
-        reader = csv.DictReader(codecs.iterdecode(content.splitlines(), 'utf-8'), dialect=csv.excel,
+        enconding = self.get_enconding_from_content(content)
+        reader = csv.DictReader(codecs.iterdecode(content.splitlines(), enconding), dialect=csv.excel,
                                 delimiter=self.CSV_DELIMITER)
 
         # # Validate headers
@@ -84,7 +91,8 @@ class Upload(models.Model):
         self.errors = list()
         self.log = list()
         content = self.file.read()
-        reader = csv.DictReader(codecs.iterdecode(content.splitlines(), 'utf-8'), dialect=csv.excel,
+        enconding = self.get_enconding_from_content(content)
+        reader = csv.DictReader(codecs.iterdecode(content.splitlines(), enconding), dialect=csv.excel,
                                 delimiter=self.CSV_DELIMITER)
 
         def update_category(instance, attr, new_value, add_log=True):
