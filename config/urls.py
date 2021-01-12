@@ -32,10 +32,10 @@ urlpatterns = i18n_patterns(
 )
 
 urlpatterns += [
-    path('', include('frontend.urls')),
     path('api/', include('api.urls')),
     path('i18n/', include('django.conf.urls.i18n')),
     path('sentry-debug/', sentry_debug_view),
+    path('', include('frontend.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

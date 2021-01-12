@@ -21,7 +21,7 @@ environ.Env.read_env(env_file=os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = env('SECRET_KEY', default='#thisisarandomstringandshouldbereplacedinenv')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 ENV = os.environ.get('ENV', 'production')
 ALLOWED_HOSTS = ['*']
 
@@ -142,9 +142,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, '.media')
 MEDIA_URL = '/media/'
 
 # AWS Settings
-AWS_ACCESS_KEY_ID=os.environ.get('AWS_ACCESS_KEY_ID', None)
-AWS_SECRET_ACCESS_KEY=os.environ.get('AWS_SECRET_ACCESS_KEY', None)
-AWS_STORAGE_BUCKET_NAME=os.environ.get('AWS_STORAGE_BUCKET_NAME', None)
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', None)
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', None)
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME', None)
 if AWS_STORAGE_BUCKET_NAME:
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
@@ -215,7 +215,7 @@ INSTAGRAM_URL = 'https://www.instagram.com/propaloptlisc/'
 YOUTUBE_URL = 'https://www.youtube.com/channel/UCqQShed9k1_1tQqqduF_tcg'
 
 # SENTRY
-SENTRY_DSN = os.environ.get('SENTRY_DSN', "")
+SENTRY_DSN = env('SENTRY_DSN', default=None)
 if SENTRY_DSN:
     sentry_sdk.init(
         dsn=SENTRY_DSN,
