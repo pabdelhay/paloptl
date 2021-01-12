@@ -31,8 +31,6 @@ def empty_string_to_none(row):
 
 
 class Upload(models.Model):
-    CSV_DELIMITER = ';'
-
     budget = models.ForeignKey('budget.Budget', verbose_name=_("budget"), related_name='uploads',
                                on_delete=models.CASCADE)
     file = models.FileField(verbose_name=_("file"), upload_to=get_upload_path,
@@ -57,14 +55,34 @@ class Upload(models.Model):
             return 'utf-8-sig'
         return 'utf-8'
 
+    @classmethod
+    def get_delimiter_from_content(cls, content):
+        """
+        Guess CSV delimiter from a partial of header string.
+        :param content: byte
+        :return: string (';' or ',')
+        """
+        default_delimiter = ','
+
+        partial_header_string = content[:50]
+        comma_count = partial_header_string.count(b',')
+        if comma_count > 2:
+            return ','
+        comma_dot_count = partial_header_string.count(b';')
+        if comma_dot_count > 2:
+            return ';'
+
+        return default_delimiter
+
     def validate(self):
         from api.api_admin import BudgetUploadSerializer
 
         self.errors = list()
         content = self.file.read()
         enconding = self.get_enconding_from_content(content)
+        delimiter = self.get_delimiter_from_content(content)
         reader = csv.DictReader(codecs.iterdecode(content.splitlines(), enconding), dialect=csv.excel,
-                                delimiter=self.CSV_DELIMITER)
+                                delimiter=delimiter)
 
         # # Validate headers
         # header_fields = list(BudgetUploadSerializer._declared_fields.keys())
@@ -92,8 +110,9 @@ class Upload(models.Model):
         self.log = list()
         content = self.file.read()
         enconding = self.get_enconding_from_content(content)
+        delimiter = self.get_delimiter_from_content(content)
         reader = csv.DictReader(codecs.iterdecode(content.splitlines(), enconding), dialect=csv.excel,
-                                delimiter=self.CSV_DELIMITER)
+                                delimiter=delimiter)
 
         def update_category(instance, attr, new_value, add_log=True):
             old_value = getattr(instance, attr)

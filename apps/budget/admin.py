@@ -175,8 +175,8 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
             'fields': (('score_open_data', 'score_reports', 'score_data_quality', 'transparency_index'),),
         }),
     )
-    # inlines = (UploadInline, FunctionInline, AgencyInline)  # Commented because of large data timeouts.
-    inlines = (UploadInline, )
+    inlines = (UploadInline, FunctionInline, AgencyInline)  # Commented because of large data timeouts.
+    #inlines = (UploadInline, )
     list_display = ('country', 'year', 'transparency_index')
     list_filter = ('year', )
     readonly_fields = ('currency', )
