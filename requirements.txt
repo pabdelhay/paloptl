@@ -15,4 +15,5 @@ djangorestframework-recursive==0.1.2
 gunicorn==20.0.4
 Pillow==7.1.2
 psycopg2==2.8.5
+sentry-sdk==0.19.5
 whitenoise==5.0.1

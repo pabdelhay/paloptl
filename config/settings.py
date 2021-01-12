@@ -1,9 +1,13 @@
 import os
 import environ
 import moneyed
+import sentry_sdk
 from moneyed.localization import _FORMATTER
 from decimal import ROUND_HALF_EVEN
 from django.utils.translation import gettext_lazy as _
+from sentry_sdk.integrations.celery import CeleryIntegration
+from sentry_sdk.integrations.django import DjangoIntegration
+from sentry_sdk.integrations.redis import RedisIntegration
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -209,3 +213,12 @@ TWITTER_URL = 'https://twitter.com/ProPALOP'
 FACEBOOK_URL = 'https://www.facebook.com/propalop.tl/'
 INSTAGRAM_URL = 'https://www.instagram.com/propaloptlisc/'
 YOUTUBE_URL = 'https://www.youtube.com/channel/UCqQShed9k1_1tQqqduF_tcg'
+
+# SENTRY
+SENTRY_DSN = os.environ.get('SENTRY_DSN', "")
+if SENTRY_DSN:
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        integrations=[DjangoIntegration(), CeleryIntegration(), RedisIntegration()],
+        environment=ENV
+    )
