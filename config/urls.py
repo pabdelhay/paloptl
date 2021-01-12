@@ -19,6 +19,11 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+
+def sentry_debug_view(request):
+    division_by_zero = 1 / 0
+
+
 urlpatterns = i18n_patterns(
     path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
     path('cso_admin/', admin.site.urls),
@@ -30,6 +35,7 @@ urlpatterns += [
     path('', include('frontend.urls')),
     path('api/', include('api.urls')),
     path('i18n/', include('django.conf.urls.i18n')),
+    path('sentry-debug/', sentry_debug_view),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
