@@ -28,6 +28,15 @@ class BudgetAccountSerializer(serializers.ModelSerializer):
     label = serializers.SerializerMethodField()
     color = serializers.SerializerMethodField()
     color_hover = serializers.SerializerMethodField()
+    initial_budget_investment = serializers.SerializerMethodField()
+    initial_budget_operation = serializers.SerializerMethodField()
+    initial_budget_aggregated = serializers.SerializerMethodField()
+    budget_investment = serializers.SerializerMethodField()
+    budget_operation = serializers.SerializerMethodField()
+    budget_aggregated = serializers.SerializerMethodField()
+    execution_investment = serializers.SerializerMethodField()
+    execution_operation = serializers.SerializerMethodField()
+    execution_aggregated = serializers.SerializerMethodField()
 
     class Meta:
         fields = ('id', 'name', 'initial_budget_investment', 'initial_budget_operation', 'initial_budget_aggregated',
@@ -35,18 +44,45 @@ class BudgetAccountSerializer(serializers.ModelSerializer):
                   'execution_investment', 'execution_operation', 'execution_aggregated',
                   'last_update', 'children', 'label', 'color', 'color_hover', 'level', 'tree_id')
 
+    def get_initial_budget_investment(self, obj):
+        return obj.get_value('initial_budget_investment')
+
+    def get_initial_budget_operation(self, obj):
+        return obj.get_value('initial_budget_operation')
+
+    def get_initial_budget_aggregated(self, obj):
+        return obj.get_value('initial_budget_aggregated')
+
+    def get_budget_investment(self, obj):
+        return obj.get_value('budget_investment')
+
+    def get_budget_operation(self, obj):
+        return obj.get_value('budget_operation')
+
+    def get_budget_aggregated(self, obj):
+        return obj.get_value('budget_aggregated')
+
+    def get_execution_investment(self, obj):
+        return obj.get_value('execution_investment')
+
+    def get_execution_operation(self, obj):
+        return obj.get_value('execution_operation')
+
+    def get_execution_aggregated(self, obj):
+        return obj.get_value('execution_aggregated')
+
     def get_label(self, obj):
         return obj.get_taxonomy_label()
 
     def get_color(self, obj):
         color_index = 0
-        execution_value = obj.execution_aggregated or 0
-
-        # TODO: REMOVE ME
-        if not obj.budget_aggregated:
+        execution_value = obj.get_value('execution_aggregated') or 0
+        budget_aggregated = obj.get_value('budget_aggregated')
+        
+        if not budget_aggregated:
             return settings.TREEMAP_EXECUTION_COLORS[color_index]
 
-        execution_percent = execution_value / obj.budget_aggregated
+        execution_percent = execution_value / budget_aggregated
         if 0.2 < execution_percent <= 0.4:
             color_index = 1
         if 0.4 < execution_percent <= 0.6:

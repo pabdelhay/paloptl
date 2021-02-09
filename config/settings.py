@@ -1,10 +1,13 @@
 import os
+from decimal import ROUND_HALF_EVEN
+
 import environ
 import moneyed
 import sentry_sdk
-from moneyed.localization import _FORMATTER
-from decimal import ROUND_HALF_EVEN
+from django.conf.locale.en import formats as en_formats
+from django.conf.locale.pt import formats as pt_formats
 from django.utils.translation import gettext_lazy as _
+from moneyed.localization import _FORMATTER
 from sentry_sdk.integrations.celery import CeleryIntegration
 from sentry_sdk.integrations.django import DjangoIntegration
 from sentry_sdk.integrations.redis import RedisIntegration
@@ -232,8 +235,5 @@ if SENTRY_DSN:
         debug=True
     )
 
-
-from django.conf.locale.en import formats as en_formats
-from django.conf.locale.pt import formats as pt_formats
 en_formats.DATETIME_FORMAT = "d b Y H:i:s"
 pt_formats.DATETIME_FORMAT = "d b Y H:i:s"

@@ -60,6 +60,17 @@ class BudgetAccount(MPTTModel):
             name = self.parent.name + f" > {name}"
         return name
 
+    def get_value(self, field):
+        """
+        Get value from field. If field is not set, fetch value from inferred values.
+        :param field: string
+        :return: float
+        """
+        value = getattr(self, field)
+        if not value:
+            value = self.inferred_values.get(field, None)
+        return value
+
     def infer_aggregated_value(self, field):
         """
         Sum all descendants values from this field. Every descendant MUST have this field set, otherwise raises
