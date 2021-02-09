@@ -35,6 +35,7 @@ urlpatterns += [
     path('api/', include('api.urls')),
     path('i18n/', include('django.conf.urls.i18n')),
     path('sentry-debug/', sentry_debug_view),
+
     path('', include('frontend.urls')),
 ]
 

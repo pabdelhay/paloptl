@@ -21,7 +21,7 @@ environ.Env.read_env(env_file=os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = env('SECRET_KEY', default='#thisisarandomstringandshouldbereplacedinenv')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 ENV = os.environ.get('ENV', 'production')
 ALLOWED_HOSTS = ['*']
 
@@ -31,13 +31,16 @@ INTERNAL_IPS = [
 
 # Application definition
 INSTALLED_APPS = [
+    'test_without_migrations',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_nose',
 
+    'django_admin_inline_paginator',
     'debug_toolbar',
     'rest_framework',
     'rest_framework_recursive',
@@ -89,6 +92,10 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
+
+
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+TEST_WITHOUT_MIGRATIONS_COMMAND = 'django_nose.management.commands.test.Command'
 
 
 # Database
@@ -220,5 +227,13 @@ if SENTRY_DSN:
     sentry_sdk.init(
         dsn=SENTRY_DSN,
         integrations=[DjangoIntegration(), CeleryIntegration()],
-        environment=ENV
+        environment=ENV,
+        traces_sample_rate=1.0,
+        debug=True
     )
+
+
+from django.conf.locale.en import formats as en_formats
+from django.conf.locale.pt import formats as pt_formats
+en_formats.DATETIME_FORMAT = "d b Y H:i:s"
+pt_formats.DATETIME_FORMAT = "d b Y H:i:s"

@@ -55,3 +55,12 @@ class Budget(CountryMixin, models.Model):
         qs = budget_account_model.objects.filter(level=0).aggregate(budget=Sum('budget_aggregated'),
                                                                     execution=Sum('budget_execution'))
         return qs
+
+    def update_inferred_values(self):
+        """
+        Updates all budget inferred values.
+        """
+        budget_accounts = [self.functions, self.agencies]
+        for budget_account_qs in budget_accounts:
+            for budget_account in budget_account_qs.all().order_by('-level'):
+                budget_account.update_inferred_values()

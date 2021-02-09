@@ -85,20 +85,30 @@ class Upload(models.Model):
                                 delimiter=delimiter)
 
         # # Validate headers
-        # header_fields = list(BudgetUploadSerializer._declared_fields.keys())
-        #
-        # if reader.fieldnames != header_fields:
-        #     self.errors.append(_("<strong>Line {line}:</strong> Header is not in standard. "
-        #                          "It must be exact as <i>{header_fields}</i>"
-        #                          .format(line=reader.line_num, header_fields=str(header_fields))))
-        for row in reader:
-            serializer = BudgetUploadSerializer(data=empty_string_to_none(row))
-            if not serializer.is_valid():
-                for field, errors_list in serializer.errors.items():
-                    error_msg = "; ".join(errors_list)
-                    self.errors.append(_("<strong>Line {line} ({column})</strong>: {error_msg} Input was: {input}"
-                                         .format(line=reader.line_num, column=field, error_msg=error_msg,
-                                                 input=row[field])))
+        header_fields = list(BudgetUploadSerializer._declared_fields.keys())
+
+        for field in reader.fieldnames:
+            if field not in header_fields:
+                if field.strip() in header_fields:
+                    self.errors.append(_("<strong>Line {line}:</strong> <b>'{field}'</b> is not a valid header. "
+                                         "Did you mean: <b>'{field_correct}'</b>? "
+                                         "<small>Remove any white spaces before and after the field.</small>"
+                                         .format(line=reader.line_num, field=field, field_correct=field.strip())))
+                else:
+                    self.errors.append(_("<strong>Line {line}:</strong> <b>'{field}'</b> is not a valid header. "
+                                         "It must be exact one of: <i>{header_fields}</i>"
+                                         .format(line=reader.line_num, field=field, header_fields=str(header_fields))))
+
+        if not self.errors:
+            # Only check for data fields if header is ok.
+            for row in reader:
+                serializer = BudgetUploadSerializer(data=empty_string_to_none(row))
+                if not serializer.is_valid():
+                    for field, errors_list in serializer.errors.items():
+                        error_msg = "; ".join(errors_list)
+                        self.errors.append(_("<strong>Line {line} ({column})</strong>: {error_msg} Input was: {input}"
+                                             .format(line=reader.line_num, column=field, error_msg=error_msg,
+                                                     input=row[field])))
 
         return not bool(len(self.errors))
 

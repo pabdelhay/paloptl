@@ -1,8 +1,7 @@
-from django.conf import settings
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
-from djmoney.money import Money
+from django_admin_inline_paginator.admin import TabularInlinePaginated
 
 from apps.budget.choices import UploadStatusChoices
 from apps.budget.models import Upload, Budget
@@ -43,8 +42,9 @@ class UploadInline(admin.TabularInline):
     get_log.short_description = "log"
 
 
-class BudgetAccountInline(admin.TabularInline):
+class BudgetAccountInline(TabularInlinePaginated):
     extra = 0
+    per_page = 50
     readonly_fields = ('code', 'get_group_taxonomy', 'get_subgroup_taxonomy', 'last_update',
                        'get_budget_investment', 'get_budget_operation', 'get_budget_aggregated',
                        'get_execution_investment', 'get_execution_operation', 'get_execution_aggregated')
@@ -52,6 +52,9 @@ class BudgetAccountInline(admin.TabularInline):
               'get_budget_aggregated', 'get_execution_investment', 'get_execution_operation',
               'get_execution_aggregated', 'last_update')
     classes = ['collapse']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
     def has_add_permission(self, request, obj):
         return False
@@ -62,50 +65,32 @@ class BudgetAccountInline(admin.TabularInline):
     @staticmethod
     def _get_budget_field(obj, field):
         current_value = getattr(obj, field)
+        inferred_value = obj.inferred_values.get(field, None)
+        if not current_value and not inferred_value:
+            return "-"
 
-        if not current_value:
-            # No explicit value set. Try to infer value from the whole category.
+        final_value = current_value
+        class_name = ''
+        title = ''
+        if current_value and inferred_value:
+            if current_value != inferred_value:
+                class_name = 'inferred-different-from-current'
+                title = _("Explicit given value differs from inferred value: {inferred}"
+                          .format(raw_money_display(inferred_value)))
+        elif not current_value and inferred_value:
+            final_value = inferred_value
+            class_name = 'inferred-value'
+            title = _("Value inferred from descendants or siblings.")
 
-            if obj.parent is not None:
-                # Inferring only root categories for now.
-                return "-"
-
-            try:
-                inferred_value = obj.infer_aggregated_value(field)
-            except BudgetAccount.NotAllDescendantsHaveValueSet:
-                return "-"
-            if not inferred_value:
-                return "-"
-
-            inferred_value_text = _("Automatically calculated from descendants")
-            html = f'{raw_money_display(inferred_value)} ' \
-                   f'<span class="ui-icon ui-icon-calculator" title="{inferred_value_text}"></span>'
-            return html
-
-        value_class, value_title = '', ''
-        if not obj.parent:
-            try:
-                inferred_value = obj.infer_aggregated_value(field)
-            except BudgetAccount.NotAllDescendantsHaveValueSet:
-                pass
-            if inferred_value and inferred_value != current_value:
-                value_class = 'inferred-different-from-current'
-                value_title = _("Explicit given value differs from descendants sum")
-                value_title += f" ({raw_money_display(inferred_value)})"
-
-        current_value_money = raw_money_display(current_value)
-        html = f'{current_value_money}'
-        if value_class and value_title:
-            html = f'<span class="{value_class}" title="{value_title}">{current_value_money}</span>'
+        html = f'<span class="{class_name}" title="{title}">{raw_money_display(final_value)}</span>'
 
         # Value different from initial.
         initial_value = getattr(obj, f"initial_{field}", None)
-        if initial_value and initial_value != current_value:
+        if initial_value and initial_value != final_value:
             value_updated_text = _("Showing updated value. Initial value was")
             raw_initial_value = raw_money_display(initial_value)
-            html += f' <span class="ui-icon ui-icon-arrowrefresh-1-e trigger-initial-value" ' \
-                    f'title="{value_updated_text}: {raw_initial_value}"></span>' \
-                    f'<span class="initial-value"><br>initial: {raw_initial_value}</span>'
+            html = f'<span class="ui-icon ui-icon-arrowrefresh-1-e trigger-initial-value" ' \
+                   f'title="{value_updated_text}: {raw_initial_value}"></span> ' + html
 
         return html
 
@@ -176,7 +161,6 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
         }),
     )
     inlines = (UploadInline, FunctionInline, AgencyInline)  # Commented because of large data timeouts.
-    #inlines = (UploadInline, )
     list_display = ('country', 'year', 'transparency_index')
     list_filter = ('year', )
     readonly_fields = ('currency', )

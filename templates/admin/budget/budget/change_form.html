@@ -8,7 +8,7 @@
     .upload-error { background-color: #f8d7da !important; }
     .upload-success { background-color: #d4edda !important; }
     .initial-value { color: #a5a5a5; display: none; }
-    .inferred-value { color: #f5dd5d; }
+    .inferred-value { color: #baa63d; }
     .inferred-different-from-current { color: #ff5654; }
 
     .inline-group .ui-icon { cursor: help; }
@@ -26,7 +26,7 @@
 </style>
 
 <script type="text/javascript">
-    $(function () {
+    $(document).ready(function () {
         // Log modal
         $(".log-link").click(function(ev){
             ev.preventDefault();
@@ -84,6 +84,14 @@
         {% if add %}
             $('#functions-group, #agencies-group').hide();
             $('.field-currency').remove();
+        {% endif %}
+
+        {% if request.GET.page %}
+            setTimeout(function () {
+                // Open collapsed budget account inlines if pagination.
+                $('.collapse-toggle')[0].click();
+                $('.collapse-toggle')[1].click();
+            }, 10);
         {% endif %}
     });
 </script>

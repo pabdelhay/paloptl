@@ -1,3 +1,4 @@
+from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.db.models import Sum
 from django.utils.translation import gettext_lazy as _
@@ -29,6 +30,9 @@ class BudgetAccount(MPTTModel):
     execution_investment = models.FloatField(verbose_name=_("execution for investment"), null=True, blank=True)
     execution_operation = models.FloatField(verbose_name=_("execution for operation"), null=True, blank=True)
     execution_aggregated = models.FloatField(verbose_name=_("execution"), null=True, blank=True)
+
+    inferred_values = JSONField(default=dict,
+                                help_text=_("inferred values from siblings or descendants"))
 
     last_update = models.DateTimeField(verbose_name=_("last update"), auto_now=True)
 
@@ -65,11 +69,49 @@ class BudgetAccount(MPTTModel):
         """
         descendants_qs = self.get_descendants()
         descendants_count = descendants_qs.count()
-        if not descendants_count:
-            return None
 
-        descendants_with_value = descendants_qs.exclude(**{f'{field}__isnull': True}).count()
-        if descendants_with_value != descendants_count:
-            raise self.NotAllDescendantsHaveValueSet()
+        # Try to infer from descendants
+        if descendants_count:
+            descendants_with_value = descendants_qs.exclude(**{f'{field}__isnull': True}).count()
+            if descendants_with_value == descendants_count:
+                # All descendants have values set, so we infer from the sum of these values.
+                return descendants_qs.aggregate(total=Sum(field))['total']
 
-        return descendants_qs.aggregate(total=Sum(field))['total']
+        # Try to infer from siblings
+        if field.endswith('_aggregated'):
+            base_field = field.replace("_aggregated", "")
+            investment_field = getattr(self, f"{base_field}_investment", None)
+            operation_field = getattr(self, f"{base_field}_operation", None)
+            if investment_field and operation_field:
+                return investment_field + operation_field
+        elif field.endswith('_investment'):
+            base_field = field.replace("_investment", "")
+            aggregated_field = getattr(self, f"{base_field}_aggregated", None)
+            operation_field = getattr(self, f"{base_field}_operation", None)
+            if operation_field and aggregated_field:
+                return aggregated_field - operation_field
+        elif field.endswith('_operation'):
+            base_field = field.replace("_operation", "")
+            aggregated_field = getattr(self, f"{base_field}_aggregated", None)
+            investment_field = getattr(self, f"{base_field}_investment", None)
+            if investment_field and aggregated_field:
+                return aggregated_field - investment_field
+
+        return None
+
+    def update_inferred_values(self):
+        """
+        Updates the 'inferred_values' json field with values aggregated from siblings or descendants.
+        :returns: dict (inferred_values)
+        """
+        fields = ['budget_investment', 'budget_operation', 'budget_aggregated',
+                  'execution_investment', 'execution_operation', 'execution_aggregated']
+        self.inferred_values = {}
+        for field in fields:
+            inferred = self.infer_aggregated_value(field)
+            if not inferred:
+                continue
+            self.inferred_values[field] = inferred
+
+        self.save()
+        return self.inferred_values
