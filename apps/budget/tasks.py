@@ -13,20 +13,40 @@ def import_file(upload_id):
     upload.save()
 
     # Validation
-    is_valid = upload.validate()
+    try:
+        is_valid = upload.validate()
+    except Exception as e:
+        # Catching unexpected exception to avoid status stuck in 'validating'.
+        capture_exception(e)
+        upload.status = UploadStatusChoices.VALIDATION_ERROR
+        upload.errors.append(_("An unexpected error occurred while validating the upload. "
+                               "Please contact the dev team."))
+        upload.save()
+        return upload
+
     if not is_valid:
         upload.status = UploadStatusChoices.VALIDATION_ERROR
         upload.save()
         return upload
 
     # Import
-    upload.file.seek(0)
-    is_valid = upload.do_import()
+    try:
+        upload.file.seek(0)
+        is_valid = upload.do_import()
+    except Exception as e:
+        # Catching unexpected exception to avoid status stuck in 'validating'.
+        capture_exception(e)
+        upload.status = UploadStatusChoices.IMPORT_ERROR
+        upload.errors.append(_("An unexpected error occurred while executing the import. Please contact the dev team."))
+        upload.save()
+        return upload
+
     if not is_valid:
         upload.status = UploadStatusChoices.IMPORT_ERROR
         upload.save()
         return upload
 
+    # Update inferred values
     try:
         upload.budget.update_inferred_values()
         upload.status = UploadStatusChoices.SUCCESS

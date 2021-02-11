@@ -78,7 +78,7 @@ class BudgetAccountSerializer(serializers.ModelSerializer):
         color_index = 0
         execution_value = obj.get_value('execution_aggregated') or 0
         budget_aggregated = obj.get_value('budget_aggregated')
-        
+
         if not budget_aggregated:
             return settings.TREEMAP_EXECUTION_COLORS[color_index]
 
