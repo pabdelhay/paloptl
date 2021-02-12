@@ -93,7 +93,10 @@ class BudgetAccount(MPTTModel):
 
         # Try to infer from descendants
         if descendants_count > 0:
-            return descendants_qs.aggregate(total=Sum(field))['total']
+            descendants_with_value = descendants_qs.exclude(**{f'{field}__isnull': True}).exists()
+            if descendants_with_value:
+                # At least one descendants have values set, so we infer from the sum of these values.
+                return descendants_qs.aggregate(total=Sum(field))['total']
 
         # Try to infer from siblings
         if field.endswith('_aggregated'):
