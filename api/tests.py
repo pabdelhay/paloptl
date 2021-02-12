@@ -55,3 +55,15 @@ class APITestCase(TestCase):
                          "First historical data should be from 2017's budget.")
         self.assertEqual(r['data'][0]['budget_aggregated'], 20, "Budget aggregated should be 20.")
         self.assertEqual(r['data'][0]['execution_aggregated'], 20, "Execution aggregated should be 20.")
+
+        sub_function = Function.objects.filter(level=1).last()
+        response = self.client.get(self.get_api_url(base_url), {'budget_account': 'functions',
+                                                                'budget_account_id': sub_function.id})
+        r = response.json()
+        self.assertEqual(response.status_code, status.HTTP_200_OK, "Wrong status code response")
+        self.assertEqual(r['name'], sub_function.name,
+                         "Name of historical on sub level should be the name of the function.")
+        self.assertEqual(r['data'][0]['year'], '2017',
+                         "First historical data should be from 2017's budget.")
+        self.assertEqual(r['data'][0]['budget_aggregated'], 20, "Budget aggregated should be 20.")
+        self.assertEqual(r['data'][0]['execution_aggregated'], 20, "Execution aggregated should be 20.")
