@@ -135,17 +135,18 @@ class Upload(models.Model):
                 if was_previously_inferred:
                     instance.inferred_fields[attr] = False
 
-            if old_value != new_value:
-                setattr(instance, attr, new_value)
-                new_value_display = format_money(Money(new_value, currency=currency), include_symbol=False)
-                old_value_display = format_money(Money(old_value, currency=currency), include_symbol=False) \
-                    if old_value is not None else _("(empty)")
-                if add_log:
-                    msg = _("Updated {taxonomy} <strong>{name}</strong> <i>{field_name}</i> from {old_value} "
-                            "to <span class='log-featured'>{new_value}</span>"
-                            .format(taxonomy=instance.get_taxonomy(level=level), name=instance.get_hierarchy_name(),
-                                    field_name=field_name, old_value=old_value_display, new_value=new_value_display))
-                    self.log.append(msg)
+                if old_value != new_value:
+                    # Set new value and save to log.
+                    setattr(instance, attr, new_value)
+                    new_value_display = format_money(Money(new_value, currency=currency), include_symbol=False)
+                    old_value_display = format_money(Money(old_value, currency=currency), include_symbol=False) \
+                        if old_value is not None else _("(empty)")
+                    if add_log:
+                        msg = _("Updated {taxonomy} <strong>{name}</strong> <i>{field_name}</i> from {old_value} "
+                                "to <span class='log-featured'>{new_value}</span>"
+                                .format(taxonomy=instance.get_taxonomy(level=level), name=instance.get_hierarchy_name(),
+                                        field_name=field_name, old_value=old_value_display, new_value=new_value_display))
+                        self.log.append(msg)
 
         for row in reader:
             serializer = BudgetUploadSerializer(data=empty_string_to_none(row))
