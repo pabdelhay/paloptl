@@ -6,7 +6,6 @@ from django_admin_inline_paginator.admin import TabularInlinePaginated
 from apps.budget.choices import UploadStatusChoices
 from apps.budget.models import Upload, Budget
 from apps.budget.models.agency import Agency
-from apps.budget.models.budget_account import BudgetAccount
 from apps.budget.models.function import Function
 from apps.budget.tasks import import_file
 from common.admin import CountryPermissionMixin
