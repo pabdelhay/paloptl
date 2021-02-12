@@ -1,5 +1,6 @@
 from django.conf import settings
-from django.db.models import F, Sum
+from django.db import models
+from django.db.models import F, Sum, Value
 from rest_framework import serializers
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -213,6 +214,7 @@ class BudgetViewset(ReadOnlyModelViewSet):
             budget_account_model = Agency
         elif budget_account_param == 'functions':
             budget_account_model = Function
+        budget_account_model_name = budget_account_model.get_model_name()  # 'function' or 'agency'
 
         data = {'code': None, 'name': None, 'data': []}
 
@@ -229,14 +231,21 @@ class BudgetViewset(ReadOnlyModelViewSet):
                     # If parent has no code, return empty list
                     return Response(data)
 
-            qs = budget_account_model.objects.filter(budget__country=country, code=code)\
-                .values('budget_aggregated', 'execution_aggregated', year=F('budget__year'))
+            qs = budget_account_model.objects.filter(budget__country=country, code=code).values(year=F('budget__year')) \
+                .annotate(budget_aggregated=F('budget_aggregated'),
+                          execution_aggregated=F('execution_aggregated'),
+                          inferred_budget_aggregated=F('inferred_values__budget_aggregated'),
+                          inferred_execution_aggregated=F('inferred_values__execution_aggregated')) \
+                .order_by('year')
         else:
             # Get aggregated historical data for the country.
             name = country.name
             code = None
-            qs = budget_account_model.objects.filter(budget__country=country, level=0).values(year=F('budget__year')) \
-                .annotate(budget_aggregated=Sum('budget_aggregated'), execution_aggregated=Sum('execution_aggregated'))\
+            qs = Budget.objects.filter(country=country).values('year') \
+                .annotate(budget_aggregated=F(f'{budget_account_model_name}_budget'),
+                          execution_aggregated=F(f'{budget_account_model_name}_execution'),
+                          inferred_budget_aggregated=F(f'{budget_account_model_name}_budget'),
+                          inferred_execution_aggregated=F(f'{budget_account_model_name}_execution')) \
                 .order_by('year')
 
         data_serializer = HistoricalDataSerializer(qs, many=True)

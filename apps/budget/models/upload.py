@@ -79,9 +79,9 @@ class Upload(models.Model):
 
         self.errors = list()
         content = self.file.read()
-        enconding = self.get_enconding_from_content(content)
+        encoding = self.get_enconding_from_content(content)
         delimiter = self.get_delimiter_from_content(content)
-        reader = csv.DictReader(codecs.iterdecode(content.splitlines(), enconding), dialect=csv.excel,
+        reader = csv.DictReader(codecs.iterdecode(content.splitlines(), encoding), dialect=csv.excel,
                                 delimiter=delimiter)
 
         # # Validate headers
@@ -119,15 +119,22 @@ class Upload(models.Model):
         self.errors = list()
         self.log = list()
         content = self.file.read()
-        enconding = self.get_enconding_from_content(content)
+        encoding = self.get_enconding_from_content(content)
         delimiter = self.get_delimiter_from_content(content)
-        reader = csv.DictReader(codecs.iterdecode(content.splitlines(), enconding), dialect=csv.excel,
+        reader = csv.DictReader(codecs.iterdecode(content.splitlines(), encoding), dialect=csv.excel,
                                 delimiter=delimiter)
 
         def update_category(instance, attr, new_value, add_log=True):
             old_value = getattr(instance, attr)
             field_name = instance.__class__._meta.get_field(attr).verbose_name
             level = 1 if instance.parent else 0
+
+            if new_value is not None:
+                # Remove field from inferred_fields if it was previously inferred.
+                was_previously_inferred = instance.inferred_fields.get(attr, None)
+                if was_previously_inferred:
+                    instance.inferred_fields[attr] = False
+
             if old_value != new_value:
                 setattr(instance, attr, new_value)
                 new_value_display = format_money(Money(new_value, currency=currency), include_symbol=False)
