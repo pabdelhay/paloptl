@@ -72,15 +72,14 @@ class BudgetAccountInline(TabularInlinePaginated):
         final_value = current_value
         class_name = ''
         title = ''
-        if current_value and inferred_value:
-            if current_value != inferred_value:
-                class_name = 'inferred-different-from-current'
-                title = _("Explicit given value differs from inferred value: {inferred}"
-                          .format(raw_money_display(inferred_value)))
-        elif not current_value and inferred_value:
+        if obj.inferred_fields.get(field, None):
             final_value = inferred_value
             class_name = 'inferred-value'
             title = _("Value inferred from descendants or siblings.")
+        if inferred_value and current_value != inferred_value:
+            class_name = 'inferred-different-from-current'
+            title = _("Explicit given value differs from inferred value: {inferred}"
+                      .format(raw_money_display(inferred_value)))
 
         html = f'<span class="{class_name}" title="{title}">{raw_money_display(final_value)}</span>'
 
