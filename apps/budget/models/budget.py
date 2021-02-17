@@ -25,20 +25,6 @@ class Budget(CountryMixin, models.Model):
     agency_budget = models.FloatField(verbose_name=_("agency's execution"), null=True, blank=True, editable=False)
     agency_execution = models.FloatField(verbose_name=_("agency's execution"), null=True, blank=True, editable=False)
 
-    # TODO: Move to a different model.
-    score_open_data = models.SmallIntegerField(verbose_name=_("score - open data"), help_text="0 - 100",
-                                               null=True, blank=True, validators=[MinValueValidator(0),
-                                                                                  MaxValueValidator(100)])
-    score_reports = models.SmallIntegerField(verbose_name=_("score - reports"), help_text="0 - 100",
-                                             null=True, blank=True, validators=[MinValueValidator(0),
-                                                                                MaxValueValidator(100)])
-    score_data_quality = models.SmallIntegerField(verbose_name=_("score - data quality"), help_text="0 - 200",
-                                                  null=True, blank=True, validators=[MinValueValidator(0),
-                                                                                     MaxValueValidator(200)])
-    transparency_index = models.SmallIntegerField(verbose_name=_("transparency index"), help_text="0 - 100",
-                                                  null=True, blank=True, validators=[MinValueValidator(0),
-                                                                                     MaxValueValidator(100)])
-
     class Meta:
         verbose_name = _("budget")
         verbose_name_plural = _("budgets")

@@ -1,15 +1,18 @@
 from django.contrib import admin
+from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 from django_admin_inline_paginator.admin import TabularInlinePaginated
+from djmoney.money import Money
 
 from apps.budget.choices import UploadStatusChoices
-from apps.budget.models import Upload, Budget
+from apps.budget.models import Upload, Budget, UploadLog
 from apps.budget.models.agency import Agency
 from apps.budget.models.function import Function
+from apps.budget.models.transparency_index import TransparencyIndex
 from apps.budget.tasks import import_file
 from common.admin import CountryPermissionMixin
-from common.methods import raw_money_display
+from common.methods import raw_money_display, money_display
 
 
 class UploadInline(admin.TabularInline):
@@ -22,22 +25,23 @@ class UploadInline(admin.TabularInline):
     def get_log(self, obj):
         if not obj.id:
             return "-"
-        link_text = _("Log") + f" ({len(obj.log)})"
-        log = "<br>".join(obj.log) if obj.log else ""
+
+        html = "-"
         if obj.status in UploadStatusChoices.get_error_status():
             link_text = _("Errors") + f" ({len(obj.errors)})"
-            log = "<br>".join(obj.errors)
+            errors = "<br>".join(obj.errors)
+            html = f'<div class="upload-log" id="upload-dialog-{obj.id}">{errors}</div>' \
+                   f'<a href="#" class="log-link" data-upload_id="{obj.id}">{link_text}</a>' \
 
-        html = f'<div class="upload-log-wrapper">' \
-               f'   <input type="hidden" name="status-{obj.id}" class="status-input" value="{obj.status}">'
-        if obj.status != UploadStatusChoices.VALIDATING:
-            html += \
-               f'   <div class="upload-log" id="upload-dialog-{obj.id}">{log}</div>' \
-               f'   <a href="#" class="log-link" data-upload_id="{obj.id}">{link_text}</a>'
-        else:
-            html += f'-'
-        html += f'</div>'
-        return html
+        elif obj.status in UploadStatusChoices.get_success_status():
+            log_count = obj.logs.count()
+            log_link = reverse(f'admin:budget_uploadlog_changelist') + f'?upload_id={obj.id}'
+            html = f'<a href="{log_link}" target="_blank" >Log ({log_count})</a>'
+
+        return f'<div class="upload-log-wrapper">' \
+               f'   <input type="hidden" name="status-{obj.id}" class="status-input" value="{obj.status}">' \
+               f'' + html + \
+               f'</div>'
     get_log.short_description = "log"
 
 
@@ -154,12 +158,9 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
         ("Base info", {
             'fields': ('country', 'year', 'currency',)
         }),
-        ("Transparency Index", {
-            'fields': (('score_open_data', 'score_reports', 'score_data_quality', 'transparency_index'),),
-        }),
     )
     inlines = (UploadInline, FunctionInline, AgencyInline)  # Commented because of large data timeouts.
-    list_display = ('country', 'year', 'transparency_index')
+    list_display = ('country', 'year')
     list_filter = ('year', )
     readonly_fields = ('currency', )
 
@@ -185,3 +186,55 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
                     # TODO: Resolve unmapped errors.
                     pass
         formset.save(commit=True)
+
+
+@admin.register(TransparencyIndex)
+class TransparencyIndexAdmin(CountryPermissionMixin, admin.ModelAdmin):
+    list_display = ('country', 'year', 'score_open_data', 'score_reports', 'score_data_quality', 'transparency_index',)
+    list_editable = ('score_open_data', 'score_reports', 'score_data_quality', 'transparency_index',)
+    list_filter = ('year', 'country', )
+    fieldsets = (
+        (_("Base info"), {
+            'fields': ('country', 'year', )
+        }),
+        (_("Transparency Index"), {
+            'fields': (('score_open_data', 'score_reports', 'score_data_quality', 'transparency_index'),),
+        }),
+    )
+
+
+@admin.register(UploadLog)
+class UploadLogAdmin(CountryPermissionMixin, admin.ModelAdmin):
+    country_lookup_field = 'upload__budget__country'
+    list_display = ('log_type', '_category_type', 'category_name', '_field', '_old_value', '_new_value', 'upload',
+                    'updated_by', 'time')
+    list_filter = ('log_type', )
+    readonly_fields = ('_old_value', '_new_value')
+    search_fields = ('field', 'category_name')
+
+    def lookup_allowed(self, lookup, value):
+        if lookup in ('upload_id',):
+            return True
+        return super().lookup_allowed(lookup, value)
+
+    def _category_type(self, obj):
+        return obj.category.get_taxonomy_label()
+    _category_type.short_description = _("category type")
+
+    def _old_value(self, obj):
+        if not obj.old_value:
+            return "-"
+        return raw_money_display(obj.old_value)
+    _old_value.short_description = _("old value")
+
+    def _new_value(self, obj):
+        if not obj.new_value:
+            return "-"
+        return raw_money_display(obj.new_value)
+    _new_value.short_description = _("new value")
+
+    def _field(self, obj):
+        if not obj.field:
+            return "-"
+        return obj.category.__class__._meta.get_field(obj.field).verbose_name
+    _field.short_description = _("field")

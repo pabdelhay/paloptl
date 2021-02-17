@@ -22,3 +22,12 @@ class UploadStatusChoices(models.TextChoices):
     @classmethod
     def get_in_progress_status(cls):
         return [cls.VALIDATING, cls.IMPORTING]
+
+    @classmethod
+    def get_success_status(cls):
+        return [cls.SUCCESS]
+
+
+class LogTypeChoices(models.TextChoices):
+    NEW_CATEGORY = 'new_category', _("new category")
+    UPDATE = 'update', _("update")

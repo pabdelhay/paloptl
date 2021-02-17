@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ReadOnlyModelViewSet
 from rest_framework_recursive.fields import RecursiveField
 
-from apps.budget.models import Budget, Function, Agency
+from apps.budget.models import Budget, Function, Agency, TransparencyIndex
 from apps.geo.models import Country
 
 
@@ -132,12 +132,13 @@ class RankingParamsSerializer(serializers.Serializer):
     year = serializers.IntegerField(required=False)
 
 
-class RankingSerializer(BudgetSerializer):
+class RankingSerializer(serializers.ModelSerializer):
     country = CountrySerializer()
 
     class Meta:
-        model = Budget
-        fields = BudgetSerializer.Meta.fields + ('country', )
+        model = TransparencyIndex
+        fields = ('id', 'country', 'year', 'score_open_data', 'score_reports', 'score_data_quality',
+                  'transparency_index',)
 
 
 class BudgetViewset(ReadOnlyModelViewSet):
@@ -175,9 +176,10 @@ class BudgetViewset(ReadOnlyModelViewSet):
                 filters['year'] = filter_year
             else:
                 filters['transparency_index__isnull'] = False
-            last_budget_with_index = Budget.objects.select_related('country').filter(**filters).order_by('year').last()
-            if last_budget_with_index:
-                budget_list.append(last_budget_with_index)
+            last_transparency_index = TransparencyIndex.objects.select_related('country')\
+                .filter(**filters).order_by('year').last()
+            if last_transparency_index:
+                budget_list.append(last_transparency_index)
 
         serializer = RankingSerializer(budget_list, many=True)
         average_dict = get_average_dict(budget_list)

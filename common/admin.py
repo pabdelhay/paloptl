@@ -1,6 +1,3 @@
-from django.contrib import admin
-
-
 class CountryPermissionMixin(object):
     """
     Filter admin lists only for instances related to user's country.

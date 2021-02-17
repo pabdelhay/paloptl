@@ -8,13 +8,12 @@ from django.conf import settings
 from django.contrib.postgres.fields import ArrayField
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.validators import FileExtensionValidator
-from django.db import models
+from django.db import models, transaction
 from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
-from djmoney.money import Money
-from moneyed.localization import format_money
 
-from apps.budget.choices import UploadReportChoices, UploadStatusChoices
+from apps.budget.choices import UploadReportChoices, UploadStatusChoices, LogTypeChoices
+from apps.budget.models.upload_log import UploadLog
 
 
 def get_upload_path(instance, filename):
@@ -40,6 +39,7 @@ class Upload(models.Model):
                               editable=False)
 
     errors = ArrayField(models.CharField(max_length=1000), verbose_name=_("errors"), default=list, editable=False)
+    # TODO: Remove after migrate to UploadLog
     log = ArrayField(models.CharField(max_length=1000), verbose_name=_("log"), default=list, editable=False)
 
     uploaded_on = models.DateTimeField(verbose_name=_("uploaded on"), auto_now_add=True)
@@ -47,7 +47,7 @@ class Upload(models.Model):
                                     editable=False)
 
     def __str__(self):
-        return f"{self.get_report_display()}"
+        return f"{self.budget.country.name} ({self.budget.year}) - #{self.id}"
 
     @classmethod
     def get_enconding_from_content(cls, content):
@@ -114,10 +114,11 @@ class Upload(models.Model):
 
     def do_import(self):
         from api.api_admin import BudgetUploadSerializer
-        currency = self.budget.currency
+        upload = self
 
-        self.errors = list()
-        self.log = list()
+        self.errors = list()  # [string]
+        log = list()  # [UploadLog]
+
         content = self.file.read()
         encoding = self.get_enconding_from_content(content)
         delimiter = self.get_delimiter_from_content(content)
@@ -126,8 +127,6 @@ class Upload(models.Model):
 
         def update_category(instance, attr, new_value, add_log=True):
             old_value = getattr(instance, attr)
-            field_name = instance.__class__._meta.get_field(attr).verbose_name
-            level = 1 if instance.parent else 0
 
             if new_value is not None:
                 # Remove field from inferred_fields if it was previously inferred.
@@ -136,17 +135,15 @@ class Upload(models.Model):
                     instance.inferred_fields[attr] = False
 
                 if old_value != new_value:
-                    # Set new value and save to log.
+                    # Set new value and add to log.
                     setattr(instance, attr, new_value)
-                    new_value_display = format_money(Money(new_value, currency=currency), include_symbol=False)
-                    old_value_display = format_money(Money(old_value, currency=currency), include_symbol=False) \
-                        if old_value is not None else _("(empty)")
+
                     if add_log:
-                        msg = _("Updated {taxonomy} <strong>{name}</strong> <i>{field_name}</i> from {old_value} "
-                                "to <span class='log-featured'>{new_value}</span>"
-                                .format(taxonomy=instance.get_taxonomy(level=level), name=instance.get_hierarchy_name(),
-                                        field_name=field_name, old_value=old_value_display, new_value=new_value_display))
-                        self.log.append(msg)
+                        upload_log = UploadLog(upload=upload, log_type=LogTypeChoices.UPDATE,
+                                               category=instance, field=attr, old_value=old_value,
+                                               new_value=new_value, updated_by=upload.uploaded_by,
+                                               category_name=instance.name)
+                        log.append(upload_log)
 
         for row in reader:
             serializer = BudgetUploadSerializer(data=empty_string_to_none(row))
@@ -174,8 +171,9 @@ class Upload(models.Model):
                 category = category_set.filter(parent__isnull=True).get(reduce(operator.or_, filters))
             except ObjectDoesNotExist:
                 category = category_set.create(name=row_category, code=row_category_code)
-                self.log.append(_("Created {taxonomy} <strong>{name}</strong>"
-                                  .format(taxonomy=category_model.get_taxonomy(level=0), name=row_category)))
+                upload_log = UploadLog(upload=upload, log_type=LogTypeChoices.NEW_CATEGORY, category=category,
+                                       updated_by=upload.uploaded_by, category_name=category.name)
+                log.append(upload_log)
 
             instance = category
             instance.code = row_category_code
@@ -187,11 +185,12 @@ class Upload(models.Model):
                         filters.append(Q(code=row_subcategory_code))
                     subcategory = category_set.filter(parent=category).get(reduce(operator.or_, filters))
                 except ObjectDoesNotExist:
-                    subcategory = category_model(name=row_subcategory, parent=category, budget=self.budget,
-                                                 code=row_subcategory_code)
-                    self.log.append(_("Created {taxonomy} <strong>{name}</strong>"
-                                      .format(taxonomy=category_model.get_taxonomy(level=1),
-                                              name=subcategory.get_hierarchy_name())))
+                    subcategory = category_set.create(name=row_subcategory, parent=category, budget=self.budget,
+                                                      code=row_subcategory_code)
+                    upload_log = UploadLog(upload=upload, log_type=LogTypeChoices.NEW_CATEGORY, category=subcategory,
+                                           updated_by=upload.uploaded_by, category_name=subcategory.name)
+                    log.append(upload_log)
+
                 instance = subcategory
                 instance.code = row_subcategory_code
 
@@ -221,6 +220,8 @@ class Upload(models.Model):
 
         try:
             self.save()
+            with transaction.atomic():
+                UploadLog.objects.bulk_create(log)
         except Exception as exc:
             self.errors.append(str(exc))
             return False
