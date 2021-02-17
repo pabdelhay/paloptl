@@ -176,7 +176,7 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
             instance.save()
             if is_new:
                 request.session['upload_in_progress'] = instance.id
-                async_task = import_file.delay(instance.id)
+                async_task = import_file.apply_async(kwargs={'upload_id': instance.id}, countdown=5)
                 if async_task.status == 'SUCCESS':
                     # For easter execution of import_file (synchronous on dev mode)
                     instance.refresh_from_db()
