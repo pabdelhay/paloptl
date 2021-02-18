@@ -190,7 +190,7 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
 
 
 @admin.register(TransparencyIndex)
-class TransparencyIndexAdmin(CountryPermissionMixin, admin.ModelAdmin):
+class TransparencyIndexAdmin(admin.ModelAdmin):
     list_display = ('country', 'year', 'score_open_data', 'score_reports', 'score_data_quality', 'transparency_index',)
     list_editable = ('score_open_data', 'score_reports', 'score_data_quality', 'transparency_index',)
     list_filter = ('year', 'country', )
@@ -203,15 +203,34 @@ class TransparencyIndexAdmin(CountryPermissionMixin, admin.ModelAdmin):
         }),
     )
 
+    def has_add_permission(self, request):
+        return request.user.is_superuser
+
+    def has_change_permission(self, request, obj=None):
+        return request.user.is_superuser
+
+    def has_delete_permission(self, request, obj=None):
+        return request.user.is_superuser
+
 
 @admin.register(UploadLog)
 class UploadLogAdmin(CountryPermissionMixin, admin.ModelAdmin):
     country_lookup_field = 'upload__budget__country'
     list_display = ('log_type', '_category_type', 'category_name', '_field', '_old_value', '_new_value', 'upload',
                     'updated_by', 'time')
-    list_filter = ('log_type', )
-    readonly_fields = ('_old_value', '_new_value')
+    list_filter = ('log_type',)
+    readonly_fields = ('log_type', '_category_type', 'category_name', '_field', '_old_value', '_new_value', 'upload',
+                       'updated_by', 'time')
     search_fields = ('field', 'category_name')
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
 
     def lookup_allowed(self, lookup, value):
         if lookup in ('upload_id',):

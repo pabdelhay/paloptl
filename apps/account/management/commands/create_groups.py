@@ -1,11 +1,8 @@
-from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User, Group, Permission
 from django.contrib.contenttypes.models import ContentType
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 
-from apps.account.models import Profile
-from apps.budget.models import Agency, Budget, Function, Upload
-from apps.geo.models import Country
+from apps.budget.models import Agency, Budget, Function, Upload, UploadLog, TransparencyIndex
 
 
 class Command(BaseCommand):
@@ -26,7 +23,9 @@ class Command(BaseCommand):
             Agency,
             Budget,
             Function,
-            Upload
+            Upload,
+            UploadLog,
+            TransparencyIndex
         ])
 
         group, created = Group.objects.get_or_create(name="CSO Team")
@@ -35,5 +34,7 @@ class Command(BaseCommand):
             Agency,
             Budget,
             Function,
-            Upload
+            Upload,
+            UploadLog,
+            TransparencyIndex
         ])
