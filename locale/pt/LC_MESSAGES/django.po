@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-18 12:00-0300\n"
+"POT-Creation-Date: 2021-02-18 12:18-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,68 +38,69 @@ msgstr ""
 msgid "Profiles"
 msgstr ""
 
-#: .\apps\budget\admin.py:31
+#: .\apps\budget\admin.py:30
 msgid "Errors"
 msgstr "Erros"
 
-#: .\apps\budget\admin.py:81
+#: .\apps\budget\admin.py:80
 msgid "Value inferred from descendants or siblings."
 msgstr "Valor inferido dos descendentes ou irmãos."
 
-#: .\apps\budget\admin.py:84
+#: .\apps\budget\admin.py:83
 #, python-brace-format
 msgid "Explicit given value differs from inferred value: {inferred}"
-msgstr "Valor explicitamente passado difere da soma dos descendentes: {inferred}"
+msgstr ""
+"Valor explicitamente passado difere da soma dos descendentes: {inferred}"
 
-#: .\apps\budget\admin.py:92
+#: .\apps\budget\admin.py:91
 msgid "Showing updated value. Initial value was"
 msgstr "Mostrando valor atualizado. Valor inicial era"
 
-#: .\apps\budget\admin.py:123
+#: .\apps\budget\admin.py:122
 msgid "investment budget"
 msgstr "orçamento de investimento"
 
-#: .\apps\budget\admin.py:124
+#: .\apps\budget\admin.py:123
 msgid "operation budget"
 msgstr "orçamento de operação"
 
-#: .\apps\budget\admin.py:125
+#: .\apps\budget\admin.py:124
 msgid "total budget"
 msgstr "orçamento total"
 
-#: .\apps\budget\admin.py:126
+#: .\apps\budget\admin.py:125
 msgid "investment execution"
 msgstr "execução de investimento"
 
-#: .\apps\budget\admin.py:127
+#: .\apps\budget\admin.py:126
 msgid "operation execution"
 msgstr "execução de operação"
 
-#: .\apps\budget\admin.py:128
+#: .\apps\budget\admin.py:127
 msgid "total execution"
 msgstr "execução total"
 
-#: .\apps\budget\admin.py:197
+#: .\apps\budget\admin.py:196
 msgid "Base info"
 msgstr "Informações básicas"
 
-#: .\apps\budget\admin.py:200
+#: .\apps\budget\admin.py:199
 msgid "Transparency Index"
 msgstr "Índice de Transparência"
 
-#: .\apps\budget\admin.py:222
+#: .\apps\budget\admin.py:221
 msgid "category type"
 msgstr "tipo de categoria"
 
-#: .\apps\budget\admin.py:228 .\apps\budget\models\upload_log.py:21
+#: .\apps\budget\admin.py:227 .\apps\budget\models\upload_log.py:22
 msgid "old value"
 msgstr "valor antigo"
 
-#: .\apps\budget\admin.py:234 .\apps\budget\models\upload_log.py:22
+#: .\apps\budget\admin.py:233 .\apps\budget\models\upload_log.py:23
 msgid "new value"
 msgstr "novo valor"
 
-#: .\apps\budget\admin.py:240 .\apps\budget\models\upload_log.py:20
+#: .\apps\budget\admin.py:239 .\apps\budget\models\upload_log.py:21
 msgid "field"
 msgstr "campo"
 
@@ -325,9 +326,9 @@ msgid ""
 "you mean: <b>'{field_correct}'</b>? <small>Remove any white spaces before "
 "and after the field.</small>"
 msgstr ""
-"<strong>Linha {line}:</strong> <b>'{field}'</b> não é um cabeçalho válido. Você "
-"quis dizer: <b>'{field_correct}'</b>? <small>Remova todo espaço em branco antes e depois "
-"do campo.</small>"
+"<strong>Linha {line}:</strong> <b>'{field}'</b> não é um cabeçalho válido. "
+"Você quis dizer: <b>'{field_correct}'</b>? <small>Remova todo espaço em "
+"branco antes e depois do campo.</small>"
 
 #: .\apps\budget\models\upload.py:98
 #, python-brace-format
@@ -335,43 +336,58 @@ msgid ""
 "<strong>Line {line}:</strong> <b>'{field}'</b> is not a valid header. It "
 "must be exact one of: <i>{header_fields}</i>"
 msgstr ""
-"<strong>Linha {line}:</strong> <b>'{field}'</b> não é um cabeçalho válido. Ele "
-"deve ser exatamente um dos seguintes: <i>{header_fields}</i>"
+"<strong>Linha {line}:</strong> <b>'{field}'</b> não é um cabeçalho válido. "
+"Ele deve ser exatamente um dos seguintes: <i>{header_fields}</i>"
 
 #: .\apps\budget\models\upload.py:109
 #, python-brace-format
 msgid "<strong>Line {line} ({column})</strong>: {error_msg} Input was: {input}"
-msgstr "<strong>Linha {line} ({column})</strong>: {error_msg} Carregado foi: {input}"
+msgstr ""
+"<strong>Linha {line} ({column})</strong>: {error_msg} Carregado foi: {input}"
 
 #: .\apps\budget\models\upload_log.py:11
 msgid "upload"
-msgstr ""
+msgstr "upload"
 
-#: .\apps\budget\models\upload_log.py:18
+#: .\apps\budget\models\upload_log.py:13
+msgid "log type"
+msgstr "log"
+
+#: .\apps\budget\models\upload_log.py:19
 msgid "category"
 msgstr "categoria"
 
-#: .\apps\budget\models\upload_log.py:24
+#: .\apps\budget\models\upload_log.py:25
 msgid "time"
 msgstr "hora"
 
-#: .\apps\budget\models\upload_log.py:25
+#: .\apps\budget\models\upload_log.py:26
 msgid "updated by"
 msgstr "atualizado por"
+
+#: .\apps\budget\models\upload_log.py:33
+msgid "upload log"
+msgstr "log do upload"
+
+#: .\apps\budget\models\upload_log.py:34
+msgid "uploads log"
+msgstr "logs de uploads"
 
 #: .\apps\budget\tasks.py:22
 msgid ""
 "An unexpected error occurred while validating the upload. Please contact the "
 "dev team."
 msgstr ""
-"Um erro inesperado ocorreu na validação do upload. Por favor contacte o time de desenvolvimento."
+"Um erro inesperado ocorreu na validação do upload. Por favor contacte o time "
+"de desenvolvimento."
 
 #: .\apps\budget\tasks.py:40
 msgid ""
 "An unexpected error occurred while executing the import. Please contact the "
 "dev team."
 msgstr ""
-"Um erro inesperado ocorreu na importação do upload. Por favor contacte o time de desenvolvimento."
+"Um erro inesperado ocorreu na importação do upload. Por favor contacte o "
+"time de desenvolvimento."
 
 #: .\apps\budget\tasks.py:56
 msgid ""
@@ -383,7 +399,7 @@ msgstr ""
 
 #: .\apps\geo\apps.py:7
 msgid "Geo"
-msgstr ""
+msgstr "Geo"
 
 #: .\apps\geo\models.py:10
 msgid "flag"

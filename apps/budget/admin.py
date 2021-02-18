@@ -3,7 +3,6 @@ from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 from django_admin_inline_paginator.admin import TabularInlinePaginated
-from djmoney.money import Money
 
 from apps.budget.choices import UploadStatusChoices
 from apps.budget.models import Upload, Budget, UploadLog
@@ -12,7 +11,7 @@ from apps.budget.models.function import Function
 from apps.budget.models.transparency_index import TransparencyIndex
 from apps.budget.tasks import import_file
 from common.admin import CountryPermissionMixin
-from common.methods import raw_money_display, money_display
+from common.methods import raw_money_display
 
 
 class UploadInline(admin.TabularInline):
@@ -35,8 +34,10 @@ class UploadInline(admin.TabularInline):
 
         elif obj.status in UploadStatusChoices.get_success_status():
             log_count = obj.logs.count()
-            log_link = reverse(f'admin:budget_uploadlog_changelist') + f'?upload_id={obj.id}'
-            html = f'<a href="{log_link}" target="_blank" >Log ({log_count})</a>'
+            log_link = reverse(f'admin:budget_uploadlog_changelist') + f'?upload_id={obj.id}&_popup=1'
+            html = f'<a href="{log_link}" target="popup" ' \
+                   f'onclick=\'window.open("{log_link}","popup","width=1200,height=800"); return false;\'>' \
+                   f'Log ({log_count})</a>'
 
         return f'<div class="upload-log-wrapper">' \
                f'   <input type="hidden" name="status-{obj.id}" class="status-input" value="{obj.status}">' \

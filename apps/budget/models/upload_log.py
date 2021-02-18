@@ -10,7 +10,8 @@ from apps.budget.choices import LogTypeChoices
 class UploadLog(models.Model):
     upload = models.ForeignKey('budget.Upload', verbose_name=_("upload"), related_name='logs',
                                on_delete=models.CASCADE, editable=False)
-    log_type = models.CharField(max_length=20, choices=LogTypeChoices.choices, editable=False)
+    log_type = models.CharField(verbose_name=_("log type"), max_length=20, choices=LogTypeChoices.choices,
+                                editable=False)
 
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, editable=False)
     object_id = models.PositiveIntegerField(editable=False)
@@ -27,3 +28,7 @@ class UploadLog(models.Model):
 
     def __str__(self):
         return f"{self.get_log_type_display()}"
+
+    class Meta:
+        verbose_name = _("upload log")
+        verbose_name_plural = _("uploads log")
