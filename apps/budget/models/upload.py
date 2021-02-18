@@ -39,8 +39,6 @@ class Upload(models.Model):
                               editable=False)
 
     errors = ArrayField(models.CharField(max_length=1000), verbose_name=_("errors"), default=list, editable=False)
-    # TODO: Remove after migrate to UploadLog
-    log = ArrayField(models.CharField(max_length=1000), verbose_name=_("log"), default=list, editable=False)
 
     uploaded_on = models.DateTimeField(verbose_name=_("uploaded on"), auto_now_add=True)
     uploaded_by = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("uploaded by"), on_delete=models.PROTECT,
@@ -66,10 +64,10 @@ class Upload(models.Model):
 
         partial_header_string = content[:50]
         comma_count = partial_header_string.count(b',')
-        if comma_count > 2:
+        if comma_count >= 2:
             return ','
         comma_dot_count = partial_header_string.count(b';')
-        if comma_dot_count > 2:
+        if comma_dot_count >= 2:
             return ';'
 
         return default_delimiter
