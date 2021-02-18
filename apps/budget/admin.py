@@ -229,9 +229,6 @@ class UploadLogAdmin(CountryPermissionMixin, admin.ModelAdmin):
     def has_change_permission(self, request, obj=None):
         return False
 
-    def has_delete_permission(self, request, obj=None):
-        return False
-
     def lookup_allowed(self, lookup, value):
         if lookup in ('upload_id',):
             return True
