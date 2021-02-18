@@ -32,7 +32,7 @@ body.login #container { margin: 300px auto; border: 1px solid #bcbcbc; }
 a.button.create { background-color: #cbbf3e; }
 a.button.create:hover { background-color: #a69a1e; }
 
-#content-related { width: 270px; }
+#content-related { width: 290px; margin-right: -310px; }
 
 .inline-description { padding: 8px; background-color: #ededed; color: #6a6a6a; }
 .inline-actions { float: right; }
