@@ -11,7 +11,7 @@
     var series_templates = [];
     var last_budget_id = {{ last_budget.id }};
     var current_budget_id = last_budget_id;
-    var current_budget_account = 'functions';
+    var current_budget_account = '{{ default_budget_account }}';
     var current_budget_account_id = null;
     var current_budget_data = null;
     var breadcrumb = [

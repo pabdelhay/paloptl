@@ -21,11 +21,14 @@ class CountryView(SingleObjectMixin, View):
 
     def get(self, request, *args, **kwargs):
         country = self.get_object()
-        budgets = country.budgets.all().order_by('year')
-        last_budget = country.budgets.order_by('year').last()
+        base_qs = country.budgets.exclude(function_budget__isnull=True, agency_budget__isnull=True)
+        budgets = base_qs.order_by('year')
+        last_budget = base_qs.order_by('year').last()
+        default_budget_account = 'functions' if last_budget and last_budget.function_budget else 'agencies'
         ctx = {
             'country': country,
             'budgets': budgets,
+            'default_budget_account': default_budget_account,
             'last_budget': last_budget,
             'treemap_colors_map': json.dumps(settings.TREEMAP_EXECUTION_COLORS_HOVER)
         }
