@@ -46,14 +46,28 @@ def import_file(upload_id):
         upload.save()
         return upload
 
+    upload.status = UploadStatusChoices.SUCCESS
+
     # Update inferred values
     try:
         upload.budget.update_inferred_values()
-        upload.status = UploadStatusChoices.SUCCESS
     except Exception as e:
         capture_exception(e)
         upload.status = UploadStatusChoices.IMPORT_ERROR
         upload.errors.append(_("An unexpected error occurred while updating inferred values from the upload. "
                                "Please contact the dev team."))
+        upload.save()
+        return upload
+
+    # Update JSON files
+    try:
+        upload.budget.update_json_files()
+    except Exception as e:
+        capture_exception(e)
+        upload.status = UploadStatusChoices.IMPORT_ERROR
+        upload.errors.append(_("An unexpected error occurred while creating the JSON file for the budget. "
+                               "Please contact the dev team."))
+        upload.save()
+        return upload
 
     upload.save()

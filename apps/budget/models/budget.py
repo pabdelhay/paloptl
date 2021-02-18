@@ -1,4 +1,8 @@
+import json
+import os
+
 from django.conf import settings
+from django.core.files.storage import default_storage
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models import Sum
@@ -79,3 +83,15 @@ class Budget(CountryMixin, models.Model):
             setattr(self, f'{budget_account_prefix}_execution', budget_account_execution)
 
         self.save()
+
+    def update_json_files(self):
+        from api.api import FunctionSerializer, AgencySerializer
+        budget_accounts = {'functions': FunctionSerializer, 'agencies': AgencySerializer}
+        for budget_account, serializer_class in budget_accounts.items():
+            file_name = f'{self.country.slug}_{budget_account}_{self.year}.json'
+            file_path = os.path.join('budgets', file_name)
+            with default_storage.open(file_path, 'w') as outfile:
+                base_qs = getattr(self, budget_account)
+                qs = base_qs.filter(level=0)
+                serializer = serializer_class(qs, many=True)
+                json.dump(serializer.data, outfile)

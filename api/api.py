@@ -26,7 +26,6 @@ class BudgetSerializer(serializers.ModelSerializer):
 
 class BudgetAccountSerializer(serializers.ModelSerializer):
     children = serializers.ListSerializer(child=RecursiveField())
-    label = serializers.SerializerMethodField()
     color = serializers.SerializerMethodField()
     color_hover = serializers.SerializerMethodField()
     initial_budget_investment = serializers.SerializerMethodField()
@@ -43,7 +42,7 @@ class BudgetAccountSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'initial_budget_investment', 'initial_budget_operation', 'initial_budget_aggregated',
                   'budget_investment', 'budget_operation', 'budget_aggregated',
                   'execution_investment', 'execution_operation', 'execution_aggregated',
-                  'last_update', 'children', 'label', 'color', 'color_hover', 'level', 'tree_id')
+                  'last_update', 'children', 'color', 'color_hover', 'level', 'tree_id')
 
     def get_initial_budget_investment(self, obj):
         return obj.get_value('initial_budget_investment')
@@ -71,9 +70,6 @@ class BudgetAccountSerializer(serializers.ModelSerializer):
 
     def get_execution_aggregated(self, obj):
         return obj.get_value('execution_aggregated')
-
-    def get_label(self, obj):
-        return obj.get_taxonomy_label()
 
     def get_color(self, obj):
         color_index = 0

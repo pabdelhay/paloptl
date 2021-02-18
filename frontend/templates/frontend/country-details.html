@@ -6,7 +6,7 @@
     <script src="//cdn.amcharts.com/lib/4/charts.js"></script>
     <script src="//cdn.amcharts.com/lib/4/themes/animated.js"></script>
     <script type="text/javascript">
-
+    var MEDIA_URL = '{% get_media_prefix %}';
     var treemap;
     var series_templates = [];
     var last_budget_id = {{ last_budget.id }};
@@ -28,8 +28,17 @@
     }
     am4core.useTheme(am4themes_animated);
 
+
+    function get_label(level, budget_account){
+        var label_map = budget_account_label_map
+        if(level == 1){
+            label_map = sub_budget_account_label_map;
+        }
+        return label_map[budget_account];
+    }
     function get_budget_data(budget_id, budget_account, callback){
-        var url = '/api/budgets/' + budget_id + '/' + budget_account + '/';
+        //var url = '/api/budgets/' + budget_id + '/' + budget_account + '/';
+        var url = MEDIA_URL + 'budgets/{{ country.slug }}_' + budget_account + '_' + get_budget_year_by_id(budget_id) + '.json'
         $.get(url, function (data) {
             callback(data);
         }).fail(function () {
@@ -75,6 +84,9 @@
     function plot_budget_account_info(data){
         if(data === undefined || !(data)){
             data = get_budget_account_aggregated_data(current_budget_data);
+        } else {
+            // Get label on front to prevent caching i18n labels.
+            data['label'] = get_label(data['level'], current_budget_account);
         }
         current_budget_account_id = data['id'];
 
