@@ -19,8 +19,8 @@ def import_file(upload_id):
         # Catching unexpected exception to avoid status stuck in 'validating'.
         capture_exception(e)
         upload.status = UploadStatusChoices.VALIDATION_ERROR
-        upload.errors.append(_("An unexpected error occurred while validating the upload. "
-                               "Please contact the dev team."))
+        upload.errors.append(_("An unexpected error occurred while validating the upload. Please contact the dev "
+                               "team informing the following error message:<br><i>{error}</i>").format(error=str(e)))
         upload.save()
         return upload
 
@@ -37,7 +37,8 @@ def import_file(upload_id):
         # Catching unexpected exception to avoid status stuck in 'validating'.
         capture_exception(e)
         upload.status = UploadStatusChoices.IMPORT_ERROR
-        upload.errors.append(_("An unexpected error occurred while executing the import. Please contact the dev team."))
+        upload.errors.append(_("An unexpected error occurred while executing the import. Please contact the dev "
+                               "team informing the following error message:<br><i>{error}</i>").format(error=str(e)))
         upload.save()
         return upload
 
@@ -54,8 +55,8 @@ def import_file(upload_id):
     except Exception as e:
         capture_exception(e)
         upload.status = UploadStatusChoices.IMPORT_ERROR
-        upload.errors.append(_("An unexpected error occurred while updating inferred values from the upload. "
-                               "Please contact the dev team."))
+        upload.errors.append(_("An unexpected error occurred while updating inferred values. Please contact the dev "
+                               "team informing the following error message:<br><i>{error}</i>").format(error=str(e)))
         upload.save()
         return upload
 
@@ -65,8 +66,8 @@ def import_file(upload_id):
     except Exception as e:
         capture_exception(e)
         upload.status = UploadStatusChoices.IMPORT_ERROR
-        upload.errors.append(_("An unexpected error occurred while creating the JSON file for the budget. "
-                               "Please contact the dev team."))
+        upload.errors.append(_("An unexpected error occurred while creating the cache file. Please contact the dev "
+                               "team informing the following error message:<br><i>{error}</i>").format(error=str(e)))
         upload.save()
         return upload
 

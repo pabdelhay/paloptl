@@ -3,13 +3,12 @@ import os
 
 from django.conf import settings
 from django.core.files.storage import default_storage
-from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models import Sum
+from django.utils.translation import gettext_lazy as _
 from djmoney.models.fields import CurrencyField
 
 from common.mixins import CountryMixin
-from django.utils.translation import gettext_lazy as _
 
 
 class Budget(CountryMixin, models.Model):
@@ -86,7 +85,10 @@ class Budget(CountryMixin, models.Model):
 
     def update_json_files(self):
         from api.api import FunctionSerializer, AgencySerializer
-        budget_accounts = {'functions': FunctionSerializer, 'agencies': AgencySerializer}
+        budget_accounts = {
+            'functions': FunctionSerializer,
+            'agencies': AgencySerializer
+        }
         for budget_account, serializer_class in budget_accounts.items():
             file_name = f'{self.country.slug}_{budget_account}_{self.year}.json'
             file_path = os.path.join('budgets', file_name)
