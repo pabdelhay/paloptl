@@ -39,7 +39,7 @@ class BudgetAccount(MPTTModel):
     last_update = models.DateTimeField(verbose_name=_("last update"), auto_now=True)
 
     class MPTTMeta:
-        order_insertion_by = ['name']
+        order_insertion_by = ['name',]
 
     class Meta:
         abstract = True

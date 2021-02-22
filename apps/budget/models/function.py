@@ -15,3 +15,4 @@ class Function(BudgetAccount):
     class Meta:
         verbose_name = _("function")
         verbose_name_plural = _("functional data")
+        ordering = ['-budget_aggregated']

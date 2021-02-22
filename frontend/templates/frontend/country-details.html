@@ -15,6 +15,7 @@
     var current_budget_account_id = null;
     var current_budget_data = null;
     var budgets = {{ budgets_serialized|safe }};
+    var skip_cache = {% if request.GET.no_cache %}true{% else %}false{% endif %};
     var breadcrumb = [
         {'name': "Visualização por Função", 'id': null},
         {'name': {{ last_budget.year }}, 'id': null},
@@ -38,8 +39,12 @@
         return label_map[budget_account];
     }
     function get_budget_data(budget_id, budget_account, callback){
-        //var url = '/api/budgets/' + budget_id + '/' + budget_account + '/';
         var url = MEDIA_URL + 'budgets/{{ country.slug }}_' + budget_account + '_' + get_budget_year_by_id(budget_id) + '.json'
+        if(skip_cache){
+            // If skip_cache, retrieve data from api.
+            url = '/api/budgets/' + budget_id + '/' + budget_account + '/';
+        }
+
         $.get(url, function (data) {
             callback(data);
         }).fail(function () {
