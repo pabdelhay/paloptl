@@ -560,10 +560,11 @@
             <th>{{ budget_account_label }} / {{ sub_budget_account_label }}</th>
             <th class="vertical-separator"></th>
             <th>Dotação</th>
-            <th>Dotação de investimento</th>
-            <th>Dotação de funcionamento</th>
             <th>Execução</th>
+            <th>%</th>
+            <th>Dotação de investimento</th>
             <th>Execução de investimento</th>
+            <th>Dotação de funcionamento</th>
             <th>Execução de funcionamento</th>
         </tr>
         <tr>
@@ -576,10 +577,11 @@
             <td>{{ name }}</td>
             <td class="vertical-separator"></td>
             <td>{{formatCurrency budget_aggregated}}</td>
-            <td>{{formatCurrency budget_investment}}</td>
-            <td>{{formatCurrency budget_operation}}</td>
             <td>{{formatCurrency execution_aggregated}}</td>
+            <td>{{formatPercent execution_percentage}}</td>
+            <td>{{formatCurrency budget_investment}}</td>
             <td>{{formatCurrency execution_investment}}</td>
+            <td>{{formatCurrency budget_operation}}</td>
             <td>{{formatCurrency execution_operation}}</td>
         </tr>
             {{#each children}}
@@ -587,10 +589,11 @@
                 <td style="padding-left: 40px;">{{ name }}</td>
                 <td class="vertical-separator"></td>
                 <td>{{formatCurrency budget_aggregated}}</td>
-                <td>{{formatCurrency budget_investment}}</td>
-                <td>{{formatCurrency budget_operation}}</td>
                 <td>{{formatCurrency execution_aggregated}}</td>
+                <td>{{formatPercent execution_percentage}}</td>
+                <td>{{formatCurrency budget_investment}}</td>
                 <td>{{formatCurrency execution_investment}}</td>
+                <td>{{formatCurrency budget_operation}}</td>
                 <td>{{formatCurrency execution_operation}}</td>
             </tr>
             {{/each}}

@@ -37,11 +37,12 @@ class BudgetAccountSerializer(serializers.ModelSerializer):
     execution_investment = serializers.SerializerMethodField()
     execution_operation = serializers.SerializerMethodField()
     execution_aggregated = serializers.SerializerMethodField()
+    execution_percentage = serializers.SerializerMethodField()
 
     class Meta:
         fields = ('id', 'name', 'initial_budget_investment', 'initial_budget_operation', 'initial_budget_aggregated',
                   'budget_investment', 'budget_operation', 'budget_aggregated',
-                  'execution_investment', 'execution_operation', 'execution_aggregated',
+                  'execution_investment', 'execution_operation', 'execution_aggregated', 'execution_percentage',
                   'last_update', 'children', 'color', 'color_hover', 'level', 'tree_id')
 
     def get_initial_budget_investment(self, obj):
@@ -70,6 +71,13 @@ class BudgetAccountSerializer(serializers.ModelSerializer):
 
     def get_execution_aggregated(self, obj):
         return obj.get_value('execution_aggregated')
+
+    def get_execution_percentage(self, obj):
+        budget_aggregated = obj.get_value('budget_aggregated')
+        execution_aggregated = obj.get_value('execution_aggregated')
+        if not budget_aggregated or not execution_aggregated:
+            return None
+        return execution_aggregated / budget_aggregated
 
     def get_color(self, obj):
         color_index = 0

@@ -700,7 +700,7 @@ h3 .arrow {
   margin-top: 40px;
 }
 .page-country-detail .datatable-wrapper table.datatable-info th, .page-country-detail .datatable-wrapper table.datatable-info td {
-  text-align: left;
+  text-align: right;
   color: #0f2843;
   padding: 5px 10px;
   line-height: 20px;
@@ -708,9 +708,12 @@ h3 .arrow {
 .page-country-detail .datatable-wrapper table.datatable-info th {
   font-size: 14px;
 }
+.page-country-detail .datatable-wrapper table.datatable-info th:first-child, .page-country-detail .datatable-wrapper table.datatable-info td:first-child {
+  text-align: left;
+}
 .page-country-detail .datatable-wrapper table.datatable-info td.separator {
   background-color: #FFFFFF;
-  height: 10px;
+  height: 6px;
   padding: 0;
 }
 .page-country-detail .datatable-wrapper table.datatable-info th.vertical-separator {
@@ -724,7 +727,7 @@ h3 .arrow {
 }
 .page-country-detail .datatable-wrapper table.datatable-info tbody td {
   background-color: #eae6e5;
-  border-left: 10px solid #FFFFFF;
+  border-left: 6px solid #FFFFFF;
   font-size: 12px;
 }
 .page-country-detail .datatable-wrapper table.datatable-info tbody td:first-child {
@@ -736,7 +739,7 @@ h3 .arrow {
   padding: 0;
   background-color: #FFF;
   width: 0;
-  border-left: 10px solid #FFFFFF;
+  border-left: 6px solid #FFFFFF;
 }
 .page-country-detail .datatable-wrapper table.datatable-info tbody tr:hover td {
   background-color: #c5c1c0;

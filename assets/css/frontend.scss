@@ -5,6 +5,7 @@ $subtitle_color: #0f69a3;
 $description_bg_color: #194262;
 $treemap_height: 729px;
 $hover_color: #e4e0df;
+$datatable_spacing: 6px;
 
 .big-container { margin: 0 30px; }
 a { color: $main_color; text-decoration: none; }
@@ -684,9 +685,10 @@ h3 {
   .datatable-wrapper {
     margin-top: 40px;
     table.datatable-info {
-      th, td { text-align: left; color: $main_color; padding: 5px 10px; line-height: 20px; }
+      th, td { text-align: right; color: $main_color; padding: 5px 10px; line-height: 20px; }
       th { font-size: 14px; }
-      td.separator { background-color: #FFFFFF; height: 10px; padding: 0; }
+      th:first-child, td:first-child { text-align: left; }
+      td.separator { background-color: #FFFFFF; height: $datatable_spacing; padding: 0; }
       th.vertical-separator { padding: 0; }
       thead {
         background-color: #eae6e5;
@@ -695,7 +697,7 @@ h3 {
         background-color: #FFFFFF;
         td {
           background-color: #eae6e5;
-          border-left: 10px solid #FFFFFF;
+          border-left: $datatable_spacing solid #FFFFFF;
           font-size: 12px;
         }
         td:first-child {
@@ -707,7 +709,7 @@ h3 {
           padding: 0;
           background-color: #FFF;
           width: 0;
-          border-left: 10px solid #FFFFFF;
+          border-left: $datatable_spacing solid #FFFFFF;
         }
         tr:hover {
           td { background-color: #c5c1c0; }

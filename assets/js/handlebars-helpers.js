@@ -26,7 +26,7 @@ Handlebars.registerHelper('formatPercent', function (value) {
     if(!value){
         return "-"
     }
-    return (parseFloat(value)*100).toFixed(2)+"%";
+    return (parseFloat(value)*100).toFixed(0)+"%";
 });
 
 Handlebars.registerHelper('parseFloat', function (value, decimals=2) {
