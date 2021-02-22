@@ -14,6 +14,7 @@
     var current_budget_account = '{{ default_budget_account }}';
     var current_budget_account_id = null;
     var current_budget_data = null;
+    var budgets = {{ budgets_serialized|safe }};
     var breadcrumb = [
         {'name': "Visualização por Função", 'id': null},
         {'name': {{ last_budget.year }}, 'id': null},
@@ -299,7 +300,28 @@
         get_budget_data(budget_id, budget_account, function(data){
             current_budget_data = data;
             init_views(current_budget_data);
+
+            inactive_budget_accounts_without_data();
         });
+    }
+    function inactive_budget_accounts_without_data(){
+        // Inactive budget_accounts without data.
+        $('.budget-account-selector a').removeClass('inactive').attr('title', "");
+        var budget_data = budgets[current_budget_id];
+        if(!budget_data['function_budget']){
+            $('.budget-account-selector .function-budget').addClass('inactive').attr('title', "Sem dados funcionais");
+            // Automatically calls other budget_account
+            if(current_budget_account == 'functions' && budget_data['agency_budget']){
+                toggle_budget_account('agencies');
+            }
+        }
+        if(!budget_data['agency_budget']){
+            $('.budget-account-selector .agency-budget').addClass('inactive').attr('title', "Sem dados orgânicos");
+            // Automatically calls other budget_account
+            if(current_budget_account == 'agencies' && budget_data['function_budget']){
+                toggle_budget_account('functions');
+            }
+        }
     }
     function get_historical_and_plot_view(){
         get_historical_data(current_budget_id, current_budget_account, current_budget_account_id, function(data){

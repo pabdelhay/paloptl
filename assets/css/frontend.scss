@@ -481,6 +481,17 @@ h3 {
         &.active {
           background-color: #0f69a4;
           color: #FFFFFF;
+          &:hover {
+            background-color: #0e5384;
+          }
+        }
+        &.inactive {
+          background-color: #eaecee;
+          color: #FFFFFF;
+          cursor: not-allowed;
+          &:hover {
+            background-color: #eaecee;
+          }
         }
         &:hover {
           background-color: #c5c1c0;

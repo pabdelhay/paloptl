@@ -482,6 +482,17 @@ h3 .arrow {
   background-color: #0f69a4;
   color: #FFFFFF;
 }
+.page-country-detail .breadcrumb-row .budget-account-selector-row a.active:hover {
+  background-color: #0e5384;
+}
+.page-country-detail .breadcrumb-row .budget-account-selector-row a.inactive {
+  background-color: #eaecee;
+  color: #FFFFFF;
+  cursor: not-allowed;
+}
+.page-country-detail .breadcrumb-row .budget-account-selector-row a.inactive:hover {
+  background-color: #eaecee;
+}
 .page-country-detail .breadcrumb-row .budget-account-selector-row a:hover {
   background-color: #c5c1c0;
 }

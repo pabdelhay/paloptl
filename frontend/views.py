@@ -25,11 +25,22 @@ class CountryView(SingleObjectMixin, View):
         budgets = base_qs.order_by('year')
         last_budget = base_qs.order_by('year').last()
         default_budget_account = 'functions' if last_budget and last_budget.function_budget else 'agencies'
+
+        budgets_serialized = {}
+        for b in budgets:
+            budgets_serialized[b.id] = {
+                'id': b.id,
+                'year': b.year,
+                'function_budget': b.function_budget,
+                'agency_budget': b.agency_budget
+            }
+
         ctx = {
             'country': country,
             'budgets': budgets,
             'default_budget_account': default_budget_account,
             'last_budget': last_budget,
+            'budgets_serialized': json.dumps(budgets_serialized),
             'treemap_colors_map': json.dumps(settings.TREEMAP_EXECUTION_COLORS_HOVER)
         }
         return render(request, 'frontend/country-details.html', context=ctx)

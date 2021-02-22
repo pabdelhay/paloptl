@@ -4,8 +4,8 @@
     </div>
     <div class="col-5 right budget-account-selector-row">
         <div class="budget-account-selector">
-            <a href="#" data-budget_account="functions">Por Função</a><a href="#" data-budget_account="agencies">Por
-            Órgão</a>
+            <a href="#" class="function-budget" data-budget_account="functions">Por
+                Função</a><a href="#" class="agency-budget" data-budget_account="agencies">Por Órgão</a>
         </div>
         <div class="budget-selector">
             {% for budget in budgets %}<a href="#" {% if budget.id == last_budget.id %}class="active"{% endif %}data-budget_id="{{ budget.id }}">{{ budget.year }}</a>{% endfor %}
