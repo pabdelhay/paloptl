@@ -309,14 +309,14 @@
         $('.budget-account-selector a').removeClass('inactive').attr('title', "");
         var budget_data = budgets[current_budget_id];
         if(!budget_data['function_budget']){
-            $('.budget-account-selector .function-budget').addClass('inactive').attr('title', "Sem dados funcionais");
+            $('.budget-account-selector .function-budget').addClass('inactive').attr('title', "Dados funcionais não disponíveis");
             // Automatically calls other budget_account
             if(current_budget_account == 'functions' && budget_data['agency_budget']){
                 toggle_budget_account('agencies');
             }
         }
         if(!budget_data['agency_budget']){
-            $('.budget-account-selector .agency-budget').addClass('inactive').attr('title', "Sem dados orgânicos");
+            $('.budget-account-selector .agency-budget').addClass('inactive').attr('title', "Dados orgânicos não disponíveis");
             // Automatically calls other budget_account
             if(current_budget_account == 'agencies' && budget_data['function_budget']){
                 toggle_budget_account('functions');
