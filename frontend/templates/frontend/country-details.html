@@ -139,16 +139,15 @@
 
     function plot_treemap(data){
         treemap = am4core.create("chart-treemap", am4charts.TreeMap);
-        treemap.data = current_budget_data;
 
         /* Define data fields */
-        treemap.zoomOutButton.disabled = true;
-        treemap.marginLeft = 0;
-        treemap.marginRight = 0;
         treemap.dataFields.value = "budget_aggregated";
         treemap.dataFields.name = "name";
         treemap.dataFields.children = "children";
         treemap.dataFields.color = "color";
+        treemap.zoomOutButton.disabled = true;
+        treemap.marginLeft = 0;
+        treemap.marginRight = 0;
         treemap.maxLevels = 1;
         treemap.homeText = "Visualização por " + budget_account_label_map[current_budget_account];
         //treemap.layoutAlgorithm = treemap.slice;
@@ -156,7 +155,8 @@
         // Labels & tooltips
         var level_columns = []; var bullets = [];
         function config_label(level){
-            series_templates[level] = treemap.seriesTemplates.create(level);
+            var series_template = treemap.seriesTemplates.create(level);
+            series_templates[level] = series_template;
 
             var columnTemplate = series_templates[level].columns.template;
             var hoverState = columnTemplate.states.create("hover");
@@ -187,22 +187,28 @@
                 //console.log("OUT", parent_data);
                 plot_budget_account_info(parent_data);
             }, this);
-
             // Label
-            bullet = series_templates[level].bullets.push(new am4charts.LabelBullet());
-            bullet.locationX = 0.02;
-            bullet.label.textAlign = 'left';
-            bullet.label.dx = 0;
-            bullet.label.dy = -14;
-            bullet.label.horizontalCenter = 'left';
-            bullet.label.verticalCenter = 'middle';
-            bullet.label.text = "{name}";
+            var bullet = series_templates[level].bullets.push(new am4charts.LabelBullet());
             bullet.label.fill = am4core.color("#ffffff");
-            bullet.interactionsEnabled = false;
+            if(level == 2){
+                bullet.locationX = 0.5;
+                bullet.locationY = 0.5;
+                bullet.label.html = "{name}<br>Dotação: {value}<br>Execução: {execution_aggregated}";
+            } else {
+                bullet.locationX = 0.02;
+                bullet.label.textAlign = 'left';
+                bullet.label.dx = 0;
+                bullet.label.dy = -14;
+                bullet.label.horizontalCenter = 'left';
+                bullet.label.verticalCenter = 'middle';
+                bullet.label.text = "{name}";
+                bullet.label.fill = am4core.color("#ffffff");
+                bullet.interactionsEnabled = false;
+            }
 
             // Tooltip
             level_columns[level] = series_templates[level].columns.template;
-            level_columns[level].tooltipText = "{name}\n{value}";
+            level_columns[level].tooltipHTML = "{name}<br/>Dotação: {value}";
             series_templates[level].tooltip.dy = -15;
             series_templates[level].tooltip.getFillFromObject = false;
             series_templates[level].tooltip.background.propertyFields.stroke = am4core.color("#FFFFFF");
@@ -210,10 +216,16 @@
             series_templates[level].tooltip.pointerOrientation = "vertical";
             series_templates[level].tooltip.label.fill = am4core.color("#FFFFFF");
             series_templates[level].tooltip.label.fontSize = 18;
+            if(level == 2){
+                series_templates[level].tooltip.disabled = true;
+            }
         }
-        config_label('0');
-        config_label('1');
-        config_label('2');
+
+        config_label(0)
+        config_label(1)
+        config_label(2)
+
+        treemap.data = current_budget_data;
     }
 
     function plot_historical(data){

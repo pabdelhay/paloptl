@@ -39,6 +39,11 @@ class BudgetAccountSerializer(serializers.ModelSerializer):
     execution_aggregated = serializers.SerializerMethodField()
     execution_percentage = serializers.SerializerMethodField()
 
+    def __init__(self, instance, no_children=False, *args, **kwargs):
+        super().__init__(instance, *args, **kwargs)
+        if no_children:
+            self.fields.pop('children')
+
     class Meta:
         fields = ('id', 'name', 'initial_budget_investment', 'initial_budget_operation', 'initial_budget_aggregated',
                   'budget_investment', 'budget_operation', 'budget_aggregated',
@@ -46,8 +51,11 @@ class BudgetAccountSerializer(serializers.ModelSerializer):
                   'last_update', 'children', 'color', 'color_hover', 'parent_id', 'level', 'tree_id')
 
     def get_children(self, obj):
+        if obj.level == 1:
+            # For level 1, we return children as itself.
+            return [self.__class__(instance=obj, no_children=True).data]
         qs = obj.get_descendants(include_self=False).order_by('-budget_aggregated')
-        return self.__class__(qs, many=True).data
+        return self.__class__(instance=qs, many=True).data
 
     def get_initial_budget_investment(self, obj):
         return obj.get_value('initial_budget_investment')
@@ -105,6 +113,14 @@ class BudgetAccountSerializer(serializers.ModelSerializer):
     def get_color_hover(self, obj):
         color = self.get_color(obj)
         return settings.TREEMAP_EXECUTION_COLORS_HOVER[color]
+
+
+class BudgetAccountLeafSerializer(BudgetAccountSerializer):
+    class Meta:
+        fields = ('id', 'name', 'initial_budget_investment', 'initial_budget_operation', 'initial_budget_aggregated',
+                  'budget_investment', 'budget_operation', 'budget_aggregated',
+                  'execution_investment', 'execution_operation', 'execution_aggregated', 'execution_percentage',
+                  'last_update', 'color', 'color_hover', 'parent_id', 'level', 'tree_id')
 
 
 class FunctionSerializer(BudgetAccountSerializer):
