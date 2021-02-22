@@ -118,20 +118,21 @@
     }
     function init_breadcrumb(plot=false){
         breadcrumb = []
-        breadcrumb.push({name: "Visualização por " + budget_account_label_map[current_budget_account], event: null});
-        breadcrumb.push({name: get_budget_year_by_id(current_budget_id), event: null});
+        breadcrumb.push({name: "Visualização por " + budget_account_label_map[current_budget_account], id: null});
+        breadcrumb.push({name: get_budget_year_by_id(current_budget_id), id: null});
         if(plot){
             plot_breadcrumb();
         }
     }
-    function update_breadcrumb(event=null){
-        if(event){
-            var data = event.target.dataItem.dataContext._dataContext;
+    function update_breadcrumb(data=null){
+        if(data){
+            init_breadcrumb();
             if(data['level'] == 0){
-                init_breadcrumb();
-                breadcrumb.push({name: data['name'], event: event})
+                breadcrumb.push({name: data['name'], id: data['id']})
             } else {
-                breadcrumb[3] = {name: data['name'], event: event};
+                var parent_name = get_category_name_by_id(data['parent_id']);
+                breadcrumb.push({name: parent_name, id: data['parent_id']});
+                breadcrumb.push({name: data['name'], id: data['id']});
             }
         }
         plot_breadcrumb();
@@ -173,10 +174,11 @@
 
             columnTemplate.events.on("hit", function(ev) {
                 var data = ev.target.dataItem.dataContext._dataContext;
-                plot_budget_account_info(data); // data: api.BudgetAccountSerializer
-                get_historical_and_plot_view();
-                update_breadcrumb(ev);
-                toggle_datatable_row(data['id']);
+                go_to_category(data['id']);
+                //plot_budget_account_info(data); // data: api.BudgetAccountSerializer
+                //get_historical_and_plot_view();
+                //update_breadcrumb(data);
+                //toggle_datatable_row(data['id']);
             }, this);
             columnTemplate.events.on("over", function(ev) {
                 var data = ev.target.dataItem.dataContext._dataContext;
@@ -193,7 +195,7 @@
             if(level == 2){
                 bullet.locationX = 0.5;
                 bullet.locationY = 0.5;
-                bullet.label.html = "{name}<br>Dotação: {value}<br>Execução: {execution_aggregated}";
+                bullet.label.html = "<b>{name}</b><br>Dotação: {value}<br>Execução: {execution_aggregated}";
             } else {
                 bullet.locationX = 0.02;
                 bullet.label.textAlign = 'left';
@@ -361,11 +363,41 @@
         return $('.budget-selector a[data-budget_id="'+budget_id+'"]').html();
     }
 
-    function toggle_datatable_row(category_id){
+    function open_datatable_row(category_id){
         var $tr = $('.datatable-info [data-category_id="'+category_id+'"]');
         var selector = '.subcategory-of-' + category_id;
         $tr.find('.arrow').toggle();
         $('.datatable-info ' + selector).toggle();
+    }
+
+    function go_to_category(category_id){
+        current_budget_account_id = category_id;
+        var data = null;
+        treemap.dataItems.each(function(dataItem){
+            if(dataItem.dataContext.id == category_id){
+                data = dataItem.dataContext;
+                treemap.zoomToChartDataItem(dataItem);
+                return;
+            }
+            dataItem.children.each(function(dataItemChildren){
+                if(dataItemChildren.dataContext.id == category_id){
+                    data = dataItemChildren.dataContext;
+                    treemap.zoomToChartDataItem(dataItemChildren);
+                    return;
+                }
+            });
+        });
+        if(!data)
+            return;
+
+        plot_budget_account_info(data);
+        get_historical_and_plot_view();
+        update_breadcrumb(data);
+        open_datatable_row(category_id);
+    }
+    function get_category_name_by_id(category_id){
+        $td = $('.datatable-info tr[data-category_id="'+category_id+'"]').find('.category-name');
+        return $td.html();
     }
 
     $(document).ready(function () {
@@ -386,12 +418,18 @@
             if(breadcrumb_index <= 1){
                 init_views(current_budget_data);
             } else {
-                breadcrumb[breadcrumb_index].event.target.dispatchImmediately('hit');
+                go_to_category(breadcrumb[breadcrumb_index].id);
+
+                //breadcrumb[breadcrumb_index].event.target.dispatchImmediately('hit');
             }
         });
-        $(document).on('click', '.datatable-info tbody tr', function(ev){
+        $(document).on('click', '.datatable-info tr.parent-category', function(ev){
             var category_id = $(this).data('category_id');
-            toggle_datatable_row(category_id);
+            open_datatable_row(category_id);
+        });
+        $(document).on('click', '.datatable-info tr.child-category', function(ev){
+            var category_id = $(this).data('category_id');
+            go_to_category(category_id);
         });
         toggle_budget_account(current_budget_account)
     });
@@ -607,7 +645,7 @@
             <td>
                 <span class="material-icons arrow">keyboard_arrow_right</span>
                 <span class="material-icons arrow" style="display: none;">keyboard_arrow_down</span>
-                {{ name }}
+                <span class="category-name">{{ name }}</span>
             </td>
             <td class="vertical-separator"></td>
             <td>{{formatCurrency budget_aggregated}}</td>
@@ -619,8 +657,10 @@
             <td>{{formatCurrency execution_operation}}</td>
         </tr>
             {{#each children}}
-            <tr class="subcategory-of-{{ parent_id }}" style="display: none;">
-                <td style="padding-left: 40px;">{{ name }}</td>
+            <tr class="child-category subcategory-of-{{ parent_id }}" data-category_id="{{ id }}" style="display: none;">
+                <td style="padding-left: 40px;">
+                    <span class="category-name">{{ name }}</span>
+                </td>
                 <td class="vertical-separator"></td>
                 <td>{{formatCurrency budget_aggregated}}</td>
                 <td>{{formatCurrency execution_aggregated}}</td>
