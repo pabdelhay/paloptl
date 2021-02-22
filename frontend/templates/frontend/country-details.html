@@ -173,9 +173,9 @@
             })
 
             columnTemplate.events.on("hit", function(ev) {
-                var data = ev.target.dataItem.dataContext._dataContext;
+                var data = ev.target.dataItem.dataContext._dataContext;  // data: api.BudgetAccountSerializer
                 go_to_category(data['id']);
-                //plot_budget_account_info(data); // data: api.BudgetAccountSerializer
+                //plot_budget_account_info(data);
                 //get_historical_and_plot_view();
                 //update_breadcrumb(data);
                 //toggle_datatable_row(data['id']);
@@ -186,9 +186,9 @@
             }, this);
             columnTemplate.events.on("out", function(ev) {
                 var parent_data = ev.target.dataItem._dataContext.parent._dataContext;
-                //console.log("OUT", parent_data);
                 plot_budget_account_info(parent_data);
             }, this);
+
             // Label
             var bullet = series_templates[level].bullets.push(new am4charts.LabelBullet());
             bullet.label.fill = am4core.color("#ffffff");
@@ -363,16 +363,41 @@
         return $('.budget-selector a[data-budget_id="'+budget_id+'"]').html();
     }
 
-    function open_datatable_row(category_id){
-        var $tr = $('.datatable-info [data-category_id="'+category_id+'"]');
-        var selector = '.subcategory-of-' + category_id;
+    function toggle_datatable_row(category_id){
+        $base_selector = $('.datatable-info');
+        var $tr = $base_selector.find('[data-category_id="'+category_id+'"]');
         $tr.find('.arrow').toggle();
-        $('.datatable-info ' + selector).toggle();
+        $base_selector.find('.subcategory-of-' + category_id).toggle();
+    }
+
+    function select_datatable_row(category_id){
+        $base_selector = $('.datatable-info');
+
+        // Reset datatable to original state.
+        $base_selector.find('.arrow-expanded').hide();
+        $base_selector.find('.arrow-collapsed').show();
+        $base_selector.find('.child-category').hide();
+        $base_selector.find('tr').removeClass('highlight');
+
+        var $tr = $base_selector.find('[data-category_id="'+category_id+'"]');
+        var parent_id = category_id;
+        if($tr.data('parent_id')){
+            parent_id = $tr.data('parent_id');
+        }
+        var $children = $base_selector.find('.subcategory-of-' + parent_id);
+        var $parent = $base_selector.find('[data-category_id="'+parent_id+'"]');
+
+        $parent.find('.arrow').toggle();
+        $parent.addClass('highlight');
+        $tr.addClass('highlight');
+        $children.show();
     }
 
     function go_to_category(category_id){
         current_budget_account_id = category_id;
         var data = null;
+
+        // Get data from treemap.
         treemap.dataItems.each(function(dataItem){
             if(dataItem.dataContext.id == category_id){
                 data = dataItem.dataContext;
@@ -393,8 +418,9 @@
         plot_budget_account_info(data);
         get_historical_and_plot_view();
         update_breadcrumb(data);
-        open_datatable_row(category_id);
+        select_datatable_row(category_id);
     }
+
     function get_category_name_by_id(category_id){
         $td = $('.datatable-info tr[data-category_id="'+category_id+'"]').find('.category-name');
         return $td.html();
@@ -419,17 +445,16 @@
                 init_views(current_budget_data);
             } else {
                 go_to_category(breadcrumb[breadcrumb_index].id);
-
                 //breadcrumb[breadcrumb_index].event.target.dispatchImmediately('hit');
             }
         });
-        $(document).on('click', '.datatable-info tr.parent-category', function(ev){
-            var category_id = $(this).data('category_id');
-            open_datatable_row(category_id);
-        });
-        $(document).on('click', '.datatable-info tr.child-category', function(ev){
-            var category_id = $(this).data('category_id');
+        $(document).on('click', '.datatable-info .expand-visualization', function(ev){
+            var category_id = $(this).closest('tr').data('category_id');
             go_to_category(category_id);
+        });
+        $(document).on('click', '.datatable-info tr.parent-category .category-toggle', function(ev){
+            var category_id = $(this).closest('tr').data('category_id');
+            toggle_datatable_row(category_id, false);
         });
         toggle_budget_account(current_budget_account)
     });
@@ -634,17 +659,18 @@
             <th>Execução de investimento</th>
             <th>Dotação de funcionamento</th>
             <th>Execução de funcionamento</th>
+            <th></th>
         </tr>
         <tr>
-            <td class="separator" colspan="8"></td>
+            <td class="separator" colspan="10"></td>
         </tr>
     </thead>
     <tbody>
         {{#each budget_accounts}}
         <tr data-category_id="{{ id }}" class="parent-category">
-            <td>
-                <span class="material-icons arrow">keyboard_arrow_right</span>
-                <span class="material-icons arrow" style="display: none;">keyboard_arrow_down</span>
+            <td class="category-toggle">
+                <span class="material-icons arrow arrow-collapsed">keyboard_arrow_right</span>
+                <span class="material-icons arrow arrow-expanded" style="display: none;">keyboard_arrow_down</span>
                 <span class="category-name">{{ name }}</span>
             </td>
             <td class="vertical-separator"></td>
@@ -655,9 +681,10 @@
             <td>{{formatCurrency execution_investment}}</td>
             <td>{{formatCurrency budget_operation}}</td>
             <td>{{formatCurrency execution_operation}}</td>
+            <td><span class="expand-visualization material-icons" title="Expandir para todas visualizações">bar_chart</span></td>
         </tr>
             {{#each children}}
-            <tr class="child-category subcategory-of-{{ parent_id }}" data-category_id="{{ id }}" style="display: none;">
+            <tr class="child-category subcategory-of-{{ parent_id }}" data-parent_id="{{ parent_id }}" data-category_id="{{ id }}" style="display: none;">
                 <td style="padding-left: 40px;">
                     <span class="category-name">{{ name }}</span>
                 </td>
@@ -669,6 +696,7 @@
                 <td>{{formatCurrency execution_investment}}</td>
                 <td>{{formatCurrency budget_operation}}</td>
                 <td>{{formatCurrency execution_operation}}</td>
+                <td><span class="expand-visualization material-icons" title="Expandir para todas visualizações">bar_chart</span></td>
             </tr>
             {{/each}}
         {{/each}}
