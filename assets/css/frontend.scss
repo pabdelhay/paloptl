@@ -10,6 +10,12 @@ $datatable_spacing: 6px;
 .big-container { margin: 0 30px; }
 a { color: $main_color; text-decoration: none; }
 
+.hide { display: none !important; }
+.material-icons{
+    display: inline-flex;
+    vertical-align: top;
+}
+
 h1, h2, h3, h4, h5, h6 {
   position: relative;
 }
@@ -696,13 +702,15 @@ h3 {
       tbody {
         background-color: #FFFFFF;
         td {
-          background-color: #eae6e5;
+          background-color: #f7f3f2;
           border-left: $datatable_spacing solid #FFFFFF;
           font-size: 12px;
         }
         td:first-child {
           border-left: 0;
           border-right: 0;
+          line-height: 25px;
+          width: 20%;
         }
         td.vertical-separator {
           border-right: 1px solid #5d8aac;
@@ -712,7 +720,21 @@ h3 {
           border-left: $datatable_spacing solid #FFFFFF;
         }
         tr:hover {
-          td { background-color: #c5c1c0; }
+          td { background-color: #e0dbd9; }
+        }
+        tr.parent-category {
+          td {
+            background-color: #eae6e5;
+            cursor: pointer;
+          }
+          &:hover {
+            td {
+              background-color: #e2dedd;
+            }
+          }
+        }
+        .arrow {
+          margin-left: -5px;
         }
       }
     }

@@ -11,6 +11,15 @@ a {
   text-decoration: none;
 }
 
+.hide {
+  display: none !important;
+}
+
+.material-icons {
+  display: inline-flex;
+  vertical-align: top;
+}
+
 h1, h2, h3, h4, h5, h6 {
   position: relative;
 }
@@ -726,13 +735,15 @@ h3 .arrow {
   background-color: #FFFFFF;
 }
 .page-country-detail .datatable-wrapper table.datatable-info tbody td {
-  background-color: #eae6e5;
+  background-color: #f7f3f2;
   border-left: 6px solid #FFFFFF;
   font-size: 12px;
 }
 .page-country-detail .datatable-wrapper table.datatable-info tbody td:first-child {
   border-left: 0;
   border-right: 0;
+  line-height: 25px;
+  width: 20%;
 }
 .page-country-detail .datatable-wrapper table.datatable-info tbody td.vertical-separator {
   border-right: 1px solid #5d8aac;
@@ -742,7 +753,17 @@ h3 .arrow {
   border-left: 6px solid #FFFFFF;
 }
 .page-country-detail .datatable-wrapper table.datatable-info tbody tr:hover td {
-  background-color: #c5c1c0;
+  background-color: #e0dbd9;
+}
+.page-country-detail .datatable-wrapper table.datatable-info tbody tr.parent-category td {
+  background-color: #eae6e5;
+  cursor: pointer;
+}
+.page-country-detail .datatable-wrapper table.datatable-info tbody tr.parent-category:hover td {
+  background-color: #e2dedd;
+}
+.page-country-detail .datatable-wrapper table.datatable-info tbody .arrow {
+  margin-left: -5px;
 }
 .page-country-detail .transparency-wrapper {
   background-color: #194262;

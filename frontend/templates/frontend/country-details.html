@@ -58,7 +58,6 @@
             console.log("Error on fetching historical data.");
         });
     }
-
     function get_budget_account_aggregated_data(budget_data){
         var aggregated_data = $.extend(true, {}, budget_data[0]);
         var fields = ['budget_aggregated', 'budget_investment', 'budget_operation', 'execution_aggregated',
@@ -138,6 +137,7 @@
         treemap.data = current_budget_data;
 
         /* Define data fields */
+        treemap.zoomOutButton.disabled = true;
         treemap.marginLeft = 0;
         treemap.marginRight = 0;
         treemap.dataFields.value = "budget_aggregated";
@@ -171,6 +171,7 @@
                 plot_budget_account_info(data); // data: api.BudgetAccountSerializer
                 get_historical_and_plot_view();
                 update_breadcrumb(ev);
+                toggle_datatable_row(data['id']);
             }, this);
             columnTemplate.events.on("over", function(ev) {
                 var data = ev.target.dataItem.dataContext._dataContext;
@@ -213,6 +214,7 @@
     function plot_historical(data){
         var chart = am4core.create('historical-info', am4charts.XYChart)
         chart.colors.step = 2;
+        chart.zoomOutButton.disabled = true;
         chart.numberFormatter.bigNumberPrefixes = [
             {"number": 1e+3, "suffix": "K"},
             {"number": 1e+6, "suffix": "Mi"},
@@ -342,6 +344,13 @@
         return $('.budget-selector a[data-budget_id="'+budget_id+'"]').html();
     }
 
+    function toggle_datatable_row(category_id){
+        var $tr = $('.datatable-info [data-category_id="'+category_id+'"]');
+        var selector = '.subcategory-of-' + category_id;
+        $tr.find('.arrow').toggle();
+        $('.datatable-info ' + selector).toggle();
+    }
+
     $(document).ready(function () {
         // Binds
         $('.budget-account-selector a').on('click', function (ev) {
@@ -362,7 +371,11 @@
             } else {
                 breadcrumb[breadcrumb_index].event.target.dispatchImmediately('hit');
             }
-        })
+        });
+        $(document).on('click', '.datatable-info tbody tr', function(ev){
+            var category_id = $(this).data('category_id');
+            toggle_datatable_row(category_id);
+        });
         toggle_budget_account(current_budget_account)
     });
 
@@ -573,8 +586,12 @@
     </thead>
     <tbody>
         {{#each budget_accounts}}
-        <tr>
-            <td>{{ name }}</td>
+        <tr data-category_id="{{ id }}" class="parent-category">
+            <td>
+                <span class="material-icons arrow">keyboard_arrow_right</span>
+                <span class="material-icons arrow" style="display: none;">keyboard_arrow_down</span>
+                {{ name }}
+            </td>
             <td class="vertical-separator"></td>
             <td>{{formatCurrency budget_aggregated}}</td>
             <td>{{formatCurrency execution_aggregated}}</td>
@@ -585,7 +602,7 @@
             <td>{{formatCurrency execution_operation}}</td>
         </tr>
             {{#each children}}
-            <tr>
+            <tr class="subcategory-of-{{ parent_id }}" style="display: none;">
                 <td style="padding-left: 40px;">{{ name }}</td>
                 <td class="vertical-separator"></td>
                 <td>{{formatCurrency budget_aggregated}}</td>
