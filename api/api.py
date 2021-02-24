@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.db import models
-from django.db.models import F, Sum, Value
+from django.db.models import F, Sum, Value, Q
 from rest_framework import serializers
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -214,14 +214,16 @@ class BudgetViewset(ReadOnlyModelViewSet):
     @action(detail=True)
     def functions(self, request, pk=None):
         budget = self.get_object()
-        qs = Function.objects.filter(budget=budget, level=0)
+        qs = Function.objects.filter(budget=budget, level=0)\
+            .exclude(Q(budget_aggregated__isnull=True) | Q(budget_aggregated=0))
         serializer = FunctionSerializer(qs, many=True)
         return Response(serializer.data)
 
     @action(detail=True)
     def agencies(self, request, pk=None):
         budget = self.get_object()
-        qs = Agency.objects.filter(budget=budget, level=0)
+        qs = Agency.objects.filter(budget=budget, level=0)\
+            .exclude(Q(budget_aggregated__isnull=True) | Q(budget_aggregated=0))
         serializer = AgencySerializer(qs, many=True)
         return Response(serializer.data)
 
