@@ -222,6 +222,7 @@ class UploadLogAdmin(CountryPermissionMixin, admin.ModelAdmin):
     readonly_fields = ('log_type', '_category_type', 'category_name', '_field', '_old_value', '_new_value', 'upload',
                        'updated_by', 'time')
     search_fields = ('field', 'category_name')
+    ordering = ('-time', '-id')
 
     def has_add_permission(self, request):
         return False
