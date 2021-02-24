@@ -1,6 +1,7 @@
 import json
 import os
 
+import requests
 from django.conf import settings
 from django.core.files.storage import default_storage
 from django.db import models
@@ -84,16 +85,15 @@ class Budget(CountryMixin, models.Model):
         self.save()
 
     def update_json_files(self):
-        from api.api import FunctionSerializer, AgencySerializer
-        budget_accounts = {
-            'functions': FunctionSerializer,
-            'agencies': AgencySerializer
-        }
-        for budget_account, serializer_class in budget_accounts.items():
+        """
+        Get data from ['/budgets/{id}/agencies/', '/budgets/{id}/functions/'] and create a json file for cache.
+        """
+        budget_accounts = ['functions', 'agencies']
+        for budget_account in budget_accounts:
             file_name = f'{self.country.slug}_{budget_account}_{self.year}.json'
             file_path = os.path.join('budgets', file_name)
+            url = f'{settings.SITE_URL}api/budgets/{self.id}/{budget_account}/'
             with default_storage.open(file_path, 'w') as outfile:
-                base_qs = getattr(self, budget_account)
-                qs = base_qs.filter(level=0)
-                serializer = serializer_class(qs, many=True)
-                json.dump(serializer.data, outfile)
+                response = requests.get(url)
+                data = response.json()
+                json.dump(data, outfile)

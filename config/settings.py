@@ -28,6 +28,8 @@ DEBUG = True
 ENV = os.environ.get('ENV', 'production')
 ALLOWED_HOSTS = ['*']
 
+SITE_URL = env('SITE_URL', default='http://localhost:8000/')
+
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
