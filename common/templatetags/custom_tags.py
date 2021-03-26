@@ -10,11 +10,10 @@ register = template.Library()
 
 @register.simple_tag
 def get_latest_budgets(user):
-    current_year = timezone.now().year
-    base_qs = Budget.objects.filter(year__gte=current_year - 1).order_by('country__name', '-year')
+    base_qs = Budget.objects.order_by('country__name', '-year')
     if user.profile.country is not None:
         base_qs = base_qs.filter(country=user.profile.country)
-    return base_qs
+    return base_qs[:10]
 
 
 @register.simple_tag

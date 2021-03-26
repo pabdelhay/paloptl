@@ -1,14 +1,19 @@
-<div class="row breadcrumb-row">
-    <div class="col-7">
+<div class="row breadcrumb-row" id="anchor-{{ visualization }}">
+    <div class="col-6">
         <div class="breadcrumb-wrapper"></div>
     </div>
-    <div class="col-5 right budget-account-selector-row">
+    <div class="col-6 right budget-account-selector-row">
         <div class="budget-account-selector">
-            <a href="#" class="function-budget" data-budget_account="functions">Por
-                Função</a><a href="#" class="agency-budget" data-budget_account="agencies">Por Órgão</a>
+            <a href="#" class="function-budget" data-budget_account="functions">Por Função
+            </a><a href="#" class="agency-budget" data-budget_account="agencies">Por Órgão</a>
         </div>
         <div class="budget-selector">
             {% for budget in budgets %}<a href="#" {% if budget.id == last_budget.id %}class="active"{% endif %}data-budget_id="{{ budget.id }}">{{ budget.year }}</a>{% endfor %}
+        </div>
+        <div class="visualization-selector">
+                <a href="#anchor-treemap" {% if visualization == 'treemap' %}class="active"{% endif %}><span class="material-icons" title="Visualização em treemap">apps</span>
+            </a><a href="#anchor-history" {% if visualization == 'history' %}class="active"{% endif %}><span class="material-icons" title="Visualização em série histórica">timeline</span>
+            </a><a href="#anchor-list" {% if visualization == 'list' %}class="active"{% endif %}><span class="material-icons" title="Visualização em tabela">reorder</span></a>
         </div>
     </div>
     <hr />

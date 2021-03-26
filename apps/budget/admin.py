@@ -1,3 +1,4 @@
+from admin_honeypot.models import LoginAttempt
 from django.contrib import admin
 from django.urls import reverse
 from django.utils.safestring import mark_safe
@@ -12,6 +13,8 @@ from apps.budget.models.transparency_index import TransparencyIndex
 from apps.budget.tasks import import_file
 from common.admin import CountryPermissionMixin
 from common.methods import raw_money_display
+
+admin.site.unregister(LoginAttempt)
 
 
 class UploadInline(admin.TabularInline):
@@ -54,7 +57,8 @@ class BudgetAccountInline(TabularInlinePaginated):
                        'get_execution_investment', 'get_execution_operation', 'get_execution_aggregated')
     fields = ('code', 'get_group_taxonomy', 'get_subgroup_taxonomy', 'get_budget_investment', 'get_budget_operation',
               'get_budget_aggregated', 'get_execution_investment', 'get_execution_operation',
-              'get_execution_aggregated', 'last_update')
+              'get_execution_aggregated', 'budget_investment', 'budget_operation', 'last_update')
+
     classes = ['collapse']
 
     def __init__(self, *args, **kwargs):

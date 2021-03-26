@@ -5,6 +5,7 @@ $subtitle_color: #0f69a3;
 $description_bg_color: #194262;
 $treemap_height: 729px;
 $hover_color: #e4e0df;
+$icon_hover_color: #6b6b6b;
 $datatable_spacing: 6px;
 
 .big-container { margin: 0 30px; }
@@ -476,12 +477,23 @@ h3 {
     .budget-account-selector-row {
       position: relative;
 
-      a {
+      &> div {
         display: inline-block;
+        border-right: 1px solid #82aecb;
+        padding-right: 10px;
+        margin-right: 10px;
+        margin-left: -5px;
+        &:last-child {
+          border-right: 0;
+          padding-right: 0;
+          margin-right: 0;
+        }
+      }
+      a {
         background: #eae6e5;
         width: 100px;
         text-align: center;
-        padding: 4px 40px;
+        padding: 4px 20px;
         font-size: 12px;
         border-right: 1px solid #82aecb;
 
@@ -509,17 +521,32 @@ h3 {
       }
 
       .budget-account-selector {
-        display: inline-block;
         border-right: 1px solid #82aecb;
         padding-right: 10px;
         margin-right: 10px;
       }
       .budget-selector {
-        display: inline-block;
-        margin-left: -5px;
+        margin-left: -4px;
         a {
           width: 40px;
           padding: 4px 10px;
+        }
+      }
+      .visualization-selector {
+        margin-left: -10px;
+        a {
+          width: 20px;
+          padding: 4px 2px;
+          background: none;
+          border-right: 0;
+          color: #cacaca;
+          &.active {
+            color: gray;
+          }
+          &:hover {
+            background: none !important;
+            color: $icon_hover_color;
+          }
         }
       }
     }
@@ -530,6 +557,41 @@ h3 {
     top: -24px;
     margin-bottom: 40px;
 
+    .treemap-tooltip {
+      font-size: 16px;
+      color: #FFF;
+
+      h5 { color: #FFF; margin: 0; text-align: left; font-size: 18px; }
+      table {
+        width: 300px;
+        td:first-child {
+          text-align: right;
+          padding-right: 5px;
+          width: 100px;
+        }
+        td:last-child {
+          padding-left: 5px;
+          font-weight: bold;
+          &.no-value {
+            font-weight: normal;
+            font-style: italic;
+          }
+        }
+        tr.secondary-info {
+          td {
+            color: #f1f1f1;
+            font-size: 12px;
+            font-weight: normal;
+            font-style: italic;
+          }
+        }
+        .execution_percent {
+          font-weight: normal;
+          font-size: 12px;
+          font-style: italic;
+        }
+      }
+    }
     hr.shaddow {
       position: relative;
       bottom: -61px;
@@ -653,10 +715,16 @@ h3 {
         margin-top: 20px;
         width: 100%;
         font-size: 13px;
-        td:first-child { width: 40%; padding-bottom: 5px; }
-        td:nth-child(2) { padding-left: 15px; }
+        td {
+          padding-bottom: 5px;
+          &:last-child { padding-left: 15px; font-weight: bold; }
+          &:first-child { width: 40%; }
+        }
         .execution-aggregated {
-          td { padding-top: 20px; }
+          td {
+            padding-top: 20px;
+            &:last-child { font-weight: bold; }
+          }
           small {
             color: #727272;
           }
@@ -665,7 +733,11 @@ h3 {
       table.secondary-info {
         font-size: 13px;
         width: 100%;
-        td:first-child { width: 50%; padding-bottom: 10px; }
+        td {
+          padding-bottom: 15px;
+          &:first-child { width: 55%; }
+          &:last-child { font-weight: bold; }
+        }
       }
     }
   }
@@ -752,6 +824,11 @@ h3 {
             }
             .expand-visualization {
               cursor: pointer;
+              color: #cacaca;
+              font-size: 16px;
+              &:hover {
+                color: $icon_hover_color;
+              }
             }
           }
         }
