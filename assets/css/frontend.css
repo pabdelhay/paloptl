@@ -622,7 +622,7 @@ h3 .arrow {
 .page-country-detail .treemap-wrapper .budget_account-info .name-wrapper {
   font-size: 14px;
   font-weight: bold;
-  height: 25px;
+  min-height: 25px;
   margin-top: 0;
 }
 .page-country-detail .treemap-wrapper .budget_account-info hr {
