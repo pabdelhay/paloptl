@@ -200,6 +200,7 @@ h3 {
       width: 42px;
       vertical-align: middle;
       margin-right: 5px;
+      float: left;
     }
   }
 
@@ -210,13 +211,17 @@ h3 {
   .first-col {
     border-right: 1px solid #aaaaaa;
 
+    img { width: 100%; }
     .upper-row {
       margin-bottom: 20px;
     }
     .bottom-row {
       font-size: 12px;
       color: #747373;
-      img { margin-right: 5px; }
+      img {
+        margin-right: 5px;
+        width: 60px;
+      }
     }
   }
 

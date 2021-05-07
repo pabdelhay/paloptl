@@ -205,12 +205,16 @@ h3 .arrow {
   width: 42px;
   vertical-align: middle;
   margin-right: 5px;
+  float: left;
 }
 .footer .sponsors {
   margin-bottom: 40px;
 }
 .footer .first-col {
   border-right: 1px solid #aaaaaa;
+}
+.footer .first-col img {
+  width: 100%;
 }
 .footer .first-col .upper-row {
   margin-bottom: 20px;
@@ -221,6 +225,7 @@ h3 .arrow {
 }
 .footer .first-col .bottom-row img {
   margin-right: 5px;
+  width: 60px;
 }
 .footer hr {
   border-bottom: 1px solid #d7d5d5;
