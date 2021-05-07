@@ -563,6 +563,7 @@ h3 .arrow {
   margin: 0;
   text-align: left;
   font-size: 18px;
+  padding-bottom: 6px;
 }
 .page-country-detail .treemap-wrapper .treemap-tooltip table {
   width: 300px;
