@@ -92,7 +92,7 @@ $(document).ready(function(){
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-12">Clique na tabela para ordenar o ranking por uma dimensão específica.</div>
+                <div class="col-12">Clique no cabeçalho da tabela para ordenar o ranking por uma dimensão específica.</div>
             </div>
         </div>
         <hr />
@@ -100,33 +100,32 @@ $(document).ready(function(){
             <div class="row">
                 <div class="col-12">
                     <div class="ranking-wrapper">
-                        <div class="row-dimensions-header">
-                            <div class="f-dimension sortable" data-dimension="score_open_data">
-                                Dados Abertos<br>
-                                (0-100)
-                            </div>
-                            <div class="f-dimension sortable" data-dimension="score_reports">
-                                Relatórios Orçamentários<br>
-                                (0-100)
-                            </div>
-                            <div class="f-dimension sortable" data-dimension="score_data_quality">
-                                Qualidade da Informação<br>
-                                (0-200)
-                            </div>
-                            <div class="f-dimension sortable active" data-dimension="transparency_index">
-                                Indicador Geral de Transparência
-                            </div>
-                        </div>
-                        <div class="ranking-row row-number-0">
-                            <div class="f-position">Posiçao</div>
-                            <div class="f-flag">Países</div>
-                            <div class="f-name"></div>
-                            <div class="f-dimension sortable" data-dimension="score_open_data"><div class="arrow-down"></div></div>
-                            <div class="f-dimension sortable" data-dimension="score_reports"><div class="arrow-down"></div></div>
-                            <div class="f-dimension sortable" data-dimension="score_data_quality"><div class="arrow-down"></div></div>
-                            <div class="f-dimension sortable active" data-dimension="transparency_index"><div class="arrow-down"></div></div>
-                        </div>
-                        <div class="budgets-wrapper"></div>
+                        <table class="ranking-table" cellspacing="0" cellpadding="0">
+                            <thead>
+                                <tr>
+                                    <th class="f-position">Posiçao</th>
+                                    <th class="f-flag">Países</th>
+                                    <th></th>
+                                    <th class="f-dimension sortable" data-dimension="score_open_data">
+                                        Dados Abertos<br>
+                                        (0-100)
+                                    </th>
+                                    <th class="f-dimension sortable" data-dimension="score_reports">
+                                        Relatórios Orçamentários<br>
+                                        (0-100)
+                                    </th>
+                                    <th class="f-dimension sortable" data-dimension="score_data_quality">
+                                        Qualidade da Informação<br>
+                                        (0-200)
+                                    </th>
+                                    <th class="f-dimension sortable active" data-dimension="transparency_index">
+                                        Indicador Geral de Transparência
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="budgets-wrapper"></tbody>
+                        </table>
+
                     </div>
                 </div>
             </div>
@@ -160,24 +159,27 @@ $(document).ready(function(){
 {% verbatim %}
 <script id="template-ranking" type="text/x-handlebars-template">
 {{#each budgets}}
-    <div class="ranking-row row-number-{{inc @index}}">
-        <div class="f-position">{{inc @index}}</div>
-        <div class="f-flag"><img src="{{ country.flag }}" /></div>
-        <div class="f-name">{{ country.name }}</div>
-        <div class="f-dimension f-dimension-1">{{ score_open_data }}</div>
-        <div class="f-dimension f-dimension-2">{{ score_reports }}</div>
-        <div class="f-dimension f-dimension-3">{{ score_data_quality }}</div>
-        <div class="f-dimension f-dimension-4">{{ transparency_index }}</div>
-    </div>
+    <tr class="ranking-row row-number-{{inc @index}}">
+        <td class="f-position">{{inc @index}}</td>
+        <td class="f-flag"><img src="{{ country.flag }}" /></td>
+        <td class="f-name">{{ country.name }}</td>
+        <td class="f-dimension f-dimension-1">{{ score_open_data }}</td>
+        <td class="f-dimension f-dimension-2">{{ score_reports }}</td>
+        <td class="f-dimension f-dimension-3">{{ score_data_quality }}</td>
+        <td class="f-dimension f-dimension-4">{{ transparency_index }}</td>
+    </tr>
+    <tr>
+        <td colspan="7" class="separator-row"></td>
+    </tr>
 {{/each}}
-<div class="ranking-row row-number-7">
-    <div class="f-position"></div>
-    <div class="f-flag">Média</div>
-    <div class="f-dimension f-dimension-1">{{parseFloat average.score_open_data 2}}</div>
-    <div class="f-dimension f-dimension-2">{{parseFloat average.score_reports 2}}</div>
-    <div class="f-dimension f-dimension-3">{{parseFloat average.score_data_quality 2}}</div>
-    <div class="f-dimension f-dimension-4">{{parseFloat average.transparency_index 2}}</div>
-</div>
+<tr class="ranking-row row-number-7 row-avg">
+    <td class="f-position"></td>
+    <td class="f-flag" colspan="2">Média</td>
+    <td class="f-dimension f-dimension-1">{{parseFloat average.score_open_data 2}}</td>
+    <td class="f-dimension f-dimension-2">{{parseFloat average.score_reports 2}}</td>
+    <td class="f-dimension f-dimension-3">{{parseFloat average.score_data_quality 2}}</td>
+    <td class="f-dimension f-dimension-4">{{parseFloat average.transparency_index 2}}</td>
+</tr>
 </script>
 {% endverbatim %}
 
