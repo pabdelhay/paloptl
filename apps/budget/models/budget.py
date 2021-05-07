@@ -21,6 +21,8 @@ class Budget(CountryMixin, models.Model):
     year = models.IntegerField(verbose_name=_("year"))
     currency = CurrencyField(verbose_name=_("currency"), choices=settings.CURRENCY_CHOICES, editable=False,
                              help_text=_("All values from budget presented in this currency"))
+    is_active = models.BooleanField(verbose_name=_("active"), default=True,
+                                    help_text=_("This budget will only be included on site if this option is checked."))
 
     # Inferred values
     function_budget = models.FloatField(verbose_name=_("function's budget"), null=True, blank=True, editable=False)

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-26 09:44-0300\n"
+"POT-Creation-Date: 2021-05-07 18:33-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,65 +42,65 @@ msgstr ""
 msgid "Errors"
 msgstr "Erros"
 
-#: .\apps\budget\admin.py:85
+#: .\apps\budget\admin.py:95
 msgid "Value inferred from descendants or siblings."
 msgstr "Valor inferido dos descendentes ou irmãos."
 
-#: .\apps\budget\admin.py:88
+#: .\apps\budget\admin.py:98
 #, python-brace-format
 msgid "Explicit given value differs from inferred value: {inferred}"
 msgstr ""
 "Valor explicitamente passado difere da soma dos descendentes: {inferred}"
 
-#: .\apps\budget\admin.py:96
+#: .\apps\budget\admin.py:106
 msgid "Showing updated value. Initial value was"
 msgstr "Mostrando valor atualizado. Valor inicial era"
 
-#: .\apps\budget\admin.py:127
+#: .\apps\budget\admin.py:137
 msgid "investment budget"
 msgstr "orçamento de investimento"
 
-#: .\apps\budget\admin.py:128
+#: .\apps\budget\admin.py:138
 msgid "operation budget"
 msgstr "orçamento de operação"
 
-#: .\apps\budget\admin.py:129
+#: .\apps\budget\admin.py:139
 msgid "total budget"
 msgstr "orçamento total"
 
-#: .\apps\budget\admin.py:130
+#: .\apps\budget\admin.py:140
 msgid "investment execution"
 msgstr "execução de investimento"
 
-#: .\apps\budget\admin.py:131
+#: .\apps\budget\admin.py:141
 msgid "operation execution"
 msgstr "execução de operação"
 
-#: .\apps\budget\admin.py:132
+#: .\apps\budget\admin.py:142
 msgid "total execution"
 msgstr "execução total"
 
-#: .\apps\budget\admin.py:201
+#: .\apps\budget\admin.py:211
 msgid "Base info"
 msgstr "Informações básicas"
 
-#: .\apps\budget\admin.py:204
+#: .\apps\budget\admin.py:214
 msgid "Transparency Index"
 msgstr "Índice de Transparência"
 
-#: .\apps\budget\admin.py:243
+#: .\apps\budget\admin.py:253
 msgid "category type"
 msgstr "tipo de categoria"
 
-#: .\apps\budget\admin.py:249 .\apps\budget\models\upload_log.py:22
+#: .\apps\budget\admin.py:259 .\apps\budget\models\upload_log.py:22
 msgid "old value"
 msgstr "valor antigo"
 
-#: .\apps\budget\admin.py:255 .\apps\budget\models\upload_log.py:23
+#: .\apps\budget\admin.py:265 .\apps\budget\models\upload_log.py:23
 msgid "new value"
 msgstr "novo valor"
 
-#: .\apps\budget\admin.py:261 .\apps\budget\models\upload_log.py:21
+#: .\apps\budget\admin.py:271 .\apps\budget\models\upload_log.py:21
 msgid "field"
 msgstr "campo"
 
@@ -156,7 +156,7 @@ msgstr "orgão"
 msgid "budget unit"
 msgstr "unidade orçamentária"
 
-#: .\apps\budget\models\agency.py:12 .\apps\budget\models\budget.py:33
+#: .\apps\budget\models\agency.py:12 .\apps\budget\models\budget.py:35
 #: .\apps\budget\models\budget_account.py:16
 #: .\apps\budget\models\function.py:12 .\apps\budget\models\upload.py:33
 msgid "budget"
@@ -185,19 +185,27 @@ msgstr "moeda"
 msgid "All values from budget presented in this currency"
 msgstr "Todos os valores do orçamento apresentados nesta moeda"
 
-#: .\apps\budget\models\budget.py:26
+#: .\apps\budget\models\budget.py:24
+msgid "active"
+msgstr "ativo"
+
+#: .\apps\budget\models\budget.py:25
+msgid "This budget will only be included on site if this option is checked."
+msgstr "Este orçamento só irá aparecer no site se esta opção estiver marcada"
+
+#: .\apps\budget\models\budget.py:28
 msgid "function's budget"
 msgstr "orçamento funcional"
 
-#: .\apps\budget\models\budget.py:27
+#: .\apps\budget\models\budget.py:29
 msgid "function's execution"
 msgstr "execução funcional"
 
-#: .\apps\budget\models\budget.py:29 .\apps\budget\models\budget.py:30
+#: .\apps\budget\models\budget.py:31 .\apps\budget\models\budget.py:32
 msgid "agency's execution"
 msgstr "execução orgânica"
 
-#: .\apps\budget\models\budget.py:34
+#: .\apps\budget\models\budget.py:36
 msgid "budgets"
 msgstr "orçamentos"
 
@@ -385,7 +393,8 @@ msgid ""
 "dev team informing the following error message:<br><i>{error}</i>"
 msgstr ""
 "Um erro inesperado ocorreu na importação do upload. Por favor contacte o "
-"time de desenvolvimento informando a seguinte mensagem de erro: <br><i>{error}</i>"
+"time de desenvolvimento informando a seguinte mensagem de erro: "
+"<br><i>{error}</i>"
 
 #: .\apps\budget\tasks.py:58
 #, python-brace-format
@@ -394,7 +403,8 @@ msgid ""
 "the dev team informing the following error message:<br><i>{error}</i>"
 msgstr ""
 "Um erro inesperado ocorreu na atualização dos valores inferidos do upload. "
-"Por favor contacte o time de desenvolvimento informando a seguinte mensagem de erro: <br><i>{error}</i>"
+"Por favor contacte o time de desenvolvimento informando a seguinte mensagem "
+"de erro: <br><i>{error}</i>"
 
 #: .\apps\budget\tasks.py:69
 #, python-brace-format
@@ -402,8 +412,9 @@ msgid ""
 "An unexpected error occurred while creating the cache file. Please contact "
 "the dev team informing the following error message:<br><i>{error}</i>"
 msgstr ""
-"Um erro inesperado ocorreu na criação do arquivo de cache. Por favor contacte o "
-"time de desenvolvimento informando a seguinte mensagem de erro: <br><i>{error}</i>"
+"Um erro inesperado ocorreu na criação do arquivo de cache. Por favor "
+"contacte o time de desenvolvimento informando a seguinte mensagem de erro: "
+"<br><i>{error}</i>"
 
 #: .\apps\geo\apps.py:7
 msgid "Geo"
@@ -478,7 +489,6 @@ msgstr ""
 "        "
 
 #: .\templates\admin\index.html:9
-#| msgid "updated budget"
 msgid "Latest budgets"
 msgstr "Últimos orçamentos"
 

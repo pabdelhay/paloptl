@@ -170,7 +170,7 @@ class AgencyInline(BudgetAccountInline):
 class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
     fieldsets = (
         ("Base info", {
-            'fields': ('country', 'year', 'currency',)
+            'fields': ('country', 'year', 'currency', 'is_active')
         }),
     )
     inlines = (UploadInline, FunctionInline, AgencyInline)  # Commented because of large data timeouts.
