@@ -754,13 +754,17 @@ h3 .arrow {
   width: 100%;
 }
 .page-country-detail .treemap-wrapper .budget_account-info table.secondary-info td {
-  padding-bottom: 15px;
+  padding-bottom: 5px;
 }
 .page-country-detail .treemap-wrapper .budget_account-info table.secondary-info td:first-child {
-  width: 55%;
+  width: 40%;
 }
 .page-country-detail .treemap-wrapper .budget_account-info table.secondary-info td:last-child {
   font-weight: bold;
+}
+.page-country-detail .treemap-wrapper .budget_account-info table.secondary-info td.info-title {
+  font-style: italic;
+  font-weight: normal;
 }
 .page-country-detail .historical-wrapper {
   margin-top: 60px;

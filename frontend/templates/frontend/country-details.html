@@ -505,10 +505,9 @@
         <h4 class="historical-title"></h4>
         <div class="container">
             <div class="row">
-                <div class="col-10">
+                <div class="col-12">
                     <div id="historical-info"></div>
                 </div>
-                <div class="col-2"></div>
             </div>
         </div>
     </div>
@@ -625,19 +624,25 @@
     <div class="budget_account-info-box">
         <table class="secondary-info">
             <tr>
-                <td>Dotação de investimento</td>
+                <td colspan="2" class="info-title">Em Investimento</td>
+            </tr>
+            <tr>
+                <td>Dotação</td>
                 <td>{{formatCurrency budget_investment}}</td>
             </tr>
             <tr>
-                <td>Execução de investimento</td>
+                <td>Execução</td>
                 <td>{{formatCurrency execution_investment}}</td>
             </tr>
             <tr>
-                <td>Dotação de funcionamento</td>
+                <td colspan="2" class="info-title">Em Funcionamento</td>
+            </tr>
+            <tr>
+                <td>Dotação</td>
                 <td>{{formatCurrency budget_operation}}</td>
             </tr>
             <tr>
-                <td>Execução de funcionamento</td>
+                <td>Execução</td>
                 <td>{{formatCurrency execution_operation}}</td>
             </tr>
         </table>

@@ -57,12 +57,21 @@ class BudgetAccountInline(TabularInlinePaginated):
                        'get_execution_investment', 'get_execution_operation', 'get_execution_aggregated')
     fields = ('code', 'get_group_taxonomy', 'get_subgroup_taxonomy', 'get_budget_investment', 'get_budget_operation',
               'get_budget_aggregated', 'get_execution_investment', 'get_execution_operation',
-              'get_execution_aggregated', 'budget_investment', 'budget_operation', 'last_update')
+              'get_execution_aggregated', 'last_update')
 
     classes = ['collapse']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+    def get_fields(self, request, obj=None):
+        if request.user.is_superuser:
+            return [
+                'code', 'get_group_taxonomy', 'get_subgroup_taxonomy', 'budget_investment', 'budget_operation',
+                'budget_aggregated', 'execution_investment', 'execution_operation', 'execution_aggregated',
+                'last_update'
+            ]
+        return self.fields
 
     def has_add_permission(self, request, obj):
         return False

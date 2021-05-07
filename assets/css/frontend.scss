@@ -734,9 +734,10 @@ h3 {
         font-size: 13px;
         width: 100%;
         td {
-          padding-bottom: 15px;
-          &:first-child { width: 55%; }
+          padding-bottom: 5px;
+          &:first-child { width: 40%; }
           &:last-child { font-weight: bold; }
+          &.info-title { font-style: italic; font-weight: normal; }
         }
       }
     }
