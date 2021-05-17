@@ -145,6 +145,7 @@ hr {
   top: 0px;
 }
 
+
 h3 {
   font-size: 30px;
   color: #0f2843;
@@ -485,10 +486,10 @@ h3 {
     background-repeat: no-repeat;
     background-position-x: right;
     background-position-y: top;
-    .flag {
-      width: 100%;
-    }
+    h3 { margin-bottom: 5px; }
+    .flag { width: 100%; }
     .big-container { padding-top: 30px; }
+    .header-currency { padding-left: 18px; }
   }
   .breadcrumb-row {
     z-index: 99;

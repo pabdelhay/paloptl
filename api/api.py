@@ -18,10 +18,14 @@ class CountrySerializer(serializers.ModelSerializer):
 
 
 class BudgetSerializer(serializers.ModelSerializer):
+    currency_display = serializers.SerializerMethodField()
+
     class Meta:
         model = Budget
-        fields = ('id', 'year', 'currency', 'score_open_data', 'score_reports', 'score_data_quality',
-                  'transparency_index')
+        fields = ('id', 'year', 'currency', 'currency_display')
+
+    def get_currency_display(self, obj):
+        return obj.get_currency_display()
 
 
 class BudgetAccountSerializer(serializers.ModelSerializer):

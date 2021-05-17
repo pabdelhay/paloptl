@@ -17,5 +17,10 @@
         </div>
     </div>
     <hr />
+    {% if not hide_currency %}
+    <div class="col-6">
+        Todos os valores em <strong class="budget-currency">{{ last_budget.get_currency_display }}</strong>
+    </div>
+    {% endif %}
 </div>
 

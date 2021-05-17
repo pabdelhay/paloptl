@@ -38,6 +38,14 @@
         }
         return label_map[budget_account];
     }
+    function get_budget_basic_info(budget_id, callback){
+        var url = url = '/api/budgets/' + budget_id + '/';
+        $.get(url, function (data) {
+            callback(data);
+        }).fail(function () {
+            console.log("Error on fetching budget basic info.");
+        });
+    }
     function get_budget_data(budget_id, budget_account, callback){
         var url = MEDIA_URL + 'budgets/{{ country.slug }}_' + budget_account + '_' + get_budget_year_by_id(budget_id) + '.json'
         if(skip_cache){
@@ -308,6 +316,11 @@
         get_historical_and_plot_view();
     }
     function get_budget_and_plot_views(budget_id, budget_account){
+        if(budget_id != current_budget_id){
+            get_budget_basic_info(budget_id, function (data) {
+                $('.budget-currency').html(data['currency_display']);
+            });
+        }
         current_budget_account = budget_account;
         current_budget_id = budget_id;
 
@@ -485,11 +498,14 @@
                     <span class="arrow-right"></span>
                     DADOS ORÇAMENTÁRIOS
                 </h3>
+                <div class="header-currency">
+                    Todos os valores em <strong class="budget-currency">{{ last_budget.get_currency_display }}</strong>
+                </div>
             </div>
         </div>
     </div>
 
-    {% include 'frontend/budget-selector.component.html' with visualization='treemap' %}
+    {% include 'frontend/budget-selector.component.html' with visualization='treemap' hide_currency=True %}
     <div class="treemap-wrapper">
         <div class="row">
             <div class="col-3 budget_account-info-wrapper">
