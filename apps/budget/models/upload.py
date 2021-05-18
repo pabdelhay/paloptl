@@ -74,6 +74,14 @@ class Upload(models.Model):
         return default_delimiter
 
     def validate(self):
+        """
+        Validate if file is ok to import.
+        Validations:
+            - Headers
+            - Check if each cell's value is according to BudgetUploadSerializer fields
+            - Check if there are same category names for different codes
+        :return:
+        """
         from api.api_admin import BudgetUploadSerializer
 
         self.errors = list()
@@ -98,16 +106,57 @@ class Upload(models.Model):
                                          "It must be exact one of: <i>{header_fields}</i>"
                                          .format(line=reader.line_num, field=field, header_fields=str(header_fields))))
 
+        class CategoryCheck(object):
+            def __init__(self, name, level='category'):
+                self.name = name
+                self.level = level
+                self.codes = set()
+                self.lines = list()
+
+            def set_code_and_line(self, code, line):
+                self.codes.add(str(code))
+                self.lines.append(str(line))
+
+        # {code: CategoryCode}
+        categories = dict()
+        subcategories = dict()
+
         if not self.errors:
             # Only check for data fields if header is ok.
             for row in reader:
-                serializer = BudgetUploadSerializer(data=empty_string_to_none(row))
+                line_num = reader.line_num
+                data = empty_string_to_none(row)
+                serializer = BudgetUploadSerializer(data=data)
                 if not serializer.is_valid():
                     for field, errors_list in serializer.errors.items():
                         error_msg = "; ".join(errors_list)
                         self.errors.append(_("<strong>Line {line} ({column})</strong>: {error_msg} Input was: {input}"
-                                             .format(line=reader.line_num, column=field, error_msg=error_msg,
+                                             .format(line=line_num, column=field, error_msg=error_msg,
                                                      input=row[field])))
+
+                category_code = data.get('category_code', None)
+                category_name = data.get('category')
+                if category_code:
+                    categories.setdefault(category_name, CategoryCheck(name=category_name))
+                    categories[category_name].set_code_and_line(category_code, line_num)
+                subcategory_code = data.get('subcategory_code', None)
+                subcategory_name = data.get('subcategory')
+                if subcategory_code:
+                    subcategories.setdefault(subcategory_name, CategoryCheck(name=subcategory_name, level='subcategory'))
+                    subcategories[subcategory_name].set_code_and_line(subcategory_code, line_num)
+
+        def check_code_errors(categories_dict):
+            for cat_name, category_check in categories_dict.items():
+                if len(category_check.codes) > 1:
+                    lines = ",".join(category_check.lines)
+                    codes = ", ".join(category_check.codes)
+                    self.errors.append(_("<strong>Lines {lines} ({level}, {level}_code)</strong>: Different codes for "
+                                         "{level} <strong>{category}</strong>. Codes: [<strong>{codes}</strong>]"
+                                         .format(lines=lines, level=category_check.level, category=cat_name,
+                                                 codes=codes)))
+
+        check_code_errors(categories)
+        check_code_errors(subcategories)
 
         return not bool(len(self.errors))
 
@@ -134,18 +183,20 @@ class Upload(models.Model):
         reader = csv.DictReader(codecs.iterdecode(content.splitlines(), encoding), dialect=csv.excel,
                                 delimiter=delimiter)
 
-        # {category: {
+        # {category_id: {'instance': Category, 'values': {
         #   'budget_investment': float, 'budget_operation': float, 'budget_aggregated': float,
         #   'execution_investment': float, 'execution_operation': float, 'execution_aggregated': float}
         # }
         categories_dict = {}
 
         def update_category(instance, attr, new_value):
-            categories_dict.setdefault(instance, {})
+            category_id = instance.id
+            categories_dict.setdefault(category_id, {'instance': instance, 'values': {}})
+            categories_dict[category_id]['instance'] = instance  # Update instance
             if new_value is not None:
-                previous_value_on_same_import = categories_dict[instance].get(attr, 0)
+                previous_value_on_same_import = categories_dict[category_id]['values'].get(attr, 0)
                 new_value = previous_value_on_same_import + new_value
-                categories_dict[instance][attr] = new_value
+                categories_dict[category_id]['values'][attr] = new_value
 
         for row in reader:
             serializer = BudgetUploadSerializer(data=empty_string_to_none(row))
@@ -179,7 +230,8 @@ class Upload(models.Model):
                 log.append(upload_log)
 
             instance = category
-            instance.code = row_category_code
+            if row_category_code:
+                instance.code = row_category_code
             if row_subcategory is not None:
                 # Budget for a subgroup
                 try:
@@ -195,7 +247,8 @@ class Upload(models.Model):
                     log.append(upload_log)
 
                 instance = subcategory
-                instance.code = row_subcategory_code
+                if row_subcategory_code:
+                    instance.code = row_subcategory_code
 
             if self.report == UploadReportChoices.OGE:
                 # If is OGE report, save also initial budget values
@@ -213,7 +266,9 @@ class Upload(models.Model):
             update_category(instance=instance, attr='execution_aggregated', new_value=data['execution_aggregated'])
 
         # Saving categories after sum of all same category rows.
-        for category, values in categories_dict.items():
+        for category_id, obj in categories_dict.items():
+            category = obj['instance']
+            values = obj['values']
             for field, new_value in values.items():
                 old_value = getattr(category, field)
                 if new_value != old_value:
