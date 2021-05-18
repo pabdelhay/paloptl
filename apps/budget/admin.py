@@ -215,7 +215,9 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
                 html += ", "
             html += f"{u.report.upper()}"
             if u.status in UploadStatusChoices.get_error_status():
-                html += ' <span class="ui-icon ui-icon-alert"></span>'
+                html += ' <span class="ui-icon ui-icon-alert" title="With error"></span>'
+            elif u.status == UploadStatusChoices.WAITING_REIMPORT:
+                html += ' <span class="ui-icon ui-icon-refresh" title="Waiting reimport"></span>'
             first = False
         if uploads_count > 0:
             html += ")"
@@ -234,8 +236,9 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
     def reimport_uploads(self, request, queryset):
         for budget in queryset:
             reimport_budget_uploads.delay(budget.id)
-        messages.add_message(request, level=messages.SUCCESS,
-                             message="Uploads from selected budgets are being reimported.")
+        messages.add_message(request, level=messages.WARNING,
+                             message="Uploads from selected budgets are being reimported. "
+                                     "Come back in a few minutes and refresh this page to check results.")
 
     def remove_uploads_with_error(self, request, queryset):
         for budget in queryset:
