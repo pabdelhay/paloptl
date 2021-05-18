@@ -216,6 +216,8 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
             html += f"{u.report.upper()}"
             if u.status in UploadStatusChoices.get_error_status():
                 html += ' <span class="ui-icon ui-icon-alert" title="With error"></span>'
+            elif u.status in UploadStatusChoices.get_in_progress_status():
+                html += ' <span class="ui-icon ui-icon-play" title="Importing"></span>'
             elif u.status == UploadStatusChoices.WAITING_REIMPORT:
                 html += ' <span class="ui-icon ui-icon-refresh" title="Waiting reimport"></span>'
             first = False
