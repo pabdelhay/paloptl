@@ -1,5 +1,5 @@
 from admin_honeypot.models import LoginAttempt
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
@@ -10,7 +10,7 @@ from apps.budget.models import Upload, Budget, UploadLog
 from apps.budget.models.agency import Agency
 from apps.budget.models.function import Function
 from apps.budget.models.transparency_index import TransparencyIndex
-from apps.budget.tasks import import_file
+from apps.budget.tasks import import_file, reimport_budget_uploads
 from common.admin import CountryPermissionMixin
 from common.methods import raw_money_display
 
@@ -175,9 +175,10 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
         }),
     )
     inlines = (UploadInline, FunctionInline, AgencyInline)  # Commented because of large data timeouts.
-    list_display = ('country', 'year')
+    list_display = ('country', 'year', 'is_active', 'uploads', 'uploads_with_error')
     list_filter = ('year', )
     readonly_fields = ('currency', )
+    actions = ['reimport_uploads', 'remove_uploads_with_error']
 
     def save_formset(self, request, form, formset, change):
         if formset.model != Upload:
@@ -201,6 +202,46 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
                     # TODO: Resolve unmapped errors.
                     pass
         formset.save(commit=True)
+
+    @mark_safe
+    def uploads(self, obj):
+        uploads_count = obj.uploads.count()
+        html = f"{uploads_count}"
+        if uploads_count > 0:
+            html += " ("
+        first = True
+        for u in obj.uploads.all():
+            if not first:
+                html += ", "
+            html += f"{u.report.upper()}"
+            if u.status in UploadStatusChoices.get_error_status():
+                html += ' <span class="ui-icon ui-icon-alert"></span>'
+            first = False
+        if uploads_count > 0:
+            html += ")"
+        return html
+    uploads.short_description = _("uploads")
+
+    @mark_safe
+    def uploads_with_error(self, obj):
+        errors_count = obj.uploads.filter(status__in=UploadStatusChoices.get_error_status()).count()
+        html = f"{errors_count}"
+        if errors_count > 0:
+            html += '&nbsp;&nbsp;<span class="ui-icon ui-icon-alert"></span>'
+        return html
+    uploads_with_error.short_description = _("uploads with error")
+
+    def reimport_uploads(self, request, queryset):
+        for budget in queryset:
+            reimport_budget_uploads.delay(budget.id)
+        messages.add_message(request, level=messages.SUCCESS,
+                             message="Uploads from selected budgets are being reimported.")
+
+    def remove_uploads_with_error(self, request, queryset):
+        for budget in queryset:
+            budget.uploads.filter(status__in=UploadStatusChoices.get_error_status()).delete()
+        messages.add_message(request, level=messages.SUCCESS,
+                             message="Uploads removed with success.")
 
 
 @admin.register(TransparencyIndex)

@@ -14,6 +14,7 @@ class UploadStatusChoices(models.TextChoices):
     SUCCESS = 'success', _("Success")
     VALIDATION_ERROR = 'validation_error', _("Validation error")
     IMPORT_ERROR = 'import_error', _("Import error")
+    WAITING_REIMPORT = 'waiting_reimport', _("Waiting reimport")
 
     @classmethod
     def get_error_status(cls):

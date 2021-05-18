@@ -5,6 +5,7 @@ import os
 from collections import OrderedDict
 from functools import reduce
 
+from dirtyfields import DirtyFieldsMixin
 from django.conf import settings
 from django.contrib.postgres.fields import ArrayField
 from django.core.exceptions import ObjectDoesNotExist
@@ -30,7 +31,7 @@ def empty_string_to_none(row):
     return row
 
 
-class Upload(models.Model):
+class Upload(models.Model, DirtyFieldsMixin):
     budget = models.ForeignKey('budget.Budget', verbose_name=_("budget"), related_name='uploads',
                                on_delete=models.CASCADE)
     file = models.FileField(verbose_name=_("file"), upload_to=get_upload_path,
@@ -45,8 +46,17 @@ class Upload(models.Model):
     uploaded_by = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("uploaded by"), on_delete=models.PROTECT,
                                     editable=False)
 
+    class Meta:
+        ordering = ['uploaded_on']
+
     def __str__(self):
         return f"{self.budget.country.name} ({self.budget.year}) - #{self.id}"
+
+    def save(self, *args, **kwargs):
+        is_new = not self.pk
+        if not is_new and 'file' in self.get_dirty_fields():
+            self.status = UploadStatusChoices.WAITING_REIMPORT
+        super().save(*args, **kwargs)
 
     @classmethod
     def get_enconding_from_content(cls, content):

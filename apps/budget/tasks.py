@@ -1,13 +1,15 @@
+import re
+
 from celery import task
 from django.utils.translation import gettext_lazy as _
 from sentry_sdk import capture_exception
 
 from apps.budget.choices import UploadStatusChoices
-from apps.budget.models import Upload
 
 
 @task
 def import_file(upload_id):
+    from apps.budget.models import Upload
     upload = Upload.objects.get(id=upload_id)
     upload.status = UploadStatusChoices.VALIDATING
     upload.save()
@@ -72,3 +74,50 @@ def import_file(upload_id):
         return upload
 
     upload.save()
+    return upload
+
+
+@task
+def reimport_budget_uploads(budget_id, include_uploads_with_error=False):
+    """
+    - Remove all BudgetAccount data from a Budget
+    - Remove all UploadLog from a Budget
+    - Set Budget's Uploads status to waiting reimport
+    - Execute import_file() for each Budget's Upload in order of uploaded
+    :param upload_id: int
+    """
+    from apps.budget.models import Budget, UploadLog
+    budget = Budget.objects.get(id=budget_id)
+    print(f"----- Reimporting all uploads from Budget #{budget.id} {budget.country.name} {budget.year} -----")
+
+    # 1. Remove all BudgetAccount data
+    budget.functions.all().delete()
+    budget.agencies.all().delete()
+
+    filters = {'status__in': UploadStatusChoices.get_success_status()}
+    if include_uploads_with_error:
+        filters['status__in'] = UploadStatusChoices.get_success_status() + UploadStatusChoices.get_error_status()
+    upload_qs = budget.uploads.filter(**filters)
+    upload_ids = [u.id for u in upload_qs]
+
+    # 2. Remove all UploadLog
+    UploadLog.objects.filter(upload_id__in=upload_ids).delete()
+
+    # 3. Set Budget's Uploads status to waiting reimport
+    upload_qs.update(status=UploadStatusChoices.WAITING_REIMPORT, errors=[])
+
+    # 4. Execute import_file() for each Budget's Upload
+    for upload in budget.uploads.filter(status=UploadStatusChoices.WAITING_REIMPORT).order_by('uploaded_on'):
+        print(f"Reimporting Upload #{upload.id}... ", end='')
+        upload = import_file(upload_id=upload.id)
+        upload.refresh_from_db()
+        if upload.status not in UploadStatusChoices.get_success_status():
+            print(f"ERROR")
+            for error in upload.errors:
+                error = re.sub('<[^<]+?>', '', error)
+                print(f"    {error}")
+            break  # Every upload must be imported in order, so we break loop here.
+        else:
+            print(f"OK")
+
+    print(f"=== FINISHED ===")
