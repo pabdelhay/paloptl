@@ -231,7 +231,7 @@ class TransparencyIndexAdmin(admin.ModelAdmin):
 class UploadLogAdmin(CountryPermissionMixin, admin.ModelAdmin):
     country_lookup_field = 'upload__budget__country'
     list_display = ('id', 'log_type', '_category_type', 'category_name', '_field', '_old_value', '_new_value', 'upload',
-                    'updated_by', 'time')
+                    'updated_by')
     list_filter = ('log_type',)
     readonly_fields = ('log_type', '_category_type', 'category_name', '_field', '_old_value', '_new_value', 'upload',
                        'updated_by', 'time')
