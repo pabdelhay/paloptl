@@ -9,6 +9,7 @@ from django.db.models import Sum
 from django.utils.translation import gettext_lazy as _
 from djmoney.models.fields import CurrencyField
 
+from apps.budget.choices import UploadStatusChoices
 from common.mixins import CountryMixin
 
 
@@ -99,3 +100,9 @@ class Budget(CountryMixin, models.Model):
                 response = requests.get(url)
                 data = response.json()
                 json.dump(data, outfile)
+
+    def has_in_progress_upload(self):
+        return self.uploads.filter(status__in=UploadStatusChoices.get_in_progress_status()).count() > 0
+
+    def has_waiting_reimport_uploads(self):
+        return self.uploads.filter(status=UploadStatusChoices.WAITING_REIMPORT).count() > 0

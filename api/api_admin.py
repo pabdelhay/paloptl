@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from apps.account.tasks import test_celery
 from apps.budget.choices import UploadStatusChoices
 from apps.budget.models import Upload
+from apps.budget.tasks import reimport_budget_uploads
 from apps.geo.models import Country
 
 
@@ -66,3 +67,9 @@ class AdminViewset(viewsets.ViewSet):
         country_id = pk
         country = Country.objects.get(id=country_id)
         return Response(country.currency)
+
+    @action(methods=['post'], detail=True)
+    def reimport_budget(self, request, pk=None):
+        budget_id = pk
+        reimport_budget_uploads.delay(budget_id=budget_id)
+        return Response('reimporting')

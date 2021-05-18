@@ -43,3 +43,20 @@ a.button.create:hover { background-color: #a69a1e; }
 .language-separator { color: rgba(255, 255, 255, 0.25); margin: 0 10px; }
 
 .log-featured { color: #a3a447; font-weight: bold; }
+
+.loading-wrap {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 140px;
+    margin-left: -110px;
+    text-align: left;
+    background: #e6e6e6;
+    color: #585858;
+    z-index: 9999;
+    padding: 10px 20px;
+    box-shadow: -1px 3px 7px 0px #c3c3c3;
+    opacity: 0.94;
+}
+.loading-wrap img { width: 50px; vertical-align: middle; }

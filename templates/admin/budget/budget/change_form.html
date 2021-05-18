@@ -23,6 +23,7 @@
     .column-get_execution_investment, .column-get_execution_operation, .column-get_execution_aggregated {
         text-align: right;
     }
+    .reimport-button { background-color: #9c9c0f !important; }
 </style>
 
 <script type="text/javascript">
@@ -93,8 +94,31 @@
                 $('.collapse-toggle')[1].click();
             }, 10);
         {% endif %}
+        $('.reimport-button').on('click', function (ev) {
+            ev.preventDefault();
+            if(confirm("{% trans 'Confirm reimporting all uploads from this budget?' %}")){
+                loading(true);
+                var url = '{% url 'api_admin-reimport-budget' original.id %}';
+                $.post(url, {}, function (data) {
+                    setTimeout(function(){
+                        document.location.reload(true);
+                    }, 3000);
+                }).fail(function () {
+                    console.log("Error on reimporting uploads.");
+                });
+            }
+        })
     });
 </script>
+{% endblock %}
+
+{% block object-tools-items %}
+    {% if not original.has_in_progress_upload and original.has_waiting_reimport_uploads %}
+    <li>
+        <a href="#" class="reimport-button">{% trans "Reimport uploads" %}</a>
+    </li>
+    {% endif %}
+    {{ block.super }}
 {% endblock %}
 
 {% block field_sets %}
