@@ -1,3 +1,4 @@
+from dirtyfields import DirtyFieldsMixin
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.db.models import Sum
@@ -6,7 +7,7 @@ from mptt.fields import TreeForeignKey
 from mptt.models import MPTTModel
 
 
-class BudgetAccount(MPTTModel):
+class BudgetAccount(MPTTModel, DirtyFieldsMixin):
     class TaxonomyLevelsNotSet(Exception):
         pass
 

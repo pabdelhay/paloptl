@@ -52,6 +52,7 @@ class UploadInline(admin.TabularInline):
 class BudgetAccountInline(TabularInlinePaginated):
     extra = 0
     per_page = 50
+    can_delete = True
     readonly_fields = ('code', 'get_group_taxonomy', 'get_subgroup_taxonomy', 'last_update',
                        'get_budget_investment', 'get_budget_operation', 'get_budget_aggregated',
                        'get_execution_investment', 'get_execution_operation', 'get_execution_aggregated')
@@ -229,13 +230,13 @@ class TransparencyIndexAdmin(admin.ModelAdmin):
 @admin.register(UploadLog)
 class UploadLogAdmin(CountryPermissionMixin, admin.ModelAdmin):
     country_lookup_field = 'upload__budget__country'
-    list_display = ('log_type', '_category_type', 'category_name', '_field', '_old_value', '_new_value', 'upload',
+    list_display = ('id', 'log_type', '_category_type', 'category_name', '_field', '_old_value', '_new_value', 'upload',
                     'updated_by', 'time')
     list_filter = ('log_type',)
     readonly_fields = ('log_type', '_category_type', 'category_name', '_field', '_old_value', '_new_value', 'upload',
                        'updated_by', 'time')
     search_fields = ('field', 'category_name')
-    ordering = ('-time', '-id')
+    ordering = ('time', 'id')
 
     def has_add_permission(self, request):
         return False

@@ -5,6 +5,7 @@ django-admin-inline-paginator==0.1.1
 django-admin-honeypot==1.1.0
 django-apptemplates==1.5
 django-debug-toolbar==2.2
+django-dirtyfields==1.7.0
 django-dotenv==1.4.2
 django-environ==0.4.5
 django-money==1.1

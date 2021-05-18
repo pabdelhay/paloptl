@@ -2,6 +2,7 @@ import codecs
 import csv
 import operator
 import os
+from collections import OrderedDict
 from functools import reduce
 
 from django.conf import settings
@@ -111,6 +112,16 @@ class Upload(models.Model):
         return not bool(len(self.errors))
 
     def do_import(self):
+        """
+        Make the upload import.
+        Same category rows are summed. Final value override existent value on database.
+        eg.:
+            category  category_code  budget_aggregated
+            Security  001            100
+            Security  001            50
+        Budget aggregated for Security will be 150. This value will override existent value on database.
+        :return:
+        """
         from api.api_admin import BudgetUploadSerializer
         upload = self
 
@@ -123,25 +134,18 @@ class Upload(models.Model):
         reader = csv.DictReader(codecs.iterdecode(content.splitlines(), encoding), dialect=csv.excel,
                                 delimiter=delimiter)
 
-        def update_category(instance, attr, new_value, add_log=True):
-            old_value = getattr(instance, attr)
+        # {category: {
+        #   'budget_investment': float, 'budget_operation': float, 'budget_aggregated': float,
+        #   'execution_investment': float, 'execution_operation': float, 'execution_aggregated': float}
+        # }
+        categories_dict = {}
 
+        def update_category(instance, attr, new_value):
+            categories_dict.setdefault(instance, {})
             if new_value is not None:
-                # Remove field from inferred_fields if it was previously inferred.
-                was_previously_inferred = instance.inferred_fields.get(attr, None)
-                if was_previously_inferred:
-                    instance.inferred_fields[attr] = False
-
-                if old_value != new_value:
-                    # Set new value and add to log.
-                    setattr(instance, attr, new_value)
-
-                    if add_log:
-                        upload_log = UploadLog(upload=upload, log_type=LogTypeChoices.UPDATE,
-                                               category=instance, field=attr, old_value=old_value,
-                                               new_value=new_value, updated_by=upload.uploaded_by,
-                                               category_name=instance.name)
-                        log.append(upload_log)
+                previous_value_on_same_import = categories_dict[instance].get(attr, 0)
+                new_value = previous_value_on_same_import + new_value
+                categories_dict[instance][attr] = new_value
 
         for row in reader:
             serializer = BudgetUploadSerializer(data=empty_string_to_none(row))
@@ -163,6 +167,7 @@ class Upload(models.Model):
                 category_model = self.budget.functions.model
 
             try:
+                # Get category by name OR code
                 filters = [Q(name__iexact=row_category)]
                 if row_category_code:
                     filters.append(Q(code=row_category_code))
@@ -200,21 +205,32 @@ class Upload(models.Model):
                                 new_value=data['budget_operation'])
                 update_category(instance=instance, attr='initial_budget_aggregated',
                                 new_value=data['budget_aggregated'])
-                update_category(instance=instance, attr='budget_investment', new_value=data['budget_investment'],
-                                add_log=False)
-                update_category(instance=instance, attr='budget_operation', new_value=data['budget_operation'],
-                                add_log=False)
-                update_category(instance=instance, attr='budget_aggregated', new_value=data['budget_aggregated'],
-                                add_log=False)
-            else:
-                update_category(instance=instance, attr='budget_investment', new_value=data['budget_investment'])
-                update_category(instance=instance, attr='budget_operation', new_value=data['budget_operation'])
-                update_category(instance=instance, attr='budget_aggregated', new_value=data['budget_aggregated'])
+            update_category(instance=instance, attr='budget_investment', new_value=data['budget_investment'])
+            update_category(instance=instance, attr='budget_operation', new_value=data['budget_operation'])
+            update_category(instance=instance, attr='budget_aggregated', new_value=data['budget_aggregated'])
             update_category(instance=instance, attr='execution_investment', new_value=data['execution_investment'])
             update_category(instance=instance, attr='execution_operation', new_value=data['execution_operation'])
             update_category(instance=instance, attr='execution_aggregated', new_value=data['execution_aggregated'])
 
-            instance.save()
+        # Saving categories after sum of all same category rows.
+        for category, values in categories_dict.items():
+            for field, new_value in values.items():
+                old_value = getattr(category, field)
+                if new_value != old_value:
+                    if not (self.report == UploadReportChoices.OGE and field.startswith('initial_')):
+                        # Don't log initial values of OGE report.
+                        upload_log = UploadLog(upload=upload, log_type=LogTypeChoices.UPDATE,
+                                               category=category, field=field, old_value=old_value,
+                                               new_value=new_value, updated_by=upload.uploaded_by,
+                                               category_name=category.name)
+                        log.append(upload_log)
+                setattr(category, field, new_value)
+
+                # Remove field from inferred_fields if it was previously inferred.
+                was_previously_inferred = category.inferred_fields.get(field, None)
+                if was_previously_inferred:
+                    category.inferred_fields[field] = False
+            category.save()
 
         try:
             self.save()

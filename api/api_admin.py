@@ -51,7 +51,7 @@ class AdminViewset(viewsets.ViewSet):
         try:
             upload = Upload.objects.get(id=upload_id)
         except Upload.DoesNotExist:
-            request.session.pop('upload_in_progress')
+            request.session.pop('upload_in_progress', None)
             return Response({})
 
         if upload.status not in UploadStatusChoices.get_in_progress_status():
