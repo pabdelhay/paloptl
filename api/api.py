@@ -22,7 +22,7 @@ class BudgetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Budget
-        fields = ('id', 'year', 'currency', 'currency_display')
+        fields = ('id', 'year', 'currency', 'currency_display', 'output_file')
 
     def get_currency_display(self, obj):
         return obj.get_currency_display()

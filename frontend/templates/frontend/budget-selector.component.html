@@ -22,5 +22,10 @@
         Todos os valores em <strong class="budget-currency">{{ last_budget.get_currency_display }}</strong>
     </div>
     {% endif %}
+    {% if show_export %}
+    <div class="col-6 right">
+        <a href="" class="download-link">Baixar dados em CSV <span class="material-icons">download</span></a>
+    </div>
+    {% endif %}
 </div>
 

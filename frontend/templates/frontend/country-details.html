@@ -316,11 +316,10 @@
         get_historical_and_plot_view();
     }
     function get_budget_and_plot_views(budget_id, budget_account){
-        if(budget_id != current_budget_id){
-            get_budget_basic_info(budget_id, function (data) {
-                $('.budget-currency').html(data['currency_display']);
-            });
-        }
+        get_budget_basic_info(budget_id, function (data) {
+            $('.budget-currency').html(data['currency_display']);
+            $('.download-link').attr('href', data['output_file']);
+        });
         current_budget_account = budget_account;
         current_budget_id = budget_id;
 
@@ -529,7 +528,7 @@
         </div>
     </div>
 
-    {% include 'frontend/budget-selector.component.html' with visualization='list' %}
+    {% include 'frontend/budget-selector.component.html' with visualization='list' show_export=True %}
     <div class="datatable-wrapper">
         <div class="container">
             <div class="row">
