@@ -196,6 +196,7 @@
                     data['execution_percentage'] = data['execution_aggregated'] / data['budget_aggregated'];
                     return renderTemplate('#template-treemap-tooltip', data);
                 });
+                bullet.label.wrap = true;
             } else {
                 bullet.locationX = 0.02;
                 bullet.label.textAlign = 'left';
