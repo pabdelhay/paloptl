@@ -23,7 +23,8 @@
     .column-get_execution_investment, .column-get_execution_operation, .column-get_execution_aggregated {
         text-align: right;
     }
-    .reimport-button { background-color: #9c9c0f !important; }
+    .reimport-button { background-color: #417690 !important; }
+    .update-output-file-button { background-color: #79aec8 !important; }
 </style>
 
 <script type="text/javascript">
@@ -85,6 +86,7 @@
         {% if add %}
             $('#functions-group, #agencies-group').hide();
             $('.field-currency').remove();
+            $('.field-output_file').remove();
         {% endif %}
 
         {% if request.GET.page %}
@@ -94,28 +96,42 @@
                 $('.collapse-toggle')[1].click();
             }, 10);
         {% endif %}
-        $('.reimport-button').on('click', function (ev) {
+
+        $('.action-button').on('click', function (ev) {
             ev.preventDefault();
-            if(confirm("{% trans 'Confirm reimporting all uploads from this budget?' %}")){
+            var confirm_msg = $(this).data('confirm_msg');
+            var api_url = $(this).data('api_url');
+            if(confirm(confirm_msg)){
                 loading(true);
-                var url = '{% url 'api_admin-reimport-budget' original.id %}';
+                var url = api_url;
                 $.post(url, {}, function (data) {
                     setTimeout(function(){
                         document.location.reload(true);
                     }, 3000);
                 }).fail(function () {
-                    console.log("Error on reimporting uploads.");
+                    console.log("Error execution action.");
                 });
             }
-        })
+        });
     });
 </script>
 {% endblock %}
 
 {% block object-tools-items %}
-    {% if not original.has_in_progress_upload and original.has_waiting_reimport_uploads %}
+    {% if not original.has_in_progress_upload %}
     <li>
-        <a href="#" class="reimport-button">{% trans "Reimport uploads" %}</a>
+        <a href="#" class="action-button reimport-button"
+           data-api_url="{% url 'api_admin-reimport-budget' original.id %}"
+           data-confirm_msg="{% trans 'Confirm reimporting all uploads from this budget?' %}">
+            {% trans "Reimport uploads" %}
+        </a>
+    </li>
+    <li>
+        <a href="#" class="action-button update-output-file-button"
+           data-api_url="{% url 'api_admin-update-budget-output-file' original.id %}"
+           data-confirm_msg="{% trans 'Confirm updating output file?' %}">
+            {% trans "Update output file" %}
+        </a>
     </li>
     {% endif %}
     {{ block.super }}

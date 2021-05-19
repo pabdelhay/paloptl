@@ -2,12 +2,16 @@ import json
 import os
 
 import requests
+import unicodecsv as csv
 from django.conf import settings
+from django.core.files import File
 from django.core.files.storage import default_storage
+from django.core.files.temp import NamedTemporaryFile
 from django.db import models
 from django.db.models import Sum
 from django.utils.translation import gettext_lazy as _
 from djmoney.models.fields import CurrencyField
+from rest_framework import serializers
 
 from apps.budget.choices import UploadStatusChoices
 from common.mixins import CountryMixin
@@ -31,6 +35,10 @@ class Budget(CountryMixin, models.Model):
                                            editable=False)
     agency_budget = models.FloatField(verbose_name=_("agency's execution"), null=True, blank=True, editable=False)
     agency_execution = models.FloatField(verbose_name=_("agency's execution"), null=True, blank=True, editable=False)
+
+    # CSV file
+    output_file = models.FileField(upload_to='exports', null=True, blank=True, editable=False,
+                                   help_text=_("Auto generated CSV file with all data from budget."))
 
     class Meta:
         verbose_name = _("budget")
@@ -100,6 +108,68 @@ class Budget(CountryMixin, models.Model):
                 response = requests.get(url)
                 data = response.json()
                 json.dump(data, outfile)
+
+    def update_csv_file(self):
+        """
+        Create a CSV file with all data from budget.
+        Fields are defined on the in-class BudgetCSVSerializer.
+        Save csv_file to Budget.output_file.
+        """
+        class BudgetCSVSerializer(serializers.Serializer):
+            report_type = serializers.CharField(allow_null=True)
+            category = serializers.CharField(allow_null=True)
+            category_code = serializers.CharField(required=False, allow_null=True)
+            subcategory = serializers.CharField(required=False, allow_null=True)
+            subcategory_code = serializers.CharField(required=False, allow_null=True)
+            budget_investment = serializers.FloatField(required=False)
+            budget_operation = serializers.FloatField(required=False)
+            budget_aggregated = serializers.FloatField(required=False)
+            execution_investment = serializers.FloatField(required=False)
+            execution_operation = serializers.FloatField(required=False)
+            execution_aggregated = serializers.FloatField(required=False)
+
+        budget_accounts = {
+            'functions': 'functional',
+            'agencies': 'organic'
+        }
+        header = list(BudgetCSVSerializer._declared_fields.keys())
+
+        file_name = f'budget_{self.country.slug}_{self.year}.csv'
+        output_file = NamedTemporaryFile(mode='wb+')
+        writer = csv.DictWriter(output_file, fieldnames=header, delimiter=',')
+        writer.writeheader()
+
+        for budget_account, report_type in budget_accounts.items():
+            category_set = getattr(self, budget_account)
+            for category in category_set.all():
+                category_name = category.name
+                category_code = category.code
+                subcategory_name = None
+                subcategory_code = None
+                if category.level == 1:
+                    category_name = category.parent.name
+                    category_code = category.parent.code
+                    subcategory_name = category.name
+                    subcategory_code = category.code
+                data = {
+                    'report_type': report_type,
+                    'category': category_name,
+                    'category_code': category_code,
+                    'subcategory': subcategory_name,
+                    'subcategory_code': subcategory_code
+                }
+                serializer = BudgetCSVSerializer(instance=category, data=data)
+                serializer.is_valid()
+                serializer_data = serializer.data
+                serializer_data.update(serializer.validated_data)
+                writer.writerow(serializer_data)
+
+        self.output_file.delete()  # To override file instead of creating another file with different name.
+        self.output_file = File(output_file, name=file_name)
+        self.save()
+
+        output_file.close()
+        return output_file
 
     def has_in_progress_upload(self):
         return self.uploads.filter(status__in=UploadStatusChoices.get_in_progress_status()).count() > 0

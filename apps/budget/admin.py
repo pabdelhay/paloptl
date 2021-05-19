@@ -171,13 +171,13 @@ class AgencyInline(BudgetAccountInline):
 class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
     fieldsets = (
         ("Base info", {
-            'fields': ('country', 'year', 'currency', 'is_active')
+            'fields': ('country', 'year', 'is_active', 'currency', 'output_file')
         }),
     )
     inlines = (UploadInline, FunctionInline, AgencyInline)  # Commented because of large data timeouts.
     list_display = ('country', 'year', 'is_active', 'uploads', 'uploads_with_error')
     list_filter = ('year', )
-    readonly_fields = ('currency', )
+    readonly_fields = ('currency', 'output_file')
     actions = ['reimport_uploads', 'remove_uploads_with_error']
 
     def save_formset(self, request, form, formset, change):

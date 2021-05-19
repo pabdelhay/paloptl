@@ -74,7 +74,23 @@ def import_file(upload_id):
         return upload
 
     upload.save()
+
+    # Update CSV file
+    # Running async since the csv file is not crucial for the country page. Preventing any unmapped error.
+    make_budget_csv_file.delay(upload.budget_id)
+
     return upload
+
+
+@task
+def make_budget_csv_file(budget_id):
+    """
+    Make a CSV file with all data from budget.
+    :param budget_id: int
+    """
+    from apps.budget.models import Budget
+    budget = Budget.objects.get(id=budget_id)
+    budget.update_csv_file()
 
 
 @task
