@@ -8,7 +8,7 @@ from django_admin_inline_paginator.admin import TabularInlinePaginated
 from apps.budget.choices import UploadStatusChoices
 from apps.budget.models import Upload, Budget, UploadLog
 from apps.budget.models.agency import Agency
-from apps.budget.models.expense_function import Function
+from apps.budget.models.function import Function
 from apps.budget.models.transparency_index import TransparencyIndex
 from apps.budget.tasks import import_file, reimport_budget_uploads
 from common.admin import CountryPermissionMixin
