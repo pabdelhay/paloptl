@@ -2,7 +2,6 @@ import codecs
 import csv
 import operator
 import os
-from collections import OrderedDict
 from functools import reduce
 
 from dirtyfields import DirtyFieldsMixin
@@ -94,7 +93,7 @@ class Upload(models.Model, DirtyFieldsMixin):
             - Check if there are same category names for different codes
         :return:
         """
-        from api.api_admin import BudgetUploadSerializer
+        from api.api_admin import ExpenseUploadSerializer, RevenueUploadSerializer
 
         self.errors = list()
         content = self.file.read()
@@ -103,8 +102,13 @@ class Upload(models.Model, DirtyFieldsMixin):
         reader = csv.DictReader(codecs.iterdecode(content.splitlines(), encoding), dialect=csv.excel,
                                 delimiter=delimiter)
 
-        # # Validate headers
-        header_fields = list(BudgetUploadSerializer._declared_fields.keys())
+        if self.category == UploadCategoryChoices.EXPENSE:
+            serializer_class = ExpenseUploadSerializer
+        elif self.category == UploadCategoryChoices.REVENUE:
+            serializer_class = RevenueUploadSerializer
+
+        # Validate headers
+        header_fields = list(serializer_class._declared_fields.keys())
 
         for field in reader.fieldnames:
             if field not in header_fields:
@@ -138,7 +142,7 @@ class Upload(models.Model, DirtyFieldsMixin):
             for row in reader:
                 line_num = reader.line_num
                 data = empty_string_to_none(row)
-                serializer = BudgetUploadSerializer(data=data)
+                serializer = serializer_class(data=data)
                 if not serializer.is_valid():
                     for field, errors_list in serializer.errors.items():
                         error_msg = "; ".join(errors_list)
@@ -183,7 +187,7 @@ class Upload(models.Model, DirtyFieldsMixin):
         Budget aggregated for Security will be 150. This value will override existent value on database.
         :return:
         """
-        from api.api_admin import BudgetUploadSerializer
+        from api.api_admin import ExpenseUploadSerializer, RevenueUploadSerializer
         upload = self
 
         self.errors = list()  # [string]
@@ -194,6 +198,11 @@ class Upload(models.Model, DirtyFieldsMixin):
         delimiter = self.get_delimiter_from_content(content)
         reader = csv.DictReader(codecs.iterdecode(content.splitlines(), encoding), dialect=csv.excel,
                                 delimiter=delimiter)
+
+        if self.category == UploadCategoryChoices.EXPENSE:
+            serializer_class = ExpenseUploadSerializer
+        elif self.category == UploadCategoryChoices.REVENUE:
+            serializer_class = RevenueUploadSerializer
 
         # {category_id: {'instance': Category, 'values': {
         #   'budget_investment': float, 'budget_operation': float, 'budget_aggregated': float,
@@ -211,7 +220,7 @@ class Upload(models.Model, DirtyFieldsMixin):
                 categories_dict[category_id]['values'][attr] = new_value
 
         for row in reader:
-            serializer = BudgetUploadSerializer(data=empty_string_to_none(row))
+            serializer = serializer_class(data=empty_string_to_none(row))
             serializer.is_valid()
             data = serializer.data
 
@@ -224,11 +233,8 @@ class Upload(models.Model, DirtyFieldsMixin):
             # Check if report is organic or functional.
             if self.category == UploadCategoryChoices.EXPENSE:
                 category_set = self.budget.expenses
-                category_model = self.budget.expenses.model
             elif self.category == UploadCategoryChoices.REVENUE:
-                pass
-                # category_set = self.revenues
-                # category_model = self.revenues.model
+                category_set = self.budget.revenues
 
             try:
                 # Get category by name OR code

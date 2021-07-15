@@ -70,7 +70,7 @@ class Budget(CountryMixin, models.Model):
         Updates all budget inferred values.
         """
         from .budget_summary import BudgetSummary
-        budget_accounts = [self.expenses, ]  # TODO: implement self.revenues
+        budget_accounts = [self.expenses, self.revenues]
 
         # Set inferred values for budget's expenses and revenues.
         for budget_account_qs in budget_accounts:
@@ -81,7 +81,8 @@ class Budget(CountryMixin, models.Model):
         budget_summary, created = BudgetSummary.objects.get_or_create(budget=self)
         for budget_account_qs in budget_accounts:
             category_prefix = budget_account_qs.model._meta.model_name  # ['expense', 'revenue']
-            for group in ExpenseGroupChoices:
+            group_choices = budget_account_qs.model.group.field.choices  # [ExpenseGroupChoices, RevenueGroupChoices]
+            for group, group_label in group_choices:
                 budget_account_budget, budget_account_execution = None, None
                 for budget_account in budget_account_qs.filter(group=group, level=0):
                     budget = budget_account.get_value('budget_aggregated')

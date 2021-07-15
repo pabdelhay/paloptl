@@ -18,6 +18,11 @@ class ExpenseGroupChoices(models.TextChoices):
     ORGANIC = 'organic', _("Organic")
 
 
+class RevenueGroupChoices(models.TextChoices):
+    NATURE = 'nature', _("Nature")
+    SOURCE = 'source', _("Source")
+
+
 class UploadStatusChoices(models.TextChoices):
     VALIDATING = 'validating', _("Validating")
     IMPORTING = 'importing', _("Importing")

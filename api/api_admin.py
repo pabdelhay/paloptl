@@ -4,15 +4,14 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from apps.account.tasks import test_celery
-from apps.budget.choices import UploadStatusChoices
+from apps.budget.choices import UploadStatusChoices, RevenueGroupChoices, ExpenseGroupChoices
 from apps.budget.models import Upload
 from apps.budget.tasks import reimport_budget_uploads, make_budget_csv_file
 from apps.geo.models import Country
 
 
 class BudgetUploadSerializer(serializers.Serializer):
-    # 'report_type' maps to 'BudgetAccount.group'
-    report_type = serializers.ChoiceField(choices=('organic', 'functional'), source='group')
+    report_type = serializers.ChoiceField(choices=ExpenseGroupChoices.choices + RevenueGroupChoices.choices)
 
     category = serializers.CharField(max_length=255)
     subcategory = serializers.CharField(required=False, allow_null=True, max_length=255)
@@ -25,6 +24,16 @@ class BudgetUploadSerializer(serializers.Serializer):
     execution_operation = serializers.FloatField(required=False, allow_null=True)
     execution_investment = serializers.FloatField(required=False, allow_null=True)
     execution_aggregated = serializers.FloatField(required=False, allow_null=True)
+
+
+class ExpenseUploadSerializer(BudgetUploadSerializer):
+    # 'report_type' maps to 'Expense.group'
+    report_type = serializers.ChoiceField(choices=ExpenseGroupChoices.choices)
+
+
+class RevenueUploadSerializer(BudgetUploadSerializer):
+    # 'report_type' maps to 'Revenue.group'
+    report_type = serializers.ChoiceField(choices=RevenueGroupChoices.choices)
 
 
 class UploadInProgressSerializer(serializers.ModelSerializer):

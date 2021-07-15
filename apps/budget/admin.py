@@ -5,8 +5,8 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 from django_admin_inline_paginator.admin import TabularInlinePaginated
 
-from apps.budget.choices import UploadStatusChoices, ExpenseGroupChoices
-from apps.budget.models import Upload, Budget, UploadLog, Expense
+from apps.budget.choices import UploadStatusChoices, ExpenseGroupChoices, RevenueGroupChoices
+from apps.budget.models import Upload, Budget, UploadLog, Expense, Revenue
 from apps.budget.models.transparency_index import TransparencyIndex
 from apps.budget.tasks import import_file, reimport_budget_uploads
 from common.admin import CountryPermissionMixin
@@ -145,32 +145,60 @@ class BudgetAccountInline(TabularInlinePaginated):
     get_execution_aggregated.short_description = _("total execution")
 
 
-class FunctionInline(BudgetAccountInline):
+class ExpenseFunctionInline(BudgetAccountInline):
     model = Expense
     group = ExpenseGroupChoices.FUNCTIONAL
     verbose_name_plural = _("Expenses by function")
 
     def get_group_taxonomy(self, obj):
         return obj.parent.name if obj.parent else obj.name
-    get_group_taxonomy.short_description = Expense.get_taxonomy(group=group, level=0)
+    get_group_taxonomy.short_description = model.get_taxonomy(group=group, level=0)
 
     def get_subgroup_taxonomy(self, obj):
         return obj.name if obj.parent else ""
-    get_subgroup_taxonomy.short_description = Expense.get_taxonomy(group=group, level=1)
+    get_subgroup_taxonomy.short_description = model.get_taxonomy(group=group, level=1)
 
 
-class AgencyInline(BudgetAccountInline):
+class ExpenseAgencyInline(BudgetAccountInline):
     model = Expense
     group = ExpenseGroupChoices.ORGANIC
     verbose_name_plural = _("Expenses by agency")
 
     def get_group_taxonomy(self, obj):
         return obj.parent.name if obj.parent else obj.name
-    get_group_taxonomy.short_description = Expense.get_taxonomy(group=group, level=0)
+    get_group_taxonomy.short_description = model.get_taxonomy(group=group, level=0)
 
     def get_subgroup_taxonomy(self, obj):
         return obj.name if obj.parent else ""
-    get_subgroup_taxonomy.short_description = Expense.get_taxonomy(group=group, level=1)
+    get_subgroup_taxonomy.short_description = model.get_taxonomy(group=group, level=1)
+
+
+class RevenueNatureInline(BudgetAccountInline):
+    model = Revenue
+    group = RevenueGroupChoices.NATURE
+    verbose_name_plural = _("Revenues by nature")
+
+    def get_group_taxonomy(self, obj):
+        return obj.parent.name if obj.parent else obj.name
+    get_group_taxonomy.short_description = model.get_taxonomy(group=group, level=0)
+
+    def get_subgroup_taxonomy(self, obj):
+        return obj.name if obj.parent else ""
+    get_subgroup_taxonomy.short_description = model.get_taxonomy(group=group, level=1)
+
+
+class RevenueSourceInline(BudgetAccountInline):
+    model = Revenue
+    group = RevenueGroupChoices.SOURCE
+    verbose_name_plural = _("Revenues by source")
+
+    def get_group_taxonomy(self, obj):
+        return obj.parent.name if obj.parent else obj.name
+    get_group_taxonomy.short_description = model.get_taxonomy(group=group, level=0)
+
+    def get_subgroup_taxonomy(self, obj):
+        return obj.name if obj.parent else ""
+    get_subgroup_taxonomy.short_description = model.get_taxonomy(group=group, level=1)
 
 
 @admin.register(Budget)
@@ -180,7 +208,7 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
             'fields': ('country', 'year', 'is_active', 'currency', 'output_file')
         }),
     )
-    inlines = (UploadInline, FunctionInline, AgencyInline)  # Commented because of large data timeouts.
+    inlines = (UploadInline, ExpenseFunctionInline, ExpenseAgencyInline, RevenueNatureInline, RevenueSourceInline)
     list_display = ('country', 'year', 'is_active', 'uploads', 'uploads_with_error')
     list_filter = ('year', )
     readonly_fields = ('currency', 'output_file')
