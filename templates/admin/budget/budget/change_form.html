@@ -84,7 +84,9 @@
         $('#uploads-group h2').after($('.inline-description.groups'))
 
         {% if add %}
-            $('#functions-group, #agencies-group').hide();
+            $('#summary-group').hide();
+            $('#expenses-group, #expenses-2-group').hide();
+            $('#revenues-group, #revenues-2-group').hide();
             $('.field-currency').remove();
             $('.field-output_file').remove();
         {% endif %}

@@ -1,12 +1,13 @@
 from admin_honeypot.models import LoginAttempt
 from django.contrib import admin, messages
+from django.contrib.admin import TabularInline
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 from django_admin_inline_paginator.admin import TabularInlinePaginated
 
 from apps.budget.choices import UploadStatusChoices, ExpenseGroupChoices, RevenueGroupChoices
-from apps.budget.models import Upload, Budget, UploadLog, Expense, Revenue
+from apps.budget.models import Upload, Budget, UploadLog, Expense, Revenue, BudgetSummary
 from apps.budget.models.transparency_index import TransparencyIndex
 from apps.budget.tasks import import_file, reimport_budget_uploads
 from common.admin import CountryPermissionMixin
@@ -45,6 +46,21 @@ class UploadInline(admin.TabularInline):
                f'' + html + \
                f'</div>'
     get_log.short_description = "log"
+
+
+class BudgetSummaryInline(TabularInline):
+    model = BudgetSummary
+    fields = ('expense_functional_budget', 'expense_functional_execution',
+              'expense_organic_budget', 'expense_organic_execution',
+              'revenue_nature_budget', 'revenue_nature_execution',
+              'revenue_source_budget', 'revenue_source_execution')
+    readonly_fields = ('expense_functional_budget', 'expense_functional_execution',
+                       'expense_organic_budget', 'expense_organic_execution',
+                       'revenue_nature_budget', 'revenue_nature_execution',
+                       'revenue_source_budget', 'revenue_source_execution')
+
+    def has_delete_permission(self, request, obj=None):
+        return False
 
 
 class BudgetAccountInline(TabularInlinePaginated):
@@ -208,7 +224,8 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
             'fields': ('country', 'year', 'is_active', 'currency', 'output_file')
         }),
     )
-    inlines = (UploadInline, ExpenseFunctionInline, ExpenseAgencyInline, RevenueNatureInline, RevenueSourceInline)
+    inlines = (UploadInline, BudgetSummaryInline,ExpenseFunctionInline, ExpenseAgencyInline, RevenueNatureInline,
+               RevenueSourceInline)
     list_display = ('country', 'year', 'is_active', 'uploads', 'uploads_with_error')
     list_filter = ('year', )
     readonly_fields = ('currency', 'output_file')
