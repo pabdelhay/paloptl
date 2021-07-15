@@ -34,13 +34,11 @@
         <div class="header">
             <div class="container">
                 <div class="row upper-row middle">
-                    <div class="col-3">
-                        <img src="{% static 'img/logo_propalop.gif' %}" alt="Logo Pro PALOP-TL ISC" />
+                    <div class="col-8 logos">
+                        <img src="{% static 'img/logo-propaloptl-pt.png' %}" class="logo-propaloptl" alt="Logo Pro PALOP-TL ISC" />
+                        <img src="{% static 'img/logo-paloptl-ue.png' %}" class="logo-ue" alt="Logo PALOP-TL UE" />
                     </div>
-                    <div class="col-3">
-                        <img src="{% static 'img/logo_paloptl_ue.gif' %}" alt="Logo PALOP-TL UE" />
-                    </div>
-                    <div class="col-6 right">
+                    <div class="col-4 right">
                         {% include 'frontend/language-selector.component.html' %}
                     </div>
                 </div>
@@ -93,22 +91,22 @@
 
                 <div class="row sponsors">
                     <div class="col-8 first-col">
-                        <div class="row upper-row middle">
-                            <div class="col-5 ml-0">
-                                <img src="{% static 'img/logo_propalop.gif' %}" alt="Logo Pro PALOP-TL ISC"/>
+                        <div class="row upper-row middle logos">
+                            <div class="col-6 ml-0">
+                                <img src="{% static 'img/logo-propaloptl-pt.png' %}" class="logo-propaloptl" alt="Logo Pro PALOP-TL ISC" />
                             </div>
-                            <div class="col-5">
-                                <img src="{% static 'img/logo_paloptl_ue.gif' %}" alt="Logo PALOP-TL UE"/>
+                            <div class="col-6">
+                                <img src="{% static 'img/logo-paloptl-ue.png' %}" class="logo-ue" alt="Logo PALOP-TL UE" />
                             </div>
                         </div>
                         <div class="row bottom-row middle">
-                            <div class="col-5 ml-0">
+                            <div class="col-6 ml-0">
                                 <img src="{% static 'img/bottom_img_1.gif' %}" />
                                 <img src="{% static 'img/bottom_img_2.gif' %}" />
                                 <img src="{% static 'img/bottom_img_3.gif' %}" />
                                 <img src="{% static 'img/bottom_img_4.gif' %}" />
                             </div>
-                            <div class="col-7">
+                            <div class="col-6">
                                 O Pro PALOP-TL ISC (FASE II) é co-financiado pela União Europeia.<br>
                                 A ação enquadra-se nos esforços #TeamEurope da União Europeia em resposta à COVID-19.
                             </div>

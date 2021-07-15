@@ -172,6 +172,10 @@ h3 {
   }
   .upper-row { height: 100px; margin-bottom: -10px; }
   .bottom-row { }
+  .logos {
+    img { height: 80px; }
+    .logo-ue { padding-left: 10px; }
+  }
 }
 
 .footer {
@@ -212,7 +216,6 @@ h3 {
   .first-col {
     border-right: 1px solid #aaaaaa;
 
-    img { width: 100%; }
     .upper-row {
       margin-bottom: 20px;
     }
@@ -240,6 +243,11 @@ h3 {
   .social {
     a { margin-left: 10px; }
   }
+
+  .logos {
+    img { width: 100%; }
+  }
+
 }
 
 .page-index {
