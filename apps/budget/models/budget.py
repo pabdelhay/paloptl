@@ -13,7 +13,7 @@ from django.utils.translation import gettext_lazy as _
 from djmoney.models.fields import CurrencyField
 from rest_framework import serializers
 
-from apps.budget.choices import UploadStatusChoices
+from apps.budget.choices import UploadStatusChoices, ExpenseGroupChoices
 from common.mixins import CountryMixin
 
 
@@ -29,7 +29,7 @@ class Budget(CountryMixin, models.Model):
     is_active = models.BooleanField(verbose_name=_("active"), default=True,
                                     help_text=_("This budget will only be included on site if this option is checked."))
 
-    # Inferred values
+    # DEPRECATED since 2021-07-15. TODO: Remove after data migration to above fields.
     function_budget = models.FloatField(verbose_name=_("function's budget"), null=True, blank=True, editable=False)
     function_execution = models.FloatField(verbose_name=_("function's execution"), null=True, blank=True,
                                            editable=False)
@@ -69,31 +69,34 @@ class Budget(CountryMixin, models.Model):
         """
         Updates all budget inferred values.
         """
-        budget_accounts = [self.functions, self.agencies]
+        from .budget_summary import BudgetSummary
+        budget_accounts = [self.expenses, ]  # TODO: implement self.revenues
 
-        # Set inferred values for budget's Functions and Agencies.
+        # Set inferred values for budget's expenses and revenues.
         for budget_account_qs in budget_accounts:
             for budget_account in budget_account_qs.all().order_by('-level'):
                 budget_account.update_inferred_values()
 
-        # Set inferred values for Budget (function_budget, function_execution, agency_budget, agency_execution)
+        # Set inferred values for BudgetAggregated
+        budget_summary, created = BudgetSummary.objects.get_or_create(budget=self)
         for budget_account_qs in budget_accounts:
-            budget_account_prefix = budget_account_qs.model._meta.model_name  # ['agency', 'function']
-            budget_account_budget, budget_account_execution = None, None
-            for budget_account in budget_account_qs.filter(level=0):
-                budget = budget_account.get_value('budget_aggregated')
-                execution = budget_account.get_value('execution_aggregated')
-                if budget:
-                    budget_account_budget = budget_account_budget or 0
-                    budget_account_budget += budget
-                if execution:
-                    budget_account_execution = budget_account_execution or 0
-                    budget_account_execution += execution
+            category_prefix = budget_account_qs.model._meta.model_name  # ['expense', 'revenue']
+            for group in ExpenseGroupChoices:
+                budget_account_budget, budget_account_execution = None, None
+                for budget_account in budget_account_qs.filter(group=group, level=0):
+                    budget = budget_account.get_value('budget_aggregated')
+                    execution = budget_account.get_value('execution_aggregated')
+                    if budget:
+                        budget_account_budget = budget_account_budget or 0
+                        budget_account_budget += budget
+                    if execution:
+                        budget_account_execution = budget_account_execution or 0
+                        budget_account_execution += execution
 
-            setattr(self, f'{budget_account_prefix}_budget', budget_account_budget)
-            setattr(self, f'{budget_account_prefix}_execution', budget_account_execution)
+                setattr(budget_summary, f'{category_prefix}_{group}_budget', budget_account_budget)
+                setattr(budget_summary, f'{category_prefix}_{group}_execution', budget_account_execution)
 
-        self.save()
+        budget_summary.save()
 
     def update_json_files(self):
         """

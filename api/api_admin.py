@@ -1,3 +1,4 @@
+from django.utils.translation import gettext_lazy as _
 from rest_framework import viewsets, permissions, serializers
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -10,7 +11,9 @@ from apps.geo.models import Country
 
 
 class BudgetUploadSerializer(serializers.Serializer):
-    report_type = serializers.ChoiceField(choices=('organic', 'functional'))
+    # 'report_type' maps to 'BudgetAccount.group'
+    report_type = serializers.ChoiceField(choices=('organic', 'functional'), source='group')
+
     category = serializers.CharField(max_length=255)
     subcategory = serializers.CharField(required=False, allow_null=True, max_length=255)
     category_code = serializers.CharField(max_length=30, required=False, allow_null=True)

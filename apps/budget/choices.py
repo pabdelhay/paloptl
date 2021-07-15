@@ -8,6 +8,16 @@ class UploadReportChoices(models.TextChoices):
     CGE = 'cge', _("CGE - Conta Geral do Estado")
 
 
+class UploadCategoryChoices(models.TextChoices):
+    EXPENSE = 'expense', _("Expense")
+    REVENUE = 'revenue', _("Revenue")
+
+
+class ExpenseGroupChoices(models.TextChoices):
+    FUNCTIONAL = 'functional', _("Functional")
+    ORGANIC = 'organic', _("Organic")
+
+
 class UploadStatusChoices(models.TextChoices):
     VALIDATING = 'validating', _("Validating")
     IMPORTING = 'importing', _("Importing")

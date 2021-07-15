@@ -5,10 +5,8 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 from django_admin_inline_paginator.admin import TabularInlinePaginated
 
-from apps.budget.choices import UploadStatusChoices
-from apps.budget.models import Upload, Budget, UploadLog
-from apps.budget.models.agency import Agency
-from apps.budget.models.function import Function
+from apps.budget.choices import UploadStatusChoices, ExpenseGroupChoices
+from apps.budget.models import Upload, Budget, UploadLog, Expense
 from apps.budget.models.transparency_index import TransparencyIndex
 from apps.budget.tasks import import_file, reimport_budget_uploads
 from common.admin import CountryPermissionMixin
@@ -20,7 +18,7 @@ admin.site.unregister(LoginAttempt)
 class UploadInline(admin.TabularInline):
     model = Upload
     extra = 1
-    fields = ('file', 'report', 'status', 'get_log', 'uploaded_by', 'uploaded_on')
+    fields = ('file', 'category', 'report', 'status', 'get_log', 'uploaded_by', 'uploaded_on')
     readonly_fields = ('status', 'uploaded_by', 'uploaded_on', 'get_log')
 
     @mark_safe
@@ -79,6 +77,10 @@ class BudgetAccountInline(TabularInlinePaginated):
 
     def has_delete_permission(self, request, obj):
         return request.user.is_superuser
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        return queryset.filter(group=self.group)
 
     @staticmethod
     def _get_budget_field(obj, field):
@@ -144,27 +146,31 @@ class BudgetAccountInline(TabularInlinePaginated):
 
 
 class FunctionInline(BudgetAccountInline):
-    model = Function
+    model = Expense
+    group = ExpenseGroupChoices.FUNCTIONAL
+    verbose_name_plural = _("Expenses by function")
 
     def get_group_taxonomy(self, obj):
         return obj.parent.name if obj.parent else obj.name
-    get_group_taxonomy.short_description = Function.get_taxonomy(level=0)
+    get_group_taxonomy.short_description = Expense.get_taxonomy(group=group, level=0)
 
     def get_subgroup_taxonomy(self, obj):
         return obj.name if obj.parent else ""
-    get_subgroup_taxonomy.short_description = Function.get_taxonomy(level=1)
+    get_subgroup_taxonomy.short_description = Expense.get_taxonomy(group=group, level=1)
 
 
 class AgencyInline(BudgetAccountInline):
-    model = Agency
+    model = Expense
+    group = ExpenseGroupChoices.ORGANIC
+    verbose_name_plural = _("Expenses by agency")
 
     def get_group_taxonomy(self, obj):
         return obj.parent.name if obj.parent else obj.name
-    get_group_taxonomy.short_description = Agency.get_taxonomy(level=0)
+    get_group_taxonomy.short_description = Expense.get_taxonomy(group=group, level=0)
 
     def get_subgroup_taxonomy(self, obj):
         return obj.name if obj.parent else ""
-    get_subgroup_taxonomy.short_description = Agency.get_taxonomy(level=1)
+    get_subgroup_taxonomy.short_description = Expense.get_taxonomy(group=group, level=1)
 
 
 @admin.register(Budget)
