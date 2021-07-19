@@ -210,23 +210,27 @@ h3 {
   }
 
   .sponsors {
-    margin-bottom: 40px;
+    margin-bottom: 60px;
   }
 
   .first-col {
-    border-right: 1px solid #aaaaaa;
-
     .upper-row {
       margin-bottom: 20px;
     }
     .bottom-row {
       font-size: 12px;
       color: #747373;
-      img {
-        margin-right: 5px;
-        width: 60px;
+      .logos-ods {
+        width: 100%;
       }
     }
+  }
+  .disclaimer {
+    border-left: 1px solid #aaaaaa;
+    font-size: 13px;
+    color: #747373;
+    padding-left: 80px;
+    text-align: justify;
   }
 
   hr {
@@ -262,11 +266,10 @@ h3 {
     background-position-x: right;
     background-position-y: top;
     background-color: $description_bg_color;
-    height: 400px;
     color: #FFFFFF;
     position: relative;
     margin-top: -7px;
-    padding: 40px 0;
+    padding: 40px 0 80px;
     h2 {
       color: #FFF;
       margin-bottom: 20px;
@@ -288,6 +291,10 @@ h3 {
         color: $subtitle_color;
         text-transform: uppercase;
         margin-top: 0;
+        margin-bottom: 20px;
+      }
+      .short-description {
+        color: #37749f;
       }
     }
     .ranking-wrapper {
