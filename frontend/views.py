@@ -1,6 +1,7 @@
 import json
 
 from django.conf import settings
+from django.http import HttpResponseNotFound
 from django.shortcuts import render
 from django.views import View
 from django.views.generic.detail import SingleObjectMixin
@@ -24,8 +25,11 @@ class CountryView(SingleObjectMixin, View):
         base_qs = country.budgets.filter(is_active=True)\
             .exclude(function_budget__isnull=True, agency_budget__isnull=True)
         budgets = base_qs.order_by('year')
-        last_budget = base_qs.order_by('year').last()
-        default_budget_account = 'functions' if last_budget and last_budget.function_budget else 'agencies'
+        last_budget = base_qs.order_by('year').select_related('summary').last()
+        summary = last_budget.summary
+
+        default_budget_account = 'expenses'
+        default_group = 'functional' if summary and summary.expense_functional_budget else 'organic'
 
         budgets_serialized = {}
         for b in budgets:
@@ -37,9 +41,10 @@ class CountryView(SingleObjectMixin, View):
             }
 
         ctx = {
+            'default_budget_account': default_budget_account,
+            'default_group': default_group,
             'country': country,
             'budgets': budgets,
-            'default_budget_account': default_budget_account,
             'last_budget': last_budget,
             'budgets_serialized': json.dumps(budgets_serialized),
             'treemap_colors_map': json.dumps(settings.TREEMAP_EXECUTION_COLORS_HOVER)

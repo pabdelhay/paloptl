@@ -23,6 +23,12 @@ class RevenueGroupChoices(models.TextChoices):
     SOURCE = 'source', _("Source")
 
 
+GROUP_CHOICES_BY_BUDGET_ACCOUNT = {
+    UploadCategoryChoices.EXPENSE: ExpenseGroupChoices,
+    UploadCategoryChoices.REVENUE: RevenueGroupChoices,
+}
+
+
 class UploadStatusChoices(models.TextChoices):
     VALIDATING = 'validating', _("Validating")
     IMPORTING = 'importing', _("Importing")

@@ -13,7 +13,7 @@ from django.utils.translation import gettext_lazy as _
 from djmoney.models.fields import CurrencyField
 from rest_framework import serializers
 
-from apps.budget.choices import UploadStatusChoices, ExpenseGroupChoices
+from apps.budget.choices import UploadStatusChoices, ExpenseGroupChoices, RevenueGroupChoices
 from common.mixins import CountryMixin
 
 
@@ -101,17 +101,32 @@ class Budget(CountryMixin, models.Model):
 
     def update_json_files(self):
         """
-        Get data from ['/budgets/{id}/agencies/', '/budgets/{id}/functions/'] and create a json file for cache.
+        Get data from ['/budgets/{id}/expenses/?group={group}', '/budgets/{id}/revenues/?group={group}'] and create
+        a json file for cache with the following name format.
+            {country}_{budget_account[expenses/revenues]}_{group}_{year}.json
+            eg.:
+                angola_expenses_functional_2020.json
+                angola_expenses_organic_2020.json
+                angola_revenues_nature_2020.json
+                angola_revenues_source_2020.json
         """
-        budget_accounts = ['functions', 'agencies']
-        for budget_account in budget_accounts:
-            file_name = f'{self.country.slug}_{budget_account}_{self.year}.json'
-            file_path = os.path.join('budgets', file_name)
-            url = f'{settings.SITE_URL}api/budgets/{self.id}/{budget_account}/'
-            with default_storage.open(file_path, 'w') as outfile:
-                response = requests.get(url)
-                data = response.json()
-                json.dump(data, outfile)
+        groups_dict = {
+            'expense': ExpenseGroupChoices,
+            'revenue': RevenueGroupChoices
+        }
+        budget_accounts = [self.expenses, self.revenues]
+        for budget_account_qs in budget_accounts:
+            budget_account_name = budget_account_qs.model._meta.model_name  # ['expense', 'revenue']
+            budget_account_name_for_api = f'{budget_account_name}s'
+            groups = groups_dict[budget_account_name]
+            for group in groups:
+                file_name = f'{self.country.slug}_{budget_account_name_for_api}_{group}_{self.year}.json'
+                file_path = os.path.join('budgets', file_name)
+                url = f'{settings.SITE_URL}api/budgets/{self.id}/{budget_account_name_for_api}/?group={group}'
+                with default_storage.open(file_path, 'w') as outfile:
+                    response = requests.get(url)
+                    data = response.json()
+                    json.dump(data, outfile)
 
     def update_csv_file(self):
         """

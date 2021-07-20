@@ -57,6 +57,18 @@ h4 {
   text-transform: uppercase;
 }
 
+a.download-link {
+  font-size: 12px;
+  border-radius: 10px;
+  padding: 1px 40px;
+  border: 1px solid #0f69a3;
+  color: #0f69a3;
+}
+a.download-link:hover {
+  background-color: #0e588d;
+  color: #FFF;
+}
+
 .language-selector .lang {
   display: inline-block;
   border-left: 1px solid #586460;
@@ -291,11 +303,11 @@ h3 .arrow {
   margin-bottom: 20px;
 }
 .page-index .ranking .ranking-header .short-description {
-  color: #37749f;
+  color: #0f69a3;
 }
 .page-index .ranking .ranking-wrapper {
   width: 100%;
-  margin-bottom: 150px;
+  margin-bottom: 60px;
   margin-top: 40px;
   position: relative;
 }
@@ -434,6 +446,25 @@ h3 .arrow {
 }
 .page-index .ranking .countries-description {
   padding-bottom: 10px;
+}
+.page-index .ranking .downloads {
+  margin-bottom: 80px;
+}
+.page-index .ranking .downloads h4 {
+  font-size: 20px;
+  font-weight: bold;
+}
+.page-index .ranking .downloads ul {
+  color: #0f69a3;
+  list-style: none;
+  padding: 0;
+}
+.page-index .ranking .downloads ul li {
+  border-bottom: 1px solid #0f69a3;
+  padding: 10px 0;
+}
+.page-index .ranking .downloads ul li a {
+  float: right;
 }
 .page-index .countries .flags-wrapper {
   position: relative;

@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ReadOnlyModelViewSet
 from rest_framework_recursive.fields import RecursiveField
 
-from apps.budget.models import Budget, Function, Agency, TransparencyIndex
+from apps.budget.models import Budget, Function, Agency, TransparencyIndex, Expense, Revenue
 from apps.geo.models import Country
 
 
@@ -127,13 +127,31 @@ class BudgetAccountLeafSerializer(BudgetAccountSerializer):
                   'last_update', 'color', 'color_hover', 'parent_id', 'level', 'tree_id')
 
 
+class BudgetAccountFilterSerializer(serializers.Serializer):
+    group = serializers.CharField(max_length=30)
+
+
+class ExpenseSerializer(BudgetAccountSerializer):
+    class Meta:
+        model = Expense
+        fields = BudgetAccountSerializer.Meta.fields
+
+
+class RevenueSerializer(BudgetAccountSerializer):
+    class Meta:
+        model = Revenue
+        fields = BudgetAccountSerializer.Meta.fields
+
+
 class FunctionSerializer(BudgetAccountSerializer):
+    # DEPRECATED
     class Meta:
         model = Function
         fields = BudgetAccountSerializer.Meta.fields
 
 
 class AgencySerializer(BudgetAccountSerializer):
+    # DEPRECATED
     class Meta:
         model = Agency
         fields = BudgetAccountSerializer.Meta.fields
@@ -216,7 +234,32 @@ class BudgetViewset(ReadOnlyModelViewSet):
         return Response(return_data)
 
     @action(detail=True)
+    def expenses(self, request, pk=None):
+        budget = self.get_object()
+        params = BudgetAccountFilterSerializer(data=request.GET)
+        params.is_valid(raise_exception=True)
+        group = params.validated_data.get('group')
+
+        qs = Expense.objects.filter(budget=budget, level=0, group=group) \
+            .exclude(Q(budget_aggregated__isnull=True) | Q(budget_aggregated=0))
+        serializer = ExpenseSerializer(qs, many=True)
+        return Response(serializer.data)
+
+    @action(detail=True)
+    def revenues(self, request, pk=None):
+        budget = self.get_object()
+        params = BudgetAccountFilterSerializer(data=request.GET)
+        params.is_valid(raise_exception=True)
+        group = params.validated_data.get('group')
+
+        qs = Revenue.objects.filter(budget=budget, level=0, group=group) \
+            .exclude(Q(budget_aggregated__isnull=True) | Q(budget_aggregated=0))
+        serializer = ExpenseSerializer(qs, many=True)
+        return Response(serializer.data)
+
+    @action(detail=True)
     def functions(self, request, pk=None):
+        # DEPRECATED
         budget = self.get_object()
         qs = Function.objects.filter(budget=budget, level=0)\
             .exclude(Q(budget_aggregated__isnull=True) | Q(budget_aggregated=0))
@@ -225,6 +268,7 @@ class BudgetViewset(ReadOnlyModelViewSet):
 
     @action(detail=True)
     def agencies(self, request, pk=None):
+        # DEPRECATED
         budget = self.get_object()
         qs = Agency.objects.filter(budget=budget, level=0)\
             .exclude(Q(budget_aggregated__isnull=True) | Q(budget_aggregated=0))

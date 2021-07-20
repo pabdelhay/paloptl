@@ -13,6 +13,7 @@
     var current_budget_id = last_budget_id;
     var current_budget_account = '{{ default_budget_account }}';
     var current_budget_account_id = null;
+    var current_group = '{{ default_group }}';
     var current_budget_data = null;
     var budgets = {{ budgets_serialized|safe }};
     var skip_cache = {% if request.GET.no_cache %}true{% else %}false{% endif %};
@@ -21,22 +22,30 @@
         {'name': {{ last_budget.year }}, 'id': null},
     ];
     var budget_account_label_map = {
-        'agencies': "Órgão",
-        'functions': "Função",
+        'expenses': "Despesas",
+        'revenues': "Receitas",
     }
-    var sub_budget_account_label_map = {
-        'agencies': "Unidade Orçamentária",
-        'functions': "Sub-função",
+    var group_label_map = {
+        'organic': "Órgão",
+        'functional': "Função",
+        'nature': "Natureza",
+        'source': "Fonte",
+    }
+    var sub_group_label_map = {
+        'organic': "Unidade Orçamentária",
+        'functional': "Sub-função",
+        'nature': "Natureza sub-grupo",
+        'source': "Fonte sub-grupo",
     }
     am4core.useTheme(am4themes_animated);
 
 
-    function get_label(level, budget_account){
-        var label_map = budget_account_label_map
+    function get_group_label(level, group){
+        var label_map = group_label_map
         if(level == 1){
-            label_map = sub_budget_account_label_map;
+            label_map = sub_group_label_map;
         }
-        return label_map[budget_account];
+        return label_map[group];
     }
     function get_budget_basic_info(budget_id, callback){
         var url = url = '/api/budgets/' + budget_id + '/';
@@ -46,11 +55,11 @@
             console.log("Error on fetching budget basic info.");
         });
     }
-    function get_budget_data(budget_id, budget_account, callback){
-        var url = MEDIA_URL + 'budgets/{{ country.slug }}_' + budget_account + '_' + get_budget_year_by_id(budget_id) + '.json'
+    function get_budget_data(budget_id, budget_account, group, callback){
+        var url = MEDIA_URL + 'budgets/{{ country.slug }}_' + budget_account + '_' + group + '_' + get_budget_year_by_id(budget_id) + '.json'
         if(skip_cache){
             // If skip_cache, retrieve data from api.
-            url = '/api/budgets/' + budget_id + '/' + budget_account + '/';
+            url = '/api/budgets/' + budget_id + '/' + budget_account + '/?group=' + group;
         }
 
         $.get(url, function (data) {
@@ -99,7 +108,7 @@
             data = get_budget_account_aggregated_data(current_budget_data);
         } else {
             // Get label on front to prevent caching i18n labels.
-            data['label'] = get_label(data['level'], current_budget_account);
+            data['label'] = get_group_label(data['level'], current_group);
         }
         current_budget_account_id = data['id'];
 
@@ -126,7 +135,8 @@
     }
     function init_breadcrumb(plot=false){
         breadcrumb = []
-        breadcrumb.push({name: "Visualização por " + budget_account_label_map[current_budget_account], id: null});
+        breadcrumb.push({name: budget_account_label_map[current_budget_account], id: null});
+        breadcrumb.push({name: "Visualização por " + group_label_map[current_group], id: null});
         breadcrumb.push({name: get_budget_year_by_id(current_budget_id), id: null});
         if(plot){
             plot_breadcrumb();
@@ -300,8 +310,8 @@
 
     function plot_datatable(data){
         var template_data = {
-            'budget_account_label': budget_account_label_map[current_budget_account],
-            'sub_budget_account_label': sub_budget_account_label_map[current_budget_account],
+            'group_label': group_label_map[current_group],
+            'sub_group_label': sub_group_label_map[current_group],
             'budget_accounts': data
         }
         renderTemplate('#template-budget_account-table', template_data, '#datatable-info');
@@ -316,15 +326,25 @@
         init_breadcrumb(true);
         get_historical_and_plot_view();
     }
-    function get_budget_and_plot_views(budget_id, budget_account){
+    function get_budget_and_plot_views(budget_id, budget_account, group){
         get_budget_basic_info(budget_id, function (data) {
             $('.budget-currency').html(data['currency_display']);
             $('.download-link').attr('href', data['output_file']);
         });
         current_budget_account = budget_account;
         current_budget_id = budget_id;
+        current_group = group;
 
-        get_budget_data(budget_id, budget_account, function(data){
+        $('.budget-account-selector a').removeClass('active');
+        $('.budget-account-selector a[data-budget_account="'+budget_account+'"]').addClass('active');
+        $('.group-selector a').hide();
+        $('.group-selector .'+ budget_account +'-group').show();
+        $('.budget-selector a').removeClass('active');
+        $('.budget-selector a[data-budget_id="'+budget_id+'"]').addClass('active');
+        $('.group-selector a').removeClass('active');
+        $('.group-selector a[data-group="'+group+'"]').addClass('active');
+
+        get_budget_data(budget_id, budget_account, group, function(data){
             current_budget_data = data;
             init_views(current_budget_data);
 
@@ -355,15 +375,22 @@
             plot_historical(data);
         });
     }
+    function get_budget_account_default_group(budget_account){
+        var map = {
+            'expenses': 'functional',
+            'revenues': 'nature'
+        }
+        return map[budget_account]
+    }
     function toggle_budget_account(budget_account){
-        get_budget_and_plot_views(current_budget_id, budget_account);
-        $('.budget-account-selector a').removeClass('active');
-        $('.budget-account-selector a[data-budget_account="'+budget_account+'"]').addClass('active');
+        var group = get_budget_account_default_group(budget_account)
+        get_budget_and_plot_views(current_budget_id, budget_account, group);
     }
     function toggle_budget(budget_id){
-        get_budget_and_plot_views(budget_id, current_budget_account);
-        $('.budget-selector a').removeClass('active');
-        $('.budget-selector a[data-budget_id="'+budget_id+'"]').addClass('active');
+        get_budget_and_plot_views(budget_id, current_budget_account, current_group);
+    }
+    function toggle_group(group){
+        get_budget_and_plot_views(current_budget_id, current_budget_account, group);
     }
     function get_budget_year_by_id(budget_id){
         return $('.budget-selector a[data-budget_id="'+budget_id+'"]').html();
@@ -439,11 +466,17 @@
             var budget_account = $(this).data('budget_account');
             toggle_budget_account(budget_account);
         });
+        $('.group-selector a').on('click', function (ev) {
+            ev.preventDefault();
+            var group = $(this).data('group');
+            toggle_group(group);
+        });
         $('.budget-selector a').on('click', function (ev) {
             ev.preventDefault();
             var budget_id = $(this).data('budget_id');
             toggle_budget(budget_id);
         });
+
         $(document).on('click', '.breadcrumb-link', function(ev){
             ev.preventDefault();
             var breadcrumb_index = parseInt($(this).data('breadcrumb_idx'));
@@ -671,7 +704,7 @@
 <table class="datatable-info" cellpadding="0" cellspacing="0">
     <thead>
         <tr>
-            <th>{{ budget_account_label }} / {{ sub_budget_account_label }}</th>
+            <th>{{ group_label }} / {{ sub_group_label }}</th>
             <th class="vertical-separator"></th>
             <th>Dotação</th>
             <th>Execução</th>
