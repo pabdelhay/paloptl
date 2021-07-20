@@ -53,7 +53,7 @@ class BudgetAccount(MPTTModel, DirtyFieldsMixin):
     @classmethod
     def get_model_name(cls):
         """
-        Return model name ('function' or 'agency')
+        Return model name
         :return: string
         """
         return cls._meta.model_name

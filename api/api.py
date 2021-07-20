@@ -7,7 +7,8 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ReadOnlyModelViewSet
 from rest_framework_recursive.fields import RecursiveField
 
-from apps.budget.models import Budget, Function, Agency, TransparencyIndex, Expense, Revenue
+from apps.budget.choices import ExpenseGroupChoices, RevenueGroupChoices
+from apps.budget.models import Budget, Function, Agency, TransparencyIndex, Expense, Revenue, BudgetSummary
 from apps.geo.models import Country
 
 
@@ -158,7 +159,8 @@ class AgencySerializer(BudgetAccountSerializer):
 
 
 class HistoricalParamsSerializer(serializers.Serializer):
-    budget_account = serializers.ChoiceField(choices=['agencies', 'functions'])
+    group = serializers.ChoiceField(choices=ExpenseGroupChoices.choices + RevenueGroupChoices.choices)
+    budget_account = serializers.ChoiceField(choices=['expenses', 'revenues'])
     budget_account_id = serializers.IntegerField(required=False)
 
 
@@ -284,13 +286,14 @@ class BudgetViewset(ReadOnlyModelViewSet):
         params.is_valid(raise_exception=True)
 
         budget_account_model = None
+        group = params.validated_data['group']
         budget_account_param = params.validated_data['budget_account']
         budget_account_id = params.validated_data.get('budget_account_id', None)
-        if budget_account_param == 'agencies':
-            budget_account_model = Agency
-        elif budget_account_param == 'functions':
-            budget_account_model = Function
-        budget_account_model_name = budget_account_model.get_model_name()  # 'function' or 'agency'
+        if budget_account_param == 'expenses':
+            budget_account_model = Expense
+        elif budget_account_param == 'revenues':
+            budget_account_model = Revenue
+        budget_account_model_name = budget_account_model.get_model_name()  # 'expense' or 'revenue'
 
         data = {'code': None, 'name': None, 'data': []}
 
@@ -307,7 +310,8 @@ class BudgetViewset(ReadOnlyModelViewSet):
                     # If parent has no code, return empty list
                     return Response(data)
 
-            qs = budget_account_model.objects.filter(budget__country=country, code=code).values(year=F('budget__year')) \
+            qs = budget_account_model.objects.filter(budget__country=country, code=code, group=group) \
+                .values(year=F('budget__year')) \
                 .annotate(budget_aggregated=F('budget_aggregated'),
                           execution_aggregated=F('execution_aggregated'),
                           inferred_budget_aggregated=F('inferred_values__budget_aggregated'),
@@ -317,11 +321,11 @@ class BudgetViewset(ReadOnlyModelViewSet):
             # Get aggregated historical data for the country.
             name = country.name
             code = None
-            qs = Budget.objects.filter(country=country).values('year') \
-                .annotate(budget_aggregated=F(f'{budget_account_model_name}_budget'),
-                          execution_aggregated=F(f'{budget_account_model_name}_execution'),
-                          inferred_budget_aggregated=F(f'{budget_account_model_name}_budget'),
-                          inferred_execution_aggregated=F(f'{budget_account_model_name}_execution')) \
+            qs = BudgetSummary.objects.filter(budget__country=country).values(year=F('budget__year')) \
+                .annotate(budget_aggregated=F(f'{budget_account_model_name}_{group}_budget'),
+                          execution_aggregated=F(f'{budget_account_model_name}_{group}_execution'),
+                          inferred_budget_aggregated=F(f'{budget_account_model_name}_{group}_budget'),
+                          inferred_execution_aggregated=F(f'{budget_account_model_name}_{group}_execution')) \
                 .order_by('year')
 
         data_serializer = HistoricalDataSerializer(qs, many=True)

@@ -68,8 +68,9 @@
             console.log("Error on fetching budget data.");
         });
     }
-    function get_historical_data(budget_id, budget_account, budget_account_id, callback){
+    function get_historical_data(budget_id, budget_account, budget_account_id, group, callback){
         var params = {
+            group: group,
             budget_account: budget_account,
             budget_account_id: budget_account_id
         }
@@ -303,7 +304,8 @@
             return series;
         }
         chart.data = data['data'];
-        $('.historical-title').html("Despesas de<br>" + data['name']);
+        budget_account_label = get_current_budget_account_label();
+        $('.historical-title').html(budget_account_label + " de<br>" + data['name']);
         createSeries('budget_aggregated', 'Dotação');
         createSeries('execution_aggregated', 'Execução');
     }
@@ -371,7 +373,7 @@
         }
     }
     function get_historical_and_plot_view(){
-        get_historical_data(current_budget_id, current_budget_account, current_budget_account_id, function(data){
+        get_historical_data(current_budget_id, current_budget_account, current_budget_account_id, current_group, function(data){
             plot_historical(data);
         });
     }
@@ -394,6 +396,9 @@
     }
     function get_budget_year_by_id(budget_id){
         return $('.budget-selector a[data-budget_id="'+budget_id+'"]').html();
+    }
+    function get_current_budget_account_label(){
+        return budget_account_label_map[current_budget_account]
     }
 
     function toggle_datatable_row(category_id){
@@ -529,7 +534,7 @@
             <div class="col-10">
                 <h3>
                     <span class="arrow-right"></span>
-                    DADOS ORÇAMENTÁRIOS
+                    DADOS ORÇAMENTAIS
                 </h3>
                 <div class="header-currency">
                     Todos os valores em <strong class="budget-currency">{{ last_budget.get_currency_display }}</strong>
@@ -579,16 +584,12 @@
                 <div class="col-6">
                     <h2><span class="arrow"></span>TRANSPARÊNCIA</h2>
                     <div>
-                        Lorem ipsum dolor sit amet,
-                        consectetuer adipiscing elit, sed
-                        diam nonummy nibh euismod
-                        tincidunt ut la metodologia
-                        aliquam erat consequat. Duis vel
-                        eum iriure dolor in hendrerit in
-                        vulputate velit esse molestie
-                        consequat, vel illum dolore eu
-                        feugiat nulla facilisis at vero nulla
-                        facilisi autem vel eum.
+                        Nossa missão é ampliar a transparência dos PALOP-TL
+                        aplicando tecnologia e inovação para derrubar barreiras
+                        e incluir mais cidadãos no debate público.
+                        <br></br>
+                        Nós encorajamos o uso das informações disponibilizadas
+                        em outros projetos e estudos.
                     </div>
                 </div>
                 <div class="col-5 img-wrapper">
