@@ -137,7 +137,7 @@
     function init_breadcrumb(plot=false){
         breadcrumb = []
         breadcrumb.push({name: budget_account_label_map[current_budget_account], id: null});
-        breadcrumb.push({name: "Visualização por " + group_label_map[current_group], id: null});
+        breadcrumb.push({name: "Por " + group_label_map[current_group], id: null});
         breadcrumb.push({name: get_budget_year_by_id(current_budget_id), id: null});
         if(plot){
             plot_breadcrumb();
@@ -633,35 +633,37 @@
         </div>
         <div>
             <table class="treemap-legend-table execution-group-{{ execution_group }}">
-                <tr class="group-1">
-                    <td>20%</td>
-                    <td><div class="treemap-legend">&nbsp;</div></td>
-                    <td><div class="execution-group-indicator"></div></td>
-                    <td><div class="execution-percentage">{{formatPercent execution_percentage}} executado</div></td>
+                <tr class="legend-square">
+                    <td class="group-0"><div class="treemap-legend">&nbsp;</div></td>
+                    <td class="group-1"><div class="treemap-legend">&nbsp;</div></td>
+                    <td class="group-2"><div class="treemap-legend">&nbsp;</div></td>
+                    <td class="group-3"><div class="treemap-legend">&nbsp;</div></td>
+                    <td class="group-4"><div class="treemap-legend">&nbsp;</div></td>
+                    <td class="group-5"><div class="treemap-legend">&nbsp;</div></td>
                 </tr>
-                <tr class="group-2">
-                    <td>40%</td>
-                    <td><div class="treemap-legend">&nbsp;</div></td>
-                    <td><div class="execution-group-indicator"></div></td>
-                    <td><div class="execution-percentage">{{formatPercent execution_percentage}} executado</div></td>
+                <tr>
+                    <td class="group-0">N/A</td>
+                    <td class="group-1">0-20%</td>
+                    <td class="group-2">20-40%</td>
+                    <td class="group-3">40-60%</td>
+                    <td class="group-4">60-80%</td>
+                    <td class="group-5">80-100%</td>
                 </tr>
-                <tr class="group-3">
-                    <td>60%</td>
-                    <td><div class="treemap-legend">&nbsp;</div></td>
-                    <td><div class="execution-group-indicator"></div></td>
-                    <td><div class="execution-percentage">{{formatPercent execution_percentage}} executado</div></td>
+                <tr>
+                    <td class="group-0"><div class="execution-group-indicator"></div></td>
+                    <td class="group-1"><div class="execution-group-indicator"></div></td>
+                    <td class="group-2"><div class="execution-group-indicator"></div></td>
+                    <td class="group-3"><div class="execution-group-indicator"></div></td>
+                    <td class="group-4"><div class="execution-group-indicator"></div></td>
+                    <td class="group-5"><div class="execution-group-indicator"></div></td>
                 </tr>
-                <tr class="group-4">
-                    <td>80%</td>
-                    <td><div class="treemap-legend">&nbsp;</div></td>
-                    <td><div class="execution-group-indicator"></div></td>
-                    <td><div class="execution-percentage">{{formatPercent execution_percentage}} executado</div></td>
-                </tr>
-                <tr class="group-5">
-                    <td>100%</td>
-                    <td><div class="treemap-legend">&nbsp;</div></td>
-                    <td><div class="execution-group-indicator"></div></td>
-                    <td><div class="execution-percentage">{{formatPercent execution_percentage}} executado</div></td>
+                <tr>
+                    <td class="group-0"><div class="execution-percentage">Execução não informada</div></td>
+                    <td class="group-1"><div class="execution-percentage"><strong>{{formatPercent execution_percentage}}</strong><br>executado</div></td>
+                    <td class="group-2"><div class="execution-percentage"><strong>{{formatPercent execution_percentage}}</strong><br>executado</div></td>
+                    <td class="group-3"><div class="execution-percentage"><strong>{{formatPercent execution_percentage}}</strong><br>executado</div></td>
+                    <td class="group-4"><div class="execution-percentage"><strong>{{formatPercent execution_percentage}}</strong><br>executado</div></td>
+                    <td class="group-5"><div class="execution-percentage"><strong>{{formatPercent execution_percentage}}</strong><br>executado</div></td>
                 </tr>
             </table>
         </div>

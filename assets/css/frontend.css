@@ -759,76 +759,82 @@ h3 .arrow {
   margin-left: 20px;
   top: -2px;
 }
-.page-country-detail .treemap-wrapper .budget_account-info .treemap-legend {
-  width: 30px;
-  height: 30px;
-}
 .page-country-detail .treemap-wrapper .budget_account-info .execution-percentage {
   display: none;
-  padding-left: 20px;
   color: #0f2843;
-}
-.page-country-detail .treemap-wrapper .budget_account-info .execution-group-indicator {
-  width: 0;
-  height: 0;
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
-  border-right: 10px solid #0f2843;
-  display: none;
-  position: relative;
-  top: 2px;
-  left: 10px;
-}
-.page-country-detail .treemap-wrapper .budget_account-info .execution-group-1 .group-1 .execution-group-indicator {
-  display: inline-block;
-}
-.page-country-detail .treemap-wrapper .budget_account-info .execution-group-1 .group-1 .execution-percentage {
-  display: block;
-}
-.page-country-detail .treemap-wrapper .budget_account-info .execution-group-2 .group-2 .execution-group-indicator {
-  display: inline-block;
-}
-.page-country-detail .treemap-wrapper .budget_account-info .execution-group-2 .group-2 .execution-percentage {
-  display: block;
-}
-.page-country-detail .treemap-wrapper .budget_account-info .execution-group-3 .group-3 .execution-group-indicator {
-  display: inline-block;
-}
-.page-country-detail .treemap-wrapper .budget_account-info .execution-group-3 .group-3 .execution-percentage {
-  display: block;
-}
-.page-country-detail .treemap-wrapper .budget_account-info .execution-group-4 .group-4 .execution-group-indicator {
-  display: inline-block;
-}
-.page-country-detail .treemap-wrapper .budget_account-info .execution-group-4 .group-4 .execution-percentage {
-  display: block;
-}
-.page-country-detail .treemap-wrapper .budget_account-info .execution-group-5 .group-5 .execution-group-indicator {
-  display: inline-block;
-}
-.page-country-detail .treemap-wrapper .budget_account-info .execution-group-5 .group-5 .execution-percentage {
-  display: block;
-}
-.page-country-detail .treemap-wrapper .budget_account-info .group-1 .treemap-legend {
-  background-color: #f2cc05;
-}
-.page-country-detail .treemap-wrapper .budget_account-info .group-2 .treemap-legend {
-  background-color: #f2571c;
-}
-.page-country-detail .treemap-wrapper .budget_account-info .group-3 .treemap-legend {
-  background-color: #8c1717;
-}
-.page-country-detail .treemap-wrapper .budget_account-info .group-4 .treemap-legend {
-  background-color: #66298c;
-}
-.page-country-detail .treemap-wrapper .budget_account-info .group-5 .treemap-legend {
-  background-color: #0f69a3;
 }
 .page-country-detail .treemap-wrapper .budget_account-info .treemap-legend-table {
   margin-top: 10px;
+  table-layout: fixed;
+  width: 100%;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .treemap-legend-table.execution-group-1 .group-1 .execution-group-indicator {
+  display: inline-block;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .treemap-legend-table.execution-group-1 .group-1 .execution-percentage {
+  display: block;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .treemap-legend-table.execution-group-2 .group-2 .execution-group-indicator {
+  display: inline-block;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .treemap-legend-table.execution-group-2 .group-2 .execution-percentage {
+  display: block;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .treemap-legend-table.execution-group-3 .group-3 .execution-group-indicator {
+  display: inline-block;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .treemap-legend-table.execution-group-3 .group-3 .execution-percentage {
+  display: block;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .treemap-legend-table.execution-group-4 .group-4 .execution-group-indicator {
+  display: inline-block;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .treemap-legend-table.execution-group-4 .group-4 .execution-percentage {
+  display: block;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .treemap-legend-table.execution-group-5 .group-5 .execution-group-indicator {
+  display: inline-block;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .treemap-legend-table.execution-group-5 .group-5 .execution-percentage {
+  display: block;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .treemap-legend-table .treemap-legend {
+  height: 40px;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .treemap-legend-table .execution-group-indicator {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #0f2843;
+  display: none;
+  position: relative;
+  top: 2px;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .treemap-legend-table .group-0 .treemap-legend {
+  background-color: #7a8381;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .treemap-legend-table .group-1 .treemap-legend {
+  background-color: #f2cc05;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .treemap-legend-table .group-2 .treemap-legend {
+  background-color: #f2571c;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .treemap-legend-table .group-3 .treemap-legend {
+  background-color: #8c1717;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .treemap-legend-table .group-4 .treemap-legend {
+  background-color: #66298c;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .treemap-legend-table .group-5 .treemap-legend {
+  background-color: #0f69a3;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .treemap-legend-table .legend-square td {
+  padding: 5px;
 }
 .page-country-detail .treemap-wrapper .budget_account-info .treemap-legend-table tr td {
   padding: 1px;
+  text-align: center;
 }
 .page-country-detail .treemap-wrapper .budget_account-info table.primary-info {
   margin-top: 20px;
