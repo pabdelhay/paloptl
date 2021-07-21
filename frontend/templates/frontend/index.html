@@ -41,7 +41,21 @@ $(document).ready(function(){
 {% block content %}
 <div class="page-index">
     <div class="hero">
-        <img src="{% static 'img/hero.png' %}" />
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <h2>
+                        Transparência<br>e Tecnologia
+                    </h2>
+                    <div class="short-description">
+                        Conectando a sociedade<br>às finanças públicas
+                    </div>
+                </div>
+                <div class="col-6 img-wrap">
+                    <img src="{% static 'img/hero-img.png' %}" />
+                </div>
+            </div>
+        </div>
     </div>
     <div class="about">
         <div class="container">
