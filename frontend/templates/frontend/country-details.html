@@ -113,20 +113,23 @@
         }
         current_budget_account_id = data['id'];
 
-        var execution_percentage = data['execution_aggregated'] / data['budget_aggregated'];
         var execution_group = 0;
-        if(0 < execution_percentage && execution_percentage <= 0.2)
-            execution_group = 1;
-        else if(0.2 < execution_percentage && execution_percentage <= 0.4)
-            execution_group = 2;
-        else if(0.4 < execution_percentage && execution_percentage <= 0.6)
-            execution_group = 3;
-        else if(0.6 < execution_percentage && execution_percentage <= 0.8)
-            execution_group = 4;
-        else if(0.8 < execution_percentage)
-            execution_group = 5;
-        data['execution_group'] = execution_group;
+        var execution_percentage = 0;
+        if(data['execution_aggregated']){
+            var execution_percentage = data['execution_aggregated'] / data['budget_aggregated'];
+            if(0 < execution_percentage && execution_percentage <= 0.2)
+                execution_group = 1;
+            else if(0.2 < execution_percentage && execution_percentage <= 0.4)
+                execution_group = 2;
+            else if(0.4 < execution_percentage && execution_percentage <= 0.6)
+                execution_group = 3;
+            else if(0.6 < execution_percentage && execution_percentage <= 0.8)
+                execution_group = 4;
+            else if(0.8 < execution_percentage)
+                execution_group = 5;
+        }
         data['execution_percentage'] = execution_percentage;
+        data['execution_group'] = execution_group;
 
         renderTemplate('#template-budget_account-info', data, '#budget_account-info');
     }

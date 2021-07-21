@@ -760,9 +760,13 @@ h3 {
         color: $main_color;
       }
 
-      .treemap-legend-table {
+      .execution-group-0 .group-0 {
+        .execution-group-indicator { display: inline-block; }
+        .execution-percentage { display: block; position: relative; left: -20px; width: 100px; }
+      }
 
-        margin-top: 10px;
+      .treemap-legend-table {
+        margin-top: 49px;
         table-layout: fixed;
         width: 100%;
 
@@ -835,7 +839,6 @@ h3 {
         }
         .execution-aggregated {
           td {
-            padding-top: 20px;
             &:last-child { font-weight: bold; }
           }
           small {

@@ -763,8 +763,17 @@ h3 .arrow {
   display: none;
   color: #0f2843;
 }
+.page-country-detail .treemap-wrapper .budget_account-info .execution-group-0 .group-0 .execution-group-indicator {
+  display: inline-block;
+}
+.page-country-detail .treemap-wrapper .budget_account-info .execution-group-0 .group-0 .execution-percentage {
+  display: block;
+  position: relative;
+  left: -20px;
+  width: 100px;
+}
 .page-country-detail .treemap-wrapper .budget_account-info .treemap-legend-table {
-  margin-top: 10px;
+  margin-top: 49px;
   table-layout: fixed;
   width: 100%;
 }
@@ -850,9 +859,6 @@ h3 .arrow {
 }
 .page-country-detail .treemap-wrapper .budget_account-info table.primary-info td:first-child {
   width: 40%;
-}
-.page-country-detail .treemap-wrapper .budget_account-info table.primary-info .execution-aggregated td {
-  padding-top: 20px;
 }
 .page-country-detail .treemap-wrapper .budget_account-info table.primary-info .execution-aggregated td:last-child {
   font-weight: bold;
