@@ -616,15 +616,15 @@
             <table class="primary-info" cellspacing="0" cellpadding="0">
                 <tr>
                     <td>Dotação inicial</td>
-                    <td>{{formatCurrency initial_budget_aggregated}}</td>
+                    <td class="money-display">{{formatCurrency initial_budget_aggregated}}</td>
                 </tr>
                 <tr>
                     <td>Dotação atualizada</td>
-                    <td>{{formatCurrency budget_aggregated}}</td>
+                    <td class="money-display">{{formatCurrency budget_aggregated}}</td>
                 </tr>
                 <tr class="execution-aggregated">
                     <td>Execução</td>
-                    <td>
+                    <td class="money-display">
                         {{#if execution_aggregated}}
                             {{formatCurrency execution_aggregated}}
                         {{else}}
@@ -684,22 +684,22 @@
             </tr>
             <tr>
                 <td>Dotação</td>
-                <td>{{formatCurrency budget_investment}}</td>
+                <td class="money-display">{{formatCurrency budget_investment}}</td>
             </tr>
             <tr>
                 <td>Execução</td>
-                <td>{{formatCurrency execution_investment}}</td>
+                <td class="money-display">{{formatCurrency execution_investment}}</td>
             </tr>
             <tr>
                 <td colspan="2" class="info-title">Em Funcionamento</td>
             </tr>
             <tr>
                 <td>Dotação</td>
-                <td>{{formatCurrency budget_operation}}</td>
+                <td class="money-display">{{formatCurrency budget_operation}}</td>
             </tr>
             <tr>
                 <td>Execução</td>
-                <td>{{formatCurrency execution_operation}}</td>
+                <td class="money-display">{{formatCurrency execution_operation}}</td>
             </tr>
         </table>
     </div>
@@ -777,24 +777,24 @@
     <table>
         <tr>
             <td>Dotação</td>
-            <td>{{formatCurrency budget_aggregated}}</td>
+            <td class="money-display">{{formatCurrency budget_aggregated}}</td>
         </tr>
         {{#if budget_investment}}
         <tr class="secondary-info">
             <td>de investimento</td>
-            <td>{{formatCurrency budget_investment}}</td>
+            <td class="money-display">{{formatCurrency budget_investment}}</td>
         </tr>
         {{/if}}
         {{#if budget_operation}}
         <tr class="secondary-info">
             <td>de operação</td>
-            <td>{{formatCurrency budget_operation}}</td>
+            <td class="money-display">{{formatCurrency budget_operation}}</td>
         </tr>
         {{/if}}
         <tr>
             <td>Execução</td>
             {{#if execution_aggregated}}
-            <td>
+            <td class="money-display">
                 {{formatCurrency execution_aggregated}}
                 <span class="execution_percent">({{formatPercent execution_percentage}})</span>
             </td>
@@ -805,13 +805,13 @@
         {{#if execution_investment}}
         <tr class="secondary-info">
             <td>de investimento</td>
-            <td>{{formatCurrency execution_investment}}</td>
+            <td class="money-display">{{formatCurrency execution_investment}}</td>
         </tr>
         {{/if}}
         {{#if execution_operation}}
         <tr class="secondary-info">
             <td>de operação</td>
-            <td>{{formatCurrency execution_operation}}</td>
+            <td class="money-display">{{formatCurrency execution_operation}}</td>
         </tr>
         {{/if}}
     </table>

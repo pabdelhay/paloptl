@@ -1,11 +1,9 @@
 from django.conf import settings
-from django.db import models
-from django.db.models import F, Sum, Value, Q
+from django.db.models import F, Q
 from rest_framework import serializers
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ReadOnlyModelViewSet
-from rest_framework_recursive.fields import RecursiveField
 
 from apps.budget.choices import ExpenseGroupChoices, RevenueGroupChoices
 from apps.budget.models import Budget, Function, Agency, TransparencyIndex, Expense, Revenue, BudgetSummary
@@ -101,18 +99,20 @@ class BudgetAccountSerializer(serializers.ModelSerializer):
         execution_value = obj.get_value('execution_aggregated') or 0
         budget_aggregated = obj.get_value('budget_aggregated')
 
-        if not budget_aggregated:
+        if not budget_aggregated or not execution_value:
             return settings.TREEMAP_EXECUTION_COLORS[color_index]
 
         execution_percent = execution_value / budget_aggregated
-        if 0.2 < execution_percent <= 0.4:
+        if execution_percent <= 0.2:
             color_index = 1
-        if 0.4 < execution_percent <= 0.6:
+        elif 0.2 < execution_percent <= 0.4:
             color_index = 2
-        elif 0.6 < execution_percent <= 0.8:
+        elif 0.4 < execution_percent <= 0.6:
             color_index = 3
-        if 0.8 < execution_percent:
+        elif 0.6 < execution_percent <= 0.8:
             color_index = 4
+        elif 0.8 < execution_percent:
+            color_index = 5
         return settings.TREEMAP_EXECUTION_COLORS[color_index]
 
     def get_color_hover(self, obj):

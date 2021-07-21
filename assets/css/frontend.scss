@@ -10,6 +10,7 @@ $datatable_spacing: 6px;
 $ranking_background_color: #f7f5f5;
 $font_main: Montserrat;
 $font_secondary: CeraPro;
+$font_money: RobotoMono;
 
 .big-container { margin: 0 30px; }
 a { color: $main_color; text-decoration: none; }
@@ -67,6 +68,8 @@ a.download-link {
     color: #FFF;
   }
 }
+
+.money-display { font-family: $font_money; }
 
 .language-selector {
 
@@ -880,6 +883,7 @@ h3 {
   .datatable-wrapper {
     margin-top: 40px;
     table.datatable-info {
+      td { font-family: $font_money; }
       th, td { text-align: right; color: $main_color; padding: 5px 10px; line-height: 20px; }
       th { font-size: 14px; }
       th:first-child, td:first-child { text-align: left; }

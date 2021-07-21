@@ -69,6 +69,10 @@ a.download-link:hover {
   color: #FFF;
 }
 
+.money-display {
+  font-family: RobotoMono;
+}
+
 .language-selector .lang {
   display: inline-block;
   border-left: 1px solid #586460;
@@ -902,6 +906,9 @@ h3 .arrow {
 }
 .page-country-detail .datatable-wrapper {
   margin-top: 40px;
+}
+.page-country-detail .datatable-wrapper table.datatable-info td {
+  font-family: RobotoMono;
 }
 .page-country-detail .datatable-wrapper table.datatable-info th, .page-country-detail .datatable-wrapper table.datatable-info td {
   text-align: right;
