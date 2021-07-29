@@ -357,23 +357,65 @@
         });
     }
     function inactive_budget_accounts_without_data(){
-        // Inactive budget_accounts without data.
+        // Inactive budget_accounts and groups without data and toggle closest with data.
+        $('.group-selector a').removeClass('inactive').attr('title', "");
         $('.budget-account-selector a').removeClass('inactive').attr('title', "");
         var budget_data = budgets[current_budget_id];
-        if(!budget_data['function_budget']){
-            $('.budget-account-selector .function-budget').addClass('inactive').attr('title', "Dados funcionais não disponíveis");
-            // Automatically calls other budget_account
-            if(current_budget_account == 'functions' && budget_data['agency_budget']){
-                toggle_budget_account('agencies');
+        var budget_account_map = {
+            'expenses': {
+                msg: "Dados de despesas não disponíveis",
+                sibling: 'revenues',
+                groups: {
+                    'expense_functional_budget': {
+                        group_id: 'functional',
+                        msg: "Dados funcionais não disponíveis",
+                        sibling: 'expense_organic_budget'
+                    },
+                    'expense_organic_budget': {
+                        group_id: 'organic',
+                        msg: "Dados orgânicos não disponíveis",
+                        sibling: 'expense_functional_budget'
+                    }
+                }
+            },
+            'revenues': {
+                msg: "Dados de receitas não disponíveis",
+                sibling: 'expenses',
+                groups: {
+                    'revenue_nature_budget': {
+                        group_id: 'nature',
+                        msg: "Dados por natureza não disponíveis",
+                        sibling: 'revenue_source_budget'
+                    },
+                    'revenue_source_budget': {
+                        group_id: 'source',
+                        msg: "Dados por fonte não disponíveis",
+                        sibling: 'revenue_nature_budget'
+                    }
+                }
             }
         }
-        if(!budget_data['agency_budget']){
-            $('.budget-account-selector .agency-budget').addClass('inactive').attr('title', "Dados orgânicos não disponíveis");
-            // Automatically calls other budget_account
-            if(current_budget_account == 'agencies' && budget_data['function_budget']){
-                toggle_budget_account('functions');
+        Object.entries(budget_account_map).forEach(([budget_account, ba_values]) => {
+            let ba_groups = Object.keys(ba_values.groups);
+            if(!budget_data[ba_groups[0]] && !budget_data[ba_groups[1]]){
+                // No data for budget_account.
+                $('.budget-account-selector [data-budget_account="'+budget_account+'"]').addClass('inactive').attr('title', ba_values['msg']);
+                if(current_budget_account == budget_account){
+                    toggle_budget_account(ba_values.sibling);
+                    return;
+                }
             }
-        }
+            Object.entries(ba_values.groups).forEach(([group, group_values]) => {
+                let group_id = group_values.group_id;  // functional, organic, nature, source
+                if(!budget_data[group]){
+                    $('.group-selector [data-group="'+group_id+'"]').addClass('inactive').attr('title', group_values['msg']);
+                    if(current_group == group_id){
+                        toggle_group(ba_values.groups[group_values.sibling].group_id);
+                        return;
+                    }
+                }
+            });
+        });
     }
     function get_historical_and_plot_view(){
         get_historical_data(current_budget_id, current_budget_account, current_budget_account_id, current_group, function(data){
@@ -469,17 +511,20 @@
 
     $(document).ready(function () {
         // Binds
-        $('.budget-account-selector a').on('click', function (ev) {
+        $('.budget-account-selector-row a').on('click', function (ev) {
+            ev.preventDefault();
+        });
+        $(document).on('click', '.budget-account-selector a:not(".inactive")', function (ev) {
             ev.preventDefault();
             var budget_account = $(this).data('budget_account');
             toggle_budget_account(budget_account);
         });
-        $('.group-selector a').on('click', function (ev) {
+        $(document).on('click', '.group-selector a:not(".inactive")', function (ev) {
             ev.preventDefault();
             var group = $(this).data('group');
             toggle_group(group);
         });
-        $('.budget-selector a').on('click', function (ev) {
+        $(document).on('click', '.budget-selector a:not(".inactive")', function (ev) {
             ev.preventDefault();
             var budget_id = $(this).data('budget_id');
             toggle_budget(budget_id);
