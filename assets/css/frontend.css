@@ -627,6 +627,9 @@ h3 .arrow {
 .page-country-detail .breadcrumb-row .budget-account-selector-row a:nth-child(2) {
   border-right: 0;
 }
+.page-country-detail .breadcrumb-row .budget-account-selector-row .budget-selector a {
+  border-right: 1px solid #82aecb;
+}
 .page-country-detail .breadcrumb-row .budget-account-selector-row .budget-account-selector {
   border-right: 1px solid #82aecb;
   padding-right: 10px;
