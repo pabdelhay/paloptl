@@ -10,7 +10,7 @@ class Command(BaseCommand):
     help = "Migrate budget accounts to new Revenue/Expense database structure."
 
     def handle(self, *args, **options):
-        budget_filter = 12
+        budget_filter = None
         expense_ct = get_content_type_for_model(Expense)
 
         def migrate_budget_account(budget_account_class, group, budget_id):

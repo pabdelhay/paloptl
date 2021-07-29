@@ -488,7 +488,7 @@
         $(document).on('click', '.breadcrumb-link', function(ev){
             ev.preventDefault();
             var breadcrumb_index = parseInt($(this).data('breadcrumb_idx'));
-            if(breadcrumb_index <= 1){
+            if(breadcrumb_index <= 2){
                 init_views(current_budget_data);
             } else {
                 go_to_category(breadcrumb[breadcrumb_index].id);

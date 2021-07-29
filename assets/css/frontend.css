@@ -71,6 +71,7 @@ a.download-link:hover {
 
 .money-display {
   font-family: RobotoMono;
+  text-align: right;
 }
 
 .language-selector .lang {
@@ -663,7 +664,7 @@ h3 .arrow {
 .page-country-detail .treemap-wrapper .treemap-tooltip {
   font-size: 16px;
   color: #FFF;
-  max-width: 400px;
+  max-width: 500px;
 }
 .page-country-detail .treemap-wrapper .treemap-tooltip h5 {
   color: #FFF;
@@ -673,12 +674,14 @@ h3 .arrow {
   padding-bottom: 6px;
 }
 .page-country-detail .treemap-wrapper .treemap-tooltip table {
-  width: 300px;
+  width: 400px;
+}
+.page-country-detail .treemap-wrapper .treemap-tooltip table td.money-display {
+  text-align: left;
 }
 .page-country-detail .treemap-wrapper .treemap-tooltip table td:first-child {
   text-align: right;
   padding-right: 5px;
-  width: 100px;
 }
 .page-country-detail .treemap-wrapper .treemap-tooltip table td:last-child {
   padding-left: 5px;
@@ -731,7 +734,7 @@ h3 .arrow {
 .page-country-detail .treemap-wrapper .budget_account-info .name-wrapper {
   font-size: 14px;
   font-weight: bold;
-  min-height: 25px;
+  min-height: 85px;
   margin-top: 0;
 }
 .page-country-detail .treemap-wrapper .budget_account-info hr {
@@ -777,7 +780,7 @@ h3 .arrow {
   width: 100px;
 }
 .page-country-detail .treemap-wrapper .budget_account-info .treemap-legend-table {
-  margin-top: 49px;
+  margin-top: 10px;
   table-layout: fixed;
   width: 100%;
 }
@@ -850,7 +853,6 @@ h3 .arrow {
   text-align: center;
 }
 .page-country-detail .treemap-wrapper .budget_account-info table.primary-info {
-  margin-top: 20px;
   width: 100%;
   font-size: 13px;
 }

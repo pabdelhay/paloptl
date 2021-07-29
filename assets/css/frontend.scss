@@ -69,7 +69,7 @@ a.download-link {
   }
 }
 
-.money-display { font-family: $font_money; }
+.money-display { font-family: $font_money; text-align: right; }
 
 .language-selector {
 
@@ -667,22 +667,26 @@ h3 {
     .treemap-tooltip {
       font-size: 16px;
       color: #FFF;
-      max-width: 400px;
+      max-width: 500px;
 
       h5 { color: #FFF; margin: 0; text-align: left; font-size: 18px; padding-bottom: 6px; }
       table {
-        width: 300px;
-        td:first-child {
-          text-align: right;
-          padding-right: 5px;
-          width: 100px;
-        }
-        td:last-child {
-          padding-left: 5px;
-          font-weight: bold;
-          &.no-value {
-            font-weight: normal;
-            font-style: italic;
+        width: 400px;
+        td {
+          &.money-display {
+            text-align: left;
+          }
+          &:first-child {
+            text-align: right;
+            padding-right: 5px;
+          }
+          &:last-child {
+            padding-left: 5px;
+            font-weight: bold;
+            &.no-value {
+              font-weight: normal;
+              font-style: italic;
+            }
           }
         }
         tr.secondary-info {
@@ -731,7 +735,7 @@ h3 {
       .name-wrapper {
         font-size: 14px;
         font-weight: bold;
-        min-height: 25px;
+        min-height: 85px;
         margin-top: 0;
       }
       hr {
@@ -769,7 +773,7 @@ h3 {
       }
 
       .treemap-legend-table {
-        margin-top: 49px;
+        margin-top: 10px;
         table-layout: fixed;
         width: 100%;
 
@@ -832,7 +836,6 @@ h3 {
         }
       }
       table.primary-info {
-        margin-top: 20px;
         width: 100%;
         font-size: 13px;
         td {
