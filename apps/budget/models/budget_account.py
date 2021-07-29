@@ -15,7 +15,7 @@ class BudgetAccount(MPTTModel, DirtyFieldsMixin):
         pass
 
     budget = models.ForeignKey('budget.Budget', verbose_name=_("budget"), on_delete=models.CASCADE)
-    # group = models.CharField(verbose_name=_("group"), max_length=30)
+    #group = models.CharField(verbose_name=_("group"), max_length=30, null=True, blank=True)
 
     name = models.CharField(verbose_name=_("name"), max_length=255)
     code = models.CharField(verbose_name=_("code"), max_length=20, null=True, blank=True)
@@ -59,13 +59,21 @@ class BudgetAccount(MPTTModel, DirtyFieldsMixin):
         return cls._meta.model_name
 
     @classmethod
+    def get_model_label(cls):
+        """
+        Return model verbose name
+        :return: string
+        """
+        return cls._meta.verbose_name
+
+    @classmethod
     def get_taxonomy(cls, group, level=0):
         if not getattr(cls, 'TAXONOMY_LEVELS_BY_GROUP', None):
             raise cls.TaxonomyLevelsNotSet()
         return cls.TAXONOMY_LEVELS_BY_GROUP[group][level]
 
     def get_taxonomy_label(self):
-        return self.get_taxonomy(self.level)
+        return self.get_taxonomy(group=self.group, level=self.level)
 
     def get_hierarchy_name(self):
         name = self.name

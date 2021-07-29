@@ -1,3 +1,4 @@
+from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -20,6 +21,8 @@ class Revenue(BudgetAccount):
     budget = models.ForeignKey('budget.Budget', verbose_name=_("budget"), related_name='revenues',
                                on_delete=models.CASCADE)
     group = models.CharField(verbose_name=_("group"), max_length=30, choices=RevenueGroupChoices.choices)
+
+    upload_logs = GenericRelation('budget.UploadLog', related_query_name='revenue')
 
     class Meta:
         verbose_name = _("revenue")
