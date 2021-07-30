@@ -52,12 +52,6 @@ class Upload(models.Model, DirtyFieldsMixin):
     def __str__(self):
         return f"{self.budget.country.name} ({self.budget.year}) - #{self.id}"
 
-    def save(self, *args, **kwargs):
-        is_new = not self.pk
-        if not is_new and 'file' in self.get_dirty_fields():
-            self.status = UploadStatusChoices.WAITING_REIMPORT
-        super().save(*args, **kwargs)
-
     @classmethod
     def get_enconding_from_content(cls, content):
         if content[:1] == b'\xef':

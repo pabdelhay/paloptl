@@ -1,6 +1,7 @@
 from admin_honeypot.models import LoginAttempt
 from django.contrib import admin, messages
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 from django_admin_inline_paginator.admin import TabularInlinePaginated
@@ -190,6 +191,10 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
             if is_new:
                 instance.uploaded_by = request.user
                 instance.status = UploadStatusChoices.VALIDATING
+            elif 'file' in instance.get_dirty_fields():
+                instance.uploaded_by = request.user
+                instance.status = UploadStatusChoices.WAITING_REIMPORT
+                instance.uploaded_on = timezone.now()
             instance.save()
             if is_new:
                 request.session['upload_in_progress'] = instance.id
