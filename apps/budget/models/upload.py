@@ -45,6 +45,7 @@ class Upload(models.Model, DirtyFieldsMixin):
     uploaded_on = models.DateTimeField(verbose_name=_("uploaded on"), auto_now_add=True)
     uploaded_by = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("uploaded by"), on_delete=models.PROTECT,
                                     editable=False)
+    updated_on = models.DateTimeField(verbose_name=_("updated on"), auto_now_add=True)
 
     class Meta:
         ordering = ['uploaded_on']

@@ -6,3 +6,4 @@ __pycache__
 .devops
 db.sqlite3
 .media
+draft.py

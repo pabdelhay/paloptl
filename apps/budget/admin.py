@@ -21,8 +21,8 @@ admin.site.unregister(LoginAttempt)
 class UploadInline(admin.TabularInline):
     model = Upload
     extra = 1
-    fields = ('file', 'report', 'status', 'get_log', 'uploaded_by', 'uploaded_on')
-    readonly_fields = ('status', 'uploaded_by', 'uploaded_on', 'get_log')
+    fields = ('file', 'report', 'status', 'get_log', 'uploaded_by', 'updated_on')
+    readonly_fields = ('status', 'uploaded_by', 'updated_on', 'get_log')
 
     @mark_safe
     def get_log(self, obj):
@@ -193,8 +193,8 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
                 instance.status = UploadStatusChoices.VALIDATING
             elif 'file' in instance.get_dirty_fields():
                 instance.uploaded_by = request.user
+                instance.updated_on = timezone.now()
                 instance.status = UploadStatusChoices.WAITING_REIMPORT
-                instance.uploaded_on = timezone.now()
             instance.save()
             if is_new:
                 request.session['upload_in_progress'] = instance.id
