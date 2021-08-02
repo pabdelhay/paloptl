@@ -41,7 +41,21 @@ $(document).ready(function(){
 {% block content %}
 <div class="page-index">
     <div class="hero">
-        <img src="{% static 'img/hero.png' %}" />
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <h2>
+                        Transparência<br>e Tecnologia
+                    </h2>
+                    <div class="short-description">
+                        Conectando a sociedade<br>às finanças públicas
+                    </div>
+                </div>
+                <div class="col-6 img-wrap">
+                    <img src="{% static 'img/hero-img.png' %}" />
+                </div>
+            </div>
+        </div>
     </div>
     <div class="about">
         <div class="container">
@@ -51,29 +65,33 @@ $(document).ready(function(){
                 </div>
             </div>
             <div class="row">
-                <div class="col-3">
-                    Lorem ipsum dolor sit amet,
-                    consectetuer adipiscing elit, sed
-                    diam nonummy nibh euismod
-                    tincidunt ut la metodologia
-                    aliquam erat consequat. Duis vel
-                    eum iriure dolor in hendrerit in
-                    vulputate velit esse molestie
-                    consequat, vel illum dolore eu
-                    feugiat nulla facilisis at vero nulla
-                    facilisi autem vel eum.
+                <div class="col-4">
+                    Esta plataforma torna os orçamentos
+                    públicos federais dos PALOP-TL mais
+                    acessíveis. Os cidadãos contam agora com
+                    uma ferramenta para monitorar as receitas
+                    e despesas públicas de forma prática e
+                    ágil. Extraímos os dados de relatórios
+                    oficiais publicados em formatos fechados
+                    e os tornamos estruturados e abertos,
+                    prontos para análise. Além das bases,
+                    disponibilizamos gráficos interativos
+                    e filtros de consulta que facilitam o
+                    consumo de informações complexas.
                 </div>
-                <div class="col-3">
-                    Lorem ipsum dolor sit amet,
-                    consectetuer adipiscing elit, sed
-                    diam nonummy nibh euismod
-                    tincidunt ut la metodologia
-                    aliquam erat consequat. Duis vel
-                    eum iriure dolor in hendrerit in
-                    vulputate velit esse molestie
-                    consequat, vel illum dolore eu
-                    feugiat nulla facilisis at vero nulla
-                    facilisi autem vel eum.
+                <div class="col-4">
+                    Aqui você encontra também o primeiro
+                    Índice de Transparência Orçamental com
+                    recorte focado nos seis PALOP-TL. Trata-se
+                    de um instrumento que pretende dar
+                    visibilidade e incentivar avanços no tema.
+                    O projeto prevê um crescimento modular
+                    tanto da plataforma de dados quanto do
+                    índice. Novas perspectivas e abordagens
+                    da transparência orçamental serão
+                    incorporadas conforme forem definidas
+                    em conjunto com representantes da
+                    sociedade civil.
                 </div>
             </div>
         </div>
@@ -85,7 +103,11 @@ $(document).ready(function(){
                 <div class="col-12">
                     <div class="ranking-header">
                         <h2><span class="arrow"></span>RANKING</h2>
-                        <h4>Índice PALOP-TL de Transparência<br>da Despesa Orçamentária</h4>
+                        <h4>Índice PALOP-TL de Transparência Orçamentária</h4>
+                        <div class="short-description">
+                            Resume quantitativamente, em três indicadores, a qualidade da transparência no fornecimento<br>
+                            dos dados básicos da receita e despesa que compõem esta plataforma.
+                        </div>
                     </div>
                 </div>
             </div>
@@ -128,6 +150,30 @@ $(document).ready(function(){
 
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="downloads">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h4>VEJA MAIS DETALHES SOBRE A METODOLOGIA E RESULTADOS DETALHADOS</h4>
+                        <ul class="links">
+                            <li>
+                                Fundamentação do trabalho e Discussão de Resultados do Índice 2020
+                                <a href="#" class="download-link">Download</a>
+                            </li>
+                            <li>
+                                Questionário e Metodologia de Pontuação do Índice de Transparência Orçamental PALOP-TL
+                                <a href="#" class="download-link">Download</a>
+                            </li>
+                            <li>
+                                Resultados Detalhados do Índice PALOP-TL 2020
+                                <a href="#" class="download-link">Download</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
             </div>
         </div>
         <div class="container countries-description">

@@ -8,6 +8,9 @@ $hover_color: #e4e0df;
 $icon_hover_color: #6b6b6b;
 $datatable_spacing: 6px;
 $ranking_background_color: #f7f5f5;
+$font_main: Montserrat;
+$font_secondary: CeraPro;
+$font_money: RobotoMono;
 
 .big-container { margin: 0 30px; }
 a { color: $main_color; text-decoration: none; }
@@ -53,6 +56,20 @@ h4 {
   font-size: 42px;
   text-transform: uppercase;
 }
+
+a.download-link {
+  font-size: 12px;
+  border-radius: 10px;
+  padding: 1px 40px;
+  border: 1px solid $subtitle_color;
+  color: $subtitle_color;
+  &:hover {
+    background-color: #0e588d;
+    color: #FFF;
+  }
+}
+
+.money-display { font-family: $font_money; text-align: right; }
 
 .language-selector {
 
@@ -158,9 +175,11 @@ h3 {
   h1 {
     padding: 36px 0 ;
     margin: 0;
+    line-height: 52px;
     a {
       color: #0f2843;
       text-decoration: none;
+      line-height: 57px;
       &:active { color: #215c96; }
     }
   }
@@ -210,23 +229,27 @@ h3 {
   }
 
   .sponsors {
-    margin-bottom: 40px;
+    margin-bottom: 60px;
   }
 
   .first-col {
-    border-right: 1px solid #aaaaaa;
-
     .upper-row {
       margin-bottom: 20px;
     }
     .bottom-row {
       font-size: 12px;
       color: #747373;
-      img {
-        margin-right: 5px;
-        width: 60px;
+      .logos-ods {
+        width: 100%;
       }
     }
+  }
+  .disclaimer {
+    border-left: 1px solid #aaaaaa;
+    font-size: 13px;
+    color: #747373;
+    padding-left: 80px;
+    text-align: justify;
   }
 
   hr {
@@ -254,7 +277,28 @@ h3 {
   text-align: left;
 
   .hero {
-    img { width: 100%; }
+    padding: 40px 0;
+    background-image: url("../img/hero-bg.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+
+    h2 {
+      font-family: $font_secondary;
+      font-weight: bold;
+      color: #FFF;
+      letter-spacing: 6px;
+      margin: 90px 0 20px;
+    }
+    .short-description {
+      color: #FFF;
+      font-size: 30px;
+      line-height: 34px;
+    }
+
+    .img-wrap {
+      text-align: right;
+      img { width: 90%; }
+    }
   }
   .about {
     background-image: url("../img/texture_bg.png");
@@ -262,11 +306,10 @@ h3 {
     background-position-x: right;
     background-position-y: top;
     background-color: $description_bg_color;
-    height: 400px;
     color: #FFFFFF;
     position: relative;
     margin-top: -7px;
-    padding: 40px 0;
+    padding: 40px 0 80px;
     h2 {
       color: #FFF;
       margin-bottom: 20px;
@@ -288,11 +331,15 @@ h3 {
         color: $subtitle_color;
         text-transform: uppercase;
         margin-top: 0;
+        margin-bottom: 20px;
+      }
+      .short-description {
+        color: $subtitle_color;
       }
     }
     .ranking-wrapper {
       width: 100%;
-      margin-bottom: 150px;
+      margin-bottom: 60px;
       margin-top: 40px;
       position: relative;
 
@@ -431,6 +478,22 @@ h3 {
 
     }
     .countries-description { padding-bottom: 10px; }
+    .downloads {
+      margin-bottom: 80px;
+      h4 { font-size: 20px; font-weight: bold; }
+      ul {
+        color: $subtitle_color;
+        list-style: none;
+        padding: 0;
+        li {
+          border-bottom: 1px solid $subtitle_color;
+          padding: 10px 0;
+          a {
+            float: right;
+          }
+        }
+      }
+    }
   }
 
   .countries {
@@ -559,6 +622,14 @@ h3 {
         &:last-child {
           border-right: 0;
         }
+        &:nth-child(2) {
+          border-right: 0;
+        }
+      }
+      .budget-selector {
+        a {
+          border-right: 1px solid #82aecb;
+        }
       }
 
       .budget-account-selector {
@@ -601,22 +672,26 @@ h3 {
     .treemap-tooltip {
       font-size: 16px;
       color: #FFF;
-      max-width: 400px;
+      max-width: 500px;
 
       h5 { color: #FFF; margin: 0; text-align: left; font-size: 18px; padding-bottom: 6px; }
       table {
-        width: 300px;
-        td:first-child {
-          text-align: right;
-          padding-right: 5px;
-          width: 100px;
-        }
-        td:last-child {
-          padding-left: 5px;
-          font-weight: bold;
-          &.no-value {
-            font-weight: normal;
-            font-style: italic;
+        width: 400px;
+        td {
+          &.money-display {
+            text-align: left;
+          }
+          &:first-child {
+            text-align: right;
+            padding-right: 5px;
+          }
+          &:last-child {
+            padding-left: 5px;
+            font-weight: bold;
+            &.no-value {
+              font-weight: normal;
+              font-style: italic;
+            }
           }
         }
         tr.secondary-info {
@@ -665,7 +740,7 @@ h3 {
       .name-wrapper {
         font-size: 14px;
         font-weight: bold;
-        min-height: 25px;
+        min-height: 85px;
         margin-top: 0;
       }
       hr {
@@ -691,70 +766,81 @@ h3 {
           span { margin-left: 20px; top: -2px; }
         }
       }
-      .treemap-legend {
-        width: 30px;
-        height: 30px;
-      }
+
       .execution-percentage {
         display: none;
-        padding-left: 20px;
         color: $main_color;
       }
-      .execution-group-indicator {
-        width: 0;
-        height: 0;
-        border-top: 10px solid transparent;
-        border-bottom: 10px solid transparent;
-        border-right: 10px solid $main_color;
-        display: none;
-        position: relative;
-        top: 2px;
-        left: 10px;
-      }
-      .execution-group-1 .group-1 {
+
+      .execution-group-0 .group-0 {
         .execution-group-indicator { display: inline-block; }
-        .execution-percentage { display: block; }
-      }
-      .execution-group-2 .group-2 {
-        .execution-group-indicator { display: inline-block; }
-        .execution-percentage { display: block; }
-      }
-      .execution-group-3 .group-3 {
-        .execution-group-indicator { display: inline-block; }
-        .execution-percentage { display: block; }
-      }
-      .execution-group-4 .group-4 {
-        .execution-group-indicator { display: inline-block; }
-        .execution-percentage { display: block; }
-      }
-      .execution-group-5 .group-5 {
-        .execution-group-indicator { display: inline-block; }
-        .execution-percentage { display: block; }
+        .execution-percentage { display: block; position: relative; left: -20px; width: 100px; }
       }
 
-      .group-1 .treemap-legend {
-        background-color: #f2cc05;
-      }
-      .group-2 .treemap-legend {
-        background-color: #f2571c;
-      }
-      .group-3 .treemap-legend {
-        background-color: #8c1717;
-      }
-      .group-4 .treemap-legend {
-        background-color: #66298c;
-      }
-      .group-5 .treemap-legend {
-        background-color: #0f69a3;
-      }
       .treemap-legend-table {
         margin-top: 10px;
-      }
-      .treemap-legend-table tr td {
-        padding: 1px;
+        table-layout: fixed;
+        width: 100%;
+
+        &.execution-group-1 .group-1 {
+          .execution-group-indicator { display: inline-block; }
+          .execution-percentage { display: block; }
+        }
+        &.execution-group-2 .group-2 {
+          .execution-group-indicator { display: inline-block; }
+          .execution-percentage { display: block; }
+        }
+        &.execution-group-3 .group-3 {
+          .execution-group-indicator { display: inline-block; }
+          .execution-percentage { display: block; }
+        }
+        &.execution-group-4 .group-4 {
+          .execution-group-indicator { display: inline-block; }
+          .execution-percentage { display: block; }
+        }
+        &.execution-group-5 .group-5 {
+          .execution-group-indicator { display: inline-block; }
+          .execution-percentage { display: block; }
+        }
+
+        .treemap-legend {
+          height: 40px;
+        }
+        .execution-group-indicator {
+          width: 0;
+          height: 0;
+          border-left: 10px solid transparent;
+          border-right: 10px solid transparent;
+          border-bottom: 10px solid $main_color;
+          display: none;
+          position: relative;
+          top: 2px;
+        }
+        .group-0 .treemap-legend {
+          background-color: #7a8381;
+        }
+        .group-1 .treemap-legend {
+          background-color: #f2cc05;
+        }
+        .group-2 .treemap-legend {
+          background-color: #f2571c;
+        }
+        .group-3 .treemap-legend {
+          background-color: #8c1717;
+        }
+        .group-4 .treemap-legend {
+          background-color: #66298c;
+        }
+        .group-5 .treemap-legend {
+          background-color: #0f69a3;
+        }
+        .legend-square td { padding: 5px; }
+        tr td {
+          padding: 1px;
+          text-align: center;
+        }
       }
       table.primary-info {
-        margin-top: 20px;
         width: 100%;
         font-size: 13px;
         td {
@@ -764,7 +850,6 @@ h3 {
         }
         .execution-aggregated {
           td {
-            padding-top: 20px;
             &:last-child { font-weight: bold; }
           }
           small {
@@ -806,6 +891,7 @@ h3 {
   .datatable-wrapper {
     margin-top: 40px;
     table.datatable-info {
+      td { font-family: $font_money; }
       th, td { text-align: right; color: $main_color; padding: 5px 10px; line-height: 20px; }
       th { font-size: 14px; }
       th:first-child, td:first-child { text-align: left; }

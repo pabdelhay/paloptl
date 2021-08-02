@@ -1,7 +1,6 @@
 from admin_honeypot.models import LoginAttempt
 from django.contrib import admin, messages
 from django.urls import reverse
-from django.utils import timezone
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 from django_admin_inline_paginator.admin import TabularInlinePaginated
@@ -21,7 +20,7 @@ admin.site.unregister(LoginAttempt)
 class UploadInline(admin.TabularInline):
     model = Upload
     extra = 1
-    fields = ('file', 'report', 'status', 'get_log', 'uploaded_by', 'updated_on')
+    fields = ('file', 'category', 'report', 'status', 'get_log', 'uploaded_by', 'updated_on')
     readonly_fields = ('status', 'uploaded_by', 'updated_on', 'get_log')
 
     @mark_safe
@@ -48,6 +47,21 @@ class UploadInline(admin.TabularInline):
                f'' + html + \
                f'</div>'
     get_log.short_description = "log"
+
+
+class BudgetSummaryInline(TabularInline):
+    model = BudgetSummary
+    fields = ('expense_functional_budget', 'expense_functional_execution',
+              'expense_organic_budget', 'expense_organic_execution',
+              'revenue_nature_budget', 'revenue_nature_execution',
+              'revenue_source_budget', 'revenue_source_execution')
+    readonly_fields = ('expense_functional_budget', 'expense_functional_execution',
+                       'expense_organic_budget', 'expense_organic_execution',
+                       'revenue_nature_budget', 'revenue_nature_execution',
+                       'revenue_source_budget', 'revenue_source_execution')
+
+    def has_delete_permission(self, request, obj=None):
+        return False
 
 
 class BudgetAccountInline(TabularInlinePaginated):
@@ -80,6 +94,10 @@ class BudgetAccountInline(TabularInlinePaginated):
 
     def has_delete_permission(self, request, obj):
         return request.user.is_superuser
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        return queryset.filter(group=self.group)
 
     @staticmethod
     def _get_budget_field(obj, field):
@@ -146,26 +164,92 @@ class BudgetAccountInline(TabularInlinePaginated):
 
 class FunctionInline(BudgetAccountInline):
     model = Function
+    group = ExpenseGroupChoices.FUNCTIONAL
+    verbose_name_plural = _("Function - OLD")
+
+    def get_queryset(self, request):
+        return self.model.objects.all()
 
     def get_group_taxonomy(self, obj):
         return obj.parent.name if obj.parent else obj.name
-    get_group_taxonomy.short_description = Function.get_taxonomy(level=0)
+    get_group_taxonomy.short_description = model.get_taxonomy(group=group, level=0)
 
     def get_subgroup_taxonomy(self, obj):
         return obj.name if obj.parent else ""
-    get_subgroup_taxonomy.short_description = Function.get_taxonomy(level=1)
+    get_subgroup_taxonomy.short_description = model.get_taxonomy(group=group, level=1)
 
 
 class AgencyInline(BudgetAccountInline):
     model = Agency
+    group = ExpenseGroupChoices.ORGANIC
+    verbose_name_plural = _("Agency - OLD")
+
+    def get_queryset(self, request):
+        return self.model.objects.all()
 
     def get_group_taxonomy(self, obj):
         return obj.parent.name if obj.parent else obj.name
-    get_group_taxonomy.short_description = Agency.get_taxonomy(level=0)
+    get_group_taxonomy.short_description = model.get_taxonomy(group=group, level=0)
 
     def get_subgroup_taxonomy(self, obj):
         return obj.name if obj.parent else ""
-    get_subgroup_taxonomy.short_description = Agency.get_taxonomy(level=1)
+    get_subgroup_taxonomy.short_description = model.get_taxonomy(group=group, level=1)
+
+
+class ExpenseFunctionInline(BudgetAccountInline):
+    model = Expense
+    group = ExpenseGroupChoices.FUNCTIONAL
+    verbose_name_plural = _("Expenses by function")
+
+    def get_group_taxonomy(self, obj):
+        return obj.parent.name if obj.parent else obj.name
+    get_group_taxonomy.short_description = model.get_taxonomy(group=group, level=0)
+
+    def get_subgroup_taxonomy(self, obj):
+        return obj.name if obj.parent else ""
+    get_subgroup_taxonomy.short_description = model.get_taxonomy(group=group, level=1)
+
+
+class ExpenseAgencyInline(BudgetAccountInline):
+    model = Expense
+    group = ExpenseGroupChoices.ORGANIC
+    verbose_name_plural = _("Expenses by agency")
+
+    def get_group_taxonomy(self, obj):
+        return obj.parent.name if obj.parent else obj.name
+    get_group_taxonomy.short_description = model.get_taxonomy(group=group, level=0)
+
+    def get_subgroup_taxonomy(self, obj):
+        return obj.name if obj.parent else ""
+    get_subgroup_taxonomy.short_description = model.get_taxonomy(group=group, level=1)
+
+
+class RevenueNatureInline(BudgetAccountInline):
+    model = Revenue
+    group = RevenueGroupChoices.NATURE
+    verbose_name_plural = _("Revenues by nature")
+
+    def get_group_taxonomy(self, obj):
+        return obj.parent.name if obj.parent else obj.name
+    get_group_taxonomy.short_description = model.get_taxonomy(group=group, level=0)
+
+    def get_subgroup_taxonomy(self, obj):
+        return obj.name if obj.parent else ""
+    get_subgroup_taxonomy.short_description = model.get_taxonomy(group=group, level=1)
+
+
+class RevenueSourceInline(BudgetAccountInline):
+    model = Revenue
+    group = RevenueGroupChoices.SOURCE
+    verbose_name_plural = _("Revenues by source")
+
+    def get_group_taxonomy(self, obj):
+        return obj.parent.name if obj.parent else obj.name
+    get_group_taxonomy.short_description = model.get_taxonomy(group=group, level=0)
+
+    def get_subgroup_taxonomy(self, obj):
+        return obj.name if obj.parent else ""
+    get_subgroup_taxonomy.short_description = model.get_taxonomy(group=group, level=1)
 
 
 @admin.register(Budget)
@@ -175,7 +259,9 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
             'fields': ('country', 'year', 'is_active', 'currency', 'output_file')
         }),
     )
-    inlines = (UploadInline, FunctionInline, AgencyInline)  # Commented because of large data timeouts.
+    inlines = (UploadInline, BudgetSummaryInline, FunctionInline, AgencyInline,
+               ExpenseFunctionInline, ExpenseAgencyInline, RevenueNatureInline,
+               RevenueSourceInline)
     list_display = ('country', 'year', 'is_active', 'uploads', 'uploads_with_error')
     list_filter = ('year', )
     readonly_fields = ('currency', 'output_file')
@@ -281,11 +367,11 @@ class TransparencyIndexAdmin(admin.ModelAdmin):
 @admin.register(UploadLog)
 class UploadLogAdmin(CountryPermissionMixin, admin.ModelAdmin):
     country_lookup_field = 'upload__budget__country'
-    list_display = ('id', 'log_type', '_category_type', 'category_name', '_field', '_old_value', '_new_value', 'upload',
-                    'updated_by')
+    list_display = ('id', 'log_type', '_category_label', '_group', '_category_name', '_field', '_old_value',
+                    '_new_value', 'upload', 'updated_by')
     list_filter = ('log_type',)
-    readonly_fields = ('log_type', '_category_type', 'category_name', '_field', '_old_value', '_new_value', 'upload',
-                       'updated_by', 'time')
+    readonly_fields = ('log_type', '_category_label', '_group', '_category_name', '_field', '_old_value', '_new_value',
+                       'upload', 'updated_by', 'time')
     search_fields = ('field', 'category_name')
     ordering = ('time', 'id')
 
@@ -300,9 +386,17 @@ class UploadLogAdmin(CountryPermissionMixin, admin.ModelAdmin):
             return True
         return super().lookup_allowed(lookup, value)
 
-    def _category_type(self, obj):
+    def _category_label(self, obj):
+        return obj.category.get_model_label()
+    _category_label.short_description = _("category")
+
+    def _group(self, obj):
         return obj.category.get_taxonomy_label()
-    _category_type.short_description = _("category type")
+    _group.short_description = _("group")
+
+    def _category_name(self, obj):
+        return obj.category_name
+    _category_name.short_description = _("name")
 
     def _old_value(self, obj):
         if not obj.old_value:

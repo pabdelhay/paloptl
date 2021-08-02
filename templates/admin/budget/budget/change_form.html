@@ -17,6 +17,15 @@
     #functions-group.inline-group .tabular tr.has_original td.delete,
     #agencies-group.inline-group .tabular tr.has_original td.delete { padding: 4px 0 0 8px; }
 
+    #expenses-group.inline-group .tabular tr.has_original td[class^="field-"],
+    #expenses-2-group.inline-group .tabular tr.has_original td[class^="field-"],
+    #revenues-group.inline-group .tabular tr.has_original td[class^="field-"],
+    #revenues-2-group.inline-group .tabular tr.has_original td[class^="field-"] { padding: 0 0 0 8px; }
+    #expenses-group.inline-group .tabular tr.has_original td.delete,
+    #expenses-2-group.inline-group .tabular tr.has_original td.delete,
+    #revenues-group.inline-group .tabular tr.has_original td.delete,
+    #revenues-2-group.inline-group .tabular tr.has_original td.delete { padding: 4px 0 0 8px; }
+
     .field-get_budget_investment, .field-get_budget_operation, .field-get_budget_aggregated,
     .field-get_execution_investment, .field-get_execution_operation, .field-get_execution_aggregated,
     .column-get_budget_investment, .column-get_budget_operation, .column-get_budget_aggregated,
@@ -61,8 +70,9 @@
 
         });
 
-        // Remove __str__ for each row on Function and Agencies inlines.
+        // Remove __str__ for each row on BudgetAccount (Expenses, Revenues) inlines.
         $('#functions-group, #agencies-group').find('.form-row .original p').remove();
+        $('#expenses-group, #expenses-2-group, #revenues-group, #revenues-2-group',).find('.form-row .original p').remove();
 
         var categories_group = ['#functions-group', '#agencies-group'];
         categories_group.forEach(function(item, index, arr){
@@ -84,7 +94,9 @@
         $('#uploads-group h2').after($('.inline-description.groups'))
 
         {% if add %}
-            $('#functions-group, #agencies-group').hide();
+            $('#summary-group').hide();
+            $('#expenses-group, #expenses-2-group').hide();
+            $('#revenues-group, #revenues-2-group').hide();
             $('.field-currency').remove();
             $('.field-output_file').remove();
         {% endif %}
