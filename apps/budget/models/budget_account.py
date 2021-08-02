@@ -15,6 +15,8 @@ class BudgetAccount(MPTTModel, DirtyFieldsMixin):
         pass
 
     budget = models.ForeignKey('budget.Budget', verbose_name=_("budget"), on_delete=models.CASCADE)
+    #group = models.CharField(verbose_name=_("group"), max_length=30, null=True, blank=True)
+
     name = models.CharField(verbose_name=_("name"), max_length=255)
     code = models.CharField(verbose_name=_("code"), max_length=20, null=True, blank=True)
     parent = TreeForeignKey('self', verbose_name=_("parent"), null=True, blank=True, related_name='children',
@@ -51,19 +53,27 @@ class BudgetAccount(MPTTModel, DirtyFieldsMixin):
     @classmethod
     def get_model_name(cls):
         """
-        Return model name ('function' or 'agency')
+        Return model name
         :return: string
         """
         return cls._meta.model_name
 
     @classmethod
-    def get_taxonomy(cls, level=0):
-        if not getattr(cls, 'TAXONOMY_LEVELS', None):
+    def get_model_label(cls):
+        """
+        Return model verbose name
+        :return: string
+        """
+        return cls._meta.verbose_name
+
+    @classmethod
+    def get_taxonomy(cls, group, level=0):
+        if not getattr(cls, 'TAXONOMY_LEVELS_BY_GROUP', None):
             raise cls.TaxonomyLevelsNotSet()
-        return cls.TAXONOMY_LEVELS[level]
+        return cls.TAXONOMY_LEVELS_BY_GROUP[group][level]
 
     def get_taxonomy_label(self):
-        return self.get_taxonomy(self.level)
+        return self.get_taxonomy(group=self.group, level=self.level)
 
     def get_hierarchy_name(self):
         name = self.name

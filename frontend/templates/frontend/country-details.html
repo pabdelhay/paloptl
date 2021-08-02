@@ -13,6 +13,7 @@
     var current_budget_id = last_budget_id;
     var current_budget_account = '{{ default_budget_account }}';
     var current_budget_account_id = null;
+    var current_group = '{{ default_group }}';
     var current_budget_data = null;
     var budgets = {{ budgets_serialized|safe }};
     var skip_cache = {% if request.GET.no_cache %}true{% else %}false{% endif %};
@@ -21,22 +22,30 @@
         {'name': {{ last_budget.year }}, 'id': null},
     ];
     var budget_account_label_map = {
-        'agencies': "Órgão",
-        'functions': "Função",
+        'expenses': "Despesas",
+        'revenues': "Receitas",
     }
-    var sub_budget_account_label_map = {
-        'agencies': "Unidade Orçamentária",
-        'functions': "Sub-função",
+    var group_label_map = {
+        'organic': "Órgão",
+        'functional': "Função",
+        'nature': "Natureza",
+        'source': "Fonte",
+    }
+    var sub_group_label_map = {
+        'organic': "Unidade Orçamentária",
+        'functional': "Sub-função",
+        'nature': "Natureza sub-grupo",
+        'source': "Fonte sub-grupo",
     }
     am4core.useTheme(am4themes_animated);
 
 
-    function get_label(level, budget_account){
-        var label_map = budget_account_label_map
+    function get_group_label(level, group){
+        var label_map = group_label_map
         if(level == 1){
-            label_map = sub_budget_account_label_map;
+            label_map = sub_group_label_map;
         }
-        return label_map[budget_account];
+        return label_map[group];
     }
     function get_budget_basic_info(budget_id, callback){
         var url = url = '/api/budgets/' + budget_id + '/';
@@ -46,11 +55,11 @@
             console.log("Error on fetching budget basic info.");
         });
     }
-    function get_budget_data(budget_id, budget_account, callback){
-        var url = MEDIA_URL + 'budgets/{{ country.slug }}_' + budget_account + '_' + get_budget_year_by_id(budget_id) + '.json'
+    function get_budget_data(budget_id, budget_account, group, callback){
+        var url = MEDIA_URL + 'budgets/{{ country.slug }}_' + budget_account + '_' + group + '_' + get_budget_year_by_id(budget_id) + '.json'
         if(skip_cache){
             // If skip_cache, retrieve data from api.
-            url = '/api/budgets/' + budget_id + '/' + budget_account + '/';
+            url = '/api/budgets/' + budget_id + '/' + budget_account + '/?group=' + group;
         }
 
         $.get(url, function (data) {
@@ -59,8 +68,9 @@
             console.log("Error on fetching budget data.");
         });
     }
-    function get_historical_data(budget_id, budget_account, budget_account_id, callback){
+    function get_historical_data(budget_id, budget_account, budget_account_id, group, callback){
         var params = {
+            group: group,
             budget_account: budget_account,
             budget_account_id: budget_account_id
         }
@@ -99,24 +109,27 @@
             data = get_budget_account_aggregated_data(current_budget_data);
         } else {
             // Get label on front to prevent caching i18n labels.
-            data['label'] = get_label(data['level'], current_budget_account);
+            data['label'] = get_group_label(data['level'], current_group);
         }
         current_budget_account_id = data['id'];
 
-        var execution_percentage = data['execution_aggregated'] / data['budget_aggregated'];
         var execution_group = 0;
-        if(0 < execution_percentage && execution_percentage <= 0.2)
-            execution_group = 1;
-        else if(0.2 < execution_percentage && execution_percentage <= 0.4)
-            execution_group = 2;
-        else if(0.4 < execution_percentage && execution_percentage <= 0.6)
-            execution_group = 3;
-        else if(0.6 < execution_percentage && execution_percentage <= 0.8)
-            execution_group = 4;
-        else if(0.8 < execution_percentage)
-            execution_group = 5;
-        data['execution_group'] = execution_group;
+        var execution_percentage = 0;
+        if(data['execution_aggregated']){
+            var execution_percentage = data['execution_aggregated'] / data['budget_aggregated'];
+            if(0 < execution_percentage && execution_percentage <= 0.2)
+                execution_group = 1;
+            else if(0.2 < execution_percentage && execution_percentage <= 0.4)
+                execution_group = 2;
+            else if(0.4 < execution_percentage && execution_percentage <= 0.6)
+                execution_group = 3;
+            else if(0.6 < execution_percentage && execution_percentage <= 0.8)
+                execution_group = 4;
+            else if(0.8 < execution_percentage)
+                execution_group = 5;
+        }
         data['execution_percentage'] = execution_percentage;
+        data['execution_group'] = execution_group;
 
         renderTemplate('#template-budget_account-info', data, '#budget_account-info');
     }
@@ -126,7 +139,8 @@
     }
     function init_breadcrumb(plot=false){
         breadcrumb = []
-        breadcrumb.push({name: "Visualização por " + budget_account_label_map[current_budget_account], id: null});
+        breadcrumb.push({name: budget_account_label_map[current_budget_account], id: null});
+        breadcrumb.push({name: "Por " + group_label_map[current_group], id: null});
         breadcrumb.push({name: get_budget_year_by_id(current_budget_id), id: null});
         if(plot){
             plot_breadcrumb();
@@ -293,15 +307,16 @@
             return series;
         }
         chart.data = data['data'];
-        $('.historical-title').html("Despesas de<br>" + data['name']);
+        budget_account_label = get_current_budget_account_label();
+        $('.historical-title').html(budget_account_label + " de<br>" + data['name']);
         createSeries('budget_aggregated', 'Dotação');
         createSeries('execution_aggregated', 'Execução');
     }
 
     function plot_datatable(data){
         var template_data = {
-            'budget_account_label': budget_account_label_map[current_budget_account],
-            'sub_budget_account_label': sub_budget_account_label_map[current_budget_account],
+            'group_label': group_label_map[current_group],
+            'sub_group_label': sub_group_label_map[current_group],
             'budget_accounts': data
         }
         renderTemplate('#template-budget_account-table', template_data, '#datatable-info');
@@ -316,15 +331,25 @@
         init_breadcrumb(true);
         get_historical_and_plot_view();
     }
-    function get_budget_and_plot_views(budget_id, budget_account){
+    function get_budget_and_plot_views(budget_id, budget_account, group){
         get_budget_basic_info(budget_id, function (data) {
             $('.budget-currency').html(data['currency_display']);
             $('.download-link').attr('href', data['output_file']);
         });
         current_budget_account = budget_account;
         current_budget_id = budget_id;
+        current_group = group;
 
-        get_budget_data(budget_id, budget_account, function(data){
+        $('.budget-account-selector a').removeClass('active');
+        $('.budget-account-selector a[data-budget_account="'+budget_account+'"]').addClass('active');
+        $('.group-selector a').hide();
+        $('.group-selector .'+ budget_account +'-group').show();
+        $('.budget-selector a').removeClass('active');
+        $('.budget-selector a[data-budget_id="'+budget_id+'"]').addClass('active');
+        $('.group-selector a').removeClass('active');
+        $('.group-selector a[data-group="'+group+'"]').addClass('active');
+
+        get_budget_data(budget_id, budget_account, group, function(data){
             current_budget_data = data;
             init_views(current_budget_data);
 
@@ -332,41 +357,93 @@
         });
     }
     function inactive_budget_accounts_without_data(){
-        // Inactive budget_accounts without data.
+        // Inactive budget_accounts and groups without data and toggle closest with data.
+        $('.group-selector a').removeClass('inactive').attr('title', "");
         $('.budget-account-selector a').removeClass('inactive').attr('title', "");
         var budget_data = budgets[current_budget_id];
-        if(!budget_data['function_budget']){
-            $('.budget-account-selector .function-budget').addClass('inactive').attr('title', "Dados funcionais não disponíveis");
-            // Automatically calls other budget_account
-            if(current_budget_account == 'functions' && budget_data['agency_budget']){
-                toggle_budget_account('agencies');
+        var budget_account_map = {
+            'expenses': {
+                msg: "Dados de despesas não disponíveis neste ano",
+                sibling: 'revenues',
+                groups: {
+                    'expense_functional_budget': {
+                        group_id: 'functional',
+                        msg: "Dados funcionais não disponíveis",
+                        sibling: 'expense_organic_budget'
+                    },
+                    'expense_organic_budget': {
+                        group_id: 'organic',
+                        msg: "Dados orgânicos não disponíveis",
+                        sibling: 'expense_functional_budget'
+                    }
+                }
+            },
+            'revenues': {
+                msg: "Dados de receitas não disponíveis neste ano",
+                sibling: 'expenses',
+                groups: {
+                    'revenue_nature_budget': {
+                        group_id: 'nature',
+                        msg: "Dados por natureza não disponíveis",
+                        sibling: 'revenue_source_budget'
+                    },
+                    'revenue_source_budget': {
+                        group_id: 'source',
+                        msg: "Dados por fonte não disponíveis",
+                        sibling: 'revenue_nature_budget'
+                    }
+                }
             }
         }
-        if(!budget_data['agency_budget']){
-            $('.budget-account-selector .agency-budget').addClass('inactive').attr('title', "Dados orgânicos não disponíveis");
-            // Automatically calls other budget_account
-            if(current_budget_account == 'agencies' && budget_data['function_budget']){
-                toggle_budget_account('functions');
+        Object.entries(budget_account_map).forEach(([budget_account, ba_values]) => {
+            let ba_groups = Object.keys(ba_values.groups);
+            if(!budget_data[ba_groups[0]] && !budget_data[ba_groups[1]]){
+                // No data for budget_account.
+                $('.budget-account-selector [data-budget_account="'+budget_account+'"]').addClass('inactive').attr('title', ba_values['msg']);
+                if(current_budget_account == budget_account){
+                    toggle_budget_account(ba_values.sibling);
+                    return;
+                }
             }
-        }
+            Object.entries(ba_values.groups).forEach(([group, group_values]) => {
+                let group_id = group_values.group_id;  // functional, organic, nature, source
+                if(!budget_data[group]){
+                    $('.group-selector [data-group="'+group_id+'"]').addClass('inactive').attr('title', group_values['msg']);
+                    if(current_group == group_id){
+                        toggle_group(ba_values.groups[group_values.sibling].group_id);
+                        return;
+                    }
+                }
+            });
+        });
     }
     function get_historical_and_plot_view(){
-        get_historical_data(current_budget_id, current_budget_account, current_budget_account_id, function(data){
+        get_historical_data(current_budget_id, current_budget_account, current_budget_account_id, current_group, function(data){
             plot_historical(data);
         });
     }
+    function get_budget_account_default_group(budget_account){
+        var map = {
+            'expenses': 'functional',
+            'revenues': 'nature'
+        }
+        return map[budget_account]
+    }
     function toggle_budget_account(budget_account){
-        get_budget_and_plot_views(current_budget_id, budget_account);
-        $('.budget-account-selector a').removeClass('active');
-        $('.budget-account-selector a[data-budget_account="'+budget_account+'"]').addClass('active');
+        var group = get_budget_account_default_group(budget_account)
+        get_budget_and_plot_views(current_budget_id, budget_account, group);
     }
     function toggle_budget(budget_id){
-        get_budget_and_plot_views(budget_id, current_budget_account);
-        $('.budget-selector a').removeClass('active');
-        $('.budget-selector a[data-budget_id="'+budget_id+'"]').addClass('active');
+        get_budget_and_plot_views(budget_id, current_budget_account, current_group);
+    }
+    function toggle_group(group){
+        get_budget_and_plot_views(current_budget_id, current_budget_account, group);
     }
     function get_budget_year_by_id(budget_id){
         return $('.budget-selector a[data-budget_id="'+budget_id+'"]').html();
+    }
+    function get_current_budget_account_label(){
+        return budget_account_label_map[current_budget_account]
     }
 
     function toggle_datatable_row(category_id){
@@ -434,20 +511,29 @@
 
     $(document).ready(function () {
         // Binds
-        $('.budget-account-selector a').on('click', function (ev) {
+        $('.budget-account-selector-row a').on('click', function (ev) {
+            ev.preventDefault();
+        });
+        $(document).on('click', '.budget-account-selector a:not(".inactive")', function (ev) {
             ev.preventDefault();
             var budget_account = $(this).data('budget_account');
             toggle_budget_account(budget_account);
         });
-        $('.budget-selector a').on('click', function (ev) {
+        $(document).on('click', '.group-selector a:not(".inactive")', function (ev) {
+            ev.preventDefault();
+            var group = $(this).data('group');
+            toggle_group(group);
+        });
+        $(document).on('click', '.budget-selector a:not(".inactive")', function (ev) {
             ev.preventDefault();
             var budget_id = $(this).data('budget_id');
             toggle_budget(budget_id);
         });
+
         $(document).on('click', '.breadcrumb-link', function(ev){
             ev.preventDefault();
             var breadcrumb_index = parseInt($(this).data('breadcrumb_idx'));
-            if(breadcrumb_index <= 1){
+            if(breadcrumb_index <= 2){
                 init_views(current_budget_data);
             } else {
                 go_to_category(breadcrumb[breadcrumb_index].id);
@@ -496,7 +582,7 @@
             <div class="col-10">
                 <h3>
                     <span class="arrow-right"></span>
-                    DADOS ORÇAMENTÁRIOS
+                    DADOS ORÇAMENTAIS
                 </h3>
                 <div class="header-currency">
                     Todos os valores em <strong class="budget-currency">{{ last_budget.get_currency_display }}</strong>
@@ -546,16 +632,12 @@
                 <div class="col-6">
                     <h2><span class="arrow"></span>TRANSPARÊNCIA</h2>
                     <div>
-                        Lorem ipsum dolor sit amet,
-                        consectetuer adipiscing elit, sed
-                        diam nonummy nibh euismod
-                        tincidunt ut la metodologia
-                        aliquam erat consequat. Duis vel
-                        eum iriure dolor in hendrerit in
-                        vulputate velit esse molestie
-                        consequat, vel illum dolore eu
-                        feugiat nulla facilisis at vero nulla
-                        facilisi autem vel eum.
+                        Nossa missão é ampliar a transparência dos PALOP-TL
+                        aplicando tecnologia e inovação para derrubar barreiras
+                        e incluir mais cidadãos no debate público.
+                        <br></br>
+                        Nós encorajamos o uso das informações disponibilizadas
+                        em outros projetos e estudos.
                     </div>
                 </div>
                 <div class="col-5 img-wrapper">
@@ -579,15 +661,15 @@
             <table class="primary-info" cellspacing="0" cellpadding="0">
                 <tr>
                     <td>Dotação inicial</td>
-                    <td>{{formatCurrency initial_budget_aggregated}}</td>
+                    <td class="money-display">{{formatCurrency initial_budget_aggregated}}</td>
                 </tr>
                 <tr>
                     <td>Dotação atualizada</td>
-                    <td>{{formatCurrency budget_aggregated}}</td>
+                    <td class="money-display">{{formatCurrency budget_aggregated}}</td>
                 </tr>
                 <tr class="execution-aggregated">
                     <td>Execução</td>
-                    <td>
+                    <td class="money-display">
                         {{#if execution_aggregated}}
                             {{formatCurrency execution_aggregated}}
                         {{else}}
@@ -599,35 +681,37 @@
         </div>
         <div>
             <table class="treemap-legend-table execution-group-{{ execution_group }}">
-                <tr class="group-1">
-                    <td>20%</td>
-                    <td><div class="treemap-legend">&nbsp;</div></td>
-                    <td><div class="execution-group-indicator"></div></td>
-                    <td><div class="execution-percentage">{{formatPercent execution_percentage}} executado</div></td>
+                <tr class="legend-square">
+                    <td class="group-0"><div class="treemap-legend">&nbsp;</div></td>
+                    <td class="group-1"><div class="treemap-legend">&nbsp;</div></td>
+                    <td class="group-2"><div class="treemap-legend">&nbsp;</div></td>
+                    <td class="group-3"><div class="treemap-legend">&nbsp;</div></td>
+                    <td class="group-4"><div class="treemap-legend">&nbsp;</div></td>
+                    <td class="group-5"><div class="treemap-legend">&nbsp;</div></td>
                 </tr>
-                <tr class="group-2">
-                    <td>40%</td>
-                    <td><div class="treemap-legend">&nbsp;</div></td>
-                    <td><div class="execution-group-indicator"></div></td>
-                    <td><div class="execution-percentage">{{formatPercent execution_percentage}} executado</div></td>
+                <tr>
+                    <td class="group-0">N/A</td>
+                    <td class="group-1">0-20%</td>
+                    <td class="group-2">20-40%</td>
+                    <td class="group-3">40-60%</td>
+                    <td class="group-4">60-80%</td>
+                    <td class="group-5">80-100%</td>
                 </tr>
-                <tr class="group-3">
-                    <td>60%</td>
-                    <td><div class="treemap-legend">&nbsp;</div></td>
-                    <td><div class="execution-group-indicator"></div></td>
-                    <td><div class="execution-percentage">{{formatPercent execution_percentage}} executado</div></td>
+                <tr>
+                    <td class="group-0"><div class="execution-group-indicator"></div></td>
+                    <td class="group-1"><div class="execution-group-indicator"></div></td>
+                    <td class="group-2"><div class="execution-group-indicator"></div></td>
+                    <td class="group-3"><div class="execution-group-indicator"></div></td>
+                    <td class="group-4"><div class="execution-group-indicator"></div></td>
+                    <td class="group-5"><div class="execution-group-indicator"></div></td>
                 </tr>
-                <tr class="group-4">
-                    <td>80%</td>
-                    <td><div class="treemap-legend">&nbsp;</div></td>
-                    <td><div class="execution-group-indicator"></div></td>
-                    <td><div class="execution-percentage">{{formatPercent execution_percentage}} executado</div></td>
-                </tr>
-                <tr class="group-5">
-                    <td>100%</td>
-                    <td><div class="treemap-legend">&nbsp;</div></td>
-                    <td><div class="execution-group-indicator"></div></td>
-                    <td><div class="execution-percentage">{{formatPercent execution_percentage}} executado</div></td>
+                <tr>
+                    <td class="group-0"><div class="execution-percentage">Execução não informada</div></td>
+                    <td class="group-1"><div class="execution-percentage"><strong>{{formatPercent execution_percentage}}</strong><br>executado</div></td>
+                    <td class="group-2"><div class="execution-percentage"><strong>{{formatPercent execution_percentage}}</strong><br>executado</div></td>
+                    <td class="group-3"><div class="execution-percentage"><strong>{{formatPercent execution_percentage}}</strong><br>executado</div></td>
+                    <td class="group-4"><div class="execution-percentage"><strong>{{formatPercent execution_percentage}}</strong><br>executado</div></td>
+                    <td class="group-5"><div class="execution-percentage"><strong>{{formatPercent execution_percentage}}</strong><br>executado</div></td>
                 </tr>
             </table>
         </div>
@@ -645,22 +729,22 @@
             </tr>
             <tr>
                 <td>Dotação</td>
-                <td>{{formatCurrency budget_investment}}</td>
+                <td class="money-display">{{formatCurrency budget_investment}}</td>
             </tr>
             <tr>
                 <td>Execução</td>
-                <td>{{formatCurrency execution_investment}}</td>
+                <td class="money-display">{{formatCurrency execution_investment}}</td>
             </tr>
             <tr>
                 <td colspan="2" class="info-title">Em Funcionamento</td>
             </tr>
             <tr>
                 <td>Dotação</td>
-                <td>{{formatCurrency budget_operation}}</td>
+                <td class="money-display">{{formatCurrency budget_operation}}</td>
             </tr>
             <tr>
                 <td>Execução</td>
-                <td>{{formatCurrency execution_operation}}</td>
+                <td class="money-display">{{formatCurrency execution_operation}}</td>
             </tr>
         </table>
     </div>
@@ -671,7 +755,7 @@
 <table class="datatable-info" cellpadding="0" cellspacing="0">
     <thead>
         <tr>
-            <th>{{ budget_account_label }} / {{ sub_budget_account_label }}</th>
+            <th>{{ group_label }} / {{ sub_group_label }}</th>
             <th class="vertical-separator"></th>
             <th>Dotação</th>
             <th>Execução</th>
@@ -738,24 +822,24 @@
     <table>
         <tr>
             <td>Dotação</td>
-            <td>{{formatCurrency budget_aggregated}}</td>
+            <td class="money-display">{{formatCurrency budget_aggregated}}</td>
         </tr>
         {{#if budget_investment}}
         <tr class="secondary-info">
             <td>de investimento</td>
-            <td>{{formatCurrency budget_investment}}</td>
+            <td class="money-display">{{formatCurrency budget_investment}}</td>
         </tr>
         {{/if}}
         {{#if budget_operation}}
         <tr class="secondary-info">
             <td>de operação</td>
-            <td>{{formatCurrency budget_operation}}</td>
+            <td class="money-display">{{formatCurrency budget_operation}}</td>
         </tr>
         {{/if}}
         <tr>
             <td>Execução</td>
             {{#if execution_aggregated}}
-            <td>
+            <td class="money-display">
                 {{formatCurrency execution_aggregated}}
                 <span class="execution_percent">({{formatPercent execution_percentage}})</span>
             </td>
@@ -766,13 +850,13 @@
         {{#if execution_investment}}
         <tr class="secondary-info">
             <td>de investimento</td>
-            <td>{{formatCurrency execution_investment}}</td>
+            <td class="money-display">{{formatCurrency execution_investment}}</td>
         </tr>
         {{/if}}
         {{#if execution_operation}}
         <tr class="secondary-info">
             <td>de operação</td>
-            <td>{{formatCurrency execution_operation}}</td>
+            <td class="money-display">{{formatCurrency execution_operation}}</td>
         </tr>
         {{/if}}
     </table>

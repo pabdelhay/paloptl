@@ -34,13 +34,11 @@
         <div class="header">
             <div class="container">
                 <div class="row upper-row middle">
-                    <div class="col-3">
-                        <img src="{% static 'img/logo_propalop.gif' %}" alt="Logo Pro PALOP-TL ISC" />
+                    <div class="col-8 logos">
+                        <img src="{% static 'img/logo-propaloptl-pt.png' %}" class="logo-propaloptl" alt="Logo Pro PALOP-TL ISC" />
+                        <img src="{% static 'img/logo-paloptl-ue.png' %}" class="logo-ue" alt="Logo PALOP-TL UE" />
                     </div>
-                    <div class="col-3">
-                        <img src="{% static 'img/logo_paloptl_ue.gif' %}" alt="Logo PALOP-TL UE" />
-                    </div>
-                    <div class="col-6 right">
+                    <div class="col-4 right">
                         {% include 'frontend/language-selector.component.html' %}
                     </div>
                 </div>
@@ -49,7 +47,12 @@
             <div class="container">
                 <div class="row bottom-row middle">
                     <div class="col-11">
-                        <h1><a href="{% url 'index' %}">PALOP-TL eBudget Platform</a></h1>
+                        <h1>
+                            <a href="{% url 'index' %}">
+                                Plataforma Orçamental Online<br>
+                                da Sociedade Civil dos PALOP-TL
+                            </a>
+                        </h1>
                     </div>
                     <div class="col-1 right">
                         <div class="menu">
@@ -92,26 +95,31 @@
                 </div>
 
                 <div class="row sponsors">
-                    <div class="col-8 first-col">
-                        <div class="row upper-row middle">
-                            <div class="col-5 ml-0">
-                                <img src="{% static 'img/logo_propalop.gif' %}" alt="Logo Pro PALOP-TL ISC"/>
+                    <div class="col-7 first-col">
+                        <div class="row upper-row middle logos">
+                            <div class="col-6 ml-0">
+                                <img src="{% static 'img/logo-propaloptl-pt.png' %}" class="logo-propaloptl" alt="Logo Pro PALOP-TL ISC" />
                             </div>
-                            <div class="col-5">
-                                <img src="{% static 'img/logo_paloptl_ue.gif' %}" alt="Logo PALOP-TL UE"/>
+                            <div class="col-6">
+                                <img src="{% static 'img/logo-paloptl-ue.png' %}" class="logo-ue" alt="Logo PALOP-TL UE" />
                             </div>
                         </div>
                         <div class="row bottom-row middle">
                             <div class="col-5 ml-0">
-                                <img src="{% static 'img/bottom_img_1.gif' %}" />
-                                <img src="{% static 'img/bottom_img_2.gif' %}" />
-                                <img src="{% static 'img/bottom_img_3.gif' %}" />
-                                <img src="{% static 'img/bottom_img_4.gif' %}" />
+                                <img class="logos-ods" src="{% static 'img/logos_ods.png' %}" />
                             </div>
-                            <div class="col-7">
-                                O Pro PALOP-TL ISC (FASE II) é co-financiado pela União Europeia.<br>
-                                A ação enquadra-se nos esforços #TeamEurope da União Europeia em resposta à COVID-19.
-                            </div>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="disclaimer">
+                        A Plataforma Online das Organizações da Sociedade Civil dos PALOP e Timor-Leste para
+                        Simplificação e Análise Orçamental foi produzida pelo Pro PALOP-TL ISC, e cofinanciada
+                        pela União Europeia e pelo Programa das Nações Unidas para o Desenvolvimento.<br>
+                        O seu conteúdo é da exclusiva responsabilidade do Pro PALOP-TL ISC e não pode, de modo
+                        algum, ser usado para refletir as posições da União Europeia.<br>
+                        As opiniões expressas nesta plataforma são exclusivas dos/as autoras/es e não
+                        representam necessariamente a opinião das Nações Unidas, nem do Programa das Nações
+                        Unidas para o Desenvolvimento ou dos Estados Membros das Nações Unidas.
                         </div>
                     </div>
                 </div>
