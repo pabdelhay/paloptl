@@ -17,6 +17,10 @@ class Command(BaseCommand):
             base_qs = budget_account_class.objects.all().select_related('budget')
             if budget_id:
                 base_qs = base_qs.filter(budget_id=budget_id)
+            migrated_ids = Expense.objects.filter(group=group,
+                                                  content_type__model=budget_account_class._meta.model_name)\
+                .values_list('object_id', flat=True)
+            base_qs = base_qs.exclude(id__in=migrated_ids)
 
             for ba in base_qs.order_by('level'):
                 with transaction.atomic():
