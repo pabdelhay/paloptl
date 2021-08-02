@@ -57,6 +57,26 @@ h4 {
   text-transform: uppercase;
 }
 
+.loading {
+  position: absolute;
+  width: 200px;
+  margin-left: -100px;
+  margin-top: -40px;
+  left: 50%;
+  border-radius: 9px;
+  text-align: center;
+  top: 50%;
+  z-index: 999;
+  background-color: #f1f2f3;
+  padding-top: 10px;
+  color: gray;
+  box-shadow: -1px 3px 7px 0px #c3c3c3;
+  display: none;
+}
+.loading img {
+  width: 40px;
+}
+
 a.download-link {
   font-size: 12px;
   border-radius: 10px;
@@ -642,6 +662,9 @@ h3 .arrow {
   width: 40px;
   padding: 4px 10px;
 }
+.page-country-detail .breadcrumb-row .budget-account-selector-row .budget-selector a:last-child {
+  border-right: 0;
+}
 .page-country-detail .breadcrumb-row .budget-account-selector-row .visualization-selector {
   margin-left: -10px;
 }
@@ -659,8 +682,10 @@ h3 .arrow {
   background: none !important;
   color: #6b6b6b;
 }
-.page-country-detail .treemap-wrapper {
+.page-country-detail .viz-wrapper {
   position: relative;
+}
+.page-country-detail .treemap-wrapper {
   top: -24px;
   margin-bottom: 40px;
 }

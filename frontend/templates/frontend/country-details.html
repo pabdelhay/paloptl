@@ -39,6 +39,17 @@
     }
     am4core.useTheme(am4themes_animated);
 
+    function loading(show=true, wrapper_selector=null){
+        var $loading_wrap = $('.loading');
+        if(wrapper_selector){
+            $loading_wrap = $(wrapper_selector).find('.loading');
+        }
+        if(show){
+            $loading_wrap.fadeIn();
+        } else {
+            $loading_wrap.fadeOut();
+        }
+    }
 
     function get_group_label(level, group){
         var label_map = group_label_map
@@ -325,13 +336,18 @@
     function init_views(budget_data){
         current_budget_account_id = null;
 
+        init_breadcrumb(true);
         plot_treemap(budget_data);
         plot_budget_account_info();
+        loading(false, '.treemap-wrapper');
         plot_datatable(budget_data);
-        init_breadcrumb(true);
+        loading(false, '.datatable-wrapper');
         get_historical_and_plot_view();
+        loading(false, '.historical-wrapper');
     }
     function get_budget_and_plot_views(budget_id, budget_account, group){
+        loading(true);
+
         get_budget_basic_info(budget_id, function (data) {
             $('.budget-currency').html(data['currency_display']);
             $('.download-link').attr('href', data['output_file']);
@@ -592,7 +608,8 @@
     </div>
 
     {% include 'frontend/budget-selector.component.html' with visualization='treemap' hide_currency=True %}
-    <div class="treemap-wrapper">
+    <div class="treemap-wrapper viz-wrapper">
+        <div class="loading">Carregando dados<br><img src="{% static 'img/loading-front.gif' %}" /></div>
         <div class="row">
             <div class="col-3 budget_account-info-wrapper">
                 <div id="budget_account-info"></div>
@@ -604,7 +621,8 @@
     </div>
 
     {% include 'frontend/budget-selector.component.html' with visualization='history' %}
-    <div class="historical-wrapper">
+    <div class="historical-wrapper viz-wrapper">
+        <div class="loading">Carregando dados<br><img src="{% static 'img/loading-front.gif' %}" /></div>
         <h4 class="historical-title"></h4>
         <div class="container">
             <div class="row">
@@ -616,7 +634,8 @@
     </div>
 
     {% include 'frontend/budget-selector.component.html' with visualization='list' show_export=True %}
-    <div class="datatable-wrapper">
+    <div class="datatable-wrapper viz-wrapper">
+        <div class="loading">Carregando dados<br><img src="{% static 'img/loading-front.gif' %}" /></div>
         <div class="container">
             <div class="row">
                 <div class="col-12">
