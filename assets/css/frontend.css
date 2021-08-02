@@ -1004,7 +1004,23 @@ h3 .arrow {
   border-left: 6px solid #FFFFFF;
 }
 .page-country-detail .datatable-wrapper table.datatable-info tbody tr td .arrow {
+  float: left;
   margin-left: -5px;
+  font-size: 20px;
+  width: 16px;
+}
+.page-country-detail .datatable-wrapper table.datatable-info tbody tr td .arrow.no-children {
+  font-size: 9px;
+  margin-left: 0;
+  margin-right: -5px;
+  margin-top: 6px;
+}
+.page-country-detail .datatable-wrapper table.datatable-info tbody tr td .category-name {
+  float: left;
+  width: 90%;
+  position: relative;
+  top: 2px;
+  left: 7px;
 }
 .page-country-detail .datatable-wrapper table.datatable-info tbody tr td .expand-visualization {
   cursor: pointer;

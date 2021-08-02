@@ -983,7 +983,23 @@ h3 {
               border-left: $datatable_spacing solid #FFFFFF;
             }
             .arrow {
+              float: left;
               margin-left: -5px;
+              font-size: 20px;
+              width: 16px;
+              &.no-children {
+                font-size: 9px;
+                margin-left: 0;
+                margin-right: -5px;
+                margin-top: 6px;
+              }
+            }
+            .category-name {
+              float: left;
+              width: 90%;
+              position: relative;
+              top: 2px;
+              left: 7px;
             }
             .expand-visualization {
               cursor: pointer;
