@@ -1,6 +1,7 @@
 from admin_honeypot.models import LoginAttempt
 from django.contrib import admin, messages
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 from django_admin_inline_paginator.admin import TabularInlinePaginated
@@ -20,8 +21,8 @@ admin.site.unregister(LoginAttempt)
 class UploadInline(admin.TabularInline):
     model = Upload
     extra = 1
-    fields = ('file', 'report', 'status', 'get_log', 'uploaded_by', 'uploaded_on')
-    readonly_fields = ('status', 'uploaded_by', 'uploaded_on', 'get_log')
+    fields = ('file', 'report', 'status', 'get_log', 'uploaded_by', 'updated_on')
+    readonly_fields = ('status', 'uploaded_by', 'updated_on', 'get_log')
 
     @mark_safe
     def get_log(self, obj):
@@ -190,6 +191,10 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
             if is_new:
                 instance.uploaded_by = request.user
                 instance.status = UploadStatusChoices.VALIDATING
+            elif 'file' in instance.get_dirty_fields():
+                instance.uploaded_by = request.user
+                instance.updated_on = timezone.now()
+                instance.status = UploadStatusChoices.WAITING_REIMPORT
             instance.save()
             if is_new:
                 request.session['upload_in_progress'] = instance.id
