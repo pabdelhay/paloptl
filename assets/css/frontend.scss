@@ -196,7 +196,7 @@ h3 {
   h1 {
     padding: 36px 0 ;
     margin: 0;
-    line-height: 52px;
+    line-height: 62px;
     a {
       color: #0f2843;
       text-decoration: none;
@@ -700,23 +700,31 @@ h3 {
       color: #FFF;
       max-width: 500px;
 
-      h5 { color: #FFF; margin: 0; text-align: left; font-size: 18px; padding-bottom: 6px; }
+      h5 {
+        color: #FFF;
+        margin: 0;
+        text-align: left;
+        font-size: 18px;
+        padding-bottom: 6px;
+        max-width: 450px;
+        line-height: 22px;
+      }
       table {
         width: 400px;
         td {
           &.money-display {
-            text-align: left;
+            text-align: right;
           }
           &:first-child {
-            text-align: right;
+            text-align: left;
             padding-right: 5px;
           }
-          &:last-child {
+          &:nth-child(2) {
             padding-left: 5px;
             font-weight: bold;
             &.no-value {
               font-weight: normal;
-              font-style: italic;
+              text-align: right;
             }
           }
         }
@@ -890,7 +898,7 @@ h3 {
           padding-bottom: 5px;
           &:first-child { width: 40%; }
           &:last-child { font-weight: bold; }
-          &.info-title { font-style: italic; font-weight: normal; }
+          &.info-title { font-weight: bold; }
         }
       }
     }

@@ -195,7 +195,7 @@ h3 .arrow {
 .header h1 {
   padding: 36px 0;
   margin: 0;
-  line-height: 52px;
+  line-height: 62px;
 }
 .header h1 a {
   color: #0f2843;
@@ -700,24 +700,26 @@ h3 .arrow {
   text-align: left;
   font-size: 18px;
   padding-bottom: 6px;
+  max-width: 450px;
+  line-height: 22px;
 }
 .page-country-detail .treemap-wrapper .treemap-tooltip table {
   width: 400px;
 }
 .page-country-detail .treemap-wrapper .treemap-tooltip table td.money-display {
-  text-align: left;
+  text-align: right;
 }
 .page-country-detail .treemap-wrapper .treemap-tooltip table td:first-child {
-  text-align: right;
+  text-align: left;
   padding-right: 5px;
 }
-.page-country-detail .treemap-wrapper .treemap-tooltip table td:last-child {
+.page-country-detail .treemap-wrapper .treemap-tooltip table td:nth-child(2) {
   padding-left: 5px;
   font-weight: bold;
 }
-.page-country-detail .treemap-wrapper .treemap-tooltip table td:last-child.no-value {
+.page-country-detail .treemap-wrapper .treemap-tooltip table td:nth-child(2).no-value {
   font-weight: normal;
-  font-style: italic;
+  text-align: right;
 }
 .page-country-detail .treemap-wrapper .treemap-tooltip table tr.secondary-info td {
   color: #f1f1f1;
@@ -914,8 +916,7 @@ h3 .arrow {
   font-weight: bold;
 }
 .page-country-detail .treemap-wrapper .budget_account-info table.secondary-info td.info-title {
-  font-style: italic;
-  font-weight: normal;
+  font-weight: bold;
 }
 .page-country-detail .historical-wrapper {
   margin-top: 60px;

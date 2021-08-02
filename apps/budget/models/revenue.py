@@ -10,11 +10,11 @@ class Revenue(BudgetAccount):
     TAXONOMY_LEVELS_BY_GROUP = {
         RevenueGroupChoices.NATURE: [
             _("nature"),
-            _("nature sub-group")
+            _("specification")
         ],
         RevenueGroupChoices.SOURCE: [
             _("source"),
-            _("source sub-group")
+            _("source (sub)")
         ]
     }
 

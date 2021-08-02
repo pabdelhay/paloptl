@@ -34,8 +34,8 @@
     var sub_group_label_map = {
         'organic': "Unidade Orçamentária",
         'functional': "Sub-função",
-        'nature': "Natureza sub-grupo",
-        'source': "Fonte sub-grupo",
+        'nature': "Especificação",
+        'source': "Fonte (sub)",
     }
     am4core.useTheme(am4themes_animated);
 
@@ -141,6 +141,7 @@
         }
         data['execution_percentage'] = execution_percentage;
         data['execution_group'] = execution_group;
+        data['budget_account_label'] = budget_account_label_map[current_budget_account];
 
         renderTemplate('#template-budget_account-info', data, '#budget_account-info');
     }
@@ -258,8 +259,7 @@
     }
 
     function plot_historical(data){
-        var chart = am4core.create('historical-info', am4charts.XYChart)
-        chart.colors.step = 2;
+        var chart = am4core.create('historical-info', am4charts.XYChart);
         chart.zoomOutButton.disabled = true;
         chart.numberFormatter.bigNumberPrefixes = [
             {"number": 1e+3, "suffix": "K"},
@@ -273,16 +273,20 @@
         ]
 
         chart.paddingTop = 50;
+        chart.maskBullets = false;  // allow bullets to go out of plot area
+        chart.colors.step = 2;
+        chart.colors.list = [
+            am4core.color("#0f69a3"),
+            am4core.color("#98ccda"),
+        ];
+
+        // Legend
         chart.legend = new am4charts.Legend();
         chart.legend.position = 'right';
         chart.legend.valign = 'bottom';
         chart.legend.paddingLeft = 150;
         chart.legend.paddingBottom = 30;
         chart.legend.labels.template.maxWidth = 95;
-        chart.colors.list = [
-            am4core.color("#0f69a3"),
-            am4core.color("#98ccda"),
-        ];
 
         var xAxis = chart.xAxes.push(new am4charts.CategoryAxis())
         xAxis.dataFields.category = 'year'
@@ -306,14 +310,14 @@
             series.columns.template.tooltipText = "[{categoryX}: bold]{valueY.formatNumber('#,###')}[/]";
 
             // Label
-            var bullet = series.bullets.push(new am4charts.LabelBullet())
+            var bullet = series.bullets.push(new am4charts.LabelBullet());
             bullet.interactionsEnabled = false;
             bullet.dy = -20;
             bullet.fontSize = 12;
             bullet.label.verticalCenter = 'top';
-            bullet.label.text = "{valueY.formatNumber('#.# a')}"
+            bullet.label.text = "{valueY.formatNumber('#.# a')}";
             bullet.label.fill = am4core.color('#0f2843');
-            //bullet.label.template.wrap = false;
+            bullet.label.truncate = false;
 
             return series;
         }
@@ -744,7 +748,7 @@
     <div class="budget_account-info-box">
         <table class="secondary-info">
             <tr>
-                <td colspan="2" class="info-title">Em Investimento</td>
+                <td colspan="2" class="info-title">{{ budget_account_label }} em Investimento</td>
             </tr>
             <tr>
                 <td>Dotação</td>
@@ -755,7 +759,7 @@
                 <td class="money-display">{{formatCurrency execution_investment}}</td>
             </tr>
             <tr>
-                <td colspan="2" class="info-title">Em Funcionamento</td>
+                <td colspan="2" class="info-title">{{ budget_account_label }} em Funcionamento</td>
             </tr>
             <tr>
                 <td>Dotação</td>
@@ -842,40 +846,44 @@
         <tr>
             <td>Dotação</td>
             <td class="money-display">{{formatCurrency budget_aggregated}}</td>
+            <td></td>
         </tr>
         {{#if budget_investment}}
         <tr class="secondary-info">
-            <td>de investimento</td>
+            <td>em investimento</td>
             <td class="money-display">{{formatCurrency budget_investment}}</td>
+            <td></td>
         </tr>
         {{/if}}
         {{#if budget_operation}}
         <tr class="secondary-info">
-            <td>de operação</td>
+            <td>em operação</td>
             <td class="money-display">{{formatCurrency budget_operation}}</td>
+            <td></td>
         </tr>
         {{/if}}
         <tr>
             <td>Execução</td>
             {{#if execution_aggregated}}
-            <td class="money-display">
-                {{formatCurrency execution_aggregated}}
-                <span class="execution_percent">({{formatPercent execution_percentage}})</span>
-            </td>
+            <td class="money-display">{{formatCurrency execution_aggregated}}</td>
+            <td><span class="execution_percent">({{formatPercent execution_percentage}})</span></td>
             {{else}}
             <td class="no-value">Não informada</td>
+            <td></td>
             {{/if}}
         </tr>
         {{#if execution_investment}}
         <tr class="secondary-info">
-            <td>de investimento</td>
+            <td>em investimento</td>
             <td class="money-display">{{formatCurrency execution_investment}}</td>
+            <td></td>
         </tr>
         {{/if}}
         {{#if execution_operation}}
         <tr class="secondary-info">
-            <td>de operação</td>
+            <td>em operação</td>
             <td class="money-display">{{formatCurrency execution_operation}}</td>
+            <td></td>
         </tr>
         {{/if}}
     </table>
