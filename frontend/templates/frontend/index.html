@@ -138,7 +138,7 @@ $(document).ready(function(){
                                     </th>
                                     <th class="f-dimension sortable" data-dimension="score_data_quality">
                                         Qualidade da Informação<br>
-                                        (0-200)
+                                        (0-300)
                                     </th>
                                     <th class="f-dimension sortable active" data-dimension="transparency_index">
                                         Indicador Geral de Transparência
@@ -160,15 +160,15 @@ $(document).ready(function(){
                         <ul class="links">
                             <li>
                                 Fundamentação do trabalho e Discussão de Resultados do Índice 2020
-                                <a href="#" class="download-link">Download</a>
+                                <a href="#" target="_blank" class="download-link">Download</a>
                             </li>
                             <li>
                                 Questionário e Metodologia de Pontuação do Índice de Transparência Orçamental PALOP-TL
-                                <a href="#" class="download-link">Download</a>
+                                <a href="{% static 'transparency_index_2020.pdf' %}" target="_blank" class="download-link">Download</a>
                             </li>
                             <li>
                                 Resultados Detalhados do Índice PALOP-TL 2020
-                                <a href="#" class="download-link">Download</a>
+                                <a href="{% static 'transparency_index_results_2020.pdf' %}" target="_blank" class="download-link">Download</a>
                             </li>
                         </ul>
                     </div>
