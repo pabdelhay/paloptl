@@ -138,7 +138,7 @@ class Upload(models.Model, DirtyFieldsMixin):
                 self.codes.add(str(code))
                 self.lines.append(str(line))
 
-        # {code: CategoryCode}
+        # {name: CategoryCheck}
         categories = dict()
         subcategories = dict()
 
@@ -176,8 +176,10 @@ class Upload(models.Model, DirtyFieldsMixin):
                 subcategory_code = data.get('subcategory_code', None)
                 subcategory_name = data.get('subcategory')
                 if subcategory_code:
-                    subcategories.setdefault(subcategory_name, CategoryCheck(name=subcategory_name, level='subcategory'))
-                    subcategories[subcategory_name].set_code_and_line(subcategory_code, line_num)
+                    subcategory_key = f"{category_name} - {subcategory_name}"
+                    subcategories.setdefault(subcategory_key,
+                                             CategoryCheck(name=subcategory_name, level='subcategory'))
+                    subcategories[subcategory_key].set_code_and_line(subcategory_code, line_num)
 
         def check_code_errors(categories_dict):
             for cat_name, category_check in categories_dict.items():
