@@ -104,6 +104,16 @@ class Upload(models.Model, DirtyFieldsMixin):
 
         # Validate headers
         header_fields = list(serializer_class._declared_fields.keys())
+        mandatory_fields = ['group', 'category']
+
+        for field in mandatory_fields:
+            if field not in reader.fieldnames:
+                if field == 'group':
+                    if 'report_type' in reader.fieldnames:
+                        # report_type is the old field name for group. We still accept it.
+                        continue
+                self.errors.append(_("<strong>Line {line}:</strong> Missing <b>'{field}'</b> column.")
+                                   .format(line=reader.line_num, field=field))
 
         for field in reader.fieldnames:
             if field not in header_fields:
@@ -114,7 +124,7 @@ class Upload(models.Model, DirtyFieldsMixin):
                                          .format(line=reader.line_num, field=field, field_correct=field.strip())))
                 else:
                     self.errors.append(_("<strong>Line {line}:</strong> <b>'{field}'</b> is not a valid header. "
-                                         "It must be exact one of: <i>{header_fields}</i>"
+                                         "It must be one of: <i>{header_fields}</i>"
                                          .format(line=reader.line_num, field=field, header_fields=str(header_fields))))
 
         class CategoryCheck(object):
@@ -140,10 +150,23 @@ class Upload(models.Model, DirtyFieldsMixin):
                 serializer = serializer_class(data=data)
                 if not serializer.is_valid():
                     for field, errors_list in serializer.errors.items():
-                        error_msg = "; ".join(errors_list)
-                        self.errors.append(_("<strong>Line {line} ({column})</strong>: {error_msg} Input was: {input}"
-                                             .format(line=line_num, column=field, error_msg=error_msg,
-                                                     input=row.get(field, "''"))))
+                        input = row.get(field, "''")
+                        if len(errors_list) == 1:
+                            err = errors_list[0]
+                            error_msg = str(err)
+                            if err.code == 'invalid_choice':
+                                available_choices = serializer.fields.fields[field].choices.keys()
+                                available_choices_str = ", ".join(available_choices)
+                                error_msg += f" Available choices are: <strong>{available_choices_str}</strong> for " \
+                                             f"{self.get_category_display().lower()}s."
+                            self.errors.append(
+                                _("<strong>Line {line} ({column})</strong>: {error_msg} Input was: {input}"
+                                  .format(line=line_num, column=field, error_msg=error_msg, input=input)))
+                        else:
+                            error_msg = "; ".join(errors_list)
+                            self.errors \
+                                .append(_("<strong>Line {line} ({column})</strong>: {error_msg} Input was: {input}"
+                                          .format(line=line_num, column=field, error_msg=error_msg, input=input)))
 
                 category_code = data.get('category_code', None)
                 category_name = data.get('category')
@@ -219,7 +242,8 @@ class Upload(models.Model, DirtyFieldsMixin):
             serializer.is_valid()
             data = serializer.data
 
-            row_group = data['report_type']
+            # report_type is deprecated. Here for backward compatibility
+            row_group = data.get('group') or data.get('report_type')
             row_category = data['category']
             row_subcategory = data['subcategory']
             row_category_code = data['category_code']

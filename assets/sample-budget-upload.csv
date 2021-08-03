@@ -1,4 +1,4 @@
-report_type,category,subcategory,budget_operation,budget_investment,budget_aggregated,execution_operation,execution_investment,execution_aggregated
+group,category,subcategory,budget_operation,budget_investment,budget_aggregated,execution_operation,execution_investment,execution_aggregated
 organic,ministério da justiça,,,,220,,,
 organic,ministério da justiça,secretaria de segurança pública,,,100,,,
 organic,ministério da justiça,gabinete presidencial,,,30,,,

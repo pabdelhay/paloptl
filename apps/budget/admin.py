@@ -261,9 +261,8 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
             'fields': ('country', 'year', 'is_active', 'currency', 'output_file')
         }),
     )
-    inlines = (UploadInline, BudgetSummaryInline, FunctionInline, AgencyInline,
-               ExpenseFunctionInline, ExpenseAgencyInline, RevenueNatureInline,
-               RevenueSourceInline)
+    inlines = (UploadInline, BudgetSummaryInline,
+               ExpenseFunctionInline, ExpenseAgencyInline, RevenueNatureInline, RevenueSourceInline)
     list_display = ('country', 'year', 'is_active', 'uploads', 'uploads_with_error')
     list_filter = ('year', )
     readonly_fields = ('currency', 'output_file')
@@ -274,17 +273,26 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
             return super().save_formset(request, form, formset, change)
 
         instances = formset.save(commit=False)
+        uploads_count = len(instances)
+        i = 1
         for instance in instances:
             is_new = not instance.pk
+            is_last_upload = True if i == uploads_count else False
+            force_reimport = False
             if is_new:
                 instance.uploaded_by = request.user
                 instance.status = UploadStatusChoices.VALIDATING
             elif 'file' in instance.get_dirty_fields():
                 instance.uploaded_by = request.user
                 instance.updated_on = timezone.now()
-                instance.status = UploadStatusChoices.WAITING_REIMPORT
+                if is_last_upload and instance.status in UploadStatusChoices.get_error_status():
+                    # Reimport last upload with error automatically.
+                    force_reimport = True
+                    instance.status = UploadStatusChoices.VALIDATING
+                else:
+                    instance.status = UploadStatusChoices.WAITING_REIMPORT
             instance.save()
-            if is_new:
+            if is_new or force_reimport:
                 request.session['upload_in_progress'] = instance.id
                 async_task = import_file.apply_async(kwargs={'upload_id': instance.id}, countdown=5)
                 if async_task.status == 'SUCCESS':
@@ -294,6 +302,7 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
                 elif async_task.status == 'FAILURE':
                     # TODO: Resolve unmapped errors.
                     pass
+            i += 1
         formset.save(commit=True)
 
     @mark_safe

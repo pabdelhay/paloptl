@@ -11,10 +11,13 @@ from apps.geo.models import Country
 
 
 class BudgetUploadSerializer(serializers.Serializer):
-    report_type = serializers.ChoiceField(choices=ExpenseGroupChoices.choices + RevenueGroupChoices.choices)
+    # report_type is DEPRECATED. Use group instead.
+    report_type = serializers.ChoiceField(choices=ExpenseGroupChoices.choices + RevenueGroupChoices.choices,
+                                          required=False, allow_null=True)
+    group = serializers.ChoiceField(choices=ExpenseGroupChoices.choices + RevenueGroupChoices.choices)
 
     category = serializers.CharField(max_length=255)
-    subcategory = serializers.CharField(required=False, allow_null=True, max_length=255)
+    subcategory = serializers.CharField(max_length=255, required=False, allow_null=True)
     category_code = serializers.CharField(max_length=30, required=False, allow_null=True)
     subcategory_code = serializers.CharField(max_length=30, required=False, allow_null=True)
 
@@ -25,15 +28,22 @@ class BudgetUploadSerializer(serializers.Serializer):
     execution_investment = serializers.FloatField(required=False, allow_null=True)
     execution_aggregated = serializers.FloatField(required=False, allow_null=True)
 
+    def validate(self, data):
+        if not data.get('group') and not data.get('report_type'):
+            raise serializers.ValidationError({'group': _("Must set 'group' field.")})
+        return data
+
 
 class ExpenseUploadSerializer(BudgetUploadSerializer):
     # 'report_type' maps to 'Expense.group'
-    report_type = serializers.ChoiceField(choices=ExpenseGroupChoices.choices)
+    report_type = serializers.ChoiceField(choices=ExpenseGroupChoices.choices, required=False, allow_null=True)
+    group = serializers.ChoiceField(choices=ExpenseGroupChoices.choices, required=False, allow_null=True)
 
 
 class RevenueUploadSerializer(BudgetUploadSerializer):
     # 'report_type' maps to 'Revenue.group'
-    report_type = serializers.ChoiceField(choices=RevenueGroupChoices.choices)
+    report_type = serializers.ChoiceField(choices=RevenueGroupChoices.choices, required=False, allow_null=True)
+    group = serializers.ChoiceField(choices=RevenueGroupChoices.choices, required=False, allow_null=True)
 
 
 class UploadInProgressSerializer(serializers.ModelSerializer):
