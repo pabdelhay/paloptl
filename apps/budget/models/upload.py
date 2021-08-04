@@ -128,19 +128,26 @@ class Upload(models.Model, DirtyFieldsMixin):
                                          .format(line=reader.line_num, field=field, header_fields=str(header_fields))))
 
         class CategoryCheck(object):
-            def __init__(self, name, level='category'):
+            def __init__(self, name=None, code=None, level='category'):
                 self.name = name
+                self.code = code
                 self.level = level
                 self.codes = set()
+                self.names = set()
                 self.lines = list()
 
             def set_code_and_line(self, code, line):
                 self.codes.add(str(code))
                 self.lines.append(str(line))
 
+            def set_name_and_line(self, name, line):
+                self.names.add(name)
+                self.lines.append(str(line))
+
         # {name: CategoryCheck}
-        categories = dict()
-        subcategories = dict()
+        categories_by_name = dict()
+        # {code: CategoryCheck}
+        categories_by_code = dict()
 
         if not self.errors:
             # Only check for data fields if header is ok.
@@ -171,28 +178,43 @@ class Upload(models.Model, DirtyFieldsMixin):
                 category_code = data.get('category_code', None)
                 category_name = data.get('category')
                 if category_code:
-                    categories.setdefault(category_name, CategoryCheck(name=category_name))
-                    categories[category_name].set_code_and_line(category_code, line_num)
+                    categories_by_name.setdefault(category_name, CategoryCheck(name=category_name))
+                    categories_by_name[category_name].set_code_and_line(category_code, line_num)
+                    categories_by_code.setdefault(category_code, CategoryCheck(code=category_code))
+                    categories_by_code[category_code].set_name_and_line(category_name, line_num)
                 subcategory_code = data.get('subcategory_code', None)
                 subcategory_name = data.get('subcategory')
                 if subcategory_code:
-                    subcategory_key = f"{category_name} - {subcategory_name}"
-                    subcategories.setdefault(subcategory_key,
-                                             CategoryCheck(name=subcategory_name, level='subcategory'))
-                    subcategories[subcategory_key].set_code_and_line(subcategory_code, line_num)
+                    subcategory_name_key = f"{category_name} - {subcategory_name}"
+                    subcategory_code_key = f"{category_name} - {subcategory_code}"
+                    categories_by_name.setdefault(subcategory_name_key,
+                                                  CategoryCheck(name=subcategory_name, level='subcategory'))
+                    categories_by_name[subcategory_name_key].set_code_and_line(subcategory_code, line_num)
+                    categories_by_code.setdefault(subcategory_code_key,
+                                                  CategoryCheck(code=subcategory_code, level='subcategory'))
+                    categories_by_code[subcategory_code_key].set_name_and_line(subcategory_name, line_num)
 
-        def check_code_errors(categories_dict):
+        def check_code_errors(categories_dict, dict_by='name'):
+            attr_check = 'codes' if dict_by == 'name' else 'names'
             for cat_name, category_check in categories_dict.items():
-                if len(category_check.codes) > 1:
+                if len(getattr(category_check, attr_check)) > 1:
                     lines = ",".join(category_check.lines)
-                    codes = ", ".join(category_check.codes)
-                    self.errors.append(_("<strong>Lines {lines} ({level}, {level}_code)</strong>: Different codes for "
-                                         "{level} <strong>{category}</strong>. Codes: [<strong>{codes}</strong>]"
-                                         .format(lines=lines, level=category_check.level, category=cat_name,
-                                                 codes=codes)))
 
-        check_code_errors(categories)
-        check_code_errors(subcategories)
+                    duplicated_objs = ", ".join(category_check.codes)
+                    category_label = category_check.name
+                    if dict_by == 'code':
+                        duplicated_objs = ", ".join(category_check.names)
+                        category_label = category_check.code
+
+                    self.errors.append(
+                        _("<strong>Lines {lines} ({level}, {level}_code)</strong>: Different {attr_check} "
+                          "for {level} <strong>{category}</strong>. {attr_check}: [<strong>{duplicated_objs}</strong>]"
+                          .format(lines=lines, level=category_check.level, attr_check=attr_check,
+                                  category=category_label, duplicated_objs=duplicated_objs))
+                        )
+
+        check_code_errors(categories_by_name, dict_by='name')
+        check_code_errors(categories_by_code, dict_by='code')
 
         return not bool(len(self.errors))
 
