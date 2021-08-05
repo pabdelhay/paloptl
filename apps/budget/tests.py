@@ -82,7 +82,7 @@ class BudgetAccountTestCase(TestCase):
                         report=UploadReportChoices.OGE, uploaded_by=self.user)
 
         header = ['group', 'category_code', 'category', 'subcategory_code', 'subcategory', 'budget_aggregated',
-                   'execution_aggregated']
+                  'execution_aggregated']
 
         def write_data_to_file(data):
             file_name = f'budget_test.csv'
@@ -122,10 +122,6 @@ class BudgetAccountTestCase(TestCase):
                          msg="Data should not be valid.")
         self.assertEqual(len(upload.errors), 1,
                          msg="There should be only one error.")
-        error_msg = str(upload.errors[0].lower())
-        msg_is_ok = "different codes for" in error_msg
-        self.assertEqual(msg_is_ok, True,
-                        msg="Error msg should contain 'different codes for...'")
         error_msg = str(upload.errors[0].lower())
         msg_is_ok = "different codes for" in error_msg
         self.assertEqual(msg_is_ok, True,

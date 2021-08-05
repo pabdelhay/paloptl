@@ -79,6 +79,13 @@ class Upload(models.Model, DirtyFieldsMixin):
 
         return default_delimiter
 
+    @classmethod
+    def is_empty_line(cls, dict_row):
+        for k, v in dict_row.items():
+            if v != '':
+                return False
+        return True
+
     def validate(self):
         """
         Validate if file is ok to import.
@@ -115,7 +122,8 @@ class Upload(models.Model, DirtyFieldsMixin):
                 self.errors.append(_("<strong>Line {line}:</strong> Missing <b>'{field}'</b> column.")
                                    .format(line=reader.line_num, field=field))
 
-        for field in reader.fieldnames:
+        filter_not_empty_header = lambda x: x != ''
+        for field in filter(filter_not_empty_header, reader.fieldnames):
             if field not in header_fields:
                 if field.strip() in header_fields:
                     self.errors.append(_("<strong>Line {line}:</strong> <b>'{field}'</b> is not a valid header. "
@@ -152,6 +160,8 @@ class Upload(models.Model, DirtyFieldsMixin):
         if not self.errors:
             # Only check for data fields if header is ok.
             for row in reader:
+                if self.is_empty_line(row):
+                    continue
                 line_num = reader.line_num
                 data = empty_string_to_none(row)
                 serializer = serializer_class(data=data)
@@ -262,6 +272,8 @@ class Upload(models.Model, DirtyFieldsMixin):
                 categories_dict[category_id]['values'][attr] = new_value
 
         for row in reader:
+            if self.is_empty_line(row):
+                continue
             serializer = serializer_class(data=empty_string_to_none(row))
             serializer.is_valid()
             data = serializer.data
