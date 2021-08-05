@@ -22,8 +22,7 @@ class CountryView(SingleObjectMixin, View):
 
     def get(self, request, *args, **kwargs):
         country = self.get_object()
-        base_qs = country.budgets.filter(is_active=True)\
-            .exclude(function_budget__isnull=True, agency_budget__isnull=True)
+        base_qs = country.budgets.filter(is_active=True)
         budgets = base_qs.order_by('year')
         last_budget = base_qs.order_by('year').select_related('summary').last()
         summary = last_budget.summary
