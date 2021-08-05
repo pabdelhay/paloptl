@@ -107,8 +107,8 @@ def reimport_budget_uploads(budget_id, include_uploads_with_error=False):
     print(f"----- Reimporting all uploads from Budget #{budget.id} {budget.country.name} {budget.year} -----")
 
     # 1. Remove all BudgetAccount data
-    budget.functions.all().delete()
-    budget.agencies.all().delete()
+    budget.expenses.all().delete()
+    budget.revenues.all().delete()
 
     filters = {'status__in': UploadStatusChoices.get_success_status()}
     if include_uploads_with_error:
