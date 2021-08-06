@@ -285,7 +285,7 @@ class Upload(models.Model, DirtyFieldsMixin):
             row_category_code = data['category_code']
             row_subcategory_code = data['subcategory_code']
 
-            # Check if report is organic or functional.
+            # Check if report is for Expense or Revenue.
             if self.category == UploadCategoryChoices.EXPENSE:
                 category_set = self.budget.expenses
             elif self.category == UploadCategoryChoices.REVENUE:

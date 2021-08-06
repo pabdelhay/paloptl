@@ -76,6 +76,7 @@ class BudgetAccountInline(TabularInlinePaginated):
     fields = ('code', 'get_group_taxonomy', 'get_subgroup_taxonomy', 'get_budget_investment', 'get_budget_operation',
               'get_budget_aggregated', 'get_execution_investment', 'get_execution_operation',
               'get_execution_aggregated', 'last_update')
+    list_select_related = ('parent',)
 
     classes = ['collapse']
 
@@ -99,7 +100,7 @@ class BudgetAccountInline(TabularInlinePaginated):
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
-        return queryset.filter(group=self.group)
+        return queryset.filter(group=self.group).select_related('parent')
 
     @staticmethod
     def _get_budget_field(obj, field):
@@ -216,6 +217,7 @@ class ExpenseAgencyInline(BudgetAccountInline):
     model = Expense
     group = ExpenseGroupChoices.ORGANIC
     verbose_name_plural = _("Expenses by agency")
+    list_select_related = ('parent', )
 
     def get_group_taxonomy(self, obj):
         return obj.parent.name if obj.parent else obj.name

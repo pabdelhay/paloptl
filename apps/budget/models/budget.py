@@ -135,7 +135,8 @@ class Budget(CountryMixin, models.Model):
         Save csv_file to Budget.output_file.
         """
         class BudgetCSVSerializer(serializers.Serializer):
-            report_type = serializers.CharField(allow_null=True)
+            budget_type = serializers.CharField(allow_null=True)
+            group = serializers.CharField(allow_null=True)
             category = serializers.CharField(allow_null=True)
             category_code = serializers.CharField(required=False, allow_null=True)
             subcategory = serializers.CharField(required=False, allow_null=True)
@@ -148,8 +149,8 @@ class Budget(CountryMixin, models.Model):
             execution_aggregated = serializers.FloatField(required=False)
 
         budget_accounts = {
-            'functions': 'functional',
-            'agencies': 'organic'
+            'expenses': 'expense',
+            'revenues': 'revenue'
         }
         header = list(BudgetCSVSerializer._declared_fields.keys())
 
@@ -158,9 +159,9 @@ class Budget(CountryMixin, models.Model):
         writer = csv.DictWriter(output_file, fieldnames=header, delimiter=',')
         writer.writeheader()
 
-        for budget_account, report_type in budget_accounts.items():
+        for budget_account, budget_type in budget_accounts.items():
             category_set = getattr(self, budget_account)
-            for category in category_set.all():
+            for category in category_set.all().order_by('group', 'tree_id', 'lft',):
                 category_name = category.name
                 category_code = category.code
                 subcategory_name = None
@@ -171,16 +172,20 @@ class Budget(CountryMixin, models.Model):
                     subcategory_name = category.name
                     subcategory_code = category.code
                 data = {
-                    'report_type': report_type,
+                    'budget_type': budget_type,
                     'category': category_name,
                     'category_code': category_code,
                     'subcategory': subcategory_name,
                     'subcategory_code': subcategory_code
                 }
-                serializer = BudgetCSVSerializer(instance=category, data=data)
+                for h in header:
+                    value = getattr(category, h, None)
+                    if not value:
+                        continue
+                    data[h] = value
+                serializer = BudgetCSVSerializer(data=data)
                 serializer.is_valid()
-                serializer_data = serializer.data
-                serializer_data.update(serializer.validated_data)
+                serializer_data = serializer.validated_data
                 writer.writerow(serializer_data)
 
         self.output_file.delete()  # To override file instead of creating another file with different name.
