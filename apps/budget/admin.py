@@ -312,12 +312,12 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
         uploads_count = obj.uploads.count()
         html = f"{uploads_count}"
         if uploads_count > 0:
-            html += " ("
+            html += " - "
         first = True
         for u in obj.uploads.all():
             if not first:
                 html += ", "
-            html += f"{u.report.upper()}"
+            html += f"{u.get_category_display()[:3]} {u.report.upper()}"
             if u.status in UploadStatusChoices.get_error_status():
                 html += ' <span class="ui-icon ui-icon-alert" title="With error"></span>'
             elif u.status in UploadStatusChoices.get_in_progress_status():
@@ -325,8 +325,6 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
             elif u.status == UploadStatusChoices.WAITING_REIMPORT:
                 html += ' <span class="ui-icon ui-icon-refresh" title="Waiting reimport"></span>'
             first = False
-        if uploads_count > 0:
-            html += ")"
         return html
     uploads.short_description = _("uploads")
 
