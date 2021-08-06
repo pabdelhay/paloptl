@@ -35,13 +35,12 @@ class CountryView(SingleObjectMixin, View):
             budgets_serialized[b.id] = {
                 'id': b.id,
                 'year': b.year,
+                'available_groups': b.get_available_groups(),
+                'available_budget_accounts': b.get_available_budget_accounts(),
                 'expense_functional_budget': b.summary.expense_functional_budget,
                 'expense_organic_budget': b.summary.expense_organic_budget,
                 'revenue_nature_budget': b.summary.revenue_nature_budget,
                 'revenue_source_budget': b.summary.revenue_source_budget,
-                # DEPRECATED vvv
-                'function_budget': b.function_budget,
-                'agency_budget': b.agency_budget
             }
 
         ctx = {

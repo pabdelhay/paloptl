@@ -13,7 +13,8 @@ from django.utils.translation import gettext_lazy as _
 from djmoney.models.fields import CurrencyField
 from rest_framework import serializers
 
-from apps.budget.choices import UploadStatusChoices, ExpenseGroupChoices, RevenueGroupChoices
+from apps.budget.choices import UploadStatusChoices, ExpenseGroupChoices, RevenueGroupChoices, UploadCategoryChoices, \
+    GROUP_CHOICES_BY_BUDGET_ACCOUNT
 from common.mixins import CountryMixin
 
 
@@ -200,3 +201,28 @@ class Budget(CountryMixin, models.Model):
 
     def has_waiting_reimport_uploads(self):
         return self.uploads.filter(status=UploadStatusChoices.WAITING_REIMPORT).count() > 0
+
+    def get_available_budget_accounts(self):
+        summary = self.summary
+        available_budget_accounts = []
+        for budget_type, label_budget_type in UploadCategoryChoices.choices:
+            group_choices = GROUP_CHOICES_BY_BUDGET_ACCOUNT[budget_type].choices
+            for group, label_group in group_choices:
+                budget = getattr(summary, f'{budget_type}_{group}_budget', None)
+                execution = getattr(summary, f'{budget_type}_{group}_execution', None)
+                if budget or execution:
+                    available_budget_accounts.append(f'{budget_type}s')
+                    continue
+        return available_budget_accounts
+
+    def get_available_groups(self):
+        summary = self.summary
+        available_groups = []
+        for budget_type, label_budget_type in UploadCategoryChoices.choices:
+            group_choices = GROUP_CHOICES_BY_BUDGET_ACCOUNT[budget_type].choices
+            for group, label_group in group_choices:
+                budget = getattr(summary, f'{budget_type}_{group}_budget', None)
+                execution = getattr(summary, f'{budget_type}_{group}_execution', None)
+                if budget or execution:
+                    available_groups.append(group)
+        return available_groups

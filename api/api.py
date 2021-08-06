@@ -41,6 +41,7 @@ class BudgetAccountSerializer(serializers.ModelSerializer):
     execution_operation = serializers.SerializerMethodField()
     execution_aggregated = serializers.SerializerMethodField()
     execution_percentage = serializers.SerializerMethodField()
+    has_budget = serializers.SerializerMethodField()
 
     def __init__(self, instance, no_children=False, *args, **kwargs):
         super().__init__(instance, *args, **kwargs)
@@ -51,7 +52,7 @@ class BudgetAccountSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'initial_budget_investment', 'initial_budget_operation', 'initial_budget_aggregated',
                   'budget_investment', 'budget_operation', 'budget_aggregated',
                   'execution_investment', 'execution_operation', 'execution_aggregated', 'execution_percentage',
-                  'last_update', 'children', 'color', 'color_hover', 'parent_id', 'level', 'tree_id')
+                  'last_update', 'children', 'color', 'color_hover', 'parent_id', 'level', 'tree_id', 'has_budget')
 
     def get_children(self, obj):
         if obj.level == 1:
@@ -76,7 +77,8 @@ class BudgetAccountSerializer(serializers.ModelSerializer):
         return obj.get_value('budget_operation')
 
     def get_budget_aggregated(self, obj):
-        return obj.get_value('budget_aggregated')
+        # If no budget, send execution as the budget.
+        return obj.get_value('budget_aggregated') or obj.get_value('execution_aggregated')
 
     def get_execution_investment(self, obj):
         return obj.get_value('execution_investment')
@@ -118,6 +120,9 @@ class BudgetAccountSerializer(serializers.ModelSerializer):
     def get_color_hover(self, obj):
         color = self.get_color(obj)
         return settings.TREEMAP_EXECUTION_COLORS_HOVER[color]
+
+    def get_has_budget(self, obj):
+        return True if obj.get_value('budget_aggregated') else False
 
 
 class BudgetAccountLeafSerializer(BudgetAccountSerializer):
@@ -243,7 +248,7 @@ class BudgetViewset(ReadOnlyModelViewSet):
         group = params.validated_data.get('group')
 
         qs = Expense.objects.filter(budget=budget, level=0, group=group) \
-            .exclude(Q(budget_aggregated__isnull=True) | Q(budget_aggregated=0))
+            .exclude(Q(budget_aggregated__isnull=True) & Q(execution_aggregated__isnull=True))
         serializer = ExpenseSerializer(qs, many=True)
         return Response(serializer.data)
 
@@ -255,7 +260,7 @@ class BudgetViewset(ReadOnlyModelViewSet):
         group = params.validated_data.get('group')
 
         qs = Revenue.objects.filter(budget=budget, level=0, group=group) \
-            .exclude(Q(budget_aggregated__isnull=True) | Q(budget_aggregated=0))
+            .exclude(Q(budget_aggregated__isnull=True) & Q(execution_aggregated__isnull=True))
         serializer = ExpenseSerializer(qs, many=True)
         return Response(serializer.data)
 

@@ -126,7 +126,10 @@
 
         var execution_group = 0;
         var execution_percentage = 0;
-        if(data['execution_aggregated']){
+        var not_informed_text = "Execução não informada";
+        if(!data['has_budget']){
+            not_informed_text = "Sem dotação aprovada";
+        } else if(data['execution_aggregated']){
             var execution_percentage = data['execution_aggregated'] / data['budget_aggregated'];
             if(0 < execution_percentage && execution_percentage <= 0.2)
                 execution_group = 1;
@@ -139,6 +142,7 @@
             else if(0.8 < execution_percentage)
                 execution_group = 5;
         }
+        data['not_informed_text'] = not_informed_text;
         data['execution_percentage'] = execution_percentage;
         data['execution_group'] = execution_group;
         data['budget_account_label'] = budget_account_label_map[current_budget_account];
@@ -371,7 +375,6 @@
         get_budget_data(budget_id, budget_account, group, function(data){
             current_budget_data = data;
             init_views(current_budget_data);
-
             inactive_budget_accounts_without_data();
         });
     }
@@ -385,15 +388,13 @@
                 msg: "Dados de despesas não disponíveis neste ano",
                 sibling: 'revenues',
                 groups: {
-                    'expense_functional_budget': {
-                        group_id: 'functional',
+                    'functional': {
                         msg: "Dados funcionais não disponíveis",
-                        sibling: 'expense_organic_budget'
+                        sibling: 'organic'
                     },
-                    'expense_organic_budget': {
-                        group_id: 'organic',
+                    'organic': {
                         msg: "Dados orgânicos não disponíveis",
-                        sibling: 'expense_functional_budget'
+                        sibling: 'functional'
                     }
                 }
             },
@@ -401,23 +402,19 @@
                 msg: "Dados de receitas não disponíveis neste ano",
                 sibling: 'expenses',
                 groups: {
-                    'revenue_nature_budget': {
-                        group_id: 'nature',
+                    'nature': {
                         msg: "Dados por natureza não disponíveis",
-                        sibling: 'revenue_source_budget'
+                        sibling: 'source'
                     },
-                    'revenue_source_budget': {
-                        group_id: 'source',
+                    'source': {
                         msg: "Dados por fonte não disponíveis",
-                        sibling: 'revenue_nature_budget'
+                        sibling: 'nature'
                     }
                 }
             }
         }
         Object.entries(budget_account_map).forEach(([budget_account, ba_values]) => {
-            let ba_groups = Object.keys(ba_values.groups);
-            if(!budget_data[ba_groups[0]] && !budget_data[ba_groups[1]]){
-                // No data for budget_account.
+            if(!budget_data['available_budget_accounts'].includes(budget_account)){
                 $('.budget-account-selector [data-budget_account="'+budget_account+'"]').addClass('inactive').attr('title', ba_values['msg']);
                 if(current_budget_account == budget_account){
                     toggle_budget_account(ba_values.sibling);
@@ -425,11 +422,10 @@
                 }
             }
             Object.entries(ba_values.groups).forEach(([group, group_values]) => {
-                let group_id = group_values.group_id;  // functional, organic, nature, source
-                if(!budget_data[group]){
-                    $('.group-selector [data-group="'+group_id+'"]').addClass('inactive').attr('title', group_values['msg']);
-                    if(current_group == group_id){
-                        toggle_group(ba_values.groups[group_values.sibling].group_id);
+                if(!budget_data['available_groups'].includes(group)){
+                    $('.group-selector [data-group="'+group+'"]').addClass('inactive').attr('title', group_values['msg']);
+                    if(current_group == group){
+                        toggle_group(group_values.sibling);
                         return;
                     }
                 }
@@ -489,7 +485,7 @@
         var $children = $base_selector.find('.subcategory-of-' + parent_id);
         var $parent = $base_selector.find('[data-category_id="'+parent_id+'"]');
 
-        $parent.find('.arrow').toggle();
+        $parent.find('.arrow:not(".no-children")').toggle();
         $parent.addClass('highlight');
         $tr.addClass('highlight');
         $children.show();
@@ -683,11 +679,23 @@
             <table class="primary-info" cellspacing="0" cellpadding="0">
                 <tr>
                     <td>Dotação inicial</td>
-                    <td class="money-display">{{formatCurrency initial_budget_aggregated}}</td>
+                    <td class="money-display">
+                        {{#if has_budget}}
+                            {{formatCurrency initial_budget_aggregated}}
+                        {{else}}
+                            {% endverbatim %}Não informada{% verbatim %}
+                        {{/if}}
+                    </td>
                 </tr>
                 <tr>
                     <td>Dotação atualizada</td>
-                    <td class="money-display">{{formatCurrency budget_aggregated}}</td>
+                    <td class="money-display">
+                        {{#if has_budget}}
+                            {{formatCurrency budget_aggregated}}
+                        {{else}}
+                            {% endverbatim %}Não informada{% verbatim %}
+                        {{/if}}
+                    </td>
                 </tr>
                 <tr class="execution-aggregated">
                     <td>Execução</td>
@@ -728,7 +736,7 @@
                     <td class="group-5"><div class="execution-group-indicator"></div></td>
                 </tr>
                 <tr>
-                    <td class="group-0"><div class="execution-percentage">Execução não informada</div></td>
+                    <td class="group-0"><div class="execution-percentage">{{ not_informed_text }}</div></td>
                     <td class="group-1"><div class="execution-percentage"><strong>{{formatPercent execution_percentage}}</strong><br>executado</div></td>
                     <td class="group-2"><div class="execution-percentage"><strong>{{formatPercent execution_percentage}}</strong><br>executado</div></td>
                     <td class="group-3"><div class="execution-percentage"><strong>{{formatPercent execution_percentage}}</strong><br>executado</div></td>
@@ -805,7 +813,13 @@
                 <span class="category-name">{{ name }}</span>
             </td>
             <td class="vertical-separator"></td>
-            <td>{{formatCurrency budget_aggregated}}</td>
+            <td>
+                {{#if has_budget}}
+                {{formatCurrency budget_aggregated}}
+                {{else}}
+                -
+                {{/if}}
+            </td>
             <td>{{formatCurrency execution_aggregated}}</td>
             <td>{{formatPercent execution_percentage}}</td>
             <td>{{formatCurrency budget_investment}}</td>
@@ -848,7 +862,13 @@
     <table>
         <tr>
             <td>Dotação</td>
-            <td class="money-display">{{formatCurrency budget_aggregated}}</td>
+            <td class="money-display">
+                {{#if has_budget}}
+                    {{formatCurrency budget_aggregated}}
+                {{else}}
+                    Não informada
+                {{/if}}
+            </td>
             <td></td>
         </tr>
         {{#if budget_investment}}
@@ -893,7 +913,5 @@
 </div>
 </script>
 {% endverbatim %}
-
-
 
 {% endblock %}
