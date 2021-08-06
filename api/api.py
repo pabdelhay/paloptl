@@ -1,3 +1,6 @@
+import operator
+from functools import reduce
+
 from django.conf import settings
 from django.db.models import F, Q
 from rest_framework import serializers
@@ -307,16 +310,24 @@ class BudgetViewset(ReadOnlyModelViewSet):
             budget_account = budget_account_model.objects.select_related('budget').get(id=budget_account_id)
             code = budget_account.code
             name = budget_account.name
-            if not code:
-                # If BudgetAccount has no code, get historical data from parent.
-                name = budget_account.parent.name
-                code = budget_account.parent.code
-                if not code:
-                    # If parent has no code, return empty list
-                    return Response(data)
+            parent = budget_account.parent
 
-            qs = budget_account_model.objects.filter(budget__country=country, code=code, group=group) \
-                .values(year=F('budget__year')) \
+            ba_filters = {
+                'budget__country': country,
+                'group': group,
+                'level': budget_account.level
+            }
+            filter_name_code = [Q(name__iexact=name)]
+            if code:
+                filter_name_code.append(Q(code=code))
+
+            qs = budget_account_model.objects.filter(**ba_filters).filter(reduce(operator.or_, filter_name_code))
+            if parent:
+                filter_parent = [Q(parent__name__iexact=parent.name)]
+                if parent.code:
+                    filter_parent.append(Q(parent__code__iexact=parent.code))
+                qs = qs.filter(reduce(operator.or_, filter_parent))
+            qs = qs.values(year=F('budget__year')) \
                 .annotate(budget_aggregated=F('budget_aggregated'),
                           execution_aggregated=F('execution_aggregated'),
                           inferred_budget_aggregated=F('inferred_values__budget_aggregated'),
