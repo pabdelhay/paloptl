@@ -89,6 +89,17 @@ a.download-link {
     color: #FFF;
   }
 }
+a.tutorial {
+  font-size: 17px;
+  border-radius: 25px;
+  padding: 6px 30px;
+  color: white;
+  background-color: #8c1717;
+  &:hover {
+    background-color: #bc0000;
+    color: #FFF;
+  }
+}
 
 .money-display { font-family: $font_money; text-align: right; }
 
@@ -1054,3 +1065,13 @@ h3 {
 .mr-0 { margin-right: 0 !important; }
 .mt-0 { margin-top: 0 !important; }
 .mb-0 { margin-bottom: 0 !important; }
+
+.customIntro {
+  .introjs-tooltip-title {
+    font-family: $font_main;
+    color: $main_color;
+  }
+  .introjs-tooltiptext {
+    font-family: $font_secondary;
+  }
+}

@@ -89,6 +89,18 @@ a.download-link:hover {
   color: #FFF;
 }
 
+a.tutorial {
+  font-size: 17px;
+  border-radius: 25px;
+  padding: 6px 30px;
+  color: white;
+  background-color: #8c1717;
+}
+a.tutorial:hover {
+  background-color: #bc0000;
+  color: #FFF;
+}
+
 .money-display {
   font-family: RobotoMono;
   text-align: right;
@@ -1079,6 +1091,14 @@ h3 .arrow {
 
 .mb-0 {
   margin-bottom: 0 !important;
+}
+
+.customIntro .introjs-tooltip-title {
+  font-family: Montserrat;
+  color: #0f2843;
+}
+.customIntro .introjs-tooltiptext {
+  font-family: CeraPro;
 }
 
 /*# sourceMappingURL=frontend.css.map */

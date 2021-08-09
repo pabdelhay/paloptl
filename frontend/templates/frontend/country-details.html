@@ -2,9 +2,11 @@
 {% load static %}
 
 {% block extrahead %}
+    <link rel="stylesheet" type="text/css" href="{% static "external/introjs/introjs.min.css" %}">
     <script src="//cdn.amcharts.com/lib/4/core.js"></script>
     <script src="//cdn.amcharts.com/lib/4/charts.js"></script>
     <script src="//cdn.amcharts.com/lib/4/themes/animated.js"></script>
+    <script src="{% static 'external/introjs/intro.min.js' %}"></script>
     <script type="text/javascript">
     var MEDIA_URL = '{% get_media_prefix %}';
     var treemap;
@@ -524,6 +526,113 @@
         return $td.html();
     }
 
+    function start_tutorial(){
+        introJs().setOptions({
+            nextLabel: 'Próximo',
+            prevLabel: 'Anterior',
+            doneLabel: 'Pronto',
+            hidePrev: true,
+            tooltipClass: 'customIntro',
+            showProgress: true,
+            showBullets: false,
+            steps: [{
+                element: document.querySelector('.visualization-selector'),
+                title: 'Visualizações',
+                position: 'left',
+                intro: 'Todas as visualizações desta plataforma são interligadas. É possivel navegar no orçamento pelas seguintes visualizações: ' +
+                    '<ul><li>Treemap</li><li>Série histórica</li><li>Tabela</li>'
+            },
+            {
+                element: document.querySelector('#chart-treemap'),
+                title: "Treemap",
+                position: 'left',
+                intro: 'O volume total do orçamento' +
+                    'do país em determinado ano está representado no espaço total retangular do gráfico, que por sua vez, é composto ' +
+                    'por retângulos menores. O tamanho deles varia de acordo com o volume de recursos autorizados. Dotação ' +
+                    'autorizada é aquela reservada no orçamento anual para uma finalidade específica. Esta dotação pode ser revista - ' +
+                    'para um valor maior ou menor ao longo do ano - neste caso, a nomenclatura utilizada é dotação atualizada. A ' +
+                    'autorização não garante que a despesa ocorra. Por isso, monitora-se também a despesa paga.'
+            },
+            {
+                element: document.querySelector('.treemap-legend-table'),
+                position: 'left',
+                title: "Execução",
+                intro: 'Para indicar no ' +
+                    'gráfico o nível de execução (o quanto da dotação foi de fato gasto: Valor Pago do Item/ Dotação Autorizada para ' +
+                    'o Item) utilizou-se uma régua de 5 cores que indica os seguintes percentuais de execução: ' +
+                    '(0% - 20%; 20% - 40%, 40% - 60%, 60% - 80% e 80% - 100%).'
+            },
+            {
+                element: document.querySelector('#chart-treemap'),
+                position: 'left',
+                title: "Dados no treemap",
+                intro: 'Ao <b>passar o cursor sobre os retângulos</b>, surgirão balões informativos, especificando os números absolutos da ' +
+                    'dotação e do valor pago. Alguns países informam o quanto da dotação é relativa ao orçamento para ' +
+                    'funcionamento do governo e o quanto é relativo ao orçamento de investimentos. Se disponíveis, estes valores ' +
+                    'serão apresentados nos balões informativos e no card "Dados Secundários", à esquerda do treemap.'
+            },
+            {
+                element: document.querySelector('.budget-account-expenses'),
+                //position: 'bottom',
+                title: "Despesas",
+                intro: 'As despesas podem ser visualizadas por dois grupos de classificação: Função (temas de governo, como saúde e ' +
+                    'educação) e Órgão (como Ministérios, por exemplo). Se selecionada a visualização por órgão, os retângulos ' +
+                    'representarão os órgãos administrativos principais. Cada um deles pode ser detalhado em unidades orçamentais ' +
+                    'com um clique na área do gráfico. Na visualização por Função, o segundo nível de informação serão as subfunções. '
+            },
+            {
+                element: document.querySelector('.budget-account-revenues'),
+                position: 'bottom',
+                title: "Receitas",
+                intro: 'As receitas estão disponíveis por natureza económica. Esta classificação indica o acontecimento real que ' +
+                    'ocasionou a entrada do recurso nos cofres públicos. Assim como na parte de despesas, os dados estão ' +
+                    'estruturados em 2 níveis hierárquicos: a origem, que é uma agregação mais geral (impostos ou taxas, por ' +
+                    'exemplo), e a espécie/desdobramentos, com dados mais detalhados (seguindo o exemplo, especificação do ' +
+                    'imposto ou da taxa).'
+            },
+            {
+                element: document.querySelector('.budget-selector'),
+                //position: 'bottom',
+                title: "Anos",
+                intro: 'Estão disponíveis ' +
+                    'dados desde 2016 na plataforma. ' +
+                    'Vale lembrar que estas informações só estarão disponíveis se os países as tiverem disponibilizado ' +
+                    'publicamente. Então, caso a seleção de determinada classificação, ou ano, não estiver selecionável, é porque, ' +
+                    'infelizmente, o dado não foi publicado pelo governo.'
+            },
+            {
+                element: document.querySelector('#historical-info'),
+                //position: 'bottom',
+                scrollTo: 'tooltip',
+                title: "Série histórica",
+                intro: 'A segunda visualização é a série histórica. Ela apresenta a evolução no montante da dotação e dos valores pagos ' +
+                    'desde 2016. A série é responsiva às seleções feitas no treemap. Assim, é possível analisar rapidamente o histórico ' +
+                    'de cada uma das rubricas listadas na plataforma.'
+            },
+            {
+                element: document.querySelector('#datatable-info'),
+                title: "Tabela",
+                //position: 'bottom',
+                scrollTo: 'tooltip',
+                intro: 'A última visualização é uma tabela que resume todas as informações contidas no treemap. É possível detalhar ' +
+                    'as informações de determinada rubrica, ao clicar na linha referente.'
+            },
+            {
+                element: document.querySelector('.expand-visualization'),
+                //position: 'bottom',
+                title: "Atualizar visualizações",
+                intro: 'É possível também atualizar toda a plataforma ' +
+                    'para apresentar os dados referentes à rubrica selecionada na tabela.'
+            },
+            {
+                element: document.querySelector('.download-link'),
+                //position: 'bottom',
+                title: "CSV",
+                intro: 'Todos os dados estão disponíveis para download em formato .csv.'
+            }]
+        }).start();
+    }
+
     $(document).ready(function () {
         // Binds
         $('.budget-account-selector-row a').on('click', function (ev) {
@@ -568,6 +677,10 @@
             $('html, body').animate({
                 scrollTop: $(selector).offset().top
             }, 1000);
+        });
+        $(document).on('click', '.tutorial', function(ev){
+            ev.preventDefault();
+            start_tutorial();
         })
 
         toggle_budget_account(current_budget_account)
@@ -594,7 +707,7 @@
             <div class="col-2 mr-0">
                 <img class="flag" src="{{ country.flag.url }}" alt="{{ country.slug }} flag" />
             </div>
-            <div class="col-10">
+            <div class="col-6">
                 <h3>
                     <span class="arrow-right"></span>
                     DADOS ORÇAMENTAIS
@@ -602,6 +715,9 @@
                 <div class="header-currency">
                     Todos os valores em <strong class="budget-currency">{{ last_budget.get_currency_display }}</strong>
                 </div>
+            </div>
+            <div class="col-3 right">
+                <a href="#" class="tutorial">APRENDA A NAVEGAR</a>
             </div>
         </div>
     </div>
