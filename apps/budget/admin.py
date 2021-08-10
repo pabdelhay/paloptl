@@ -4,13 +4,12 @@ from django.contrib.admin import TabularInline
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.safestring import mark_safe
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext as _
 from django_admin_inline_paginator.admin import TabularInlinePaginated
+from tabulate import tabulate
 
-from apps.budget.choices import UploadStatusChoices, ExpenseGroupChoices, RevenueGroupChoices
+from apps.budget.choices import UploadStatusChoices, ExpenseGroupChoices, RevenueGroupChoices, UploadCategoryChoices
 from apps.budget.models import Upload, Budget, UploadLog, BudgetSummary, Expense, Revenue
-from apps.budget.models.agency import Agency
-from apps.budget.models.function import Function
 from apps.budget.models.transparency_index import TransparencyIndex
 from apps.budget.tasks import import_file, reimport_budget_uploads
 from common.admin import CountryPermissionMixin
@@ -165,40 +164,6 @@ class BudgetAccountInline(TabularInlinePaginated):
     get_execution_aggregated.short_description = _("total execution")
 
 
-class FunctionInline(BudgetAccountInline):
-    model = Function
-    group = ExpenseGroupChoices.FUNCTIONAL
-    verbose_name_plural = _("Function - OLD")
-
-    def get_queryset(self, request):
-        return self.model.objects.all()
-
-    def get_group_taxonomy(self, obj):
-        return obj.parent.name if obj.parent else obj.name
-    get_group_taxonomy.short_description = model.get_taxonomy(group=group, level=0)
-
-    def get_subgroup_taxonomy(self, obj):
-        return obj.name if obj.parent else ""
-    get_subgroup_taxonomy.short_description = model.get_taxonomy(group=group, level=1)
-
-
-class AgencyInline(BudgetAccountInline):
-    model = Agency
-    group = ExpenseGroupChoices.ORGANIC
-    verbose_name_plural = _("Agency - OLD")
-
-    def get_queryset(self, request):
-        return self.model.objects.all()
-
-    def get_group_taxonomy(self, obj):
-        return obj.parent.name if obj.parent else obj.name
-    get_group_taxonomy.short_description = model.get_taxonomy(group=group, level=0)
-
-    def get_subgroup_taxonomy(self, obj):
-        return obj.name if obj.parent else ""
-    get_subgroup_taxonomy.short_description = model.get_taxonomy(group=group, level=1)
-
-
 class ExpenseFunctionInline(BudgetAccountInline):
     model = Expense
     group = ExpenseGroupChoices.FUNCTIONAL
@@ -309,23 +274,34 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
 
     @mark_safe
     def uploads(self, obj):
-        uploads_count = obj.uploads.count()
-        html = f"{uploads_count}"
-        if uploads_count > 0:
-            html += " - "
-        first = True
-        for u in obj.uploads.all():
-            if not first:
-                html += ", "
-            html += f"{u.get_category_display()[:3]} {u.report.upper()}"
-            if u.status in UploadStatusChoices.get_error_status():
-                html += ' <span class="ui-icon ui-icon-alert" title="With error"></span>'
-            elif u.status in UploadStatusChoices.get_in_progress_status():
-                html += ' <span class="ui-icon ui-icon-play" title="Importing"></span>'
-            elif u.status == UploadStatusChoices.WAITING_REIMPORT:
-                html += ' <span class="ui-icon ui-icon-refresh" title="Waiting reimport"></span>'
-            first = False
-        return html
+        expenses = obj.uploads.filter(category=UploadCategoryChoices.EXPENSE).order_by('uploaded_on')
+        revenues = obj.uploads.filter(category=UploadCategoryChoices.REVENUE).order_by('uploaded_on')
+        total_expenses = len(expenses)
+        total_revenues = len(revenues)
+
+        def format_uploads(qs):
+            html = ""
+            first = True
+            for u in qs:
+                if not first:
+                    html += ", "
+                html += f"{u.report.upper()}"
+                if u.status in UploadStatusChoices.get_error_status():
+                    html += ' <span class="ui-icon ui-icon-alert" title="With error"></span>'
+                elif u.status in UploadStatusChoices.get_in_progress_status():
+                    html += ' <span class="ui-icon ui-icon-play" title="Importing"></span>'
+                elif u.status == UploadStatusChoices.WAITING_REIMPORT:
+                    html += ' <span class="ui-icon ui-icon-refresh" title="Waiting reimport"></span>'
+                first = False
+            return html
+
+        headers = [_("Expenses: <strong>{total_expenses}</strong>".format(total_expenses=total_expenses)),
+                   _("Revenues: <strong>{total_revenues}</strong>".format(total_revenues=total_revenues))]
+        row = [
+            [format_uploads(expenses), format_uploads(revenues)]
+        ]
+
+        return tabulate(row, headers=headers, tablefmt='unsafehtml')
     uploads.short_description = _("uploads")
 
     @mark_safe

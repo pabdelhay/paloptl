@@ -60,3 +60,7 @@ a.button.create:hover { background-color: #a69a1e; }
     opacity: 0.94;
 }
 .loading-wrap img { width: 50px; vertical-align: middle; }
+
+.field-uploads table { max-width: 400px; table-layout: fixed; }
+.field-uploads table thead th { background: none; border: 0px; }
+.field-uploads table tbody td { padding: 5px 0; border: 0; font-size: 80%; color: #636363; }
