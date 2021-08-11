@@ -3,7 +3,8 @@ from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from apps.budget.models import Budget, Function
+from apps.budget.choices import ExpenseGroupChoices
+from apps.budget.models import Budget, Expense
 from apps.geo.models import Country
 
 
@@ -19,10 +20,12 @@ class APITestCase(TestCase):
 
     def test_budget_historical(self):
         def create_functions(budget):
-            f0 = Function.objects.create(budget=budget, name="test function", code="f0")
+            f0 = Expense.objects.create(budget=budget, group=ExpenseGroupChoices.FUNCTIONAL, name="test function",
+                                        code="f0")
             f0.save()
 
-            f1 = Function.objects.create(parent=f0, budget=budget, name="test sub-function", code="f1")
+            f1 = Expense.objects.create(parent=f0, group=ExpenseGroupChoices.FUNCTIONAL, budget=budget,
+                                        name="test sub-function", code="f1")
             f1.budget_investment = 10
             f1.budget_operation = 10
             f1.execution_investment = 10
@@ -44,7 +47,8 @@ class APITestCase(TestCase):
 
         base_url = f'/budgets/{budget_2020.id}/historical/'
 
-        response = self.client.get(self.get_api_url(base_url), {'budget_account': 'functions'})
+        response = self.client.get(self.get_api_url(base_url), {'group': ExpenseGroupChoices.FUNCTIONAL,
+                                                                'budget_account': 'expenses'})
 
         r = response.json()
         self.assertEqual(response.status_code, status.HTTP_200_OK, "Wrong status code response")
@@ -56,8 +60,9 @@ class APITestCase(TestCase):
         self.assertEqual(r['data'][0]['budget_aggregated'], 20, "Budget aggregated should be 20.")
         self.assertEqual(r['data'][0]['execution_aggregated'], 20, "Execution aggregated should be 20.")
 
-        sub_function = Function.objects.filter(level=1).last()
-        response = self.client.get(self.get_api_url(base_url), {'budget_account': 'functions',
+        sub_function = Expense.objects.filter(level=1).last()
+        response = self.client.get(self.get_api_url(base_url), {'group': ExpenseGroupChoices.FUNCTIONAL,
+                                                                'budget_account': 'expenses',
                                                                 'budget_account_id': sub_function.id})
         r = response.json()
         self.assertEqual(response.status_code, status.HTTP_200_OK, "Wrong status code response")

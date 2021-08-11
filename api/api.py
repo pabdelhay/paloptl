@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from apps.budget.choices import ExpenseGroupChoices, RevenueGroupChoices
-from apps.budget.models import Budget, Function, Agency, TransparencyIndex, Expense, Revenue, BudgetSummary
+from apps.budget.models import Budget, TransparencyIndex, Expense, Revenue, BudgetSummary
 from apps.geo.models import Country
 
 
@@ -152,20 +152,6 @@ class RevenueSerializer(BudgetAccountSerializer):
         fields = BudgetAccountSerializer.Meta.fields
 
 
-class FunctionSerializer(BudgetAccountSerializer):
-    # DEPRECATED
-    class Meta:
-        model = Function
-        fields = BudgetAccountSerializer.Meta.fields
-
-
-class AgencySerializer(BudgetAccountSerializer):
-    # DEPRECATED
-    class Meta:
-        model = Agency
-        fields = BudgetAccountSerializer.Meta.fields
-
-
 class HistoricalParamsSerializer(serializers.Serializer):
     group = serializers.ChoiceField(choices=ExpenseGroupChoices.choices + RevenueGroupChoices.choices)
     budget_account = serializers.ChoiceField(choices=['expenses', 'revenues'])
@@ -265,24 +251,6 @@ class BudgetViewset(ReadOnlyModelViewSet):
         qs = Revenue.objects.filter(budget=budget, level=0, group=group) \
             .exclude(Q(budget_aggregated__isnull=True) & Q(execution_aggregated__isnull=True))
         serializer = ExpenseSerializer(qs, many=True)
-        return Response(serializer.data)
-
-    @action(detail=True)
-    def functions(self, request, pk=None):
-        # DEPRECATED
-        budget = self.get_object()
-        qs = Function.objects.filter(budget=budget, level=0)\
-            .exclude(Q(budget_aggregated__isnull=True) | Q(budget_aggregated=0))
-        serializer = FunctionSerializer(qs, many=True)
-        return Response(serializer.data)
-
-    @action(detail=True)
-    def agencies(self, request, pk=None):
-        # DEPRECATED
-        budget = self.get_object()
-        qs = Agency.objects.filter(budget=budget, level=0)\
-            .exclude(Q(budget_aggregated__isnull=True) | Q(budget_aggregated=0))
-        serializer = AgencySerializer(qs, many=True)
         return Response(serializer.data)
 
     @action(detail=True)

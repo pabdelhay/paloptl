@@ -30,13 +30,6 @@ class Budget(CountryMixin, models.Model):
     is_active = models.BooleanField(verbose_name=_("active"), default=True,
                                     help_text=_("This budget will only be included on site if this option is checked."))
 
-    # DEPRECATED since 2021-07-15. TODO: Remove after data migration to above fields.
-    function_budget = models.FloatField(verbose_name=_("function's budget"), null=True, blank=True, editable=False)
-    function_execution = models.FloatField(verbose_name=_("function's execution"), null=True, blank=True,
-                                           editable=False)
-    agency_budget = models.FloatField(verbose_name=_("agency's execution"), null=True, blank=True, editable=False)
-    agency_execution = models.FloatField(verbose_name=_("agency's execution"), null=True, blank=True, editable=False)
-
     # CSV file
     output_file = models.FileField(upload_to='exports', null=True, blank=True, editable=False,
                                    help_text=_("Auto generated CSV file with all data from budget."))
