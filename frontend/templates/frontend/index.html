@@ -15,16 +15,35 @@ function get_ranking(callback) {
         console.log("Error on fetching ranking data.");
     });
 }
+
 function plot_ranking(){
     var data = {'budgets': ranking_budgets, 'average': ranking_average};
     renderTemplate('#template-ranking', data, '.ranking-wrapper .budgets-wrapper');
 }
+
 function sort_ranking(dimension){
     ranking_budgets = sortByKey(ranking_budgets, dimension);
     $('.ranking-wrapper').find('.sortable').removeClass('active');
     $('.ranking-wrapper').find("[data-dimension='" + dimension + "']").addClass('active');
     plot_ranking();
 }
+
+function parallaxScroll() {
+    var scrolled = $(window).scrollTop();
+    $('#parallax-lvl-1').css('top', (0 - (scrolled * .7)) + 'px');
+    $('#parallax-lvl-1').css('left', (0 - (scrolled * .2)) + 'px');
+    $('#parallax-lvl-2').css('top', (0 - (scrolled * .65)) + 'px');
+    //$('#parallax-lvl-2').css('left', (0 - (scrolled * .75)) + 'px');
+    $('#parallax-lvl-3').css('top', (0 - (scrolled * .6)) + 'px');
+    $('#parallax-lvl-3').css('left', (0 + (scrolled * .18)) + 'px');
+    $('#parallax-lvl-4').css('top', (0 - (scrolled * .5)) + 'px');
+    $('#parallax-lvl-4').css('left', (0 + (scrolled * .12)) + 'px');
+    $('#parallax-lvl-5').css('top', (0 - (scrolled * .35)) + 'px');
+    //$('#parallax-lvl-5').css('top', (0 - (scrolled * .4)) + 'px');
+    $('#parallax-lvl-6').css('top', (0 - (scrolled * .28)) + 'px');
+    $('#parallax-lvl-6').css('left', (0 - (scrolled * .12)) + 'px');
+}
+
 $(document).ready(function(){
     $(document).on('click', '.ranking-wrapper .sortable', function(ev){
         var dimension = $(this).data('dimension');
@@ -33,7 +52,11 @@ $(document).ready(function(){
 
     get_ranking(function(data){
         plot_ranking()
-    })
+    });
+
+    $(window).bind('scroll',function(e){
+        parallaxScroll();
+    });
 });
 </script>
 {% endblock extrahead %}
@@ -43,16 +66,26 @@ $(document).ready(function(){
     <div class="hero">
         <div class="container">
             <div class="row">
-                <div class="col-6">
-                    <h2>
-                        Transparência<br>e Tecnologia
-                    </h2>
-                    <div class="short-description">
-                        Conectando a sociedade<br>às finanças públicas
+                <div class="col-8">
+                    <div class="text">
+                        Nossa missão é <strong>derrubar</strong><br>
+                        todas as <strong>barreiras</strong> entre os<br>
+                        <strong>cidadãos</strong> e as informações<br>
+                        sobre <strong>finanças públicas</strong><br>
+                        dos países _
                     </div>
                 </div>
-                <div class="col-6 img-wrap">
-                    <img src="{% static 'img/hero-img.png' %}" />
+                <div class="col-4 countries-bubbles">
+                    <div class="short-description">
+                        Escolha um país para<br>
+                        entender seu orçamento
+                    </div>
+                    {% for country in countries %}
+                    <div id="parallax-lvl-{{ forloop.counter }}">
+                        <a href="{% url 'country-details' country.slug %}" id="country-{{ forloop.counter }}" class="bubble" style="background-image: url('{{ country.flag.url }}');">&nbsp;</a>
+                    </div>
+                    {% endfor %}
+
                 </div>
             </div>
         </div>

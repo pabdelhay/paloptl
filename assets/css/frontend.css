@@ -1,5 +1,5 @@
 body {
-  font-family: "Montserrat", sans-serif;
+  font-family: Montserrat, sans-serif;
 }
 
 .big-container {
@@ -306,7 +306,8 @@ h3 .arrow {
   text-align: left;
 }
 .page-index .hero {
-  padding: 40px 0;
+  overflow: hidden;
+  min-height: 400px;
   background-image: url("../img/hero-bg.png");
   background-size: 100%;
   background-repeat: no-repeat;
@@ -318,10 +319,75 @@ h3 .arrow {
   letter-spacing: 6px;
   margin: 90px 0 20px;
 }
-.page-index .hero .short-description {
+.page-index .hero .text {
+  padding: 60px 0;
   color: #FFF;
-  font-size: 30px;
-  line-height: 34px;
+  font-size: 36px;
+  line-height: 44px;
+}
+.page-index .hero .countries-bubbles {
+  position: relative;
+}
+.page-index .hero .countries-bubbles .short-description {
+  color: #FFF;
+  font-size: 18px;
+  text-align: center;
+  display: inline-block;
+  position: relative;
+  left: 20px;
+  top: 30px;
+}
+.page-index .hero .countries-bubbles #parallax-lvl-1,
+.page-index .hero .countries-bubbles #parallax-lvl-2,
+.page-index .hero .countries-bubbles #parallax-lvl-3,
+.page-index .hero .countries-bubbles #parallax-lvl-4,
+.page-index .hero .countries-bubbles #parallax-lvl-5,
+.page-index .hero .countries-bubbles #parallax-lvl-6 {
+  position: absolute;
+  top: 0;
+}
+.page-index .hero .countries-bubbles .bubble {
+  display: block;
+  background-size: cover;
+  color: white;
+  text-align: center;
+  border-radius: 100%;
+  position: absolute;
+  opacity: 0.8;
+  width: 100px;
+  height: 100px;
+  background-color: green;
+  transition: width 0.7s, height 0.7s, opacity 1s;
+}
+.page-index .hero .countries-bubbles .bubble:hover {
+  opacity: 0.98;
+  z-index: 999;
+  width: 120px;
+  height: 120px;
+}
+.page-index .hero .countries-bubbles #country-1 {
+  top: 170px;
+  left: 0px;
+}
+.page-index .hero .countries-bubbles #country-2 {
+  top: 110px;
+  left: 60px;
+}
+.page-index .hero .countries-bubbles #country-3 {
+  top: 240px;
+  left: 10px;
+}
+.page-index .hero .countries-bubbles #country-4 {
+  top: 140px;
+  left: 140px;
+}
+.page-index .hero .countries-bubbles #country-5 {
+  top: 220px;
+  left: 150px;
+}
+.page-index .hero .countries-bubbles #country-6 {
+  top: 270px;
+  left: 85px;
 }
 .page-index .hero .img-wrap {
   text-align: right;

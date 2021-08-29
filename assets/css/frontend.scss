@@ -1,5 +1,3 @@
-body { font-family: 'Montserrat', sans-serif; }
-
 $main_color: #0f2843;
 $subtitle_color: #0f69a3;
 $description_bg_color: #194262;
@@ -12,6 +10,7 @@ $font_main: Montserrat;
 $font_secondary: CeraPro;
 $font_money: RobotoMono;
 
+body { font-family: $font_main, sans-serif; }
 .big-container { margin: 0 30px; }
 a { color: $main_color; text-decoration: none; }
 
@@ -309,7 +308,9 @@ h3 {
   text-align: left;
 
   .hero {
-    padding: 40px 0;
+    overflow: hidden;
+    min-height: 400px;
+    //padding: 40px 0;
     background-image: url("../img/hero-bg.png");
     background-size: 100%;
     background-repeat: no-repeat;
@@ -321,10 +322,59 @@ h3 {
       letter-spacing: 6px;
       margin: 90px 0 20px;
     }
-    .short-description {
+    .text {
+      padding: 60px 0;
       color: #FFF;
-      font-size: 30px;
-      line-height: 34px;
+      font-size: 36px;
+      line-height: 44px;
+    }
+    .countries-bubbles {
+      .short-description {
+        color: #FFF;
+        font-size: 18px;
+        text-align: center;
+        display: inline-block;
+        position: relative;
+        left: 20px;
+        top: 30px;
+      }
+
+      position: relative;
+
+      #parallax-lvl-1,
+      #parallax-lvl-2,
+      #parallax-lvl-3,
+      #parallax-lvl-4,
+      #parallax-lvl-5,
+      #parallax-lvl-6 {
+        position: absolute;
+        top: 0;
+      }
+      .bubble {
+        display: block;
+        background-size: cover;
+        color: white;
+        text-align: center;
+        border-radius: 100%;
+        position: absolute;
+        opacity: 0.8;
+        width: 100px;
+        height: 100px;
+        background-color: green;
+        transition: width .7s, height .7s, opacity 1s;
+        &:hover {
+          opacity: 0.98;
+          z-index: 999;
+          width: 120px;
+          height: 120px;
+        }
+      }
+      #country-1 { top: 170px; left: 0px; }
+      #country-2 { top: 110px; left: 60px; }
+      #country-3 { top: 240px; left: 10px; }
+      #country-4 { top: 140px; left: 140px; }
+      #country-5 { top: 220px; left: 150px; }
+      #country-6 { top: 270px; left: 85px; }
     }
 
     .img-wrap {
