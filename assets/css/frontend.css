@@ -205,14 +205,15 @@ h3 .arrow {
 }
 
 .header h1 {
+  font-size: 34px;
   padding: 36px 0;
+  font-weight: normal;
   margin: 0;
-  line-height: 62px;
+  line-height: 1;
 }
 .header h1 a {
   color: #0f2843;
   text-decoration: none;
-  line-height: 57px;
 }
 .header h1 a:active {
   color: #215c96;
@@ -307,7 +308,7 @@ h3 .arrow {
 }
 .page-index .hero {
   overflow: hidden;
-  min-height: 400px;
+  min-height: 430px;
   background-image: url("../img/hero-bg.png");
   background-size: 100%;
   background-repeat: no-repeat;
@@ -322,8 +323,8 @@ h3 .arrow {
 .page-index .hero .text {
   padding: 60px 0;
   color: #FFF;
-  font-size: 36px;
-  line-height: 44px;
+  font-size: 34px;
+  line-height: 1.5;
 }
 .page-index .hero .countries-bubbles {
   position: relative;
@@ -335,7 +336,7 @@ h3 .arrow {
   display: inline-block;
   position: relative;
   left: 20px;
-  top: 30px;
+  margin-top: 30px;
 }
 .page-index .hero .countries-bubbles #parallax-lvl-1,
 .page-index .hero .countries-bubbles #parallax-lvl-2,
@@ -401,10 +402,11 @@ h3 .arrow {
   background-position-x: right;
   background-position-y: top;
   background-color: #194262;
+  font-size: 22px;
   color: #FFFFFF;
   position: relative;
   margin-top: -7px;
-  padding: 40px 0 80px;
+  padding: 20px 0 40px;
 }
 .page-index .about h2 {
   color: #FFF;
@@ -412,6 +414,23 @@ h3 .arrow {
 }
 .page-index .about h2 .arrow {
   border-left-color: #FFF;
+}
+.page-index .about .paragraph {
+  margin-bottom: 30px;
+}
+.page-index .about .badget {
+  display: inline-block;
+  width: 270px;
+  text-align: center;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background-color: #0f2843;
+  color: #FFF;
+  margin-bottom: 20px;
+  position: relative;
+}
+.page-index .about .badget.right {
+  float: right;
 }
 .page-index .ranking {
   background-color: #f7f5f5;
@@ -430,6 +449,13 @@ h3 .arrow {
 }
 .page-index .ranking .ranking-header .short-description {
   color: #0f69a3;
+}
+.page-index .ranking .ranking-header .short-description a {
+  color: #0f69a3;
+  text-decoration: underline;
+}
+.page-index .ranking .ranking-header .short-description a:hover {
+  text-decoration: none;
 }
 .page-index .ranking .ranking-wrapper {
   width: 100%;

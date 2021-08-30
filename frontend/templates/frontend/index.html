@@ -28,6 +28,12 @@ function sort_ranking(dimension){
     plot_ranking();
 }
 
+function scroll_to(href){
+    $('html, body').animate({
+        scrollTop: $(href).offset().top
+    }, 1000);
+}
+
 function parallaxScroll() {
     var scrolled = $(window).scrollTop();
     $('#parallax-lvl-1').css('top', (0 - (scrolled * .7)) + 'px');
@@ -42,6 +48,7 @@ function parallaxScroll() {
     //$('#parallax-lvl-5').css('top', (0 - (scrolled * .4)) + 'px');
     $('#parallax-lvl-6').css('top', (0 - (scrolled * .28)) + 'px');
     $('#parallax-lvl-6').css('left', (0 - (scrolled * .12)) + 'px');
+    $('.countries-bubbles .short-description').css('top', (0 - (scrolled * .5)) + 'px');
 }
 
 $(document).ready(function(){
@@ -56,6 +63,10 @@ $(document).ready(function(){
 
     $(window).bind('scroll',function(e){
         parallaxScroll();
+    });
+    $(document).on('click', '.scroll-to', function(ev){
+        ev.preventDefault();
+        scroll_to($(this).attr('href'));
     });
 });
 </script>
@@ -82,10 +93,9 @@ $(document).ready(function(){
                     </div>
                     {% for country in countries %}
                     <div id="parallax-lvl-{{ forloop.counter }}">
-                        <a href="{% url 'country-details' country.slug %}" id="country-{{ forloop.counter }}" class="bubble" style="background-image: url('{{ country.flag.url }}');">&nbsp;</a>
+                        <a href="{% url 'country-details' country.slug %}" title="{{ country.name }}" id="country-{{ forloop.counter }}" class="bubble" style="background-image: url('{{ country.flag.url }}');">&nbsp;</a>
                     </div>
                     {% endfor %}
-
                 </div>
             </div>
         </div>
@@ -98,33 +108,28 @@ $(document).ready(function(){
                 </div>
             </div>
             <div class="row">
-                <div class="col-4">
-                    Esta plataforma torna os orçamentos
-                    públicos federais dos PALOP-TL mais
-                    acessíveis. Os cidadãos contam agora com
-                    uma ferramenta para monitorar as receitas
-                    e despesas públicas de forma prática e
-                    ágil. Extraímos os dados de relatórios
-                    oficiais publicados em formatos fechados
-                    e os tornamos estruturados e abertos,
-                    prontos para análise. Além das bases,
-                    disponibilizamos gráficos interativos
-                    e filtros de consulta que facilitam o
-                    consumo de informações complexas.
+                <div class="col-8">
+                    <div class="paragraph">
+                        Extraímos os dados de relatórios oficiais publicados em formatos fechados
+                        e os tornamos estruturados e abertos: <strong>prontos para análise</strong> _
+                    </div>
+                    <div class="paragraph">
+                        Para dar visibilidade e incentivar avanços na pauta, construímos o
+                        <strong>primeiro Índice de Transparência Orçamental com recorte focado nos PALOP-TL</strong> _
+                    </div>
+                    <div class="paragraph">
+                        <strong>Crescimento modular</strong>: Novas perspectivas da transparência orçamental serão
+                        incorporadas na Plataforma e no Índice. As novas funcionalidades
+                        serão definidas a partir de <strong>sessões de <i>Design Thinking</i> com representantes
+                        da sociedade civíl</strong> _
+                    </div>
                 </div>
                 <div class="col-4">
-                    Aqui você encontra também o primeiro
-                    Índice de Transparência Orçamental com
-                    recorte focado nos seis PALOP-TL. Trata-se
-                    de um instrumento que pretende dar
-                    visibilidade e incentivar avanços no tema.
-                    O projeto prevê um crescimento modular
-                    tanto da plataforma de dados quanto do
-                    índice. Novas perspectivas e abordagens
-                    da transparência orçamental serão
-                    incorporadas conforme forem definidas
-                    em conjunto com representantes da
-                    sociedade civil.
+                    <div class="badget">Base de dados abertas</div>
+                    <div class="badget right">Visualizações interativas</div>
+                    <div class="badget">Filtros de Consulta</div>
+                    <div class="badget right">Séries Históricas</div>
+                    <div class="badget">Índice de Transparência</div>
                 </div>
             </div>
         </div>
@@ -135,11 +140,12 @@ $(document).ready(function(){
             <div class="row">
                 <div class="col-12">
                     <div class="ranking-header">
-                        <h2><span class="arrow"></span>RANKING</h2>
-                        <h4>Índice PALOP-TL de Transparência Orçamental</h4>
+                        <h2><span class="arrow"></span>Índice PALOP-TL de Transparência Orçamental</h2>
                         <div class="short-description">
-                            Resume quantitativamente, em três indicadores, a qualidade da transparência no fornecimento<br>
-                            dos dados básicos da receita e despesa que compõem esta plataforma.
+                            Resume a qualidade da transparência no fornecimento dos dados básicos da receita e despesa
+                            que compõem esta plataforma.<br>
+                            Veja mais detalhes na <a class="scroll-to" href="#methodology">Metodologia</a>,
+                            disponível abaixo.
                         </div>
                     </div>
                 </div>
@@ -171,7 +177,7 @@ $(document).ready(function(){
                                     </th>
                                     <th class="f-dimension sortable" data-dimension="score_data_quality">
                                         Qualidade da Informação<br>
-                                        (0-300)
+                                        (0-100)
                                     </th>
                                     <th class="f-dimension sortable active" data-dimension="transparency_index">
                                         Indicador Geral de Transparência
@@ -189,7 +195,7 @@ $(document).ready(function(){
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <h4>VEJA MAIS DETALHES SOBRE A METODOLOGIA E RESULTADOS DETALHADOS</h4>
+                        <h4 id="methodology">VEJA MAIS DETALHES SOBRE A METODOLOGIA E RESULTADOS DETALHADOS</h4>
                         <ul class="links">
 {#                            <li>#}
 {#                                Fundamentação do trabalho e Discussão de Resultados do Índice 2020#}

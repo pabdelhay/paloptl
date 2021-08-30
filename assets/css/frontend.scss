@@ -204,13 +204,14 @@ h3 {
 
 .header {
   h1 {
-    padding: 36px 0 ;
+    font-size: 34px;
+    padding: 36px 0;
+    font-weight: normal;
     margin: 0;
-    line-height: 62px;
+    line-height: 1;
     a {
       color: #0f2843;
       text-decoration: none;
-      line-height: 57px;
       &:active { color: #215c96; }
     }
   }
@@ -309,7 +310,7 @@ h3 {
 
   .hero {
     overflow: hidden;
-    min-height: 400px;
+    min-height: 430px;
     //padding: 40px 0;
     background-image: url("../img/hero-bg.png");
     background-size: 100%;
@@ -325,8 +326,8 @@ h3 {
     .text {
       padding: 60px 0;
       color: #FFF;
-      font-size: 36px;
-      line-height: 44px;
+      font-size: 34px;
+      line-height: 1.5;
     }
     .countries-bubbles {
       .short-description {
@@ -336,7 +337,8 @@ h3 {
         display: inline-block;
         position: relative;
         left: 20px;
-        top: 30px;
+        margin-top: 30px;
+        //top: 30px;
       }
 
       position: relative;
@@ -388,15 +390,33 @@ h3 {
     background-position-x: right;
     background-position-y: top;
     background-color: $description_bg_color;
+    font-size: 22px;
     color: #FFFFFF;
     position: relative;
     margin-top: -7px;
-    padding: 40px 0 80px;
+    padding: 20px 0 40px;
     h2 {
       color: #FFF;
       margin-bottom: 20px;
       .arrow {
         border-left-color: #FFF;
+      }
+    }
+    .paragraph {
+      margin-bottom: 30px;
+    }
+    .badget {
+      display: inline-block;
+      width: 270px;
+      text-align: center;
+      padding: 5px 10px;
+      border-radius: 10px;
+      background-color: $main_color;
+      color: #FFF;
+      margin-bottom: 20px;
+      position: relative;
+      &.right {
+        float: right;
       }
     }
   }
@@ -417,6 +437,13 @@ h3 {
       }
       .short-description {
         color: $subtitle_color;
+        a {
+          color: $subtitle_color;
+          text-decoration: underline;
+          &:hover {
+            text-decoration: none;
+          }
+        }
       }
     }
     .ranking-wrapper {
