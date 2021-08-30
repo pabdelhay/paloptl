@@ -431,6 +431,7 @@ h3 {
   }
 
   .ranking {
+    .material-icons { font-size: 20px; }
     background-color: $ranking_background_color;
 
     .ranking-header {
@@ -473,8 +474,15 @@ h3 {
               font-size: 14px;
               vertical-align: bottom;
               padding-bottom: 10px;
+              position: relative;
               &.active {
                 border-bottom: 5px solid #0f2843;
+              }
+              .material-icons {
+                position: absolute;
+                top: 15px;
+                right: 10px;
+                cursor: help;
               }
             }
           }
@@ -572,26 +580,6 @@ h3 {
       }
       .sortable {
         cursor: pointer;
-      }
-      .row-dimensions-header {
-        position: absolute;
-        right: 0;
-        display: flex;
-        .f-dimension {
-          //box-shadow:inset 0px 0px 0px 1px #f00;
-          width: 181px;
-          text-align: center;
-          position: relative;
-          top: 60px;
-          font-size: 14px;
-          font-weight: bold;
-          border-bottom: 1px solid $main_color;
-          padding-bottom: 20px;
-
-          &.active {
-            border-bottom-width: 3px;
-          }
-        }
       }
 
     }
@@ -1152,7 +1140,7 @@ h3 {
 .mt-0 { margin-top: 0 !important; }
 .mb-0 { margin-bottom: 0 !important; }
 
-.customIntro {
+.customIntro, .customIntroRanking {
   .introjs-tooltip-title {
     font-family: $font_main;
     color: $main_color;
@@ -1160,4 +1148,9 @@ h3 {
   .introjs-tooltiptext {
     font-family: $font_secondary;
   }
+}
+
+.customIntroRanking {
+  min-width: 550px !important;
+  max-width: none;
 }

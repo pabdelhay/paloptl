@@ -444,6 +444,9 @@ h3 .arrow {
 .page-index .ranking {
   background-color: #f7f5f5;
 }
+.page-index .ranking .material-icons {
+  font-size: 20px;
+}
 .page-index .ranking .ranking-header {
   padding: 40px 0;
 }
@@ -484,9 +487,16 @@ h3 .arrow {
   font-size: 14px;
   vertical-align: bottom;
   padding-bottom: 10px;
+  position: relative;
 }
 .page-index .ranking .ranking-wrapper table.ranking-table thead th.f-dimension.active {
   border-bottom: 5px solid #0f2843;
+}
+.page-index .ranking .ranking-wrapper table.ranking-table thead th.f-dimension .material-icons {
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  cursor: help;
 }
 .page-index .ranking .ranking-wrapper table.ranking-table tbody .separator-row {
   height: 10px;
@@ -586,24 +596,6 @@ h3 .arrow {
 }
 .page-index .ranking .ranking-wrapper .sortable {
   cursor: pointer;
-}
-.page-index .ranking .ranking-wrapper .row-dimensions-header {
-  position: absolute;
-  right: 0;
-  display: flex;
-}
-.page-index .ranking .ranking-wrapper .row-dimensions-header .f-dimension {
-  width: 181px;
-  text-align: center;
-  position: relative;
-  top: 60px;
-  font-size: 14px;
-  font-weight: bold;
-  border-bottom: 1px solid #0f2843;
-  padding-bottom: 20px;
-}
-.page-index .ranking .ranking-wrapper .row-dimensions-header .f-dimension.active {
-  border-bottom-width: 3px;
 }
 .page-index .ranking .countries-description {
   padding-bottom: 10px;
@@ -1194,12 +1186,17 @@ h3 .arrow {
   margin-bottom: 0 !important;
 }
 
-.customIntro .introjs-tooltip-title {
+.customIntro .introjs-tooltip-title, .customIntroRanking .introjs-tooltip-title {
   font-family: Montserrat;
   color: #0f2843;
 }
-.customIntro .introjs-tooltiptext {
+.customIntro .introjs-tooltiptext, .customIntroRanking .introjs-tooltiptext {
   font-family: CeraPro;
+}
+
+.customIntroRanking {
+  min-width: 550px !important;
+  max-width: none;
 }
 
 /*# sourceMappingURL=frontend.css.map */

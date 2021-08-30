@@ -51,6 +51,46 @@ function parallaxScroll() {
     $('.countries-bubbles .short-description').css('top', (0 - (scrolled * .5)) + 'px');
 }
 
+function ranking_help(step) {
+    introJs().setOptions({
+        nextLabel: 'Próxima dimensão',
+        prevLabel: 'Dimensão anterior',
+        doneLabel: 'Pronto',
+        hidePrev: false,
+        tooltipClass: 'customIntroRanking',
+        showProgress: false,
+        showBullets: true,
+        steps: [{
+            element: document.querySelector('.header-open_data'),
+            title: 'Dados Abertos',
+            position: 'bottom',
+            intro: 'Dados considerados abertos são <strong>completos, primários</strong> (coletados na fonte e com o menor nível de ' +
+                'granularidade possível), <strong>acessíveis</strong> (disponíveis online), <strong>não discriminatórios</strong> (qualquer pessoa pode ' +
+                'acessar sem qualquer necessidade de identificação), <strong>atualizados</strong>, em <strong>formato processável</strong> por máquinas, ' +
+                '<strong>não proprietários</strong> (como .csv por exemplo) e sob <strong>licença livre</strong> (não patenteada/ sem copyright). ' +
+                'Veja a metodologia para entender mais sobre a lógica de pontuação nesta dimensão.'
+        }, {
+            element: document.querySelector('.header-score_reports'),
+            title: 'Relatórios Orçamentais',
+            position: 'bottom',
+            intro: 'Avalia se os relatórios relativos ao ciclo de implementação do orçamento são <strong>elaborados ' +
+                'e publicados no prazo</strong>. Os relatórios avaliados são <strong>Orçamento Promulgado, os Relatórios de ' +
+                'Execução</strong> e o <strong>Relatório de Final de Ano</strong> (ou Contas Gerais do Estado). ' +
+                'Veja a metodologia para entender mais sobre a lógica de pontuação nesta dimensão.'
+        }, {
+            element: document.querySelector('.header-data_quality'),
+            title: 'Qualidade da Informação',
+            position: 'bottom',
+            intro: 'Acessa em que medida o cidadão pode acompanhar desde a <strong>previsão do orçamento ' +
+                'para o ano até a arrecadação e gasto efetivo dos valores</strong>. Atualmente avalia a ' +
+                'disponibilidade de três tipos de classificação: <strong>receita por natureza econômica</strong> ' +
+                '(origem da entrada de recurso, como impostos ou transferências), <strong>despesa por ' +
+                'classificação administrativa</strong> (por órgãos da administração) e <strong>funcional</strong> ' +
+                '(por temas de ação pública, como saúde e educação).'
+        }]
+    }).goToStepNumber(step).start();
+}
+
 $(document).ready(function(){
     $(document).on('click', '.ranking-wrapper .sortable', function(ev){
         var dimension = $(this).data('dimension');
@@ -67,6 +107,11 @@ $(document).ready(function(){
     $(document).on('click', '.scroll-to', function(ev){
         ev.preventDefault();
         scroll_to($(this).attr('href'));
+    });
+    $(document).on('click', '.ranking-table .help', function(ev){
+        ev.preventDefault();
+        ranking_help($(this).data('step'));
+        ev.stopPropagation();
     });
 });
 </script>
@@ -153,7 +198,9 @@ $(document).ready(function(){
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-12">Clique no cabeçalho da tabela para ordenar o ranking por uma dimensão específica.</div>
+                <div class="col-12">
+                    Clique no cabeçalho da tabela para ordenar o ranking por uma dimensão específica ou
+                    no ícone <span class="material-icons help" data-step="1">info</span> para saber mais sobre a dimensão.</div>
             </div>
         </div>
         <hr />
@@ -167,19 +214,25 @@ $(document).ready(function(){
                                     <th class="f-position"></th>
                                     <th class="f-flag"></th>
                                     <th></th>
-                                    <th class="f-dimension sortable" data-dimension="score_open_data">
-                                        Dados Abertos<br>
+                                    <th class="f-dimension sortable header-open_data" data-dimension="score_open_data" title="Clique para ordernar por esta dimensão">
+                                        Dados<br/>
+                                        Abertos<br/>
                                         (0-100)
+                                        <span class="material-icons help" data-step="1" title="Saiba mais sobre esta dimensão">info</span>
                                     </th>
-                                    <th class="f-dimension sortable" data-dimension="score_reports">
-                                        Relatórios Orçamentais<br>
+                                    <th class="f-dimension sortable header-score_reports" data-dimension="score_reports" title="Clique para ordernar por esta dimensão">
+                                        Relatórios<br/>
+                                        Orçamentais<br/>
                                         (0-100)
+                                        <span class="material-icons help" data-step="2" title="Saiba mais sobre esta dimensão">info</span>
                                     </th>
-                                    <th class="f-dimension sortable" data-dimension="score_data_quality">
-                                        Qualidade da Informação<br>
+                                    <th class="f-dimension sortable header-data_quality" data-dimension="score_data_quality" title="Clique para ordernar por esta dimensão">
+                                        Qualidade da<br/>
+                                        Informação<br/>
                                         (0-100)
+                                        <span class="material-icons help" data-step="3" title="Saiba mais sobre esta dimensão">info</span>
                                     </th>
-                                    <th class="f-dimension sortable active" data-dimension="transparency_index">
+                                    <th class="f-dimension sortable active" data-dimension="transparency_index" title="Clique para ordernar pelo ÍNDICE GERAL">
                                         Indicador Geral de Transparência
                                     </th>
                                 </tr>

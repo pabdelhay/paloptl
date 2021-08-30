@@ -2,11 +2,9 @@
 {% load static %}
 
 {% block extrahead %}
-    <link rel="stylesheet" type="text/css" href="{% static "external/introjs/introjs.min.css" %}">
     <script src="//cdn.amcharts.com/lib/4/core.js"></script>
     <script src="//cdn.amcharts.com/lib/4/charts.js"></script>
     <script src="//cdn.amcharts.com/lib/4/themes/animated.js"></script>
-    <script src="{% static 'external/introjs/intro.min.js' %}"></script>
     <script type="text/javascript">
     var MEDIA_URL = '{% get_media_prefix %}';
     var treemap;
