@@ -480,9 +480,12 @@ h3 {
               }
               .material-icons {
                 position: absolute;
-                top: 15px;
-                right: 10px;
+                bottom: 10px;
+                right: 30px;
                 cursor: help;
+              }
+              small {
+                font-weight: normal;
               }
             }
           }
@@ -580,6 +583,9 @@ h3 {
       }
       .sortable {
         cursor: pointer;
+        &:hover {
+          color: #0f69a3;
+        }
       }
 
     }
