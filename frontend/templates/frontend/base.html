@@ -63,7 +63,7 @@
                                 <div></div>
                             </div>
                             <div class="dropdown-content">
-                                <div class="short-description">Escolha uma país e<br>entenda seu orçamento</div>
+                                <div class="short-description">Escolha um país e<br>entenda seu orçamento</div>
                                 {% for country in all_countries %}
                                     <a href="{% url 'country-details' country.slug %}">
                                         <img src="{{ country.flag.url }}"/> {{ country.name }}
