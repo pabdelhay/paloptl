@@ -37,7 +37,7 @@
         'organic': "Unidade Orçamentária",
         'functional': "Sub-função",
         'nature': "Especificação",
-        'source': "Fonte (sub)",
+        'source': "Fonte detalhada",
     }
     am4core.useTheme(am4themes_animated);
 
@@ -392,12 +392,18 @@
         $('.budget-selector a[data-budget_id="'+budget_id+'"]').addClass('active');
         $('.group-selector a').removeClass('active');
         $('.group-selector a[data-group="'+group+'"]').addClass('active');
+        update_search_placeholders();
 
         get_budget_data(budget_id, budget_account, group, function(data){
             current_budget_data = data;
             init_views(current_budget_data);
             inactive_budget_accounts_without_data();
         });
+    }
+    function update_search_placeholders(){
+        var msg = "Busque por " + get_group_label(0, current_group) + " ou " + get_group_label(1, current_group)
+        $('#search').attr('placeholder', msg);
+        $('.search-link').attr('title', msg);
     }
     function inactive_budget_accounts_without_data(){
         // Inactive budget_accounts and groups without data and toggle closest with data.
@@ -725,7 +731,7 @@
             var category_id = $(this).closest('tr').data('category_id');
             toggle_datatable_row(category_id, false);
         });
-        $(document).on('click', '.visualization-selector a', function(ev){
+        $(document).on('click', '.visualization-selector a, .search-selector a', function(ev){
             var selector = $(this).attr('href');
             $('html, body').animate({
                 scrollTop: $(selector).offset().top
@@ -748,9 +754,12 @@
             }
             plot_datatable(current_budget_data, field, order_dir);
         });
-        $('#search').bind('keyup change', function (ev) {
+        $('#search').on('keyup change', function (ev) {
             var term = $(this).val();
             search_term(term);
+        });
+        $(document).on('click', '.search-link', function(ev){
+            $('#search').focus();
         });
 
         // Init

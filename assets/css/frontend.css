@@ -745,7 +745,7 @@ h3 .arrow {
 }
 .page-country-detail .breadcrumb-row .budget-account-selector-row > div {
   display: inline-block;
-  border-right: 1px solid #82aecb;
+  border-right: 1px solid #d8d8d8;
   padding-right: 10px;
   margin-right: 10px;
   margin-left: -5px;
@@ -791,7 +791,6 @@ h3 .arrow {
   border-right: 1px solid #82aecb;
 }
 .page-country-detail .breadcrumb-row .budget-account-selector-row .budget-account-selector {
-  border-right: 1px solid #82aecb;
   padding-right: 10px;
   margin-right: 10px;
 }
@@ -805,20 +804,20 @@ h3 .arrow {
 .page-country-detail .breadcrumb-row .budget-account-selector-row .budget-selector a:last-child {
   border-right: 0;
 }
-.page-country-detail .breadcrumb-row .budget-account-selector-row .visualization-selector {
+.page-country-detail .breadcrumb-row .budget-account-selector-row .visualization-selector, .page-country-detail .breadcrumb-row .budget-account-selector-row .search-selector {
   margin-left: -10px;
 }
-.page-country-detail .breadcrumb-row .budget-account-selector-row .visualization-selector a {
+.page-country-detail .breadcrumb-row .budget-account-selector-row .visualization-selector a, .page-country-detail .breadcrumb-row .budget-account-selector-row .search-selector a {
   width: 20px;
   padding: 4px 2px;
   background: none;
   border-right: 0;
   color: #cacaca;
 }
-.page-country-detail .breadcrumb-row .budget-account-selector-row .visualization-selector a.active {
+.page-country-detail .breadcrumb-row .budget-account-selector-row .visualization-selector a.active, .page-country-detail .breadcrumb-row .budget-account-selector-row .search-selector a.active {
   color: gray;
 }
-.page-country-detail .breadcrumb-row .budget-account-selector-row .visualization-selector a:hover {
+.page-country-detail .breadcrumb-row .budget-account-selector-row .visualization-selector a:hover, .page-country-detail .breadcrumb-row .budget-account-selector-row .search-selector a:hover {
   background: none !important;
   color: #6b6b6b;
 }
@@ -1102,8 +1101,8 @@ h3 .arrow {
 }
 .page-country-detail .datatable-wrapper .datatable-search-wrapper input:focus {
   outline: 0;
-  border: 1px solid #bbbbbb;
-  box-shadow: 0px 1px 5px 1px #adc9d6;
+  border: 1px solid #0f69a4;
+  box-shadow: 0px 1px 5px 1px #0f69a4;
 }
 .page-country-detail .datatable-wrapper table.datatable-info td {
   font-family: RobotoMono;
