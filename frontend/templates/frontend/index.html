@@ -122,7 +122,7 @@ $(document).ready(function(){
     <div class="hero">
         <div class="container">
             <div class="row">
-                <div class="col-8">
+                <div class="col-6">
                     <div class="text">
                         Nossa missão é <strong>derrubar</strong><br>
                         todas as <strong>barreiras</strong> entre os<br>
@@ -131,16 +131,25 @@ $(document).ready(function(){
                         dos países _
                     </div>
                 </div>
-                <div class="col-4 countries-bubbles">
-                    <div class="short-description">
-                        Escolha um país para<br>
-                        entender seu orçamento
-                    </div>
+                <div class="col-6 countries-flags">
+                    <div class="row">
                     {% for country in countries %}
-                    <div id="parallax-lvl-{{ forloop.counter }}">
-                        <a href="{% url 'country-details' country.slug %}" title="{{ country.name }}" id="country-{{ forloop.counter }}" class="bubble" style="background-image: url('{{ country.flag.url }}');">&nbsp;</a>
-                    </div>
+                        <div class="col-4">
+                            <div class="flag-wrapper">
+                                <img src="{{ country.flag.url }}" />
+                                <a href="{% url 'country-details' country.slug %}" class="overlay"><span>{{ country.name }}</span></a>
+                            </div>
+                        </div>
                     {% endfor %}
+                    </div>
+                    <div class="short-description">
+                        Escolha um país para entender seu orçamento
+                    </div>
+{#                    {% for country in countries %}#}
+{#                    <div id="parallax-lvl-{{ forloop.counter }}">#}
+{#                        <a href="{% url 'country-details' country.slug %}" title="{{ country.name }}" id="country-{{ forloop.counter }}" class="bubble" style="background-image: url('{{ country.flag.url }}');">&nbsp;</a>#}
+{#                    </div>#}
+{#                    {% endfor %}#}
                 </div>
             </div>
         </div>
@@ -154,27 +163,46 @@ $(document).ready(function(){
             </div>
             <div class="row">
                 <div class="col-8">
-                    <div class="paragraph">
-                        Extraímos os dados de relatórios oficiais publicados em formatos fechados
-                        e os tornamos estruturados e abertos: <strong>prontos para análise</strong> _
-                    </div>
-                    <div class="paragraph">
-                        Para dar visibilidade e incentivar avanços na pauta, construímos o
-                        <strong>primeiro Índice de Transparência Orçamental com recorte focado nos PALOP-TL</strong> _
-                    </div>
-                    <div class="paragraph">
-                        <strong>Crescimento modular</strong>: Novas perspectivas da transparência orçamental serão
-                        incorporadas na Plataforma e no Índice. As novas funcionalidades
-                        serão definidas a partir de <strong>sessões de <i>Design Thinking</i> com representantes
-                        da sociedade civíl</strong> _
+                    <div class="description">
+                        <div class="paragraph">
+                            Extraímos os dados de relatórios oficiais publicados em formatos fechados
+                            e os tornamos estruturados e abertos: <strong>prontos para análise</strong> _
+                        </div>
+                        <div class="paragraph">
+                            Para dar visibilidade e incentivar avanços na pauta, construímos o
+                            <strong>primeiro Índice de Transparência Orçamental com recorte focado nos PALOP-TL</strong> _
+                        </div>
+                        <div class="paragraph">
+                            <strong>Crescimento modular</strong>: Novas perspectivas da transparência orçamental serão
+                            incorporadas na Plataforma e no Índice. As novas funcionalidades
+                            serão definidas a partir de <strong>sessões de <i>Design Thinking</i> com representantes
+                            da sociedade civíl</strong> _
+                        </div>
                     </div>
                 </div>
                 <div class="col-4">
-                    <div class="badget right">Base de dados abertas</div>
-                    <div class="badget right">Visualizações interativas</div>
-                    <div class="badget right">Filtros de Consulta</div>
-                    <div class="badget right">Séries Históricas</div>
-                    <div class="badget right">Índice de Transparência</div>
+                    <div class="bullets">
+                        <div class="bullet">
+                            <span class="arrow-right"></span>
+                            Base de dados abertas
+                        </div>
+                        <div class="bullet">
+                            <span class="arrow-right"></span>
+                            Visualizações interativas
+                        </div>
+                        <div class="bullet">
+                            <span class="arrow-right"></span>
+                            Filtros de Consulta
+                        </div>
+                        <div class="bullet">
+                            <span class="arrow-right"></span>
+                            Séries Históricas
+                        </div>
+                        <div class="bullet">
+                            <span class="arrow-right"></span>
+                            Índice de Transparência
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

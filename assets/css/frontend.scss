@@ -34,7 +34,7 @@ h2 {
   font-family: CeraPro;
   font-weight: normal;
   line-height: 50px;
-  font-size: 49px;
+  font-size: 46px;
   text-transform: uppercase;
   color: $main_color;
   .arrow {
@@ -356,54 +356,60 @@ h3 {
       font-size: 34px;
       line-height: 1.5;
     }
-    .countries-bubbles {
-      .short-description {
-        color: #FFF;
-        font-size: 18px;
-        text-align: center;
-        display: inline-block;
+    .countries-flags {
+      margin-top: 60px;
+      .flag-wrapper {
         position: relative;
-        left: 20px;
-        margin-top: 30px;
-        //top: 30px;
-      }
-
-      position: relative;
-
-      #parallax-lvl-1,
-      #parallax-lvl-2,
-      #parallax-lvl-3,
-      #parallax-lvl-4,
-      #parallax-lvl-5,
-      #parallax-lvl-6 {
-        position: absolute;
-        top: 0;
-      }
-      .bubble {
-        display: block;
-        background-size: cover;
-        color: white;
         text-align: center;
-        border-radius: 100%;
-        position: absolute;
-        opacity: 0.8;
-        width: 100px;
-        height: 100px;
-        background-color: green;
-        transition: width .7s, height .7s, opacity 1s;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 105px;
+
+        img {
+          width: 82%;
+          opacity: 0.7;
+          transition: width 0.4s;
+        }
+
         &:hover {
-          opacity: 0.98;
-          z-index: 999;
-          width: 120px;
-          height: 120px;
+          a.overlay {
+            display: flex;
+          }
+          img {
+            opacity: 0.4;
+            width: 100%;
+          }
+        }
+
+        a.overlay {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          display: none;
+          transition: background-color 1.4s linear;
+          flex-direction: column;
+          justify-content: center;
+          background-color: rgba(0, 0, 0, 0);
+          color: #FFF;
+          font-weight: bold;
+          text-transform: uppercase;
+          z-index: 99;
+          span {
+            font-family: $font_secondary;
+          }
         }
       }
-      #country-1 { top: 170px; left: 0px; }
-      #country-2 { top: 110px; left: 60px; }
-      #country-3 { top: 240px; left: 10px; }
-      #country-4 { top: 140px; left: 140px; }
-      #country-5 { top: 220px; left: 150px; }
-      #country-6 { top: 270px; left: 85px; }
+      .short-description {
+        color: #FFF;
+        text-transform: uppercase;
+        font-family: $font_secondary;
+        text-align: center;
+        margin-top: 20px;
+      }
     }
 
     .img-wrap {
@@ -412,26 +418,44 @@ h3 {
     }
   }
   .about {
-    background-image: url("../img/texture_bg.png");
+    background-image: url("../img/texture-1.png");
     background-repeat: no-repeat;
     background-position-x: right;
     background-position-y: top;
-    background-color: $description_bg_color;
-    font-size: 22px;
-    color: #FFFFFF;
+    background-color: #eae6e5;
+    font-size: 18px;
+    color: $main_color;
     position: relative;
     margin-top: -7px;
     padding: 20px 0 40px;
-    h2 {
-      color: #FFF;
-      margin-bottom: 20px;
-      .arrow {
-        border-left-color: #FFF;
+    .description {
+      border-right: 1px solid #bdbdbd;
+      padding-right: 80px;
+      height: 100%;
+      h2 {
+        color: $main_color;
+        margin-bottom: 20px;
+      }
+      .paragraph {
+        margin-bottom: 30px;
       }
     }
-    .paragraph {
-      margin-bottom: 30px;
+    .bullets {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      .bullet {
+        font-family: $font_secondary;
+        text-transform: uppercase;
+        font-weight: bold;
+        span {
+          margin-right: 10px;
+          top: 0;
+        }
+      }
     }
+
     .badget {
       display: inline-block;
       width: 270px;
