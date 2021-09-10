@@ -706,6 +706,9 @@
                 var order_dir = current_datatable_order['order_dir'] == 'asc' ? 'desc' : 'asc';
             }
             plot_datatable(current_budget_data, field, order_dir);
+            if(current_budget_account_id){
+                select_datatable_row(current_budget_account_id);
+            }
         });
 
         toggle_budget_account(current_budget_account)

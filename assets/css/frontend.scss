@@ -695,6 +695,7 @@ h3 {
   }
   .breadcrumb-row {
     z-index: 99;
+    align-items: flex-end;
 
     .breadcrumb-wrapper {
       .breadcrumb-link:last-child {

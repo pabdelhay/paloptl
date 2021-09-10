@@ -720,6 +720,7 @@ h3 .arrow {
 }
 .page-country-detail .breadcrumb-row {
   z-index: 99;
+  align-items: flex-end;
 }
 .page-country-detail .breadcrumb-row .breadcrumb-wrapper .breadcrumb-link:last-child {
   font-weight: bold;
