@@ -665,7 +665,8 @@ h3 .arrow {
   height: 100%;
 }
 .page-index .countries .full-width .col:hover .overlay {
-  display: flex;
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.65);
 }
 .page-index .countries .overlay {
   position: absolute;
@@ -676,9 +677,11 @@ h3 .arrow {
   z-index: 99;
   top: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.65);
+  opacity: 0;
+  transition: background-color 0.4s, opacity 0.4s;
+  background-color: rgba(0, 0, 0, 0);
   margin: 0 auto;
-  display: none;
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;

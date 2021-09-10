@@ -34,23 +34,6 @@ function scroll_to(href){
     }, 1000);
 }
 
-function parallaxScroll() {
-    var scrolled = $(window).scrollTop();
-    $('#parallax-lvl-1').css('top', (0 - (scrolled * .7)) + 'px');
-    $('#parallax-lvl-1').css('left', (0 - (scrolled * .2)) + 'px');
-    $('#parallax-lvl-2').css('top', (0 - (scrolled * .65)) + 'px');
-    //$('#parallax-lvl-2').css('left', (0 - (scrolled * .75)) + 'px');
-    $('#parallax-lvl-3').css('top', (0 - (scrolled * .6)) + 'px');
-    $('#parallax-lvl-3').css('left', (0 + (scrolled * .18)) + 'px');
-    $('#parallax-lvl-4').css('top', (0 - (scrolled * .5)) + 'px');
-    $('#parallax-lvl-4').css('left', (0 + (scrolled * .12)) + 'px');
-    $('#parallax-lvl-5').css('top', (0 - (scrolled * .35)) + 'px');
-    //$('#parallax-lvl-5').css('top', (0 - (scrolled * .4)) + 'px');
-    $('#parallax-lvl-6').css('top', (0 - (scrolled * .28)) + 'px');
-    $('#parallax-lvl-6').css('left', (0 - (scrolled * .12)) + 'px');
-    $('.countries-bubbles .short-description').css('top', (0 - (scrolled * .5)) + 'px');
-}
-
 function ranking_help(step) {
     introJs().setOptions({
         nextLabel: 'Próxima dimensão',
@@ -101,9 +84,6 @@ $(document).ready(function(){
         plot_ranking()
     });
 
-    $(window).bind('scroll',function(e){
-        parallaxScroll();
-    });
     $(document).on('click', '.scroll-to', function(ev){
         ev.preventDefault();
         scroll_to($(this).attr('href'));
@@ -145,11 +125,6 @@ $(document).ready(function(){
                     <div class="short-description">
                         Escolha um país para entender seu orçamento
                     </div>
-{#                    {% for country in countries %}#}
-{#                    <div id="parallax-lvl-{{ forloop.counter }}">#}
-{#                        <a href="{% url 'country-details' country.slug %}" title="{{ country.name }}" id="country-{{ forloop.counter }}" class="bubble" style="background-image: url('{{ country.flag.url }}');">&nbsp;</a>#}
-{#                    </div>#}
-{#                    {% endfor %}#}
                 </div>
             </div>
         </div>
