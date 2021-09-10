@@ -182,6 +182,16 @@ hr {
   width: 99.9%;
 }
 
+.arrow-left {
+  height: 0;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-right: 7px solid #0f2843;
+  display: inline-block;
+  position: relative;
+  top: -4px;
+}
+
 .arrow-right {
   height: 0;
   border-top: 7px solid transparent;
@@ -197,6 +207,16 @@ hr {
   border-left: 7px solid transparent;
   border-right: 7px solid transparent;
   border-top: 7px solid #0f2843;
+  display: inline-block;
+  position: relative;
+  top: 0px;
+}
+
+.arrow-up {
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid #0f2843;
   display: inline-block;
   position: relative;
   top: 0px;
@@ -1074,6 +1094,45 @@ h3 .arrow {
 }
 .page-country-detail .datatable-wrapper table.datatable-info thead {
   background-color: #eae6e5;
+}
+.page-country-detail .datatable-wrapper table.datatable-info thead th {
+  cursor: pointer;
+}
+.page-country-detail .datatable-wrapper table.datatable-info thead th:first-child .header-container {
+  justify-content: flex-start;
+}
+.page-country-detail .datatable-wrapper table.datatable-info thead th .header-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-end;
+}
+.page-country-detail .datatable-wrapper table.datatable-info thead th .order-arrows {
+  position: relative;
+  margin-left: 9px;
+  height: 20px;
+  vertical-align: bottom;
+}
+.page-country-detail .datatable-wrapper table.datatable-info thead th .order-arrows span {
+  left: 0;
+  border-width: 5px !important;
+}
+.page-country-detail .datatable-wrapper table.datatable-info thead th .order-arrows .arrow-up {
+  border-bottom-color: #cacaca;
+  position: absolute;
+  top: 4px;
+}
+.page-country-detail .datatable-wrapper table.datatable-info thead th .order-arrows .arrow-up.active {
+  border-bottom-color: #0f2843;
+}
+.page-country-detail .datatable-wrapper table.datatable-info thead th .order-arrows .arrow-down {
+  border-top-color: #cacaca;
+  position: absolute;
+  top: 11px;
+}
+.page-country-detail .datatable-wrapper table.datatable-info thead th .order-arrows .arrow-down.active {
+  border-top-color: #0f2843;
 }
 .page-country-detail .datatable-wrapper table.datatable-info tbody {
   background-color: #FFFFFF;

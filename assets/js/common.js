@@ -1,7 +1,11 @@
-function sortByKey(array, key) {
+function sortByKey(array, key, direction='desc') {
     return array.sort(function(a, b) {
         var x = a[key]; var y = b[key];
-        return ((x > y) ? -1 : ((x < y) ? 1 : 0));
+        if(direction == 'desc'){
+            return ((x > y) ? -1 : ((x < y) ? 1 : 0));
+        } else {
+            return ((x < y) ? -1 : ((x < y) ? 1 : 0));
+        }
     });
 }
 

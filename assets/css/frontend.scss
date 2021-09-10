@@ -2,6 +2,7 @@ $main_color: #0f2843;
 $subtitle_color: #0f69a3;
 $description_bg_color: #194262;
 $treemap_height: 729px;
+$icon_action_color: #cacaca;
 $hover_color: #e4e0df;
 $icon_hover_color: #6b6b6b;
 $datatable_spacing: 6px;
@@ -180,11 +181,20 @@ hr {
   width: 99.9%;
 }
 
+.arrow-left {
+  height: 0;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-right: 7px solid $main_color;
+  display: inline-block;
+  position: relative;
+  top: -4px;
+}
 .arrow-right {
   height: 0;
   border-top: 7px solid transparent;
   border-bottom: 7px solid transparent;
-  border-left: 7px solid #0f2843;
+  border-left: 7px solid $main_color;
   display: inline-block;
   position: relative;
   top: -4px;
@@ -193,7 +203,16 @@ hr {
   height: 0;
   border-left: 7px solid transparent;
   border-right: 7px solid transparent;
-  border-top: 7px solid #0f2843;
+  border-top: 7px solid $main_color;
+  display: inline-block;
+  position: relative;
+  top: 0px;
+}
+.arrow-up {
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid $main_color;
   display: inline-block;
   position: relative;
   top: 0px;
@@ -766,7 +785,7 @@ h3 {
           padding: 4px 2px;
           background: none;
           border-right: 0;
-          color: #cacaca;
+          color: $icon_action_color;
           &.active {
             color: gray;
           }
@@ -1024,6 +1043,49 @@ h3 {
       th.vertical-separator { padding: 0; }
       thead {
         background-color: #eae6e5;
+        th {
+          cursor: pointer;
+          &:first-child {
+            .header-container {
+              justify-content: flex-start;
+            }
+          }
+          .header-container {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-items: center;
+            justify-content: flex-end;
+
+          }
+          .field-name { }
+          .order-arrows {
+            position: relative;
+            margin-left: 9px;
+            height: 20px;
+            vertical-align: bottom;
+            span {
+              left: 0;
+              border-width: 5px !important;
+            }
+            .arrow-up {
+              border-bottom-color: $icon_action_color;
+              position: absolute;
+              top: 4px;
+              &.active {
+                border-bottom-color: $main_color;
+              }
+            }
+            .arrow-down {
+              border-top-color: $icon_action_color;
+              position: absolute;
+              top: 11px;
+              &.active {
+                border-top-color: $main_color;
+              }
+            }
+          }
+        }
       }
       tbody {
         background-color: #FFFFFF;
@@ -1094,7 +1156,7 @@ h3 {
             }
             .expand-visualization {
               cursor: pointer;
-              color: #cacaca;
+              color: $icon_action_color;
               font-size: 16px;
               &:hover {
                 color: $icon_hover_color;
