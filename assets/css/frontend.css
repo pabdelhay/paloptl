@@ -106,6 +106,10 @@ a.tutorial:hover {
   text-align: right;
 }
 
+.highlight-search {
+  background-color: yellow;
+}
+
 .language-selector .lang {
   display: inline-block;
   border-left: 1px solid #586460;
@@ -1072,7 +1076,34 @@ h3 .arrow {
   border: 1px solid #0f2843;
 }
 .page-country-detail .datatable-wrapper {
-  margin-top: 40px;
+  margin-top: 10px;
+}
+.page-country-detail .datatable-wrapper .datatable-search-wrapper {
+  text-align: center;
+  margin-top: 0px;
+  margin-right: auto;
+  margin-bottom: 30px;
+  margin-left: auto;
+  width: 420px;
+  position: relative;
+}
+.page-country-detail .datatable-wrapper .datatable-search-wrapper .material-icons {
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  color: #CCC;
+}
+.page-country-detail .datatable-wrapper .datatable-search-wrapper input {
+  width: 400px;
+  border-radius: 24px;
+  padding: 10px;
+  border: 1px solid #bbbbbb;
+  box-shadow: 0px 1px 5px 1px #e8e8e8;
+}
+.page-country-detail .datatable-wrapper .datatable-search-wrapper input:focus {
+  outline: 0;
+  border: 1px solid #bbbbbb;
+  box-shadow: 0px 1px 5px 1px #adc9d6;
 }
 .page-country-detail .datatable-wrapper table.datatable-info td {
   font-family: RobotoMono;
@@ -1155,9 +1186,15 @@ h3 .arrow {
   background-color: #0f69a4;
   color: #FFF;
 }
+.page-country-detail .datatable-wrapper table.datatable-info tbody tr.parent-category.highlight .highlight-search {
+  color: black;
+}
 .page-country-detail .datatable-wrapper table.datatable-info tbody tr.highlight td {
   background-color: #0f92dc;
   color: #FFF;
+}
+.page-country-detail .datatable-wrapper table.datatable-info tbody tr.highlight .highlight-search {
+  color: black;
 }
 .page-country-detail .datatable-wrapper table.datatable-info tbody tr td {
   background-color: #f7f3f2;

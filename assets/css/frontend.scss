@@ -103,6 +103,8 @@ a.tutorial {
 
 .money-display { font-family: $font_money; text-align: right; }
 
+.highlight-search { background-color: yellow; }
+
 .language-selector {
 
   .lang {
@@ -1062,7 +1064,35 @@ h3 {
   }
 
   .datatable-wrapper {
-    margin-top: 40px;
+    margin-top: 10px;
+    .datatable-search-wrapper {
+      text-align: center;
+      margin-top: 0px;
+      margin-right: auto;
+      margin-bottom: 30px;
+      margin-left: auto;
+      width: 420px;
+      position: relative;
+
+      .material-icons {
+        position: absolute;
+        right: 10px;
+        top: 8px;
+        color: #CCC;
+      }
+      input {
+        width: 400px;
+        border-radius: 24px;
+        padding: 10px;
+        border: 1px solid #bbbbbb;
+        box-shadow: 0px 1px 5px 1px #e8e8e8;
+        &:focus {
+          outline: 0;
+          border: 1px solid #bbbbbb;
+          box-shadow: 0px 1px 5px 1px #adc9d6;
+        }
+      }
+    }
     table.datatable-info {
       td { font-family: $font_money; }
       th, td { text-align: right; color: $main_color; padding: 5px 10px; line-height: 20px; }
@@ -1136,12 +1166,18 @@ h3 {
                 background-color: #0f69a4;
                 color: #FFF;
               }
+              .highlight-search {
+                color: black;
+              }
             }
           }
           &.highlight {
             td {
               background-color: #0f92dc;
               color: #FFF;
+            }
+            .highlight-search {
+              color: black;
             }
           }
 

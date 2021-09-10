@@ -5,6 +5,7 @@
     <script src="//cdn.amcharts.com/lib/4/core.js"></script>
     <script src="//cdn.amcharts.com/lib/4/charts.js"></script>
     <script src="//cdn.amcharts.com/lib/4/themes/animated.js"></script>
+    <script src="{% static 'external/jquery.highlight.js' %}"></script>
     <script type="text/javascript">
     var MEDIA_URL = '{% get_media_prefix %}';
     var treemap;
@@ -332,8 +333,11 @@
         createSeries('execution_aggregated', 'Execução');
     }
 
-    function plot_datatable(data, order_by=current_datatable_order['field'], order_dir=current_datatable_order['order_dir']){
-        data = sort_datatable(data, order_by, order_dir);
+    function plot_datatable(data, order_by, order_dir){
+        data = data || current_budget_data;
+        order_by = order_by || current_datatable_order['field'];
+        order_dir = order_dir || current_datatable_order['order_dir'];
+        data = sort_data(data, order_by, order_dir);
         var template_data = {
             'group_label': group_label_map[current_group],
             'sub_group_label': sub_group_label_map[current_group],
@@ -342,9 +346,12 @@
             'order_dir': current_datatable_order['order_dir']
         }
         renderTemplate('#template-budget_account-table', template_data, '#datatable-info');
+        if(current_budget_account_id){
+            select_datatable_row(current_budget_account_id);
+        }
     }
 
-    function sort_datatable(data, order_by, order_dir){
+    function sort_data(data, order_by, order_dir){
         data.forEach(function(elem){
             elem['children'] = sortByKey(elem['children'], order_by, order_dir);
         });
@@ -481,6 +488,18 @@
         $tr.find('.arrow:not(".no-children")').toggle();
         $base_selector.find('.subcategory-of-' + category_id).toggle();
     }
+    function expand_datatable(){
+        $base_selector = $('.datatable-info');
+        $base_selector.find('.child-category').show();
+        $base_selector.find('.arrow').hide();
+        $base_selector.find('.arrow-expanded').show();
+    }
+    function collapse_datatable(){
+        $base_selector = $('.datatable-info');
+        $base_selector.find('.child-category').hide();
+        $base_selector.find('.arrow').hide();
+        $base_selector.find('.arrow-collapsed').show();
+    }
 
     function select_datatable_row(category_id){
         $base_selector = $('.datatable-info');
@@ -536,6 +555,28 @@
     function get_category_name_by_id(category_id){
         $td = $('.datatable-info tr[data-category_id="'+category_id+'"]').find('.category-name');
         return $td.html();
+    }
+
+    function search_term(term){
+        var $base_selector = $('.datatable-info tbody');
+        $('body').removeHighlight();
+        $base_selector.find('.search-match').removeClass('search-match');
+        if (term) {
+            $base_selector.highlight(term);
+            $('span.' + highlight_class).closest('tr').each(function(idx){
+                $(this).addClass('search-match');
+                if($(this).hasClass('child-category')){
+                    var parent_id = $(this).data('parent_id');
+                    $base_selector.find('tr[data-category_id="'+parent_id+'"]').addClass('search-match');
+                }
+            });
+            expand_datatable();
+            $base_selector.find('tr:not(".search-match")').hide();
+            $base_selector.find('tr.search-match').show();
+        } else {
+            collapse_datatable();
+            plot_datatable();
+        }
     }
 
     function start_tutorial(){
@@ -706,11 +747,13 @@
                 var order_dir = current_datatable_order['order_dir'] == 'asc' ? 'desc' : 'asc';
             }
             plot_datatable(current_budget_data, field, order_dir);
-            if(current_budget_account_id){
-                select_datatable_row(current_budget_account_id);
-            }
+        });
+        $('#search').bind('keyup change', function (ev) {
+            var term = $(this).val();
+            search_term(term);
         });
 
+        // Init
         toggle_budget_account(current_budget_account)
     });
 
@@ -782,6 +825,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
+                    <div class="datatable-search-wrapper">
+                        <span class="material-icons">search</span>
+                        <input type="text" id="search" class="search-data" placeholder="Busque por Órgão ou Unidade Orçamentária"/>
+                    </div>
                     <div id="datatable-info"></div>
                 </div>
             </div>
