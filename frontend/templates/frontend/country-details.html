@@ -747,12 +747,12 @@
             if(field === undefined){
                 return;
             }
-
             if(field == current_datatable_order['field']) {
                 // Toggle order_dir if is the same field.
                 var order_dir = current_datatable_order['order_dir'] == 'asc' ? 'desc' : 'asc';
             }
             plot_datatable(current_budget_data, field, order_dir);
+            $('#search').trigger('change');
         });
         $('#search').on('keyup change', function (ev) {
             var term = $(this).val();
