@@ -497,13 +497,13 @@
     function expand_datatable(){
         $base_selector = $('.datatable-info');
         $base_selector.find('.child-category').show();
-        $base_selector.find('.arrow').hide();
+        $base_selector.find('.arrow:not(".no-children")').hide();
         $base_selector.find('.arrow-expanded').show();
     }
     function collapse_datatable(){
         $base_selector = $('.datatable-info');
         $base_selector.find('.child-category').hide();
-        $base_selector.find('.arrow').hide();
+        $base_selector.find('.arrow:not(".no-children")').hide();
         $base_selector.find('.arrow-collapsed').show();
     }
 
