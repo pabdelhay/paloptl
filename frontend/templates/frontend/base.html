@@ -86,11 +86,10 @@
                     <div class="col-12">
                         <div class="countries">
                         {% for country in all_countries %}
-                            <div>
-                                <a href="{% url 'country-details' country.slug %}" >
-                                    <img src="{{ country.flag.url }}" /> {{ country.name }}
-                                </a>
-                            </div>
+                            <a href="{% url 'country-details' country.slug %}" >
+                                <img src="{{ country.flag.url }}" />
+                                <span>{{ country.name }}</span>
+                            </a>
                         {% endfor %}
                         </div>
                     </div>

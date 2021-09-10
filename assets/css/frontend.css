@@ -269,16 +269,14 @@ h3 .arrow {
 .footer .countries {
   margin-bottom: 40px;
   display: flex;
-}
-.footer .countries div {
-  flex-basis: 100%;
-  text-align: center;
-  text-align: left;
-}
-.footer .countries div:last-child {
-  padding-left: 40px;
+  align-items: center;
+  justify-content: space-between;
 }
 .footer .countries a {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  height: 40px;
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
