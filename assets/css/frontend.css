@@ -77,15 +77,15 @@ h4 {
   width: 40px;
 }
 
-a.download-link {
+.download-link {
   font-size: 12px;
-  border-radius: 10px;
-  padding: 1px 40px;
+  border-radius: 13px;
+  padding: 3px 40px;
   border: 1px solid #0f69a3;
   color: #0f69a3;
 }
-a.download-link:hover {
-  background-color: #0e588d;
+.download-link:hover {
+  background-color: #04588c;
   color: #FFF;
 }
 
@@ -634,9 +634,8 @@ h3 .arrow {
 .page-index .ranking .downloads {
   margin-bottom: 80px;
 }
-.page-index .ranking .downloads h4 {
-  font-size: 20px;
-  font-weight: bold;
+.page-index .ranking .downloads h2 {
+  font-size: 33px;
 }
 .page-index .ranking .downloads ul {
   color: #0f69a3;
@@ -649,6 +648,54 @@ h3 .arrow {
 }
 .page-index .ranking .downloads ul li a {
   float: right;
+}
+.page-index .ranking .downloads .covers {
+  margin-left: 0;
+  display: flex;
+  justify-content: space-between;
+}
+.page-index .ranking .downloads .covers .cover-wrapper {
+  width: 30%;
+  height: 350px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+  align-items: center;
+  justify-content: flex-end;
+}
+.page-index .ranking .downloads .covers .cover-wrapper img {
+  width: 90%;
+  transition: width 0.4s;
+}
+.page-index .ranking .downloads .covers .cover-wrapper:hover img {
+  width: 100%;
+}
+.page-index .ranking .downloads .covers .cover-wrapper:hover span.download-link {
+  background-color: #04588c;
+  color: #FFF;
+}
+.page-index .ranking .downloads .results .result-title {
+  text-transform: uppercase;
+  margin: 20px 0 20px 0;
+  color: #0f2843;
+  font-weight: bold;
+}
+.page-index .ranking .downloads .results .result-title span {
+  top: 0px;
+  margin: 0 5px;
+}
+.page-index .ranking .downloads .results .country-item {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #04588c;
+  padding: 10px 0;
+  color: #04588c;
+}
+.page-index .ranking .downloads .results .country-item .country-name {
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 .page-index .countries .flags-wrapper {
   position: relative;
