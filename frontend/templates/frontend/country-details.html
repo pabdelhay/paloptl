@@ -598,30 +598,61 @@
                 element: document.querySelector('.visualization-selector'),
                 title: 'Visualizações',
                 position: 'left',
-                intro: 'Todas as visualizações desta plataforma são interligadas. É possivel navegar no orçamento pelas seguintes visualizações: ' +
+                intro: 'É possível navegar no orçamento pelas seguintes visualizações: ' +
                     '<ul><li>Treemap</li><li>Série histórica</li><li>Tabela</li>'
-            },
-            {
+            }, {
+                element: document.querySelector('.budget-account-selector-row'),
+                title: 'Filtros de Consulta',
+                position: 'left',
+                intro: 'Os filtros atualizam as três visualizações sincronicamente. Escolha aqui se deseja ver os ' +
+                    'dados de <strong>receitas</strong> ou <strong>despesas</strong>, o <strong>tipo de ' +
+                    'classificação</strong> e o <strong>ano</strong>. Se alguma das opções não ' +
+                    'estiver disponível para seleção, é porque infelizmente o governo não disponibilizou os dados.'
+            }, {
+                element: document.querySelector('.budget-account-expenses'),
+                //position: 'bottom',
+                title: "Despesas",
+                intro: 'As despesas podem ser visualizadas por dois grupos de classificação: <strong>Função</strong> ' +
+                    '(temas de governo, como saúde e educação) e <strong>Órgão</strong> (como Ministérios, ' +
+                    'por exemplo).'
+            }, {
+                element: document.querySelector('.budget-account-revenues'),
+                position: 'bottom',
+                title: "Receitas",
+                intro: 'As receitas estão disponíveis por <strong>natureza económica</strong>. Esta classificação ' +
+                    'indica o acontecimento real que ocasionou a entrada do recurso nos cofres públicos ' +
+                    '(impostos ou transferências por exemplo)'
+            }, {
+                element: document.querySelector('.budget-selector'),
+                //position: 'bottom',
+                title: "Ano",
+                intro: 'Estão disponíveis dados desde 2016 na plataforma.'
+            }, {
+                element: document.querySelector('.search-selector'),
+                //position: 'bottom',
+                title: "Busca",
+                intro: 'Você pode buscar por uma despesa ou receita específica neste ícone.'
+            }, {
                 element: document.querySelector('#chart-treemap'),
                 title: "Treemap",
                 position: 'left',
-                intro: 'O volume total do orçamento ' +
-                    'do país em determinado ano está representado no espaço total retangular do gráfico, que por sua vez, é composto ' +
-                    'por retângulos menores. O tamanho deles varia de acordo com o volume de recursos autorizados. Dotação ' +
-                    'autorizada é aquela reservada no orçamento anual para uma finalidade específica. Esta dotação pode ser revista - ' +
-                    'para um valor maior ou menor ao longo do ano - neste caso, a nomenclatura utilizada é dotação atualizada. A ' +
-                    'autorização não garante que a despesa ocorra. Por isso, monitora-se também a despesa paga.'
-            },
-            {
+                intro: 'O tamanho dos retângulos é proporcional ao volume de recursos previstos no orçamento da ' +
+                    'rubrica em relação ao orçamento total. Clique nos retângulos para atualizar o gráfico e ' +
+                    'entender os detalhes de como os recursos são distribuídos dentro de uma rubrica específica.'
+            }, {
                 element: document.querySelector('.treemap-legend-table'),
                 position: 'left',
-                title: "Execução",
-                intro: 'Para indicar no ' +
-                    'gráfico o nível de execução (o quanto da dotação foi de fato gasto: Valor Pago do Item/ Dotação Autorizada para ' +
-                    'o Item) utilizou-se uma régua de 5 cores que indica os seguintes percentuais de execução: ' +
-                    '(0% - 20%; 20% - 40%, 40% - 60%, 60% - 80% e + de 80%).'
-            },
-            {
+                title: "Cores",
+                intro: 'As cores dos retângulos indicam o percentual (%) do orçamento previsto que foi de fato gasto ' +
+                    'ou arrecadado na rubrica. Caso esta informação não esteja disponível, será atribuída a cor cinza. '
+            }, {
+                element: document.querySelector('.secondary-info'),
+                position: 'right',
+                title: "Dados secundários",
+                intro: 'Alguns países apresentam o quanto do orçamento de cada rubrica é direcionado para manutenção ' +
+                    'dos serviços do Governo (Orçamento de Funcionamento) e ou a investimentos (Orçamento de ' +
+                    'Investimento). Caso disponível, esta informação aparecerá aqui.'
+            }, {
                 element: document.querySelector('#chart-treemap'),
                 position: 'left',
                 title: "Dados no treemap",
@@ -629,35 +660,6 @@
                     'dotação e do valor pago. Alguns países informam o quanto da dotação é relativa ao orçamento para ' +
                     'funcionamento do governo e o quanto é relativo ao orçamento de investimentos. Se disponíveis, estes valores ' +
                     'serão apresentados nos balões informativos e no card "Dados Secundários", à esquerda do treemap.'
-            },
-            {
-                element: document.querySelector('.budget-account-expenses'),
-                //position: 'bottom',
-                title: "Despesas",
-                intro: 'As despesas podem ser visualizadas por dois grupos de classificação: Função (temas de governo, como saúde e ' +
-                    'educação) e Órgão (como Ministérios, por exemplo). Se selecionada a visualização por órgão, os retângulos ' +
-                    'representarão os órgãos administrativos principais. Cada um deles pode ser detalhado em unidades orçamentais ' +
-                    'com um clique na área do gráfico. Na visualização por Função, o segundo nível de informação serão as subfunções. '
-            },
-            {
-                element: document.querySelector('.budget-account-revenues'),
-                position: 'bottom',
-                title: "Receitas",
-                intro: 'As receitas estão disponíveis por natureza económica. Esta classificação indica o acontecimento real que ' +
-                    'ocasionou a entrada do recurso nos cofres públicos. Assim como na parte de despesas, os dados estão ' +
-                    'estruturados em 2 níveis hierárquicos: a origem, que é uma agregação mais geral (impostos ou taxas, por ' +
-                    'exemplo), e a espécie/desdobramentos, com dados mais detalhados (seguindo o exemplo, especificação do ' +
-                    'imposto ou da taxa).'
-            },
-            {
-                element: document.querySelector('.budget-selector'),
-                //position: 'bottom',
-                title: "Anos",
-                intro: 'Estão disponíveis ' +
-                    'dados desde 2016 na plataforma. ' +
-                    'Vale lembrar que estas informações só estarão disponíveis se os países as tiverem disponibilizado ' +
-                    'publicamente. Então, caso a seleção de determinada classificação, ou ano, não estiver selecionável, é porque, ' +
-                    'infelizmente, o dado não foi publicado pelo governo.'
             },
             {
                 element: document.querySelector('#historical-info'),
@@ -850,12 +852,12 @@
                 <div class="col-6">
                     <h2><span class="arrow"></span>TRANSPARÊNCIA</h2>
                     <div>
-                        Nossa missão é ampliar a transparência dos PALOP-TL
-                        aplicando tecnologia e inovação para derrubar barreiras
-                        e incluir mais cidadãos no debate público _
+                        Nossa missão é ampliar a transparência dos PALOP-TL aplicando tecnologia e inovação para
+                        derrubar barreiras e incluir mais cidadãos no debate público.
                         <br></br>
-                        Nós encorajamos o uso das informações disponibilizadas
-                        em outros projetos e estudos _
+                        Acreditamos que cidadãos com acesso à informação têm mais condições de supervisionar seus
+                        representantes e pressionar por políticas públicas de seu interesse.
+{#                        Se você deseja colaborar conosco, entre em contato via: [ INSERIR EMAIL ]#}
                     </div>
                 </div>
                 <div class="col-5 img-wrapper">
