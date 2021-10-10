@@ -203,7 +203,7 @@ $(document).ready(function(){
             <div class="row">
                 <div class="col-12">
                     Clique no cabeçalho da tabela para ordenar o ranking por uma dimensão específica ou
-                    no ícone <span class="material-icons help" data-step="1">info</span> para saber mais sobre a dimensão.</div>
+                    no ícone <span class="material-icons help" data-step="1">info_outlined</span> para saber mais sobre a dimensão.</div>
             </div>
         </div>
         <hr />
@@ -221,19 +221,19 @@ $(document).ready(function(){
                                         Dados<br/>
                                         Abertos<br/>
                                         <small>(0-100)</small>
-                                        <span class="material-icons help" data-step="1" title="Saiba mais sobre esta dimensão">info</span>
+                                        <span class="material-icons help" data-step="1" title="Saiba mais sobre esta dimensão">info_outlined</span>
                                     </th>
                                     <th class="f-dimension sortable header-score_reports" data-dimension="score_reports" title="Clique para ordernar por esta dimensão">
                                         Relatórios<br/>
                                         Orçamentais<br/>
                                         <small>(0-100)</small>
-                                        <span class="material-icons help" data-step="2" title="Saiba mais sobre esta dimensão">info</span>
+                                        <span class="material-icons help" data-step="2" title="Saiba mais sobre esta dimensão">info_outlined</span>
                                     </th>
                                     <th class="f-dimension sortable header-data_quality" data-dimension="score_data_quality" title="Clique para ordernar por esta dimensão">
                                         Qualidade da<br/>
                                         Informação<br/>
                                         <small>(0-100)</small>
-                                        <span class="material-icons help" data-step="3" title="Saiba mais sobre esta dimensão">info</span>
+                                        <span class="material-icons help" data-step="3" title="Saiba mais sobre esta dimensão">info_outlined</span>
                                     </th>
                                     <th class="f-dimension sortable active" data-dimension="transparency_index" title="Clique para ordernar pelo ÍNDICE GERAL">
                                         Índice de Transparência<br/>
@@ -333,10 +333,10 @@ $(document).ready(function(){
 <tr class="ranking-row row-number-7 row-avg">
     <td class="f-position"></td>
     <td class="f-flag" colspan="2">Média</td>
-    <td class="f-dimension f-dimension-1">{{parseFloat average.score_open_data 2}}</td>
-    <td class="f-dimension f-dimension-2">{{parseFloat average.score_reports 2}}</td>
-    <td class="f-dimension f-dimension-3">{{parseFloat average.score_data_quality 2}}</td>
-    <td class="f-dimension f-dimension-4">{{parseFloat average.transparency_index 2}}</td>
+    <td class="f-dimension f-dimension-1">{{parseInt average.score_open_data}}</td>
+    <td class="f-dimension f-dimension-2">{{parseInt average.score_reports}}</td>
+    <td class="f-dimension f-dimension-3">{{parseInt average.score_data_quality}}</td>
+    <td class="f-dimension f-dimension-4">{{parseInt average.transparency_index}}</td>
 </tr>
 </script>
 {% endverbatim %}

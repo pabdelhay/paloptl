@@ -257,11 +257,10 @@ h3 .arrow {
   box-shadow: 0px 2px 5px 1px #d2d2d2;
 }
 .header .upper-row {
-  height: 100px;
   margin-bottom: -10px;
 }
 .header .logos img {
-  height: 80px;
+  width: 100%;
 }
 .header .logos .logo-ue {
   padding-left: 10px;
@@ -342,7 +341,7 @@ h3 .arrow {
   min-height: 430px;
   background-image: url("../img/hero-bg.png");
   background-size: 100%;
-  background-repeat: no-repeat;
+  background-repeat: repeat;
 }
 .page-index .hero h2 {
   font-family: CeraPro;
@@ -371,14 +370,14 @@ h3 .arrow {
 }
 .page-index .hero .countries-flags .flag-wrapper img {
   width: 82%;
-  opacity: 0.7;
+  opacity: 0.9;
   transition: width 0.4s;
 }
 .page-index .hero .countries-flags .flag-wrapper:hover a.overlay {
   display: flex;
 }
 .page-index .hero .countries-flags .flag-wrapper:hover img {
-  opacity: 0.4;
+  opacity: 0.6;
   width: 100%;
 }
 .page-index .hero .countries-flags .flag-wrapper a.overlay {
@@ -471,6 +470,7 @@ h3 .arrow {
 }
 .page-index .ranking .material-icons {
   font-size: 20px;
+  width: 20px;
 }
 .page-index .ranking .ranking-header {
   padding: 40px 0;
@@ -518,9 +518,6 @@ h3 .arrow {
   border-bottom: 5px solid #0f2843;
 }
 .page-index .ranking .ranking-wrapper table.ranking-table thead th.f-dimension .material-icons {
-  position: absolute;
-  bottom: 10px;
-  right: 30px;
   cursor: help;
 }
 .page-index .ranking .ranking-wrapper table.ranking-table thead th.f-dimension small {

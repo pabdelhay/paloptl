@@ -36,11 +36,17 @@
         <div class="header">
             <div class="container">
                 <div class="row upper-row middle">
-                    <div class="col-8 logos">
-                        <img src="{% static 'img/logo-propaloptl-pt.png' %}" class="logo-propaloptl" alt="Logo Pro PALOP-TL ISC" />
-                        <img src="{% static 'img/logo-paloptl-ue.png' %}" class="logo-ue" alt="Logo PALOP-TL UE" />
+                    <div class="col-6">
+                        <div class="row logos">
+                            <div class="col-6 ml-0">
+                                <img src="{% static 'img/logo-propaloptl-pt.png' %}" class="logo-propaloptl" alt="Logo Pro PALOP-TL ISC" />
+                            </div>
+                            <div class="col-6">
+                                <img src="{% static 'img/logo-paloptl-ue.png' %}" class="logo-ue" alt="Logo PALOP-TL UE" />
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-4 right">
+                    <div class="col-6 right">
                         {% include 'frontend/language-selector.component.html' %}
                     </div>
                 </div>

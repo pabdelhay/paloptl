@@ -33,6 +33,10 @@ Handlebars.registerHelper('parseFloat', function (value, decimals=2) {
     return parseFloat(value).toFixed(decimals);
 });
 
+Handlebars.registerHelper('parseInt', function (value) {
+    return parseInt(value);
+});
+
 Handlebars.registerHelper("inc", function(value, options) {
     return parseInt(value) + 1;
 });
