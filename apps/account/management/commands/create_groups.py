@@ -2,7 +2,7 @@ from django.contrib.auth.models import User, Group, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.core.management.base import BaseCommand
 
-from apps.budget.models import Budget, Upload, UploadLog, TransparencyIndex
+from apps.budget.models import Budget, Upload, UploadLog, TransparencyIndex, Expense, Revenue
 
 
 class Command(BaseCommand):
@@ -23,7 +23,9 @@ class Command(BaseCommand):
             Budget,
             Upload,
             UploadLog,
-            TransparencyIndex
+            TransparencyIndex,
+            Expense,
+            Revenue,
         ])
 
         group, created = Group.objects.get_or_create(name="CSO Team")
@@ -32,5 +34,7 @@ class Command(BaseCommand):
             Budget,
             Upload,
             UploadLog,
-            TransparencyIndex
+            TransparencyIndex,
+            Expense,
+            Revenue,
         ])

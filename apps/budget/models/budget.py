@@ -31,8 +31,8 @@ class Budget(CountryMixin, models.Model):
                                     help_text=_("This budget will only be included on site if this option is checked."))
 
     # CSV file
-    output_file = models.FileField(upload_to='exports', null=True, blank=True, editable=False,
-                                   help_text=_("Auto generated CSV file with all data from budget."))
+    output_file = models.FileField(verbose_name=_("output file."), upload_to='exports', null=True, blank=True,
+                                   editable=False, help_text=_("Auto generated CSV file with all data from budget."))
 
     class Meta:
         verbose_name = _("budget")

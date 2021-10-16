@@ -118,7 +118,7 @@ class BudgetAccountInline(TabularInlinePaginated):
         if inferred_value and current_value != inferred_value:
             class_name = 'inferred-different-from-current'
             title = _("Explicit given value differs from inferred value: {inferred}"
-                      .format(raw_money_display(inferred_value)))
+                      .format(inferred=raw_money_display(inferred_value)))
 
         html = f'<span class="{class_name}" title="{title}">{raw_money_display(final_value)}</span>'
 
@@ -328,7 +328,7 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
 
 
 @admin.register(TransparencyIndex)
-class TransparencyIndexAdmin(admin.ModelAdmin):
+class TransparencyIndexAdmin(CountryPermissionMixin, admin.ModelAdmin):
     list_display = ('country', 'year', 'score_open_data', 'score_reports', 'score_data_quality', 'transparency_index',)
     list_editable = ('score_open_data', 'score_reports', 'score_data_quality', 'transparency_index',)
     list_filter = ('year', 'country', )
@@ -340,15 +340,6 @@ class TransparencyIndexAdmin(admin.ModelAdmin):
             'fields': (('score_open_data', 'score_reports', 'score_data_quality', 'transparency_index'),),
         }),
     )
-
-    def has_add_permission(self, request):
-        return request.user.is_superuser
-
-    def has_change_permission(self, request, obj=None):
-        return request.user.is_superuser
-
-    def has_delete_permission(self, request, obj=None):
-        return request.user.is_superuser
 
 
 @admin.register(UploadLog)
