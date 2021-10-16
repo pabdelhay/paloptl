@@ -2,7 +2,7 @@ from django.contrib.auth.models import User, Group, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.core.management.base import BaseCommand
 
-from apps.budget.models import Agency, Budget, Function, Upload, UploadLog, TransparencyIndex
+from apps.budget.models import Budget, Upload, UploadLog, TransparencyIndex
 
 
 class Command(BaseCommand):
@@ -20,9 +20,7 @@ class Command(BaseCommand):
         group.permissions.add(Permission.objects.get(codename="view_profile"))
         create_default_perms(group, [
             User,
-            Agency,
             Budget,
-            Function,
             Upload,
             UploadLog,
             TransparencyIndex
@@ -31,9 +29,7 @@ class Command(BaseCommand):
         group, created = Group.objects.get_or_create(name="CSO Team")
         print(f"Creating permissions for {group.name}")
         create_default_perms(group, [
-            Agency,
             Budget,
-            Function,
             Upload,
             UploadLog,
             TransparencyIndex
