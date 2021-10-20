@@ -233,7 +233,7 @@ SENTRY_DSN = env('SENTRY_DSN', default=None)
 if SENTRY_DSN:
     sentry_sdk.init(
         dsn=SENTRY_DSN,
-        integrations=[DjangoIntegration(), CeleryIntegration()],
+        integrations=[DjangoIntegration(), CeleryIntegration(), RedisIntegration()],
         environment=ENV,
         traces_sample_rate=1.0,
         debug=True
