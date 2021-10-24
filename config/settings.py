@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_nose',
 
     'django_admin_inline_paginator',
     'debug_toolbar',
@@ -98,9 +97,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 SECURE_SSL_REDIRECT = True if ENV != 'dev' else False
-
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-TEST_WITHOUT_MIGRATIONS_COMMAND = 'django_nose.management.commands.test.Command'
 
 
 # Database
