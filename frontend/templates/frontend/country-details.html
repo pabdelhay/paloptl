@@ -368,8 +368,14 @@
     function sort_data(data, order_by, order_dir){
         data.forEach(function(elem){
             elem['children'] = sortByKey(elem['children'], order_by, order_dir);
+            if(order_by == 'budget_aggregated'){
+                elem['children'] = sortByKey(elem['children'], 'has_budget', 'desc');
+            }
         });
         data = sortByKey(data, order_by, order_dir);
+        if(order_by == 'budget_aggregated'){
+            data = sortByKey(data, 'has_budget', 'desc');
+        }
         current_datatable_order['field'] = order_by;
         current_datatable_order['order_dir'] = order_dir;
         return data;
