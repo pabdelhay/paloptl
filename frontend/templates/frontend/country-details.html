@@ -61,7 +61,7 @@
         return label_map[group];
     }
     function get_budget_basic_info(budget_id, callback){
-        var url = url = '/api/budgets/' + budget_id + '/';
+        var url = '/api/budgets/' + budget_id + '/';
         $.get(url, function (data) {
             callback(data);
         }).fail(function () {
@@ -95,15 +95,29 @@
         });
     }
     function get_budget_account_aggregated_data(budget_data){
+        /*
+        Get data for the whole budget, with sum of all level 0 categories.
+         */
+        // Initialize aggregated data by copying structure of first element.
         var aggregated_data = $.extend(true, {}, budget_data[0]);
         var fields = ['budget_aggregated', 'budget_investment', 'budget_operation', 'execution_aggregated',
             'execution_investment', 'execution_operation', 'initial_budget_aggregated', 'initial_budget_investment',
             'initial_budget_operation'];
+        // Set null for values fiels on initialize.
+        fields.forEach(function(item, index){
+            aggregated_data[item] = null;
+        });
         aggregated_data['label'] = "Orçamento " + get_budget_year_by_id(current_budget_id);
         aggregated_data['name'] = "{{ country.name }}";
         aggregated_data['id'] = null;
-        for(var i = 1; i < budget_data.length; i++){
+        for(var i = 0; i < budget_data.length; i++){
             fields.forEach(function(item, index){
+                if(item == 'budget_aggregated' && !budget_data[i]['has_budget']){
+                    // If category has execution_aggregated but not budget_aggregated, budget_aggregated comes with
+                    // same amount as the execution_aggregated to fill treemap nicely. Here we prevent the sum of these
+                    // categories to the whole amount of the budget.
+                    return;
+                }
                 var new_value = budget_data[i][item];
                 if(!new_value){
                     return;
