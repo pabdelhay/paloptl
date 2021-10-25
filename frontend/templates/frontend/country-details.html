@@ -1114,7 +1114,13 @@
                     <span class="category-name">{{ name }}</span>
                 </td>
                 <td class="vertical-separator"></td>
-                <td>{{formatCurrency budget_aggregated}}</td>
+                <td>
+                    {{#if has_budget}}
+                    {{formatCurrency budget_aggregated}}
+                    {{else}}
+                    -
+                    {{/if}}
+                </td>
                 <td>{{formatCurrency execution_aggregated}}</td>
                 <td>{{formatPercent execution_percentage}}</td>
                 <td>{{formatCurrency budget_investment}}</td>
