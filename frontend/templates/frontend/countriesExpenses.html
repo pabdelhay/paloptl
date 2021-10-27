@@ -1,0 +1,22 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block extrahead %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/countriesExpenses.css' %}">
+
+<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+<script src="{% static 'js/countriesExpenses.js' %}"></script>
+
+{% endblock extrahead %}
+
+{% block content %}
+<!-- HTML -->
+<div>
+    <button class="ano">2018</button>
+    <button class="ano">2019</button>
+    <button class="ano">2020</button>
+    <button class="ano">2021</button>
+</div>
+<div id="chartdiv"></div>
+{% endblock content %}

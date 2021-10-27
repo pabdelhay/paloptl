@@ -1,7 +1,6 @@
 import json
 
 from django.conf import settings
-from django.http import HttpResponseNotFound
 from django.shortcuts import render
 from django.views import View
 from django.views.generic.detail import SingleObjectMixin
@@ -53,3 +52,8 @@ class CountryView(SingleObjectMixin, View):
             'treemap_colors_map': json.dumps(settings.TREEMAP_EXECUTION_COLORS_HOVER)
         }
         return render(request, 'frontend/country-details.html', context=ctx)
+
+
+class CountriesExpensesView(View):
+    def get(self, request):
+        return render(request, 'frontend/countriesExpenses.html', context=None)

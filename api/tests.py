@@ -3,8 +3,8 @@ from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from apps.budget.choices import ExpenseGroupChoices
-from apps.budget.models import Budget, Expense
+from apps.budget.choices import ExpenseGroupChoices, CategoryGroupChoices, UploadCategoryChoices
+from apps.budget.models import Budget, Expense, Category, CategoryMap
 from apps.geo.models import Country
 
 
@@ -72,3 +72,86 @@ class APITestCase(TestCase):
                          "First historical data should be from 2017's budget.")
         self.assertEqual(r['data'][0]['budget_aggregated'], 20, "Budget aggregated should be 20.")
         self.assertEqual(r['data'][0]['execution_aggregated'], 20, "Execution aggregated should be 20.")
+
+    def test_budgets_expense_by_country(self):
+        def create_functions(budget):
+            f0 = Expense.objects.create(budget=budget, group=ExpenseGroupChoices.FUNCTIONAL,
+                                        name="SAUDE", code="SA")
+            f0.budget_investment = 5
+            f0.budget_operation = 15
+            f0.save()
+
+            f1 = Expense.objects.create(budget=budget, group=ExpenseGroupChoices.FUNCTIONAL,
+                                        name="EDUCAÇÂO", code="ED")
+            f1.budget_investment = 10
+            f1.budget_operation = 20
+            f1.save()
+
+            f2 = Expense.objects.create(group=ExpenseGroupChoices.FUNCTIONAL, budget=budget,
+                                        name="SEGURANÇA", code="SE")
+            f2.budget_investment = 8
+            f2.budget_operation = 5
+            f2.save()
+
+            # Will generate on inferred_values: budget_aggregated=20, execution_aggregated=20
+            budget.update_inferred_values()
+
+        budget_2020 = Budget.objects.create(country=self.country, year=2020)
+        budget_2019 = Budget.objects.create(country=self.country, year=2019)
+        budget_2018 = Budget.objects.create(country=self.country, year=2018)
+        budget_2017 = Budget.objects.create(country=self.country, year=2017)
+
+        create_functions(self.budget)
+        create_functions(budget_2020)
+        create_functions(budget_2019)
+        create_functions(budget_2018)
+        create_functions(budget_2017)
+
+        saude = Category.objects.create(name="SAUDE", group=CategoryGroupChoices.FUNCTIONAL,
+                                        type=UploadCategoryChoices.EXPENSE)
+        saude.save()
+
+        educacao = Category.objects.create(name="EDUCAÇÂO", group=CategoryGroupChoices.FUNCTIONAL,
+                                           type=UploadCategoryChoices.EXPENSE)
+        educacao.save()
+
+        seguranca = Category.objects.create(name="SEGURANÇA", group=CategoryGroupChoices.FUNCTIONAL,
+                                            type=UploadCategoryChoices.EXPENSE)
+        seguranca.save()
+
+        categories = []
+        categories.append(saude.name)
+        categories.append(educacao.name)
+        categories.append(seguranca.name)
+
+        categoryMap0 = CategoryMap.objects.create(code="SA", country=self.country,
+                                                  category=saude)
+        categoryMap0.save()
+
+        categoryMap1 = CategoryMap.objects.create(code="ED", country=self.country,
+                                                  category=educacao)
+        categoryMap1.save()
+
+        categoryMap2 = CategoryMap.objects.create(code="SE", country=self.country,
+                                                  category=seguranca)
+        categoryMap2.save()
+
+        base_url = f'/budgets/expense_by_country/'
+
+        response = self.client.get(self.get_api_url(base_url), {'year': '2021'})
+
+        r = response.json()
+        self.assertEqual(response.status_code, status.HTTP_200_OK,
+                         "Wrong status code response")
+        self.assertEqual(r['category'].sort(), categories.sort(),
+                         "List of category must be equal")
+        self.assertEqual(r["data"][0]["country"], "Angola",
+                         "Country must be Angola")
+
+        expense_functional_budget = self.budget.summary.expense_functional_budget
+        saudepercentage = (20 / expense_functional_budget) * 100
+        self.assertEqual(r["data"][0]["SAUDE"], saudepercentage, "SAUDE musta be equal")
+        educacaopercentage = (30 / expense_functional_budget) * 100
+        self.assertEqual(r["data"][0]["EDUCAÇÂO"], educacaopercentage, "EDUCAÇÂO musta be equal")
+        segurancapercentage = (13 / expense_functional_budget) * 100
+        self.assertEqual(r["data"][0]["SEGURANÇA"], segurancapercentage, "SEGURANÇA musta be equal")
