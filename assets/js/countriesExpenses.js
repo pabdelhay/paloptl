@@ -38,7 +38,7 @@ function createSeries(field, name) {
 
   // Configure columns
   series.columns.template.width = am4core.percent(60);
-  series.columns.template.tooltipText = "[bold]{name}[/]\n[font-size:14px]{categoryX}: {valueY}";
+  series.columns.template.tooltipText = "[bold]{name}[/]\n[font-size:14px]{categoryX}: {valueY.formatNumber('#.00')}%";
 
   // Add label
   var labelBullet = series.bullets.push(new am4charts.LabelBullet());
