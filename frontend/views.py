@@ -8,15 +8,6 @@ from django.views.generic.detail import SingleObjectMixin
 
 from apps.geo.models import Country
 
-class NewPageView(View):
-    def get(self, request):
-        countries = { 'countries': Country.objects.all() }
-        return render(request, "frontend/newpage.html", context=countries)
-
-class ExpesensesByCountryView(View):
-    def get(self, request):
-        countries = { 'countries': Country.objects.all() }
-        return render(request, "frontend/expenses_by_country.html", context=countries)
 
 class IndexView(View):
     def get(self, request):
@@ -24,7 +15,6 @@ class IndexView(View):
             'countries': Country.objects.all()
         }
         return render(request, 'frontend/index.html', context=ctx)
-
 
 class CountryView(SingleObjectMixin, View):
     model = Country
@@ -62,3 +52,8 @@ class CountryView(SingleObjectMixin, View):
             'treemap_colors_map': json.dumps(settings.TREEMAP_EXECUTION_COLORS_HOVER)
         }
         return render(request, 'frontend/country-details.html', context=ctx)
+
+class ExpesensesByCountryView(View):
+    def get(self, request):
+        countries = { 'countries': Country.objects.all() }
+        return render(request, "frontend/expenses_by_country.html", context=countries)
