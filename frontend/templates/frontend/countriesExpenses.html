@@ -11,12 +11,35 @@
 {% endblock extrahead %}
 
 {% block content %}
-<!-- HTML -->
-<div>
-    <button class="ano">2018</button>
-    <button class="ano">2019</button>
-    <button class="ano">2020</button>
-    <button class="ano">2021</button>
+<hr />
+<div class="page-countries-expenses">
+    <div class="historical-wrapper viz-wrapper">
+        <div class="loading">Carregando dados<br><img src="{% static 'img/loading-front.gif' %}" /></div>
+        <h4 class="historical-title">
+            Dotação das principais despesas<br>funcionais em relação ao orçamento<br>
+            <span class="year"></span>
+        </h4>
+        <div class="container">
+            <div class="row">
+                <div class="row breadcrumb-row" id="anchor-{{ visualization }}">
+                    <div class="col-12 right budget-account-selector-row">
+                        <div class="year-selector">
+                            <a>2016
+                            </a><a>2017
+                            </a><a>2018
+                            </a><a>2019
+                            </a><a>2020
+                            </a><a>2021</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div id="chartdiv"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'frontend/transparency-text.component.html' %}
 </div>
-<div id="chartdiv"></div>
 {% endblock content %}

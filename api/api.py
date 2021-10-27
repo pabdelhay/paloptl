@@ -377,8 +377,6 @@ class BudgetViewset(ReadOnlyModelViewSet):
             budget__year=year
         ).values('expense_functional_budget', 'budget__country__id')
 
-        countries = Country.objects.all()
-
         dbudgetSummary = {}
         for budgetSummary in budgetSummarys:
             dbudgetSummary[budgetSummary['budget__country__id']] = budgetSummary['expense_functional_budget']
@@ -389,16 +387,19 @@ class BudgetViewset(ReadOnlyModelViewSet):
             categories.append(category.name)
 
         agregateExpenses = []
+        countries = Country.objects.all()
         for country in countries:
             categoriesMaps = CategoryMap.objects.filter(
                 country=country, category__group='functional',
                 category__type='expense'
             )
 
+            aggregateExpense = {"country": country.name}
             categoriesnames = {}
-            categoriesmapscodes = []
             for categoryMap in categoriesMaps:
                 categoriesnames[categoryMap.code] = categoryMap.category.name
+                aggregateExpense[categoryMap.category.name] = None
+
             if len(categoriesnames) > 0:
                 categoriesmapscodes = categoriesnames.keys()
                 expenses = Expense.objects.filter(
@@ -406,20 +407,19 @@ class BudgetViewset(ReadOnlyModelViewSet):
                     code__in=categoriesmapscodes, group='functional'
                 )
 
-                agregateExpense = {"country": country.name}
                 for expense in expenses:
                     totalbudgetSummaryCountry = dbudgetSummary[country.id]
 
                     catname = categoriesnames[expense.code]
 
-                    if expense is not None and totalbudgetSummaryCountry is not None:
+                    if expense.budget_aggregated and totalbudgetSummaryCountry:
                         expenses_category = expense.budget_aggregated
                         expenses_category_percent = (expenses_category / totalbudgetSummaryCountry) * 100
-                        agregateExpense[catname] = expenses_category_percent
+                        aggregateExpense[catname] = expenses_category_percent
                     else:
-                        agregateExpense[catname] = None
+                        aggregateExpense[catname] = None
 
-                agregateExpenses.append(agregateExpense)
+                agregateExpenses.append(aggregateExpense)
 
         return Response({
             "category": categories,

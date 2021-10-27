@@ -824,7 +824,7 @@ h3 {
   }
 }
 
-.page-country-detail {
+.page-country-detail, .page-countries-expenses {
   .country-name-wrapper {
     background-position-y: bottom;
     background-repeat: no-repeat;
@@ -888,6 +888,7 @@ h3 {
         }
       }
       a {
+        cursor: pointer;
         background: #eae6e5;
         width: 100px;
         text-align: center;
@@ -920,7 +921,7 @@ h3 {
           border-right: 0;
         }
       }
-      .budget-selector {
+      .budget-selector, .year-selector {
         a {
           border-right: 1px solid #82aecb;
         }
@@ -930,7 +931,7 @@ h3 {
         padding-right: 10px;
         margin-right: 10px;
       }
-      .budget-selector {
+      .budget-selector, .year-selector {
         margin-left: -4px;
         a {
           width: 40px;
@@ -1456,6 +1457,12 @@ h3 {
       }
     }
   }
+}
+
+.page-countries-expenses {
+  background-color: #f7f5f5;
+  margin-top: -8px;
+  padding-top: 1px;
 }
 
 .temp-info {
