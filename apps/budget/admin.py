@@ -82,14 +82,14 @@ class BudgetAccountInline(TabularInlinePaginated):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    def get_fields(self, request, obj=None):
-        if request.user.is_superuser:
-            return [
-                'code', 'get_group_taxonomy', 'get_subgroup_taxonomy', 'budget_investment', 'budget_operation',
-                'budget_aggregated', 'execution_investment', 'execution_operation', 'execution_aggregated',
-                'last_update'
-            ]
-        return self.fields
+    # def get_fields(self, request, obj=None):
+    #     if request.user.is_superuser:
+    #         return [
+    #             'code', 'get_group_taxonomy', 'get_subgroup_taxonomy', 'budget_investment', 'budget_operation',
+    #             'budget_aggregated', 'execution_investment', 'execution_operation', 'execution_aggregated',
+    #             'last_update'
+    #         ]
+    #     return self.fields
 
     def has_add_permission(self, request, obj):
         return False

@@ -24,7 +24,7 @@ environ.Env.read_env(env_file=os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = env('SECRET_KEY', default='#thisisarandomstringandshouldbereplacedinenv')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG', cast=bool, default=True)
 ENV = os.environ.get('ENV', 'production')
 ALLOWED_HOSTS = ['*']
 
@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_nose',
 
     'django_admin_inline_paginator',
     'debug_toolbar',
@@ -98,6 +97,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 SECURE_SSL_REDIRECT = True if ENV != 'dev' else False
+
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
@@ -229,7 +229,7 @@ SENTRY_DSN = env('SENTRY_DSN', default=None)
 if SENTRY_DSN:
     sentry_sdk.init(
         dsn=SENTRY_DSN,
-        integrations=[DjangoIntegration(), CeleryIntegration()],
+        integrations=[DjangoIntegration(), CeleryIntegration(), RedisIntegration()],
         environment=ENV,
         traces_sample_rate=1.0,
         debug=True
