@@ -5,7 +5,7 @@ from frontend.views import IndexView, CountryView, CountriesExpensesView
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
-    path('countriesExpenses/', CountriesExpensesView.as_view(), name='countriesExpenses'),
+    path('comparativo-despesas/', CountriesExpensesView.as_view(), name='countries-expenses'),
     path('dataviz/', TemplateView.as_view(template_name="frontend/chart_sample.htm"), name='dataviz'),
     path('<slug>/', CountryView.as_view(), name='country-details'),
 ]

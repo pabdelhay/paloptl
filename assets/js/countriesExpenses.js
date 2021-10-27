@@ -7,6 +7,7 @@ function PlotChart(category, data) {
 
         // Create chart instance
         var chart = am4core.create("chartdiv", am4charts.XYChart);
+        chart.zoomOutButton.disabled = true;
 
         // Add data
         chart.data = data;
@@ -15,10 +16,12 @@ function PlotChart(category, data) {
         var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
         categoryAxis.dataFields.category = "country";
         categoryAxis.renderer.grid.template.location = 0;
+        categoryAxis.renderer.grid.template.disabled = true;
 
         var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
         valueAxis.renderer.inside = true;
         valueAxis.renderer.labels.template.disabled = true;
+        valueAxis.renderer.grid.template.disabled = true;
         valueAxis.min = 0;
 
         // Create series
@@ -78,4 +81,5 @@ $(document).ready(function () {
         var year = $(this).text();
         GetPlotChart(year)
     });
+    $('.year-selector a:last').trigger('click');
 });
