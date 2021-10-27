@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from apps.budget.choices import ExpenseGroupChoices, RevenueGroupChoices
-from apps.budget.models import Budget, TransparencyIndex, Expense, Revenue, BudgetSummary
+from apps.budget.models import Budget, TransparencyIndex, Expense, Revenue, BudgetSummary, Category, CategoryMap
 from apps.geo.models import Country
 
 
@@ -183,6 +183,15 @@ class RankingSerializer(serializers.ModelSerializer):
                   'transparency_index',)
 
 
+class ExpensePerYearCategoryFilterSerializer(serializers.Serializer):
+    year = serializers.IntegerField()
+    category = serializers.CharField(max_length=100)
+
+
+class ExpensePerYearFilterSerializer(serializers.Serializer):
+    year = serializers.IntegerField()
+
+
 class BudgetViewset(ReadOnlyModelViewSet):
     model = Budget
     serializer_class = BudgetSerializer
@@ -218,7 +227,7 @@ class BudgetViewset(ReadOnlyModelViewSet):
                 filters['year'] = filter_year
             else:
                 filters['transparency_index__isnull'] = False
-            last_transparency_index = TransparencyIndex.objects.select_related('country')\
+            last_transparency_index = TransparencyIndex.objects.select_related('country') \
                 .filter(**filters).order_by('year').last()
             if last_transparency_index:
                 budget_list.append(last_transparency_index)
@@ -320,3 +329,99 @@ class BudgetViewset(ReadOnlyModelViewSet):
         serializer = HistoricalSerializer(data=data)
 
         return Response(serializer.initial_data)
+
+    @action(detail=False)
+    def teste(self, request, pk=None):
+        return Response("ola teste")
+
+    @action(detail=False)
+    def budget_category_percentage(self, request, pk=None):
+        """
+            Get all Expenses by category and calculate percentage
+        """
+        params = ExpensePerYearCategoryFilterSerializer(data=request.GET)
+        params.is_valid(raise_exception=True)
+        year = params.validated_data.get('year')
+        category = params.validated_data.get('category')
+        budgetSummarys = BudgetSummary.objects.filter(
+            budget__year=year
+        ).values('expense_functional_budget', 'budget__country__id')
+        dbudgetSummary = {}
+        for budgetSummary in budgetSummarys:
+            dbudgetSummary[budgetSummary['budget__country__id']] = budgetSummary['expense_functional_budget']
+
+        expenses = Expense.objects.filter(
+            budget__year=year, group='functional', name__iexact=category
+        ).values('budget_aggregated', 'budget__country__name', 'budget__country')
+
+        agregateExpenses = []
+        for expense in expenses:
+            if expense['budget_aggregated'] is not None:
+                agregateExpense = {}
+                totalbudgetSummaryCountry = dbudgetSummary[expense['budget__country']]
+                agregateExpense['country'] = expense['budget__country__name']
+                agregateExpense['percent'] = (expense['budget_aggregated'] / totalbudgetSummaryCountry) * 100;
+                agregateExpenses.append(agregateExpense)
+        return Response(agregateExpenses)
+
+    @action(detail=False)
+    def expense_by_country(self, request, pk=None):
+        """
+            Get Expenses by category and calculate percentage
+        """
+        params = ExpensePerYearFilterSerializer(data=request.GET)
+        params.is_valid(raise_exception=True)
+        year = params.validated_data.get('year')
+
+        budgetSummarys = BudgetSummary.objects.filter(
+            budget__year=year
+        ).values('expense_functional_budget', 'budget__country__id')
+
+        countries = Country.objects.all()
+
+        dbudgetSummary = {}
+        for budgetSummary in budgetSummarys:
+            dbudgetSummary[budgetSummary['budget__country__id']] = budgetSummary['expense_functional_budget']
+
+        categories_qs = Category.objects.all()
+        categories = []
+        for category in categories_qs:
+            categories.append(category.name)
+
+        agregateExpenses = []
+        for country in countries:
+            categoriesMaps = CategoryMap.objects.filter(
+                country=country, category__group='functional',
+                category__type='expense'
+            )
+
+            categoriesnames = {}
+            categoriesmapscodes = []
+            for categoryMap in categoriesMaps:
+                categoriesnames[categoryMap.code] = categoryMap.category.name
+            if len(categoriesnames) > 0:
+                categoriesmapscodes = categoriesnames.keys()
+                expenses = Expense.objects.filter(
+                    budget__country=country, budget__year=year,
+                    code__in=categoriesmapscodes, group='functional'
+                )
+
+                agregateExpense = {"country": country.name}
+                for expense in expenses:
+                    totalbudgetSummaryCountry = dbudgetSummary[country.id]
+
+                    catname = categoriesnames[expense.code]
+
+                    if expense is not None and totalbudgetSummaryCountry is not None:
+                        expenses_category = expense.budget_aggregated
+                        expenses_category_percent = (expenses_category / totalbudgetSummaryCountry) * 100
+                        agregateExpense[catname] = expenses_category_percent
+                    else:
+                        agregateExpense[catname] = None
+
+                agregateExpenses.append(agregateExpense)
+
+        return Response({
+            "category": categories,
+            "data": agregateExpenses
+        })

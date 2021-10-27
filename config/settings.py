@@ -99,8 +99,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 SECURE_SSL_REDIRECT = True if ENV != 'dev' else False
 
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-TEST_WITHOUT_MIGRATIONS_COMMAND = 'django_nose.management.commands.test.Command'
+#TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+#TEST_WITHOUT_MIGRATIONS_COMMAND = 'django_nose.management.commands.test.Command'
 
 
 # Database

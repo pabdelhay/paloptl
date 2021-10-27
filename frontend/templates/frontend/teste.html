@@ -1,0 +1,20 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block extrahead %}
+<script src="{% static 'js/teste.js' %}"></script>
+{% endblock extrahead %}
+
+{% block content %}
+    <div>
+        <button class="ano">2018</button>
+        <button class="ano">2019</button>
+        <button class="ano">2020</button>
+        <button class="ano">2021</button>
+    </div>
+    <div id="teste_country"></div>
+    {% for country in countries %}
+        <img src="{{ country.flag.url }}"/>
+        <div>{{ country.name }}</div>
+        <div>{{country.slug }}</div>
+    {% endfor %}
+{% endblock content %}

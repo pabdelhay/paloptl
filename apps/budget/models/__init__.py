@@ -5,3 +5,5 @@ from .expense import Expense
 from .revenue import Revenue
 from .transparency_index import TransparencyIndex
 from .budget_summary import BudgetSummary
+from .category import Category
+from .categoryMap import CategoryMap

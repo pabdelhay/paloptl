@@ -53,3 +53,18 @@ class CountryView(SingleObjectMixin, View):
             'treemap_colors_map': json.dumps(settings.TREEMAP_EXECUTION_COLORS_HOVER)
         }
         return render(request, 'frontend/country-details.html', context=ctx)
+
+
+class TesteView(View):
+    def get(self, request):
+        ctx = {
+            'countries': Country.objects.all()
+        }
+        return render(request, 'frontend/teste.html', context=ctx)
+
+class CartView(View):
+    def get(self, request):
+        ctx = {
+
+        }
+        return render(request, 'frontend/chart.html', context=None)

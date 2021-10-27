@@ -9,7 +9,7 @@ from django_admin_inline_paginator.admin import TabularInlinePaginated
 from tabulate import tabulate
 
 from apps.budget.choices import UploadStatusChoices, ExpenseGroupChoices, RevenueGroupChoices, UploadCategoryChoices
-from apps.budget.models import Upload, Budget, UploadLog, BudgetSummary, Expense, Revenue
+from apps.budget.models import Upload, Budget, UploadLog, BudgetSummary, Expense, Revenue, Category, CategoryMap
 from apps.budget.models.transparency_index import TransparencyIndex
 from apps.budget.tasks import import_file, reimport_budget_uploads
 from common.admin import CountryPermissionMixin
@@ -393,3 +393,31 @@ class UploadLogAdmin(CountryPermissionMixin, admin.ModelAdmin):
             return "-"
         return obj.category.__class__._meta.get_field(obj.field).verbose_name
     _field.short_description = _("field")
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'group', 'type',)
+    #list_editable = ('name', 'group', 'type',)
+    list_filter = ('group', 'type', )
+    # fieldsets = (
+    #     (_("Base info"), {
+    #         'fields': ('country', 'year', )
+    #     }),
+    #     (_("Transparency Index"), {
+    #         'fields': (('score_open_data', 'score_reports', 'score_data_quality', 'transparency_index'),),
+    #     }),
+    # )
+
+    @admin.register(CategoryMap)
+    class CategoryMapAdmin(CountryPermissionMixin, admin.ModelAdmin):
+        list_display = ('code', 'country', 'category',)
+        # list_editable = ('name', 'group', 'type',)
+        list_filter = ('country', 'category',)
+        # fieldsets = (
+        #     (_("Base info"), {
+        #         'fields': ('country', 'year', )
+        #     }),
+        #     (_("Transparency Index"), {
+        #         'fields': (('score_open_data', 'score_reports', 'score_data_quality', 'transparency_index'),),
+        #     }),
+        # )
