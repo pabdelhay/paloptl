@@ -34,8 +34,7 @@ class UploadInline(admin.TabularInline):
             link_text = _("Errors") + f" ({len(obj.errors)})"
             errors = "<br>".join(obj.errors)
             html = f'<div class="upload-log" id="upload-dialog-{obj.id}">{errors}</div>' \
-                   f'<a href="#" class="log-link" data-upload_id="{obj.id}">{link_text}</a>' \
-
+                   f'<a href="#" class="log-link" data-upload_id="{obj.id}">{link_text}</a>'
         elif obj.status in UploadStatusChoices.get_success_status():
             log_count = obj.logs.count()
             log_link = reverse(f'admin:budget_uploadlog_changelist') + f'?upload_id={obj.id}&_popup=1'
@@ -47,6 +46,7 @@ class UploadInline(admin.TabularInline):
                f'   <input type="hidden" name="status-{obj.id}" class="status-input" value="{obj.status}">' \
                f'' + html + \
                f'</div>'
+
     get_log.short_description = "log"
 
 
@@ -171,10 +171,12 @@ class ExpenseFunctionInline(BudgetAccountInline):
 
     def get_group_taxonomy(self, obj):
         return obj.parent.name if obj.parent else obj.name
+
     get_group_taxonomy.short_description = model.get_taxonomy(group=group, level=0)
 
     def get_subgroup_taxonomy(self, obj):
         return obj.name if obj.parent else ""
+
     get_subgroup_taxonomy.short_description = model.get_taxonomy(group=group, level=1)
 
 
@@ -182,14 +184,16 @@ class ExpenseAgencyInline(BudgetAccountInline):
     model = Expense
     group = ExpenseGroupChoices.ORGANIC
     verbose_name_plural = _("Expenses by agency")
-    list_select_related = ('parent', )
+    list_select_related = ('parent',)
 
     def get_group_taxonomy(self, obj):
         return obj.parent.name if obj.parent else obj.name
+
     get_group_taxonomy.short_description = model.get_taxonomy(group=group, level=0)
 
     def get_subgroup_taxonomy(self, obj):
         return obj.name if obj.parent else ""
+
     get_subgroup_taxonomy.short_description = model.get_taxonomy(group=group, level=1)
 
 
@@ -200,10 +204,12 @@ class RevenueNatureInline(BudgetAccountInline):
 
     def get_group_taxonomy(self, obj):
         return obj.parent.name if obj.parent else obj.name
+
     get_group_taxonomy.short_description = model.get_taxonomy(group=group, level=0)
 
     def get_subgroup_taxonomy(self, obj):
         return obj.name if obj.parent else ""
+
     get_subgroup_taxonomy.short_description = model.get_taxonomy(group=group, level=1)
 
 
@@ -214,10 +220,12 @@ class RevenueSourceInline(BudgetAccountInline):
 
     def get_group_taxonomy(self, obj):
         return obj.parent.name if obj.parent else obj.name
+
     get_group_taxonomy.short_description = model.get_taxonomy(group=group, level=0)
 
     def get_subgroup_taxonomy(self, obj):
         return obj.name if obj.parent else ""
+
     get_subgroup_taxonomy.short_description = model.get_taxonomy(group=group, level=1)
 
 
@@ -231,7 +239,7 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
     inlines = (UploadInline, BudgetSummaryInline,
                ExpenseFunctionInline, ExpenseAgencyInline, RevenueNatureInline, RevenueSourceInline)
     list_display = ('country', 'year', 'is_active', 'uploads', 'uploads_with_error')
-    list_filter = ('year', )
+    list_filter = ('year',)
     readonly_fields = ('currency', 'output_file')
     actions = ['reimport_uploads', 'remove_uploads_with_error']
 
@@ -302,6 +310,7 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
         ]
 
         return tabulate(row, headers=headers, tablefmt='unsafehtml')
+
     uploads.short_description = _("uploads")
 
     @mark_safe
@@ -311,6 +320,7 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
         if errors_count > 0:
             html += '&nbsp;&nbsp;<span class="ui-icon ui-icon-alert"></span>'
         return html
+
     uploads_with_error.short_description = _("uploads with error")
 
     def reimport_uploads(self, request, queryset):
@@ -331,10 +341,10 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
 class TransparencyIndexAdmin(CountryPermissionMixin, admin.ModelAdmin):
     list_display = ('country', 'year', 'score_open_data', 'score_reports', 'score_data_quality', 'transparency_index',)
     list_editable = ('score_open_data', 'score_reports', 'score_data_quality', 'transparency_index',)
-    list_filter = ('year', 'country', )
+    list_filter = ('year', 'country',)
     fieldsets = (
         (_("Base info"), {
-            'fields': ('country', 'year', )
+            'fields': ('country', 'year',)
         }),
         (_("Transparency Index"), {
             'fields': (('score_open_data', 'score_reports', 'score_data_quality', 'transparency_index'),),
@@ -366,58 +376,48 @@ class UploadLogAdmin(CountryPermissionMixin, admin.ModelAdmin):
 
     def _category_label(self, obj):
         return obj.category.get_model_label()
+
     _category_label.short_description = _("category")
 
     def _group(self, obj):
         return obj.category.get_taxonomy_label()
+
     _group.short_description = _("group")
 
     def _category_name(self, obj):
         return obj.category_name
+
     _category_name.short_description = _("name")
 
     def _old_value(self, obj):
         if not obj.old_value:
             return "-"
         return raw_money_display(obj.old_value)
+
     _old_value.short_description = _("old value")
 
     def _new_value(self, obj):
         if not obj.new_value:
             return "-"
         return raw_money_display(obj.new_value)
+
     _new_value.short_description = _("new value")
 
     def _field(self, obj):
         if not obj.field:
             return "-"
         return obj.category.__class__._meta.get_field(obj.field).verbose_name
+
     _field.short_description = _("field")
+
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'group', 'type',)
-    #list_editable = ('name', 'group', 'type',)
-    list_filter = ('group', 'type', )
-    # fieldsets = (
-    #     (_("Base info"), {
-    #         'fields': ('country', 'year', )
-    #     }),
-    #     (_("Transparency Index"), {
-    #         'fields': (('score_open_data', 'score_reports', 'score_data_quality', 'transparency_index'),),
-    #     }),
-    # )
+    list_filter = ('group', 'type',)
 
-    @admin.register(CategoryMap)
-    class CategoryMapAdmin(CountryPermissionMixin, admin.ModelAdmin):
-        list_display = ('code', 'country', 'category',)
-        # list_editable = ('name', 'group', 'type',)
-        list_filter = ('country', 'category',)
-        # fieldsets = (
-        #     (_("Base info"), {
-        #         'fields': ('country', 'year', )
-        #     }),
-        #     (_("Transparency Index"), {
-        #         'fields': (('score_open_data', 'score_reports', 'score_data_quality', 'transparency_index'),),
-        #     }),
-        # )
+
+@admin.register(CategoryMap)
+class CategoryMapAdmin(CountryPermissionMixin, admin.ModelAdmin):
+    list_display = ('code', 'country', 'category',)
+    list_filter = ('country', 'category',)

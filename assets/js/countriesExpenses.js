@@ -63,7 +63,7 @@ chart.legend = new am4charts.Legend();
 
 
 function GetPlotChart(year){
-    var url = "/api/budgets/expense_category_percentage/?year="+year;
+    var url = "/api/budgets/expense_by_country/?year="+year;
     $.get(url, function (result) {
         PlotChart(result.category,result.data);
     }).fail(function () {

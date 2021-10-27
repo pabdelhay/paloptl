@@ -1,7 +1,6 @@
 import json
 
 from django.conf import settings
-from django.http import HttpResponseNotFound
 from django.shortcuts import render
 from django.views import View
 from django.views.generic.detail import SingleObjectMixin
@@ -55,16 +54,6 @@ class CountryView(SingleObjectMixin, View):
         return render(request, 'frontend/country-details.html', context=ctx)
 
 
-class TesteView(View):
+class CountriesExpensesView(View):
     def get(self, request):
-        ctx = {
-            'countries': Country.objects.all()
-        }
-        return render(request, 'frontend/teste.html', context=ctx)
-
-class CartView(View):
-    def get(self, request):
-        ctx = {
-
-        }
-        return render(request, 'frontend/chart.html', context=None)
+        return render(request, 'frontend/countriesExpenses.html', context=None)
