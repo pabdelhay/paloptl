@@ -8,6 +8,15 @@ from django.views.generic.detail import SingleObjectMixin
 
 from apps.geo.models import Country
 
+class NewPageView(View):
+    def get(self, request):
+        countries = { 'countries': Country.objects.all() }
+        return render(request, "frontend/newpage.html", context=countries)
+
+class ExpesensesByCountryView(View):
+    def get(self, request):
+        countries = { 'countries': Country.objects.all() }
+        return render(request, "frontend/expenses_by_country.html", context=countries)
 
 class IndexView(View):
     def get(self, request):

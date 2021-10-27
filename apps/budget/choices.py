@@ -29,6 +29,13 @@ GROUP_CHOICES_BY_BUDGET_ACCOUNT = {
 }
 
 
+class CategoryGroupChoice(models.TextChoices):
+    FUNCTIONAL = 'functional', _("Functional")
+    ORGANIC = 'organic', _("Organic")
+    NATURE = 'nature', _("Nature")
+    SOURCE = 'source', _("Source")
+
+
 class UploadStatusChoices(models.TextChoices):
     VALIDATING = 'validating', _("Validating")
     IMPORTING = 'importing', _("Importing")

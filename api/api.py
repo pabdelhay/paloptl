@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from apps.budget.choices import ExpenseGroupChoices, RevenueGroupChoices
-from apps.budget.models import Budget, TransparencyIndex, Expense, Revenue, BudgetSummary
+from apps.budget.models import Budget, TransparencyIndex, Expense, Revenue, BudgetSummary, Category, CategoryMap
 from apps.geo.models import Country
 
 
@@ -151,6 +151,13 @@ class RevenueSerializer(BudgetAccountSerializer):
         model = Revenue
         fields = BudgetAccountSerializer.Meta.fields
 
+class PercentalParamSerializer(serializers.Serializer):
+    year = serializers.IntegerField(required=True)
+    category = serializers.CharField(required=True)
+    #level = serializers.IntegerField(required=True)
+
+class ExpensesByCountryFilterSerializer(serializers.Serializer):
+    year = serializers.IntegerField(required=True)
 
 class HistoricalParamsSerializer(serializers.Serializer):
     group = serializers.ChoiceField(choices=ExpenseGroupChoices.choices + RevenueGroupChoices.choices)
@@ -252,6 +259,147 @@ class BudgetViewset(ReadOnlyModelViewSet):
             .exclude(Q(budget_aggregated__isnull=True) & Q(execution_aggregated__isnull=True))
         serializer = ExpenseSerializer(qs, many=True)
         return Response(serializer.data)
+
+    @action(detail=False)
+    def hello(self, request, pk=None):
+        despesas = Expense.objects.all();
+        return Response(f"Despesas: {despesas}")
+
+        lista = TransparencyIndex.objects.filter(year=2020)
+        soma = 0
+        for t in lista:
+            soma += t.transparency_index
+
+        media = soma / len(lista)
+        return Response(f"Media: {media}")
+
+    @action(detail=False)
+    def despesa_2020(self, request):
+        lista = BudgetSummary.objects.filter(budget__year='2020').values('expense_functional_budget', 'budget__country')
+        dic = {}
+        for l in lista:
+            dic[l['budget__country']] = l['expense_functional_budget']
+
+        return Response(dic)
+
+    @action(detail=False)
+    def country_list(self, request):
+        return Response("Lista de paises")
+
+    @action(detail=False)
+    def expenses_by_country(self, request):
+        params = ExpensesByCountryFilterSerializer(data=request.GET)
+        params.is_valid(raise_exception=True)
+        year = params.validated_data.get('year')
+
+        countries = Country.objects.all()
+        result = {
+            'categories':[],
+            'data':[]
+        }
+
+        categories = Category.objects.filter(group="functional", type="expense").values_list("name", flat=True)
+        result['categories'] = list(categories)
+
+        for country in countries:
+
+            category_map = CategoryMap.objects.filter(country=country, category__group="functional", category__type="expense")
+            name_by_code = {}
+
+            for cm in category_map:
+                name_by_code[cm.code] = cm.category.name
+
+            codes = name_by_code.keys()
+
+            result_expense = {
+                'country': country.name,
+
+            }
+            #inicialize result expense categories None
+            for category in categories:
+                result_expense[category] = None
+
+            expenses = Expense.objects.filter(budget__country=country, budget__year=year, code__in=codes, group='functional')
+            #print(expenses)
+
+            budget = BudgetSummary.objects.filter(budget__year=year, budget__country=country).values('expense_functional_budget').first()
+
+            if not budget:
+                result['data'].append(result_expense)
+                continue
+            budget_country = budget['expense_functional_budget']
+
+            #create the dictionary
+            for expense in expenses:
+                name_category = name_by_code[expense.code]
+                budget_aggregated = expense.budget_aggregated / budget_country if budget_country else None
+                result_expense[name_category] = budget_aggregated * 100
+
+            result['data'].append(result_expense)
+
+        return Response(result)
+    # @action(detail=False)
+    # def expenses_by_country(self, request):
+    #     params = ExpensesByCountryFilterSerializer(data=request.GET)
+    #     params.is_valid(raise_exception=True)
+    #     year = params.validated_data.get('year')
+    #     result = []
+    #     countries = Country.objects.all()
+    #
+    #     for country in countries:
+    #         dic = {}
+    #         filters = {'budget__year': year, 'budget__country': country, 'group': 'functional'}
+    #
+    #         budget = BudgetSummary.objects.filter(budget__year=year, budget__country=country).values('expense_functional_budget').first()
+    #
+    #         budget_country = budget['expense_functional_budget']
+    #
+    #         if not budget_country:
+    #             continue
+    #
+    #         budget_health = Expense.objects.filter(**filters, name__iexact="saúde").values("budget_aggregated").first()
+    #         budget_education = Expense.objects.filter(**filters, name__iexact="educação").values("budget_aggregated").first()
+    #         budget_security = Expense.objects.filter(**filters, name__iexact="segurança").values("budget_aggregated").first()
+    #
+    #         dic['country'] = country.name
+    #         dic['expense_health'] = budget_health['budget_aggregated'] / budget_country if budget_health else None
+    #         dic['expense_education'] = budget_education['budget_aggregated'] / budget_country if budget_education else None
+    #         dic['expense_security'] = budget_security['budget_aggregated'] / budget_country if budget_security else None
+    #
+    #         result.append(dic)
+    #
+    #     return Response(result)
+
+    @action(detail=False)
+    def budget_category_percentage(self, request):
+        params = PercentalParamSerializer(data=request.GET)
+        params.is_valid(raise_exception=True)
+        category = params.validated_data['category']
+        year = params.validated_data['year']
+        #level = params.validated_data['level']
+
+        orcamento_saude_pais = Expense.objects.filter(budget__year=year, level=0, group="functional", name__iexact=category).values("budget__country", "budget__country__name", "budget_aggregated")
+        orcamento_total_pais = BudgetSummary.objects.filter(budget__year="2020").values("expense_functional_budget","budget__country")
+        lista_final = []
+        dict_orcamento_total = {}
+
+        for i in orcamento_total_pais:
+            dict_orcamento_total[i["budget__country"]] = i["expense_functional_budget"]
+
+        for l in orcamento_saude_pais:
+            country_id = l["budget__country"]
+            orcamento_saude = l["budget_aggregated"]
+            if not country_id or not orcamento_saude: continue
+            percental = orcamento_saude / dict_orcamento_total[country_id]
+            resultado_dict = {"country": l["budget__country__name"], "percental": percental}
+            lista_final.append(resultado_dict)
+
+        return Response(lista_final)
+
+    @action(detail= False)
+    def RevenueByFunction(self, request):
+        revenue = Revenue.objects.all()
+        return Response(revenue)
 
     @action(detail=True)
     def historical(self, request, pk=None):

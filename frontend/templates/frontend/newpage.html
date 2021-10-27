@@ -1,0 +1,21 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+
+{% block content %}
+    <h2>Countries and Percentages</h2>
+    <div>
+        <button class="year">2018</button>
+        <button class="year">2019</button>
+        <button class="year">2020</button>
+        <button class="year">2021</button>
+    </div>
+    <div id="list_countries"></div>
+
+{% endblock content%}
+
+{% block extrahead %}
+        <script src="{% static 'js/newpage.js' %}"></script>
+
+<script>
+</script>
+{% endblock %}

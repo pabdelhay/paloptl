@@ -14,6 +14,8 @@ from apps.budget.models.transparency_index import TransparencyIndex
 from apps.budget.tasks import import_file, reimport_budget_uploads
 from common.admin import CountryPermissionMixin
 from common.methods import raw_money_display
+from apps.budget.models.category_map import CategoryMap
+from apps.budget.models.category import Category
 
 admin.site.unregister(LoginAttempt)
 
@@ -393,3 +395,32 @@ class UploadLogAdmin(CountryPermissionMixin, admin.ModelAdmin):
             return "-"
         return obj.category.__class__._meta.get_field(obj.field).verbose_name
     _field.short_description = _("field")
+
+
+@admin.register(Category)
+class Category(admin.ModelAdmin):
+    list_display = ('name', 'type', 'group')
+    list_filter = ('type', 'group')
+    # fieldsets = (
+    #     (_("Base info"), {
+    #         'fields': ('country', 'year', )
+    #     }),
+    #     (_("Transparency Index"), {
+    #         'fields': (('score_open_data', 'score_reports', 'score_data_quality', 'transparency_index'),),
+    #     }),
+    # )
+
+
+@admin.register(CategoryMap)
+class CategoryMap(admin.ModelAdmin):
+    # the order to be apresented in admin
+    list_display = ('country', 'category', 'code')
+    list_filter = ('country', 'category',)
+    # fieldsets = (
+    #     (_("Base info"), {
+    #         'fields': ('country', 'year', )
+    #     }),
+    #     (_("Transparency Index"), {
+    #         'fields': (('score_open_data', 'score_reports', 'score_data_quality', 'transparency_index'),),
+    #     }),
+    # )
