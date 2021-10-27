@@ -398,7 +398,7 @@ class UploadLogAdmin(CountryPermissionMixin, admin.ModelAdmin):
 
 
 @admin.register(Category)
-class Category(admin.ModelAdmin):
+class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'type', 'group')
     list_filter = ('type', 'group')
     # fieldsets = (
@@ -412,7 +412,7 @@ class Category(admin.ModelAdmin):
 
 
 @admin.register(CategoryMap)
-class CategoryMap(admin.ModelAdmin):
+class CategoryMapAdmin(admin.ModelAdmin):
     # the order to be apresented in admin
     list_display = ('country', 'category', 'code')
     list_filter = ('country', 'category',)
