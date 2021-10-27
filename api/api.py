@@ -403,8 +403,8 @@ class BudgetViewset(ReadOnlyModelViewSet):
             if len(categoriesnames) > 0:
                 categoriesmapscodes = categoriesnames.keys()
                 expenses = Expense.objects.filter(
-                    budget__country=country, budget__year=year,
-                    code__in=categoriesmapscodes, group='functional'
+                    budget__country=country, budget__year=year, code__in=categoriesmapscodes,
+                    group='functional', level=0
                 )
 
                 for expense in expenses:
