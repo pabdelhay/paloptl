@@ -1316,6 +1316,11 @@ h3 .arrow {
   margin-top: -8px;
   padding-top: 1px;
 }
+.page-countries-expenses .disclaimer {
+  color: #6b6b6b;
+  font-size: 10px;
+  margin-top: 11px;
+}
 
 .temp-info {
   font-size: 24px;
