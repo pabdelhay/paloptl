@@ -392,7 +392,7 @@ class BudgetViewset(ReadOnlyModelViewSet):
             categoriesMaps = CategoryMap.objects.filter(
                 country=country, category__group='functional',
                 category__type='expense'
-            )
+            ).select_related('category')
 
             aggregateExpense = {"country": country.name}
             categoriesnames = {}
