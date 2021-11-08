@@ -126,6 +126,10 @@
                     aggregated_data[item] = 0
                 }
                 aggregated_data[item] += new_value;
+                if(item == 'budget_aggregated'){
+                    // Here we force has_budget to true, in case first budget_data 'has_budget' is false.
+                    aggregated_data['has_budget'] = true;
+                }
             });
         }
         return aggregated_data;
