@@ -57,7 +57,7 @@ class BudgetAccountTestCase(TestCase):
         f01.save()
         inferred_budget_aggregated = f0.infer_aggregated_value('budget_investment')
         self.assertEqual(inferred_budget_aggregated, 5,
-                         msg="Aggregated value should be sum of descendants, event there are descendants without "
+                         msg="Aggregated value should be sum of descendants, even there are descendants without "
                              "values set.")
 
     def test_update_inferred_values(self):
