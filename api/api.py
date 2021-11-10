@@ -192,6 +192,20 @@ class ExpensePerYearFilterSerializer(serializers.Serializer):
     year = serializers.IntegerField()
 
 
+class ExpensesRevenueYearFilterSerializer(serializers.Serializer):
+    country = serializers.PrimaryKeyRelatedField(queryset=Country.objects.all())
+
+
+class OutputExpensesRevenueYearFilterSerializer(serializers.Serializer):
+    year = serializers.IntegerField()
+    budget_expense = serializers.FloatField()
+    budget_revenue = serializers.FloatField()
+    execution_expense = serializers.FloatField()
+    execution_revenue = serializers.FloatField()
+    revenue_group = serializers.CharField()
+    expense_group = serializers.CharField()
+
+
 class BudgetViewset(ReadOnlyModelViewSet):
     model = Budget
     serializer_class = BudgetSerializer
@@ -333,6 +347,54 @@ class BudgetViewset(ReadOnlyModelViewSet):
     @action(detail=False)
     def teste(self, request, pk=None):
         return Response("ola teste")
+
+    @action(detail=False)
+    def expenses_revenue_year_by_country(self, request, pk=None):
+        """
+            This is an API for a country's budget list.
+        """
+        params = ExpensesRevenueYearFilterSerializer(data=request.GET)
+        params.is_valid(raise_exception=True)
+        country = params.validated_data.get("country")
+        # country = Country.objects.get(country=country)
+        budget_summaries = BudgetSummary.objects.order_by("budget__year").filter(budget__country=country)
+        list_dict = []
+        for budget_summary in budget_summaries:
+            if not (budget_summary.expense_functional_budget is None):
+                budget_expense = budget_summary.expense_functional_budget
+                expense_group = "Funcional"
+            else:
+                budget_expense = budget_summary.expense_organic_budget
+                expense_group = "Orgánico"
+
+            if not (budget_summary.revenue_nature_budget is None):
+                budget_revenue = budget_summary.revenue_nature_budget
+                revenue_group = "Natural"
+            else:
+                budget_revenue = budget_summary.revenue_source_budget
+                revenue_group = "Origem"
+
+            if not (budget_summary.expense_functional_execution is None):
+                execution_expense = budget_summary.expense_functional_execution
+            else:
+                execution_expense = budget_summary.expense_organic_execution
+
+            if not (budget_summary.revenue_nature_execution is None):
+                execution_revenue = budget_summary.revenue_nature_execution
+            else:
+                execution_revenue = budget_summary.revenue_source_execution
+
+            list_dict.append({
+                "year": budget_summary.budget.year,
+                "budget_expense": budget_expense,
+                "budget_revenue": budget_revenue,
+                "execution_expense": execution_expense,
+                "execution_revenue": execution_revenue,
+                "expense_group": expense_group,
+                "revenue_group": revenue_group,
+            })
+        list_dict = OutputExpensesRevenueYearFilterSerializer(list_dict, many=True)
+        return Response(list_dict.data)
 
     @action(detail=False)
     def budget_category_percentage(self, request, pk=None):

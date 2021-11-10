@@ -1,10 +1,12 @@
+from random import random
+
 from django.core.management import call_command
 from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from apps.budget.choices import ExpenseGroupChoices, CategoryGroupChoices, UploadCategoryChoices
-from apps.budget.models import Budget, Expense, Category, CategoryMap
+from apps.budget.choices import ExpenseGroupChoices, CategoryGroupChoices, UploadCategoryChoices, RevenueGroupChoices
+from apps.budget.models import Budget, Expense, Category, CategoryMap, Revenue
 from apps.geo.models import Country
 
 
@@ -155,3 +157,92 @@ class APITestCase(TestCase):
         self.assertEqual(r["data"][0]["EDUCAÇÂO"], educacaopercentage, "EDUCAÇÂO musta be equal")
         segurancapercentage = (13 / expense_functional_budget) * 100
         self.assertEqual(r["data"][0]["SEGURANÇA"], segurancapercentage, "SEGURANÇA musta be equal")
+
+    def test_expenses_revenue_year_by_country(self):
+        self.assertEqual(1, 1, msg="Hello Word Test")
+
+        def create_budget(country, year):
+            return Budget.objects.create(country=country, year=year)
+
+        def create_expenses_or_revenue(group, budget):
+            if group == ExpenseGroupChoices.FUNCTIONAL:
+                e_or_r = Expense.objects.create(group=group, budget=budget, name="test function", code="f0")
+                e_or_r.budget_investment = 8
+                e_or_r.budget_operation = 17
+                e_or_r.save()
+            else:
+                e_or_r = Revenue.objects.create(group=group, budget=budget, name="test natural", code="f0")
+                e_or_r.budget_investment = 16
+                e_or_r.budget_operation = 15
+                e_or_r.save()
+
+            budget.update_inferred_values()
+
+        budget2020 = create_budget(self.country, "2020")
+        budget2019 = create_budget(self.country, "2019")
+        budget2018 = create_budget(self.country, "2018")
+        budget2017 = create_budget(self.country, "2017")
+        budget2016 = create_budget(self.country, "2016")
+        budget2015 = create_budget(self.country, "2015")
+        budget2014 = create_budget(self.country, "2014")
+
+        create_expenses_or_revenue(ExpenseGroupChoices.FUNCTIONAL, self.budget)
+        create_expenses_or_revenue(RevenueGroupChoices.NATURE, self.budget)
+
+        create_expenses_or_revenue(ExpenseGroupChoices.FUNCTIONAL, budget2020)
+        create_expenses_or_revenue(RevenueGroupChoices.NATURE, budget2020)
+
+        create_expenses_or_revenue(ExpenseGroupChoices.FUNCTIONAL, budget2019)
+        create_expenses_or_revenue(RevenueGroupChoices.NATURE, budget2019)
+
+        create_expenses_or_revenue(ExpenseGroupChoices.FUNCTIONAL, budget2018)
+        create_expenses_or_revenue(RevenueGroupChoices.NATURE, budget2018)
+
+        create_expenses_or_revenue(ExpenseGroupChoices.FUNCTIONAL, budget2017)
+        create_expenses_or_revenue(RevenueGroupChoices.NATURE, budget2017)
+
+        create_expenses_or_revenue(ExpenseGroupChoices.FUNCTIONAL, budget2016)
+        create_expenses_or_revenue(RevenueGroupChoices.NATURE, budget2016)
+
+        create_expenses_or_revenue(ExpenseGroupChoices.FUNCTIONAL, budget2015)
+        create_expenses_or_revenue(RevenueGroupChoices.NATURE, budget2015)
+
+        create_expenses_or_revenue(ExpenseGroupChoices.FUNCTIONAL, budget2014)
+        create_expenses_or_revenue(RevenueGroupChoices.NATURE, budget2014)
+
+        last_budget = Budget.objects.order_by("-year").last()
+        last_budget_expense = Expense.objects.filter(budget=last_budget).last()
+        last_budget_revenue = Revenue.objects.filter(budget=last_budget).last()
+
+        last_budget_expense.budget_investment += 2
+        last_budget_expense.budget_operation += 2
+        last_budget_expense.save()
+
+        last_budget_revenue.budget_operation += 2
+        last_budget_revenue.budget_operation += 2
+        last_budget_revenue.save()
+
+        last_budget.update_inferred_values()
+
+        base_url = f"/budgets/expenses_revenue_year_by_country/"
+        result = self.client.get(self.get_api_url(base_url), {"country": self.country.id})
+
+        result_json = result.json()
+        self.assertEqual(len(result_json), 8, msg="Row number returned was not expected")
+
+        first = result_json[0]
+        self.assertTrue(isinstance(first["revenue"], float), msg="Expected type is a float")
+        self.assertTrue(isinstance(first["expense"], float), msg="Expected type is a float")
+        self.assertTrue(isinstance(first["year"], int), msg="Expected type is a int")
+
+        self.assertEqual(len(first), 5, msg="Is not returning the expected number of keys")
+
+        self.assertTrue("revenue" in first, msg="Did not find the corresponding key")
+        self.assertTrue("expense" in first, msg="Did not find the corresponding key")
+        self.assertTrue("year" in first, msg="Did not find the corresponding key")
+
+        self.assertEqual(result_json[0]["expense"], 25, msg="Unexpected line number")
+        self.assertEqual(result_json[0]["revenue"], 31, msg="Unexpected line number")
+
+        self.assertEqual(result_json[-1]["expense"], 29, msg="Unexpected line number")
+        self.assertEqual(result_json[-1]["revenue"], 35, msg="Unexpected line number")
