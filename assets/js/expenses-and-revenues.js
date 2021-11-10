@@ -88,9 +88,9 @@ am4core.ready(async function () {
     // Add legend
     chart.legend = new am4charts.Legend();
 
-    createSeries("budget_revenue", "Receita", 60, -40);
-    createSeries("execution_revenue", "Exec. Receita", 40, -40, 10, "#ffffff");
-    createSeries("budget_expense", "Despesa", 60, 40);
-    createSeries("execution_expense", "Exec. Despesa", 40, 40, 10, "#ffffff");
+    createSeries("budget_revenue", "Dotação Receita", 60, -20);
+    createSeries("execution_revenue", "Execução Receita", 40, -20, 10, "#ffffff");
+    createSeries("budget_expense", "Dotação Despesa", 60, 41);
+    createSeries("execution_expense", "Execução Despesa", 40, 41, 10, "#ffffff");
 
 }); // end am4core.ready()
