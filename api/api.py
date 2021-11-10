@@ -182,6 +182,15 @@ class RankingSerializer(serializers.ModelSerializer):
         fields = ('id', 'country', 'year', 'score_open_data', 'score_reports', 'score_data_quality',
                   'transparency_index',)
 
+class ExpensesAndRevenuesSerializer(serializers.Serializer):
+    budget_expense = serializers.FloatField()
+    year = serializers.IntegerField()
+    budget_revenue = serializers.FloatField()
+    execution_expense = serializers.FloatField()
+    execution_revenue = serializers.FloatField()
+    expense_group = serializers.CharField()
+    revenue_group = serializers.CharField()
+
 
 class ExpensePerYearCategoryFilterSerializer(serializers.Serializer):
     year = serializers.IntegerField()
@@ -190,6 +199,10 @@ class ExpensePerYearCategoryFilterSerializer(serializers.Serializer):
 
 class ExpensePerYearFilterSerializer(serializers.Serializer):
     year = serializers.IntegerField()
+
+
+class ExpenseAndRevenueCountryIdFilterSerializer(serializers.Serializer):
+    country = serializers.PrimaryKeyRelatedField(queryset=Country.objects.all())
 
 
 class BudgetViewset(ReadOnlyModelViewSet):
@@ -333,6 +346,53 @@ class BudgetViewset(ReadOnlyModelViewSet):
     @action(detail=False)
     def teste(self, request, pk=None):
         return Response("ola teste")
+
+    @action(detail=False, methods=['GET', 'POST'])
+    def expenses_and_revenues(self, request, pk=None):
+        params = ExpenseAndRevenueCountryIdFilterSerializer(data=request.GET)
+        params.is_valid(raise_exception=True)
+        country = params.validated_data.get('country')
+        budgets = Budget.objects.filter(country=country).order_by("year")
+        expensesRevenues = []
+
+        for budget in budgets:
+            budget_summary = BudgetSummary.objects.get(budget=budget)
+            if not (budget_summary.expense_functional_budget is None):
+                budget_expense = budget_summary.expense_functional_budget
+            else:
+                budget_expense = budget_summary.expense_organic_budget
+
+            if not (budget_summary.revenue_nature_budget is None):
+                budget_revenue = budget_summary.revenue_nature_budget
+            else:
+                budget_revenue = budget_summary.revenue_source_budget
+
+            if not (budget_summary.expense_functional_execution is None):
+                execution_expense = budget_summary.expense_functional_execution
+            else:
+                execution_expense = budget_summary.expense_organic_execution
+
+            if not (budget_summary.revenue_nature_execution is None):
+                execution_revenue = budget_summary.revenue_nature_execution
+            else:
+                execution_revenue = budget_summary.revenue_source_execution
+
+            if not (budget_summary.expense_functional_budget is None):
+                expense_group = ExpenseGroupChoices.FUNCTIONAL
+            else:
+                expense_group = ExpenseGroupChoices.ORGANIC
+
+            if not (budget_summary.revenue_nature_budget is None):
+                revenue_group = RevenueGroupChoices.NATURE
+            else:
+                revenue_group = RevenueGroupChoices.SOURCE
+
+            expensesRevenues.append({"year": budget.year, "budget_expense": budget_expense,
+                                     "budget_revenue": budget_revenue, "execution_revenue": execution_revenue,
+                                    "execution_expense": execution_expense, "expense_group": expense_group, "revenue_group": revenue_group})
+
+        serializer = ExpensesAndRevenuesSerializer(expensesRevenues, many=True)
+        return Response(serializer.data)
 
     @action(detail=False)
     def budget_category_percentage(self, request, pk=None):

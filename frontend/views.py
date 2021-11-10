@@ -16,6 +16,14 @@ class IndexView(View):
         return render(request, 'frontend/index.html', context=ctx)
 
 
+class ExpensesRevenuesView(View):
+    def get(self, request, slug):
+        ctx = {
+            'country': Country.objects.all().first()
+        }
+        return render(request, 'frontend/expenses_revenues.html', context=ctx)
+
+
 class CountryView(SingleObjectMixin, View):
     model = Country
 

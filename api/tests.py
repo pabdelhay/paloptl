@@ -3,8 +3,8 @@ from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from apps.budget.choices import ExpenseGroupChoices, CategoryGroupChoices, UploadCategoryChoices
-from apps.budget.models import Budget, Expense, Category, CategoryMap
+from apps.budget.choices import ExpenseGroupChoices, CategoryGroupChoices, UploadCategoryChoices, RevenueGroupChoices
+from apps.budget.models import Budget, Expense, Category, CategoryMap, Revenue
 from apps.geo.models import Country
 
 
@@ -12,8 +12,9 @@ class APITestCase(TestCase):
     def setUp(self):
         call_command('create_countries')
         self.country = Country.objects.first()
-        self.budget = Budget.objects.create(country=self.country, year=2021)
-        self.client = APIClient()
+        # self.budget = Budget.objects.create(country=self.country, year=2021)
+        # self.client = APIClient()
+        # self.budget.update_inferred_values()
 
     def get_api_url(self, path):
         return f'/api{path}'
@@ -155,3 +156,60 @@ class APITestCase(TestCase):
         self.assertEqual(r["data"][0]["EDUCAÇÂO"], educacaopercentage, "EDUCAÇÂO musta be equal")
         segurancapercentage = (13 / expense_functional_budget) * 100
         self.assertEqual(r["data"][0]["SEGURANÇA"], segurancapercentage, "SEGURANÇA musta be equal")
+
+    def test_budgets_expenses_revenues(self):
+        budget2020 = Budget.objects.create(country=self.country, year=2020)
+        budget2019 = Budget.objects.create(country=self.country, year=2019)
+
+        expense2020 = Expense.objects.create(budget=budget2020, group=ExpenseGroupChoices.FUNCTIONAL,
+                                    name="EDUCAÇÂO", code="ED")
+        expense2020.budget_investment = 16
+        expense2020.budget_operation = 5
+        expense2020.execution_investment = 18
+        expense2020.execution_operation = 30
+        expense2020.save()
+
+        expense2019 = Expense.objects.create(budget=budget2019, group=ExpenseGroupChoices.FUNCTIONAL,
+                                             name="DESPORTO", code="SP")
+        expense2019.budget_investment = 10
+        expense2019.budget_operation = 12
+        expense2019.execution_investment = 10
+        expense2019.execution_operation = 27
+        expense2019.save()
+
+        revenue2020 = Revenue.objects.create(budget=budget2020, group=RevenueGroupChoices.NATURE,
+                                    name="EDUCAÇÂO", code="ED")
+        revenue2020.budget_investment = 30
+        revenue2020.budget_operation = 9
+        revenue2020.execution_investment = 8
+        revenue2020.execution_operation = 12
+        revenue2020.save()
+
+        revenue2019 = Revenue.objects.create(budget=budget2019, group=RevenueGroupChoices.NATURE,
+                                             name="DESPORTO", code="SP")
+        revenue2019.budget_investment = 22
+        revenue2019.budget_operation = 19
+        revenue2019.execution_investment = 20
+        revenue2019.execution_operation = 15
+        revenue2019.save()
+
+        budget2020.update_inferred_values()
+        budget2019.update_inferred_values()
+
+        base_url = f'/budgets/expenses_and_revenues/'
+        response = self.client.get(self.get_api_url(base_url), {'country': self.country.id})
+        r = response.json()
+
+        self.assertEqual('expense' in r[0], True, "Key expense not found.")
+        self.assertEqual('revenue' in r[0], True, "Key revenue not found.")
+        self.assertEqual('year' in r[0], True, "Key year not found.")
+
+        for budget_summary in r:
+            if budget_summary['year'] == 2020:
+                self.assertEqual(budget_summary['expense'], (expense2020.budget_investment + expense2020.budget_operation), 'Invalid expense value.')
+                self.assertEqual(budget_summary['revenue'], (revenue2020.budget_investment + revenue2020.budget_operation), 'Invalid revenue value.')
+            else:
+                self.assertEqual(budget_summary['expense'],  (expense2019.budget_investment + expense2019.budget_operation),  'Invalid expense value.')
+                self.assertEqual(budget_summary['revenue'],  (revenue2019.budget_investment + revenue2019.budget_operation),  'Invalid revenue value.')
+
+
