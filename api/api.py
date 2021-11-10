@@ -347,7 +347,7 @@ class BudgetViewset(ReadOnlyModelViewSet):
     def teste(self, request, pk=None):
         return Response("ola teste")
 
-    @action(detail=False, methods=['GET', 'POST'])
+    @action(detail=False, methods=['GET'])
     def expenses_and_revenues(self, request, pk=None):
         params = ExpenseAndRevenueCountryIdFilterSerializer(data=request.GET)
         params.is_valid(raise_exception=True)
@@ -357,32 +357,32 @@ class BudgetViewset(ReadOnlyModelViewSet):
 
         for budget in budgets:
             budget_summary = BudgetSummary.objects.get(budget=budget)
-            if not (budget_summary.expense_functional_budget is None):
+            if budget_summary.expense_functional_budget:
                 budget_expense = budget_summary.expense_functional_budget
             else:
                 budget_expense = budget_summary.expense_organic_budget
 
-            if not (budget_summary.revenue_nature_budget is None):
+            if budget_summary.revenue_nature_budget:
                 budget_revenue = budget_summary.revenue_nature_budget
             else:
                 budget_revenue = budget_summary.revenue_source_budget
 
-            if not (budget_summary.expense_functional_execution is None):
+            if budget_summary.expense_functional_execution:
                 execution_expense = budget_summary.expense_functional_execution
             else:
                 execution_expense = budget_summary.expense_organic_execution
 
-            if not (budget_summary.revenue_nature_execution is None):
+            if budget_summary.revenue_nature_execution:
                 execution_revenue = budget_summary.revenue_nature_execution
             else:
                 execution_revenue = budget_summary.revenue_source_execution
 
-            if not (budget_summary.expense_functional_budget is None):
+            if budget_summary.expense_functional_budget:
                 expense_group = ExpenseGroupChoices.FUNCTIONAL
             else:
                 expense_group = ExpenseGroupChoices.ORGANIC
 
-            if not (budget_summary.revenue_nature_budget is None):
+            if budget_summary.revenue_nature_budget:
                 revenue_group = RevenueGroupChoices.NATURE
             else:
                 revenue_group = RevenueGroupChoices.SOURCE

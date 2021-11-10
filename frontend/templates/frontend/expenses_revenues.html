@@ -20,7 +20,7 @@
 
 {% block content %}
     <h2 style="text-align: center;">Hello world</h2>
-  <div class="page-country-detail">
+    <div class="page-country-detail">
     {% with bg_name="bg_"|add:country.slug|add:".png" %}
     <div class="country-name-wrapper" style="background-image: url('{% static 'img/'|add:bg_name %}');">
         <div class="container">

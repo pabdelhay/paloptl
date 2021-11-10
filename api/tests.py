@@ -12,9 +12,8 @@ class APITestCase(TestCase):
     def setUp(self):
         call_command('create_countries')
         self.country = Country.objects.first()
-        # self.budget = Budget.objects.create(country=self.country, year=2021)
-        # self.client = APIClient()
-        # self.budget.update_inferred_values()
+        self.budget = Budget.objects.create(country=self.country, year=2021)
+        self.client = APIClient()
 
     def get_api_url(self, path):
         return f'/api{path}'
@@ -161,6 +160,22 @@ class APITestCase(TestCase):
         budget2020 = Budget.objects.create(country=self.country, year=2020)
         budget2019 = Budget.objects.create(country=self.country, year=2019)
 
+        expense2021 = Expense.objects.create(budget=self.budget, group=ExpenseGroupChoices.ORGANIC,
+                                             name="JUVENTUDE", code="JV")
+        expense2021.budget_investment = 10
+        expense2021.budget_operation = 20
+        expense2021.execution_investment = 13
+        expense2021.execution_operation = 37
+        expense2021.save()
+
+        revenue2021 = Revenue.objects.create(budget=self.budget, group=RevenueGroupChoices.NATURE,
+                                             name="JUVENTUDE", code="JV")
+        revenue2021.budget_investment = 8
+        revenue2021.budget_operation = 10
+        revenue2021.execution_investment = 18
+        revenue2021.execution_operation = 15
+        revenue2021.save()
+
         expense2020 = Expense.objects.create(budget=budget2020, group=ExpenseGroupChoices.FUNCTIONAL,
                                     name="EDUCAÇÂO", code="ED")
         expense2020.budget_investment = 16
@@ -193,6 +208,7 @@ class APITestCase(TestCase):
         revenue2019.execution_operation = 15
         revenue2019.save()
 
+        self.budget.update_inferred_values()
         budget2020.update_inferred_values()
         budget2019.update_inferred_values()
 
@@ -200,16 +216,18 @@ class APITestCase(TestCase):
         response = self.client.get(self.get_api_url(base_url), {'country': self.country.id})
         r = response.json()
 
-        self.assertEqual('expense' in r[0], True, "Key expense not found.")
-        self.assertEqual('revenue' in r[0], True, "Key revenue not found.")
+        self.assertEqual('budget_expense' in r[0], True, "Key expense not found.")
+        self.assertEqual('budget_revenue' in r[0], True, "Key revenue not found.")
         self.assertEqual('year' in r[0], True, "Key year not found.")
 
         for budget_summary in r:
-            if budget_summary['year'] == 2020:
-                self.assertEqual(budget_summary['expense'], (expense2020.budget_investment + expense2020.budget_operation), 'Invalid expense value.')
-                self.assertEqual(budget_summary['revenue'], (revenue2020.budget_investment + revenue2020.budget_operation), 'Invalid revenue value.')
+            print(budget_summary)
+            if budget_summary['year'] == 2021:
+                self.assertEqual(budget_summary['budget_expense'], (expense2021.budget_investment + expense2021.budget_operation), 'Invalid expense value.')
+                self.assertEqual(budget_summary['budget_revenue'], (revenue2021.budget_investment + revenue2021.budget_operation), 'Invalid revenue value.')
+            elif budget_summary["year"] == 2020:
+                self.assertEqual(budget_summary['budget_expense'],  (expense2020.budget_investment + expense2020.budget_operation),  'Invalid expense value.')
+                self.assertEqual(budget_summary['budget_revenue'],  (revenue2020.budget_investment + revenue2020.budget_operation),  'Invalid revenue value.')
             else:
-                self.assertEqual(budget_summary['expense'],  (expense2019.budget_investment + expense2019.budget_operation),  'Invalid expense value.')
-                self.assertEqual(budget_summary['revenue'],  (revenue2019.budget_investment + revenue2019.budget_operation),  'Invalid revenue value.')
-
-
+                self.assertEqual(budget_summary['budget_expense'], (expense2019.budget_investment + expense2019.budget_operation),  'Invalid expense value.')
+                self.assertEqual(budget_summary['budget_revenue'],  (revenue2019.budget_investment + revenue2019.budget_operation), 'Invalid revenue value.')
