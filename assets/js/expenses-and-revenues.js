@@ -10,10 +10,10 @@ am4core.ready(async function () {
     var chart = am4core.create("chartdiv", am4charts.XYChart);
     //chart.colors.step = 2;
     chart.colors.list = [
-        am4core.color("#ea7a71"),
-        am4core.color("#fbd1c1"),
         am4core.color("#0F69A3"),
-        am4core.color("#98B8DA")
+        am4core.color("#98B8DA"),
+        am4core.color("#ea7a71"),
+        am4core.color("#fbd1c1")
     ];
 
     chart.numberFormatter.bigNumberPrefixes = [
@@ -88,9 +88,9 @@ am4core.ready(async function () {
     // Add legend
     chart.legend = new am4charts.Legend();
 
-    createSeries("budget_revenue", "Despesa", 60, -40);
-    createSeries("execution_revenue", "Exec. Despesa", 40, -40, 10, "#ffffff");
-    createSeries("budget_expense", "Receita", 60, 40);
-    createSeries("execution_expense", "Exec. Receita", 40, 40, 10, "#ffffff");
+    createSeries("budget_revenue", "Receita", 60, -40);
+    createSeries("execution_revenue", "Exec. Receita", 40, -40, 10, "#ffffff");
+    createSeries("budget_expense", "Despesa", 60, 40);
+    createSeries("execution_expense", "Exec. Despesa", 40, 40, 10, "#ffffff");
 
 }); // end am4core.ready()
