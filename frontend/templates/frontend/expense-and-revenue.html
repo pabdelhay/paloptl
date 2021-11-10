@@ -1,0 +1,40 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+
+{% block extrahead %}
+<!-- Resources -->
+<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+
+<link rel="stylesheet" type="text/css" href="{% static "css/country-expense-revenue.css" %}">
+
+{% endblock extrahead %}
+
+{% block content %}
+<div class="block">
+
+
+    <h1 id="name"> Hello {{ country.name }} </h1>
+
+    <img class="block__flag" id="flag" src="{{ country.flag.url }}" alt="{{ country.slug }} flag"/>
+
+
+
+    <!-- HTML -->
+    <div id="chartdiv"></div>
+
+    <script src="{% static 'js/country-expenses-revenue.js' %}"></script>
+
+    <ul class="block__list">
+        {% for country in countries %}
+        <li class="block__list__item" onclick="GetExpenseAndRevenue({{ country.id }})"><a href="{% url 'country-expense-revenue' country.slug %}">{{ country.name }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <script>
+        GetExpenseAndRevenue({{ country.id }});
+    </script>
+</div>
+
+{% endblock %}

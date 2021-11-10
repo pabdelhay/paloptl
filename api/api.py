@@ -192,6 +192,7 @@ class ExpensePerYearCategoryFilterSerializer(serializers.Serializer):
 class ExpensePerYearFilterSerializer(serializers.Serializer):
     year = serializers.IntegerField()
 
+
 class CountryFilterSerializer(serializers.Serializer):
     # country = serializers.IntegerField()
     country = serializers.PrimaryKeyRelatedField(queryset=Country.objects.all())
@@ -208,11 +209,6 @@ class BudgetsPerYearSerializer(serializers.Serializer):
 
     execution_revenue = serializers.FloatField()
     execution_expense = serializers.FloatField()
-
-
-    # city = serializers.IntegerField()
-
-
 
 
 class BudgetViewset(ReadOnlyModelViewSet):
@@ -364,37 +360,34 @@ class BudgetViewset(ReadOnlyModelViewSet):
         params = CountryFilterSerializer(data=request.GET)
         params.is_valid(raise_exception=True)
         country = params.validated_data.get('country')
-
         budget_stp = Budget.objects.filter(country=country).order_by('year')
-        #budget_stp = Budget.objects.filter(country=country).order_by('-year') decrescente
         budget_list = list()
+
         for i in budget_stp:
-           j = BudgetSummary.objects.get(budget=i)
-           budget_expense_flag = "functional"
-           if(j.expense_functional_budget == None):
+            j = BudgetSummary.objects.get(budget=i)
+            budget_expense_flag = "functional"
+            budget_expense_value = j.expense_functional_budget
+            if not j.expense_functional_budget:
                 budget_expense_value = j.expense_organic_budget
                 budget_expense_flag = "organic"
-           budget_revenue_flag = "nature"
 
-           if (j.revenue_nature_budget == None):
-               budget_revenue_value = j.revenue_source_budget
-               budget_revenue_flag = "source"
+            budget_revenue_flag = "nature"
+            budget_revenue_value = j.revenue_nature_budget
+            if not j.revenue_nature_budget:
+                budget_revenue_value = j.revenue_source_budget
+                budget_revenue_flag = "source"
 
-
-
-
-
-
-
-           budget_list.append({'year': j.budget.year,
-                               'budget_expense': budget_expense_value,
-                               'budget_expense_group': budget_expense_flag,
-                               'budget_revenue': budget_revenue_value,
-                               'budget_revenue_group': budget_revenue_flag,
-
-                               'execution_revenue': j.revenue_nature_execution,
-                               'execution_expense': j.expense_functional_execution
-                               })
+            budget_list.append(
+                {
+                    'year': j.budget.year,
+                    'budget_expense': budget_expense_value,
+                    'budget_expense_group': budget_expense_flag,
+                    'budget_revenue': budget_revenue_value,
+                    'budget_revenue_group': budget_revenue_flag,
+                    'execution_revenue': j.revenue_nature_execution,
+                    'execution_expense': j.expense_functional_execution
+                }
+            )
 
         budget_list_s = BudgetsPerYearSerializer(budget_list, many=True)
 
@@ -409,9 +402,7 @@ class BudgetViewset(ReadOnlyModelViewSet):
         params.is_valid(raise_exception=True)
         year = params.validated_data.get('year')
         category = params.validated_data.get('category')
-        budgetSummarys = BudgetSummary.objects.filter(
-            budget__year=year
-        ).values('expense_functional_budget', 'budget__country__id')
+        budgetSummarys = BudgetSummary.objects.filter(budget__year=year).values('expense_functional_budget', 'budget__country__id')
         dbudgetSummary = {}
         for budgetSummary in budgetSummarys:
             dbudgetSummary[budgetSummary['budget__country__id']] = budgetSummary['expense_functional_budget']

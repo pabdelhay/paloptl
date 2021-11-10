@@ -1,8 +1,8 @@
-.pardal{
+.block{
     margin: 0 auto;
     text-align: center;
 }
-.pardal__flag{
+.block__flag{
 
     width: 300px;
     height: auto;
@@ -11,11 +11,11 @@
     border-radius: 10px;
 }
 
-.pardal__list{
+.block__list{
     list-style-type: none;
 }
 
-.pardal__list__item{
+.block__list__item{
     display: inline-block;
     vertical-align: top;
     width: auto;

@@ -201,37 +201,16 @@ class APITestCase(TestCase):
         r = response.json()
 
         self.assertEqual(len(r), Budget.objects.filter(country=self.country).count())
-
-        # bgd do ano atual é igual á
         budget_sumary = BudgetSummary.objects.get(budget=self.budget)
         self.assertEqual(budget_sumary.expense_functional_budget, 63)
-        budget_sumary_2018 = BudgetSummary.objects.get(budget=budget_2018)
 
         budget_agraget_by_year = {
                 'year': 2018,
                 'expense': 63,
                 'revenue': None
-            }
-
-        #year = budget_2018.year
-        #expense = budget_sumary_2018.expense_functional_budget
-        #revenue = budget_sumary_2018.revenue_nature_budget
-
+        }
 
         self.assertEqual(budget_agraget_by_year, r[0])
         self.assertEqual(budget_agraget_by_year['year'], r[0]['year'])
         self.assertEqual(budget_agraget_by_year['expense'], r[0]['expense'])
         self.assertEqual(budget_agraget_by_year['revenue'], r[0]['revenue'])
-        # self.assertEqual(budget_sumary_2018, r[0])
-
-
-
-
-
-
-
-
-        # Budget.objects.filter(country = self.country).count() -> retorna a quantidade de Bugests de um determinado pais
-        # print(r)
-
-        # total_years = 2
