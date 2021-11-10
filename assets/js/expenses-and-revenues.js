@@ -16,10 +16,10 @@ function expenses_and_revenues(_data) {
         var chart = am4core.create('chartdiv', am4charts.XYChart)
         // chart.colors.step = 2;
         chart.colors.list = [
-            am4core.color("#0F69A3"),
-            am4core.color("#98B8DA"),
-            am4core.color("#C90000"),
-            am4core.color("#FF8080")
+        am4core.color("#ea7a71"),
+          am4core.color("#fbd1c1"),
+          am4core.color("#0F69A3"),
+          am4core.color("#98B8DA"),
         ];
         chart.legend = new am4charts.Legend()
         // chart.legend.position = 'top'
@@ -80,11 +80,12 @@ function expenses_and_revenues(_data) {
 
         chart.data = _data;
         chart.maskBullets = false;
+        chart.responsive.enabled = true;
 
-        createSeries("revenue_budget", "Dotação Despesa", 60, -40, -25);
-        createSeries("revenue_execution", "Execução Despesa", 40, -40, 10);
-        createSeries("expense_budget", "Dotação Receita", 60, 40, -25);
-        createSeries("expense_execution", "Execução Receita", 40, 40, 10);
+        createSeries("revenue_budget", "Dotação Despesa", 50, -40, -25);
+        createSeries("revenue_execution", "Execução Despesa", 30, -40, 10);
+        createSeries("expense_budget", "Dotação Receita", 50, 40, -25);
+        createSeries("expense_execution", "Execução Receita", 30, 40, 10);
 
     }); // end am4core.ready()
 }
