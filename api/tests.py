@@ -221,7 +221,6 @@ class APITestCase(TestCase):
         self.assertEqual('year' in r[0], True, "Key year not found.")
 
         for budget_summary in r:
-            print(budget_summary)
             if budget_summary['year'] == 2021:
                 self.assertEqual(budget_summary['budget_expense'], (expense2021.budget_investment + expense2021.budget_operation), 'Invalid expense value.')
                 self.assertEqual(budget_summary['budget_revenue'], (revenue2021.budget_investment + revenue2021.budget_operation), 'Invalid revenue value.')
