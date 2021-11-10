@@ -1,14 +1,9 @@
-
-
-
 let myData = (country_id) => {
     let url = '/api/budgets/expense_revenue/?country_id=' + country_id;
     $.get(url, function (data) {
 
         console.log(data);
         expenses_and_revenues(data)
-
-
     }).fail(function () {
         console.log("Error on fetching budget basic info.");
     });
@@ -16,10 +11,8 @@ let myData = (country_id) => {
 
 function expenses_and_revenues(_data) {
     am4core.ready(function () {
-
         // Themes begin
         am4core.useTheme(am4themes_animated);
-
         var chart = am4core.create('chartdiv', am4charts.XYChart)
         // chart.colors.step = 2;
         chart.colors.list = [
@@ -42,7 +35,6 @@ function expenses_and_revenues(_data) {
             {"number": 1e+21, "suffix": "Z"},
             {"number": 1e+24, "suffix": "Y"}*/
         ]
-
         var xAxis = chart.xAxes.push(new am4charts.CategoryAxis())
         xAxis.dataFields.category = 'year'
         xAxis.renderer.cellStartLocation = 0.1
@@ -89,53 +81,11 @@ function expenses_and_revenues(_data) {
         chart.data = _data;
         chart.maskBullets = false;
 
-
-
         createSeries("revenue_budget", "Dotação Despesa", 60, -40, -25);
         createSeries("revenue_execution", "Execução Despesa", 40, -40, 10);
         createSeries("expense_budget", "Dotação Receita", 60, 40, -25);
         createSeries("expense_execution", "Execução Receita", 40, 40, 10);
 
-        function arrangeColumns() {
-
-            var series = chart.series.getIndex(0);
-
-            var w = 1 - xAxis.renderer.cellStartLocation - (1 - xAxis.renderer.cellEndLocation);
-            if (series.dataItems.length > 1) {
-                var x0 = xAxis.getX(series.dataItems.getIndex(0), "categoryX");
-                var x1 = xAxis.getX(series.dataItems.getIndex(1), "categoryX");
-                var delta = ((x1 - x0) / chart.series.length) * w;
-                if (am4core.isNumber(delta)) {
-                    var middle = chart.series.length / 2;
-
-                    var newIndex = 0;
-                    chart.series.each(function (series) {
-                        if (!series.isHidden && !series.isHiding) {
-                            series.dummyData = newIndex;
-                            newIndex++;
-                        }
-                        else {
-                            series.dummyData = chart.series.indexOf(series);
-                        }
-                    })
-                    var visibleCount = newIndex;
-                    var newMiddle = visibleCount / 2;
-
-                    chart.series.each(function (series) {
-                        var trueIndex = chart.series.indexOf(series);
-                        var newIndex = series.dummyData;
-
-                        var dx = (newIndex - trueIndex + middle - newMiddle) * delta
-
-                        series.animate({ property: "dx", to: dx }, series.interpolationDuration, series.interpolationEasing);
-                        series.bulletsContainer.animate({ property: "dx", to: dx }, series.interpolationDuration, series.interpolationEasing);
-                    })
-                }
-            }
-        }
-
     }); // end am4core.ready()
 }
-
-
 myData(country_id);

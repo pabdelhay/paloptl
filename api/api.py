@@ -200,7 +200,7 @@ class ExpensePerCountryIdSerializer(serializers.Serializer):
     country_id = serializers.PrimaryKeyRelatedField(queryset=Country.objects.all())
 
 
-class ExpenseVenueSerializer(serializers.Serializer):
+class ExpenseRevenueSerializer(serializers.Serializer):
     country = serializers.CharField()
     year = serializers.IntegerField()
     expense_budget = serializers.FloatField()
@@ -208,7 +208,8 @@ class ExpenseVenueSerializer(serializers.Serializer):
     expense_execution = serializers.FloatField()
     revenue_execution = serializers.FloatField()
     currency = serializers.CharField()   
-    #expense_group = serializers.CharField()
+    expense_group = serializers.CharField()
+    revenue_group = serializers.CharField()
 
 
 class BudgetViewset(ReadOnlyModelViewSet):
@@ -346,7 +347,6 @@ class BudgetViewset(ReadOnlyModelViewSet):
         data['code'] = code
         data['data'] = data_serializer.data
         serializer = HistoricalSerializer(data=data)
-
         return Response(serializer.initial_data)
 
     @action(detail=False)
@@ -354,7 +354,6 @@ class BudgetViewset(ReadOnlyModelViewSet):
         return Response("ola teste")
 
     @action(detail=False)
-
     def expense_revenue(self, request, pk=None):
         """
             Lista de expenses e revenues ordenada por ano
@@ -365,38 +364,42 @@ class BudgetViewset(ReadOnlyModelViewSet):
         budget_summary = BudgetSummary.objects.filter(budget__country=country).order_by('budget__year')
         list = []
         for budget_summary in budget_summary:
-            if not (budget_summary.expense_functional_budget is None):
+            if budget_summary.expense_functional_budget:
                 budget_expense = budget_summary.expense_functional_budget
+                group_expense = "funcional"
             else:
                 budget_expense = budget_summary.expense_organic_budget
+                group_expense = "orgânico"
 
-            if not (budget_summary.revenue_nature_budget is None):
+            if budget_summary.revenue_nature_budget:
                 budget_revenue = budget_summary.revenue_nature_budget
+                group_revenue = "por natureza"
             else:
                 budget_revenue = budget_summary.revenue_source_budget
+                group_revenue = "de origem"
 
-            if not (budget_summary.expense_functional_execution is None):
+            if budget_summary.expense_functional_execution:
                 execution_expense = budget_summary.expense_functional_execution
             else:
                 execution_expense = budget_summary.expense_organic_execution
 
-            if not (budget_summary.revenue_nature_execution is None):
+            if budget_summary.revenue_nature_execution:
                 execution_revenue = budget_summary.revenue_nature_execution
             else:
                 execution_revenue = budget_summary.revenue_source_execution
 
             list.append({
+                'country': country.name,
                 'year': budget_summary.budget.year,
+                'currency': country.currency,
                 'expense_budget': budget_expense,
                 'revenue_budget': budget_revenue,
                 'expense_execution': execution_expense,
                 'revenue_execution': execution_revenue,
-                'country': country.name,
-                'currency': country.currency,
-                #"expense_group": country.group,
+                "expense_group": group_expense,
+                "revenue_group": group_revenue,
             })
-            serializer = ExpenseVenueSerializer(list, many=True)
-
+            serializer = ExpenseRevenueSerializer(list, many=True)
         return Response(serializer.data)
 
     @action(detail=False)
@@ -471,7 +474,6 @@ class BudgetViewset(ReadOnlyModelViewSet):
                     budget__country=country, budget__year=year, code__in=categoriesmapscodes,
                     group='functional', level=0
                 )
-
                 for expense in expenses:
                     totalbudgetSummaryCountry = dbudgetSummary[country.id]
 
