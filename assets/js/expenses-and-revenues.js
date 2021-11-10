@@ -81,7 +81,7 @@ am4core.ready(async function () {
             resolve(data)
         }).fail(function () {
             resolve([])
-            console.error("Error on fetching budget basic info.");
+            console.error("Error on fetching budget basic info");
         });
     });
 
