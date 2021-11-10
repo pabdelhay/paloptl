@@ -1,4 +1,4 @@
-var url = `/api/budgets/expenses_revenue_year_by_country/?country=${country}`;
+var url = `/api/budgets/expenses_revenue_year_by_country/?country=${country.id}`;
 
 am4core.ready(async function () {
 
@@ -10,10 +10,10 @@ am4core.ready(async function () {
     var chart = am4core.create("chartdiv", am4charts.XYChart);
     //chart.colors.step = 2;
     chart.colors.list = [
-      am4core.color("#0F69A3"),
-      am4core.color("#98B8DA"),
-      am4core.color("#C90000"),
-      am4core.color("#FF8080")
+        am4core.color("#ea7a71"),
+        am4core.color("#fbd1c1"),
+        am4core.color("#0F69A3"),
+        am4core.color("#98B8DA")
     ];
 
     chart.numberFormatter.bigNumberPrefixes = [
@@ -23,6 +23,7 @@ am4core.ready(async function () {
         {"number": 1e+12, "suffix": "Tri"},
         {"number": 1e+15, "suffix": "Qua"}
     ]
+    chart.maskBullets = false;
 
     // Create axes
     var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
@@ -49,7 +50,7 @@ am4core.ready(async function () {
     }
 
     // Create series
-    function createSeries(field, name, width, dx, label_dy = -20, label_color = "#000000") {
+    function createSeries(field, name, width, dx, label_dy = -15, label_color = "#000000") {
         var series = chart.series.push(new am4charts.ColumnSeries());
         series.dataFields.valueY = field;
         series.dataFields.categoryX = "year";
@@ -60,7 +61,7 @@ am4core.ready(async function () {
 
         // Tooltip
         series.columns.template.tooltipText = `Ano: [bold]{year.formatNumber('#')}[/]
-        Valor: [bold]{valueY.formatNumber('#,###')}[/]
+        Valor: [bold]{valueY.formatNumber('#,###')} ${country.currency}[/]
         ${name} de acordo com grupamento [bold,italic]{${get_group[field]}}`;
 
         // Label
@@ -75,8 +76,6 @@ am4core.ready(async function () {
         bullet.label.truncate = false;
     }
 
-    chart.maskBullets = false;
-
     chart.data = await new Promise((resolve, reject) => {
         $.get(url, function (data) {
             resolve(data)
@@ -90,8 +89,8 @@ am4core.ready(async function () {
     chart.legend = new am4charts.Legend();
 
     createSeries("budget_revenue", "Despesa", 60, -40);
-    createSeries("execution_revenue", "Exec. Despesa", 40, -40, 20, "#ffffff");
+    createSeries("execution_revenue", "Exec. Despesa", 40, -40, 10, "#ffffff");
     createSeries("budget_expense", "Receita", 60, 40);
-    createSeries("execution_expense", "Exec. Receita", 40, 40, 20, "#ffffff");
+    createSeries("execution_expense", "Exec. Receita", 40, 40, 10, "#ffffff");
 
 }); // end am4core.ready()

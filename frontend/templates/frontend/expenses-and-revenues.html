@@ -5,14 +5,16 @@
 <style>
 #chartdiv {
     width: 100%;
-    height: 600px;
+    height: 450px;
 }
 </style>
 <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
 <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
 <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
 <script type="text/javascript">
-    let country = {{country.id}};
+    let country = {};
+    country.id = {{country.id}};
+    country.currency = "{{country.currency }}";
 </script>
 <script src="{% static 'js/expenses-and-revenues.js' %}"></script>
 <div class="page-country-detail">
