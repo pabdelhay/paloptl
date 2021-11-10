@@ -360,26 +360,26 @@ class BudgetViewset(ReadOnlyModelViewSet):
         budget_summaries = BudgetSummary.objects.order_by("budget__year").filter(budget__country=country)
         list_dict = []
         for budget_summary in budget_summaries:
-            if not (budget_summary.expense_functional_budget is None):
+            if budget_summary.expense_functional_budget:
                 budget_expense = budget_summary.expense_functional_budget
                 expense_group = "Funcional"
             else:
                 budget_expense = budget_summary.expense_organic_budget
                 expense_group = "Orgánico"
 
-            if not (budget_summary.revenue_nature_budget is None):
+            if budget_summary.revenue_nature_budget:
                 budget_revenue = budget_summary.revenue_nature_budget
                 revenue_group = "Natural"
             else:
                 budget_revenue = budget_summary.revenue_source_budget
                 revenue_group = "Origem"
 
-            if not (budget_summary.expense_functional_execution is None):
+            if budget_summary.expense_functional_execution:
                 execution_expense = budget_summary.expense_functional_execution
             else:
                 execution_expense = budget_summary.expense_organic_execution
 
-            if not (budget_summary.revenue_nature_execution is None):
+            if budget_summary.revenue_nature_execution:
                 execution_revenue = budget_summary.revenue_nature_execution
             else:
                 execution_revenue = budget_summary.revenue_source_execution

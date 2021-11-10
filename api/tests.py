@@ -231,18 +231,18 @@ class APITestCase(TestCase):
         self.assertEqual(len(result_json), 8, msg="Row number returned was not expected")
 
         first = result_json[0]
-        self.assertTrue(isinstance(first["revenue"], float), msg="Expected type is a float")
-        self.assertTrue(isinstance(first["expense"], float), msg="Expected type is a float")
+        self.assertTrue(isinstance(first["budget_revenue"], float), msg="Expected type is a float")
+        self.assertTrue(isinstance(first["budget_expense"], float), msg="Expected type is a float")
         self.assertTrue(isinstance(first["year"], int), msg="Expected type is a int")
 
-        self.assertEqual(len(first), 5, msg="Is not returning the expected number of keys")
+        self.assertEqual(len(first), 7, msg="Is not returning the expected number of keys")
 
-        self.assertTrue("revenue" in first, msg="Did not find the corresponding key")
-        self.assertTrue("expense" in first, msg="Did not find the corresponding key")
+        self.assertTrue("budget_revenue" in first, msg="Did not find the corresponding key")
+        self.assertTrue("budget_expense" in first, msg="Did not find the corresponding key")
         self.assertTrue("year" in first, msg="Did not find the corresponding key")
 
-        self.assertEqual(result_json[0]["expense"], 25, msg="Unexpected line number")
-        self.assertEqual(result_json[0]["revenue"], 31, msg="Unexpected line number")
+        self.assertEqual(result_json[-1]["budget_expense"], 25, msg="Unexpected line number")
+        self.assertEqual(result_json[-1]["budget_revenue"], 31, msg="Unexpected line number")
 
-        self.assertEqual(result_json[-1]["expense"], 29, msg="Unexpected line number")
-        self.assertEqual(result_json[-1]["revenue"], 35, msg="Unexpected line number")
+        self.assertEqual(result_json[0]["budget_expense"], 29, msg="Unexpected line number")
+        self.assertEqual(result_json[0]["budget_revenue"], 35, msg="Unexpected line number")

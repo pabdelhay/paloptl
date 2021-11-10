@@ -47,6 +47,7 @@ am4core.ready(async function () {
         "budget_expense" : "expense_group",
         "execution_expense" : "expense_group",
     }
+
     // Create series
     function createSeries(field, name, width, dx, label_dy = -20, label_color = "#000000") {
         var series = chart.series.push(new am4charts.ColumnSeries());
@@ -57,7 +58,6 @@ am4core.ready(async function () {
         series.dx = dx;
         series.columns.template.width = width;
 
-        console.log(get_group[field], "djdjjd")
         // Tooltip
         series.columns.template.tooltipText = `Ano: [bold]{year.formatNumber('#')}[/]
         Valor: [bold]{valueY.formatNumber('#,###')}[/]

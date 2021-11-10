@@ -59,9 +59,9 @@ class CountriesExpensesView(View):
         return render(request, 'frontend/countriesExpenses.html', context=None)
 
 
-class DespesasEReceitas(View, ):
+class ExpensesAndRevenues(View, ):
     def get(self, request, *args, **kwargs):
         cn = {
             "country": Country.objects.get(slug=self.kwargs.get("slug"))
         }
-        return render(request, 'frontend/despesas-e-receitas.html', context=cn)
+        return render(request, 'frontend/expenses-and-revenues.html', context=cn)
