@@ -19,7 +19,7 @@ class IndexView(View):
 class ExpensesRevenuesView(View):
     def get(self, request, slug):
         ctx = {
-            'country': Country.objects.all().first()
+            'country': Country.objects.get(slug=slug)
         }
         return render(request, 'frontend/expenses_revenues.html', context=ctx)
 

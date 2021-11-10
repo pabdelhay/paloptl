@@ -5,21 +5,17 @@
     <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
     <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
     <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        }
         #chartdiv {
           width: 100%;
           height: 500px;
-        }
-        [aria-labelledby=id-66-title]{
-        display: none;
-        }
-        #chartdiv [stroke="#000000"]{
-            display: none;
         }
     </style>
 {% endblock extrahead %}
 
 {% block content %}
-    <h2 style="text-align: center;">Hello world</h2>
     <div class="page-country-detail">
     {% with bg_name="bg_"|add:country.slug|add:".png" %}
     <div class="country-name-wrapper" style="background-image: url('{% static 'img/'|add:bg_name %}');">
@@ -35,7 +31,7 @@
     <div class="flag-wrapper">
         <div class="row middle">
             <div class="col-2 mr-0">
-                <img class="flag country" src="{{ country.flag.url }}" alt="{{ country.slug }} flag"  country_id="{{ country.id }}"/>
+                <img class="flag country" src="{{ country.flag.url }}" alt="{{ country.slug }} flag"  country_id="{{ country.id }}" cur="{{ country.currency }}"/>
             </div>
         </div>
     </div>
