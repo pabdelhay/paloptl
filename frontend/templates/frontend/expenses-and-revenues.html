@@ -1,0 +1,46 @@
+{% extends 'frontend/base.html' %}
+{% load static i18n %}
+{% block extrahead %}
+    <script src="//cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="//cdn.amcharts.com/lib/4/charts.js"></script>
+    <script src="//cdn.amcharts.com/lib/4/themes/animated.js"></script>
+    <script src="{% static 'external/jquery.highlight.js' %}"></script>
+    <script> country_id = {{country.id}} </script>
+    <script src="{% static 'js/expenses-and-revenues.js' %}"></script>
+<style>
+    .myHead{
+        margin-top: 60px;
+        margin-bottom: 90px;
+        padding-left: 24px;
+    }
+    .myHead img{
+        width: 80px;
+    }
+    .myHead h1{
+        font-size: 1.5rem;
+        margin-left: 20px;
+    }
+    #chartdiv{
+      width: 100%;
+      height: 500px;
+      margin-bottom: 190px;
+    }
+    [aria-labelledby=id-66-title]{
+        display: none;
+    }
+    rect [width=174]{
+        border-radius: 50%;
+    }
+    
+</style>
+{% endblock extrahead %}
+{% block content %}
+    <div class="container">
+        <div class="row bottom-row middle myHead">
+            <img class="flag mr-10" src="{{ country.flag.url }}" alt="{{ country.slug }} flag"/>
+            <h1>Despesas e Receitas de {{ country.name }}</h1>
+        </div>
+        <div id="chartdiv"></div>
+    </div>
+
+{% endblock %}

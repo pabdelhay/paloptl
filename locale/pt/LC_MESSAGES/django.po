@@ -2,13 +2,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-16 11:02-0300\n"
+"POT-Creation-Date: 2021-11-08 16:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,459 +18,479 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\api\api_admin.py:33
+#: api/api_admin.py:33
 msgid "Must set 'group' field."
 msgstr "Campo 'group' é obrigatório."
 
-#: .\apps\account\admin.py:26
+#: apps/account/admin.py:26
 msgid "Personal info"
 msgstr "Dados pessoais"
 
-#: .\apps\account\admin.py:27
+#: apps/account/admin.py:27
 msgid "Permissions"
 msgstr "Permissões"
 
-#: .\apps\account\admin.py:30
+#: apps/account/admin.py:30
 msgid "Important dates"
 msgstr "Datas importantes"
 
-#: .\apps\account\models.py:16
+#: apps/account/models.py:16
 msgid "Profile"
 msgstr ""
 
-#: .\apps\account\models.py:17
+#: apps/account/models.py:17
 msgid "Profiles"
 msgstr ""
 
-#: .\apps\budget\admin.py:34
+#: apps/budget/admin.py:34
 msgid "Errors"
 msgstr "Erros"
 
-#: .\apps\budget\admin.py:117
+#: apps/budget/admin.py:117
 msgid "Value inferred from descendants or siblings."
 msgstr "Valor inferido dos descendentes ou irmãos."
 
-#: .\apps\budget\admin.py:120
+#: apps/budget/admin.py:120
 #, python-brace-format
 msgid "Explicit given value differs from inferred value: {inferred}"
 msgstr ""
 "Valor explicitamente passado difere da soma dos descendentes: {inferred}"
 
-#: .\apps\budget\admin.py:128
+#: apps/budget/admin.py:128
 msgid "Showing updated value. Initial value was"
 msgstr "Mostrando valor atualizado. Valor inicial era"
 
-#: .\apps\budget\admin.py:159
+#: apps/budget/admin.py:159
 msgid "investment budget"
 msgstr "orçamento de investimento"
 
-#: .\apps\budget\admin.py:160
+#: apps/budget/admin.py:160
 msgid "operation budget"
 msgstr "orçamento de operação"
 
-#: .\apps\budget\admin.py:161
+#: apps/budget/admin.py:161
 msgid "total budget"
 msgstr "orçamento total"
 
-#: .\apps\budget\admin.py:162
+#: apps/budget/admin.py:162
 msgid "investment execution"
 msgstr "execução de investimento"
 
-#: .\apps\budget\admin.py:163
+#: apps/budget/admin.py:163
 msgid "operation execution"
 msgstr "execução de operação"
 
-#: .\apps\budget\admin.py:164
+#: apps/budget/admin.py:164
 msgid "total execution"
 msgstr "execução total"
 
-#: .\apps\budget\admin.py:170
+#: apps/budget/admin.py:170
 msgid "Expenses by function"
 msgstr "Despesas por função"
 
-#: .\apps\budget\admin.py:184
+#: apps/budget/admin.py:186
 msgid "Expenses by agency"
 msgstr "Despesas por orgão"
 
-#: .\apps\budget\admin.py:199
+#: apps/budget/admin.py:203
 msgid "Revenues by nature"
 msgstr "Receitas por natureza"
 
-#: .\apps\budget\admin.py:213
+#: apps/budget/admin.py:219
 msgid "Revenues by source"
 msgstr "Receitas por fonte"
 
-#: .\apps\budget\admin.py:298
+#: apps/budget/admin.py:306
 #, python-brace-format
 msgid "Expenses: <strong>{total_expenses}</strong>"
 msgstr "Despesas: <strong>{total_expenses}</strong>"
 
-#: .\apps\budget\admin.py:299
+#: apps/budget/admin.py:307
 #, python-brace-format
 msgid "Revenues: <strong>{total_revenues}</strong>"
 msgstr "Receitas: <strong>{total_revenues}</strong>"
 
-#: .\apps\budget\admin.py:305
+#: apps/budget/admin.py:314
 msgid "uploads"
 msgstr "uploads"
 
-#: .\apps\budget\admin.py:314
+#: apps/budget/admin.py:324
 msgid "uploads with error"
 msgstr "uploads com error"
 
-#: .\apps\budget\admin.py:336
+#: apps/budget/admin.py:346
 msgid "Base info"
 msgstr "Informações básicas"
 
-#: .\apps\budget\admin.py:339
+#: apps/budget/admin.py:349
 msgid "Transparency Index"
 msgstr "Índice de Transparência"
 
-#: .\apps\budget\admin.py:369 .\apps\budget\models\upload.py:38
-#: .\apps\budget\models\upload_log.py:19
+#: apps/budget/admin.py:380 apps/budget/models/category.py:22
+#: apps/budget/models/categoryMap.py:17 apps/budget/models/upload.py:38
+#: apps/budget/models/upload_log.py:19
 msgid "category"
 msgstr "categoria"
 
-#: .\apps\budget\admin.py:373 .\apps\budget\models\expense.py:24
-#: .\apps\budget\models\revenue.py:23
+#: apps/budget/admin.py:385 apps/budget/models/category.py:14
+#: apps/budget/models/expense.py:24 apps/budget/models/revenue.py:23
 msgid "group"
 msgstr "grupo"
 
-#: .\apps\budget\admin.py:377 .\apps\budget\models\budget_account.py:20
-#: .\apps\geo\models.py:8
+#: apps/budget/admin.py:390 apps/budget/models/budget_account.py:20
+#: apps/budget/models/category.py:12 apps/geo/models.py:8
 msgid "name"
 msgstr "nome"
 
-#: .\apps\budget\admin.py:383 .\apps\budget\models\upload_log.py:22
+#: apps/budget/admin.py:397 apps/budget/models/upload_log.py:22
 msgid "old value"
 msgstr "valor antigo"
 
-#: .\apps\budget\admin.py:389 .\apps\budget\models\upload_log.py:23
+#: apps/budget/admin.py:404 apps/budget/models/upload_log.py:23
 msgid "new value"
 msgstr "novo valor"
 
-#: .\apps\budget\admin.py:395 .\apps\budget\models\upload_log.py:21
+#: apps/budget/admin.py:411 apps/budget/models/upload_log.py:21
 msgid "field"
 msgstr "campo"
 
-#: .\apps\budget\apps.py:7 .\templates\admin\index.html:14
+#: apps/budget/apps.py:7 templates/admin/index.html:14
 msgid "Budget"
 msgstr "Orçamento"
 
-#: .\apps\budget\choices.py:6
+#: apps/budget/choices.py:6
 msgid "OGE - Orçamento Geral do Estado"
 msgstr ""
 
-#: .\apps\budget\choices.py:7
+#: apps/budget/choices.py:7
 msgid "REO - Relatório de Execução Orçamentária"
 msgstr ""
 
-#: .\apps\budget\choices.py:8
+#: apps/budget/choices.py:8
 msgid "CGE - Conta Geral do Estado"
 msgstr ""
 
-#: .\apps\budget\choices.py:12
+#: apps/budget/choices.py:12
 msgid "Expense"
 msgstr "Despesa"
 
-#: .\apps\budget\choices.py:13
+#: apps/budget/choices.py:13
 msgid "Revenue"
 msgstr "Receita"
 
-#: .\apps\budget\choices.py:17
+#: apps/budget/choices.py:17 apps/budget/choices.py:26
 msgid "Functional"
 msgstr "Funcional"
 
-#: .\apps\budget\choices.py:18
+#: apps/budget/choices.py:18 apps/budget/choices.py:27
 msgid "Organic"
 msgstr "Orgânica"
 
-#: .\apps\budget\choices.py:22
+#: apps/budget/choices.py:22 apps/budget/choices.py:28
 msgid "Nature"
 msgstr "Natureza"
 
-#: .\apps\budget\choices.py:23
+#: apps/budget/choices.py:23 apps/budget/choices.py:29
 msgid "Source"
 msgstr "Fonte"
 
-#: .\apps\budget\choices.py:33
+#: apps/budget/choices.py:39
 msgid "Validating"
 msgstr "Validando"
 
-#: .\apps\budget\choices.py:34
+#: apps/budget/choices.py:40
 msgid "Importing"
 msgstr "Importando"
 
-#: .\apps\budget\choices.py:35
+#: apps/budget/choices.py:41
 msgid "Success"
 msgstr "Sucesso"
 
-#: .\apps\budget\choices.py:36
+#: apps/budget/choices.py:42
 msgid "Validation error"
 msgstr "Erro de validação"
 
-#: .\apps\budget\choices.py:37
+#: apps/budget/choices.py:43
 msgid "Import error"
 msgstr "Erro de importação"
 
-#: .\apps\budget\choices.py:38
+#: apps/budget/choices.py:44
 msgid "Waiting reimport"
 msgstr "Aguardando reimportação"
 
-#: .\apps\budget\choices.py:54
+#: apps/budget/choices.py:60
 msgid "new category"
 msgstr "nova categoria"
 
-#: .\apps\budget\choices.py:55
+#: apps/budget/choices.py:61
 msgid "update"
 msgstr "atualização"
 
-#: .\apps\budget\models\budget.py:25
-#: .\apps\budget\models\transparency_index.py:12 .\apps\geo\models.py:14
-#: .\common\mixins.py:6
+#: apps/budget/models/budget.py:25 apps/budget/models/categoryMap.py:14
+#: apps/budget/models/transparency_index.py:12 apps/geo/models.py:14
+#: common/mixins.py:6
 msgid "country"
 msgstr "país"
 
-#: .\apps\budget\models\budget.py:27
-#: .\apps\budget\models\transparency_index.py:14
+#: apps/budget/models/budget.py:27 apps/budget/models/transparency_index.py:14
 msgid "year"
 msgstr "ano"
 
-#: .\apps\budget\models\budget.py:28 .\apps\geo\models.py:11
+#: apps/budget/models/budget.py:28 apps/geo/models.py:11
 msgid "currency"
 msgstr "moeda"
 
-#: .\apps\budget\models\budget.py:29
+#: apps/budget/models/budget.py:29
 msgid "All values from budget presented in this currency"
 msgstr "Todos os valores do orçamento apresentados nesta moeda"
 
-#: .\apps\budget\models\budget.py:30
+#: apps/budget/models/budget.py:30
 msgid "active"
 msgstr "ativo"
 
-#: .\apps\budget\models\budget.py:31
+#: apps/budget/models/budget.py:31
 msgid "This budget will only be included on site if this option is checked."
 msgstr "Este orçamento só irá aparecer no site se esta opção estiver marcada"
 
-#: .\apps\budget\models\budget.py:34
+#: apps/budget/models/budget.py:34
 msgid "output file."
 msgstr "arquivo de output"
 
-#: .\apps\budget\models\budget.py:35
+#: apps/budget/models/budget.py:35
 msgid "Auto generated CSV file with all data from budget."
 msgstr "CSV gerado automaticamente com todos os dados do orçamento"
 
-#: .\apps\budget\models\budget.py:38 .\apps\budget\models\budget_account.py:17
-#: .\apps\budget\models\budget_summary.py:9 .\apps\budget\models\expense.py:22
-#: .\apps\budget\models\revenue.py:21 .\apps\budget\models\upload.py:34
+#: apps/budget/models/budget.py:38 apps/budget/models/budget_account.py:17
+#: apps/budget/models/budget_summary.py:9 apps/budget/models/expense.py:22
+#: apps/budget/models/revenue.py:21 apps/budget/models/upload.py:34
 msgid "budget"
 msgstr "orçamento"
 
-#: .\apps\budget\models\budget.py:39
+#: apps/budget/models/budget.py:39
 msgid "budgets"
 msgstr "orçamentos"
 
-#: .\apps\budget\models\budget_account.py:21
+#: apps/budget/models/budget_account.py:21 apps/budget/models/categoryMap.py:12
 msgid "code"
 msgstr "código"
 
-#: .\apps\budget\models\budget_account.py:22
+#: apps/budget/models/budget_account.py:22
 msgid "parent"
 msgstr "pai"
 
-#: .\apps\budget\models\budget_account.py:25
+#: apps/budget/models/budget_account.py:25
 msgid "initial budget for investment"
 msgstr "orçamento inicial para investimento"
 
-#: .\apps\budget\models\budget_account.py:26
+#: apps/budget/models/budget_account.py:26
 msgid "initial budget for operation"
 msgstr "orçamento inicial para operação"
 
-#: .\apps\budget\models\budget_account.py:27
+#: apps/budget/models/budget_account.py:27
 msgid "initial budget"
 msgstr "orçamento inicial"
 
-#: .\apps\budget\models\budget_account.py:29
+#: apps/budget/models/budget_account.py:29
 msgid "updated budget for investment"
 msgstr "orçamento atualizado para investimento"
 
-#: .\apps\budget\models\budget_account.py:30
+#: apps/budget/models/budget_account.py:30
 msgid "updated budget for operation"
 msgstr "orçamento atualizado para operação"
 
-#: .\apps\budget\models\budget_account.py:31
+#: apps/budget/models/budget_account.py:31
 msgid "updated budget"
 msgstr "orçamento atualizado"
 
-#: .\apps\budget\models\budget_account.py:33
+#: apps/budget/models/budget_account.py:33
 msgid "execution for investment"
 msgstr "execução para investimento"
 
-#: .\apps\budget\models\budget_account.py:34
+#: apps/budget/models/budget_account.py:34
 msgid "execution for operation"
 msgstr "execução para operação"
 
-#: .\apps\budget\models\budget_account.py:35
+#: apps/budget/models/budget_account.py:35
 msgid "execution"
 msgstr "execução"
 
-#: .\apps\budget\models\budget_account.py:38
+#: apps/budget/models/budget_account.py:38
 msgid "inferred values from siblings or descendants"
 msgstr "valor inferido dos irmãos ou descendentes"
 
-#: .\apps\budget\models\budget_account.py:40
+#: apps/budget/models/budget_account.py:40
 msgid "fields that were inferred (not originally inputted)"
 msgstr "campos que foram inferidos (não carregados originalmente)"
 
-#: .\apps\budget\models\budget_account.py:42
+#: apps/budget/models/budget_account.py:42
 msgid "last update"
 msgstr "última atualização"
 
-#: .\apps\budget\models\budget_summary.py:13
+#: apps/budget/models/budget_summary.py:13
 msgid "expenses budget (functional)"
 msgstr "orçamento de despesas funcionais"
 
-#: .\apps\budget\models\budget_summary.py:15
+#: apps/budget/models/budget_summary.py:15
 msgid "expenses execution (functional)"
 msgstr "execução de despesas funcionais "
 
-#: .\apps\budget\models\budget_summary.py:17
+#: apps/budget/models/budget_summary.py:17
 msgid "expenses budget (organic)"
 msgstr "orçamento de despesas orgânicas"
 
-#: .\apps\budget\models\budget_summary.py:19
+#: apps/budget/models/budget_summary.py:19
 msgid "expenses execution (organic)"
 msgstr "execução de despesas orgânicas"
 
-#: .\apps\budget\models\budget_summary.py:21
+#: apps/budget/models/budget_summary.py:21
 msgid "revenues budget (nature)"
 msgstr "orçamento de receitas por natureza"
 
-#: .\apps\budget\models\budget_summary.py:23
+#: apps/budget/models/budget_summary.py:23
 msgid "revenues execution (nature)"
 msgstr "execução de receitas por natureza"
 
-#: .\apps\budget\models\budget_summary.py:25
+#: apps/budget/models/budget_summary.py:25
 msgid "revenues budget (source)"
 msgstr "orçamento de receitas por fonte"
 
-#: .\apps\budget\models\budget_summary.py:27
+#: apps/budget/models/budget_summary.py:27
 msgid "revenues execution (source)"
 msgstr "execução de receitas por fonte"
 
-#: .\apps\budget\models\budget_summary.py:31
+#: apps/budget/models/budget_summary.py:31
 msgid "budget summary"
 msgstr "resumo do orçamento"
 
-#: .\apps\budget\models\budget_summary.py:32
+#: apps/budget/models/budget_summary.py:32
 msgid "aggregated values"
 msgstr "valores agregados"
 
-#: .\apps\budget\models\budget_summary.py:35
+#: apps/budget/models/budget_summary.py:35
 msgid "Aggregated values for Budget #{}"
 msgstr "Valores agregados para o Orçamento #{}"
 
-#: .\apps\budget\models\expense.py:13
+#: apps/budget/models/category.py:16
+#, fuzzy
+#| msgid "log type"
+msgid "type"
+msgstr "log"
+
+#: apps/budget/models/category.py:23
+#, fuzzy
+#| msgid "category"
+msgid "categories"
+msgstr "categoria"
+
+#: apps/budget/models/categoryMap.py:24
+msgid "Category Mappping"
+msgstr ""
+
+#: apps/budget/models/categoryMap.py:25
+msgid "Categories Mappping"
+msgstr ""
+
+#: apps/budget/models/expense.py:13
 msgid "function"
 msgstr "função"
 
-#: .\apps\budget\models\expense.py:14
+#: apps/budget/models/expense.py:14
 msgid "sub-function"
 msgstr "sub-função"
 
-#: .\apps\budget\models\expense.py:17
+#: apps/budget/models/expense.py:17
 msgid "agency"
 msgstr "orgão"
 
-#: .\apps\budget\models\expense.py:18
+#: apps/budget/models/expense.py:18
 msgid "budget unit"
 msgstr "unidade orçamentária"
 
-#: .\apps\budget\models\expense.py:33
+#: apps/budget/models/expense.py:33
 msgid "expense"
 msgstr "despesa"
 
-#: .\apps\budget\models\expense.py:34
+#: apps/budget/models/expense.py:34
 msgid "expenses"
 msgstr "despesas"
 
-#: .\apps\budget\models\revenue.py:12
+#: apps/budget/models/revenue.py:12
 msgid "nature"
 msgstr "natureza"
 
-#: .\apps\budget\models\revenue.py:13
+#: apps/budget/models/revenue.py:13
 msgid "specification"
 msgstr "especificação"
 
-#: .\apps\budget\models\revenue.py:16
+#: apps/budget/models/revenue.py:16
 msgid "source"
 msgstr "fonte"
 
-#: .\apps\budget\models\revenue.py:17
+#: apps/budget/models/revenue.py:17
 msgid "source (sub)"
 msgstr "sub-fonte"
 
-#: .\apps\budget\models\revenue.py:28
+#: apps/budget/models/revenue.py:28
 msgid "revenue"
 msgstr "receita"
 
-#: .\apps\budget\models\revenue.py:29
+#: apps/budget/models/revenue.py:29
 msgid "revenues"
 msgstr "receitas"
 
-#: .\apps\budget\models\transparency_index.py:16
+#: apps/budget/models/transparency_index.py:16
 msgid "score - open data"
 msgstr "pontuação - dados abertos"
 
-#: .\apps\budget\models\transparency_index.py:19
+#: apps/budget/models/transparency_index.py:19
 msgid "score - reports"
 msgstr "pontuação - relatórios"
 
-#: .\apps\budget\models\transparency_index.py:22
+#: apps/budget/models/transparency_index.py:22
 msgid "score - data quality"
 msgstr "pontuação - qualidade dos dados"
 
-#: .\apps\budget\models\transparency_index.py:25
-#: .\apps\budget\models\transparency_index.py:33
-#: .\apps\budget\models\transparency_index.py:34
+#: apps/budget/models/transparency_index.py:25
+#: apps/budget/models/transparency_index.py:33
+#: apps/budget/models/transparency_index.py:34
 msgid "transparency index"
 msgstr "índice de transparência"
 
-#: .\apps\budget\models\upload.py:36
+#: apps/budget/models/upload.py:36
 msgid "file"
 msgstr "arquivo"
 
-#: .\apps\budget\models\upload.py:40
+#: apps/budget/models/upload.py:40
 msgid "report"
 msgstr "relatório"
 
-#: .\apps\budget\models\upload.py:41
+#: apps/budget/models/upload.py:41
 msgid "status"
 msgstr ""
 
-#: .\apps\budget\models\upload.py:44
+#: apps/budget/models/upload.py:44
 msgid "errors"
 msgstr "erros"
 
-#: .\apps\budget\models\upload.py:46
+#: apps/budget/models/upload.py:46
 msgid "uploaded on"
 msgstr "enviado em"
 
-#: .\apps\budget\models\upload.py:47
+#: apps/budget/models/upload.py:47
 msgid "uploaded by"
 msgstr "enviado por"
 
-#: .\apps\budget\models\upload.py:49
+#: apps/budget/models/upload.py:49
 msgid "updated on"
 msgstr "atualizado em"
 
-#: .\apps\budget\models\upload.py:122
+#: apps/budget/models/upload.py:122
 #, python-brace-format
 msgid "<strong>Line {line}:</strong> Missing <b>'{field}'</b> column."
 msgstr ""
 "<strong>Linha {line}:</strong> A coluna <b>'{field}'</b> é obrigatória."
 
-#: .\apps\budget\models\upload.py:129
+#: apps/budget/models/upload.py:129
 #, python-brace-format
 msgid ""
 "<strong>Line {line}:</strong> <b>'{field}'</b> is not a valid header. Did "
@@ -481,7 +501,7 @@ msgstr ""
 "Você quis dizer: <b>'{field_correct}'</b>? <small>Remova todo espaço em "
 "branco antes e depois do campo.</small>"
 
-#: .\apps\budget\models\upload.py:134
+#: apps/budget/models/upload.py:134
 #, python-brace-format
 msgid ""
 "<strong>Line {line}:</strong> <b>'{field}'</b> is not a valid header. It "
@@ -490,13 +510,13 @@ msgstr ""
 "<strong>Linha {line}:</strong> <b>'{field}'</b> não é um cabeçalho válido. "
 "Ele deve ser exatamente um dos seguintes: <i>{header_fields}</i>"
 
-#: .\apps\budget\models\upload.py:180 .\apps\budget\models\upload.py:185
+#: apps/budget/models/upload.py:180 apps/budget/models/upload.py:185
 #, python-brace-format
 msgid "<strong>Line {line} ({column})</strong>: {error_msg} Input was: {input}"
 msgstr ""
 "<strong>Linha {line} ({column})</strong>: {error_msg} Carregado foi: {input}"
 
-#: .\apps\budget\models\upload.py:220
+#: apps/budget/models/upload.py:220
 #, python-brace-format
 msgid ""
 "<strong>Lines {lines} ({level}, {level}_code)</strong>: Different "
@@ -504,31 +524,31 @@ msgid ""
 "[<strong>{duplicated_objs}</strong>]"
 msgstr ""
 
-#: .\apps\budget\models\upload_log.py:11
+#: apps/budget/models/upload_log.py:11
 msgid "upload"
 msgstr "upload"
 
-#: .\apps\budget\models\upload_log.py:13
+#: apps/budget/models/upload_log.py:13
 msgid "log type"
 msgstr "log"
 
-#: .\apps\budget\models\upload_log.py:25
+#: apps/budget/models/upload_log.py:25
 msgid "time"
 msgstr "hora"
 
-#: .\apps\budget\models\upload_log.py:26
+#: apps/budget/models/upload_log.py:26
 msgid "updated by"
 msgstr "atualizado por"
 
-#: .\apps\budget\models\upload_log.py:33
+#: apps/budget/models/upload_log.py:33
 msgid "upload log"
 msgstr "log do upload"
 
-#: .\apps\budget\models\upload_log.py:34
+#: apps/budget/models/upload_log.py:34
 msgid "uploads log"
 msgstr "logs de uploads"
 
-#: .\apps\budget\tasks.py:24
+#: apps/budget/tasks.py:24
 #, python-brace-format
 msgid ""
 "An unexpected error occurred while validating the upload. Please contact the "
@@ -537,7 +557,7 @@ msgstr ""
 "Um erro inesperado ocorreu na validação do upload. Por favor contacte o time "
 "de desenvolvimento informando a seguinte mensagem de erro: <br><i>{error}</i>"
 
-#: .\apps\budget\tasks.py:42
+#: apps/budget/tasks.py:42
 #, python-brace-format
 msgid ""
 "An unexpected error occurred while executing the import. Please contact the "
@@ -547,7 +567,7 @@ msgstr ""
 "time de desenvolvimento informando a seguinte mensagem de erro: "
 "<br><i>{error}</i>"
 
-#: .\apps\budget\tasks.py:60
+#: apps/budget/tasks.py:60
 #, python-brace-format
 msgid ""
 "An unexpected error occurred while updating inferred values. Please contact "
@@ -557,7 +577,7 @@ msgstr ""
 "Por favor contacte o time de desenvolvimento informando a seguinte mensagem "
 "de erro: <br><i>{error}</i>"
 
-#: .\apps\budget\tasks.py:71
+#: apps/budget/tasks.py:71
 #, python-brace-format
 msgid ""
 "An unexpected error occurred while creating the cache file. Please contact "
@@ -567,83 +587,87 @@ msgstr ""
 "contacte o time de desenvolvimento informando a seguinte mensagem de erro: "
 "<br><i>{error}</i>"
 
-#: .\apps\geo\apps.py:7
+#: apps/geo/apps.py:7
 msgid "Geo"
 msgstr "Geo"
 
-#: .\apps\geo\models.py:10
+#: apps/geo/models.py:10
 msgid "flag"
 msgstr "bandeira"
 
-#: .\apps\geo\models.py:15
+#: apps/geo/models.py:15
 msgid "countries"
 msgstr "países"
 
-#: .\config\settings.py:139
+#: config/settings.py:135
 msgid "Portuguese"
 msgstr "Português"
 
-#: .\config\settings.py:140
+#: config/settings.py:136
 msgid "English"
 msgstr "Inglês"
 
-#: .\templates\admin\base_site.html:40
+#: frontend/templates/frontend/hello.html:19
+msgid "Hello Antunes!"
+msgstr "Olá Antunes!"
+
+#: templates/admin/base_site.html:40
 msgid "Django administration"
 msgstr "Administração do Django"
 
-#: .\templates\admin\base_site.html:48
+#: templates/admin/base_site.html:48
 msgid "Loading"
 msgstr "Carregando"
 
-#: .\templates\admin\base_site.html:54
+#: templates/admin/base_site.html:54
 msgid "Importing report..."
 msgstr "Importando relatório..."
 
-#: .\templates\admin\base_site.html:69
+#: templates/admin/base_site.html:69
 msgid "See results"
 msgstr "Ver resultados"
 
-#: .\templates\admin\base_site.html:70
+#: templates/admin/base_site.html:70
 msgid "The report has been imported with success."
 msgstr "O relatório foi importado com sucesso."
 
-#: .\templates\admin\base_site.html:72
+#: templates/admin/base_site.html:72
 msgid "Check and fix errors"
 msgstr "Verificar e corrigir erros"
 
-#: .\templates\admin\base_site.html:73
+#: templates/admin/base_site.html:73
 msgid "The report has validation errors."
 msgstr "O relatório possui erros de validação."
 
-#: .\templates\admin\base_site.html:79
+#: templates/admin/base_site.html:79
 msgid "Upload finished"
 msgstr "Carregmento finalizado"
 
-#: .\templates\admin\budget\budget\change_form.html:82
+#: templates/admin/budget/budget/change_form.html:82
 msgid "Show initial budgets"
 msgstr "Mostrar orçamentos iniciais"
 
-#: .\templates\admin\budget\budget\change_form.html:83
+#: templates/admin/budget/budget/change_form.html:83
 msgid "Hide initial budgets"
 msgstr "Esconder orçamentos iniciais"
 
-#: .\templates\admin\budget\budget\change_form.html:137
+#: templates/admin/budget/budget/change_form.html:137
 msgid "Confirm reimporting all uploads from this budget?"
 msgstr "Confirma a reimportação de todos os uploads deste orçamento?"
 
-#: .\templates\admin\budget\budget\change_form.html:138
+#: templates/admin/budget/budget/change_form.html:138
 msgid "Reimport uploads"
 msgstr "Reimportar uploads"
 
-#: .\templates\admin\budget\budget\change_form.html:144
+#: templates/admin/budget/budget/change_form.html:144
 msgid "Confirm updating output file?"
 msgstr "Confirma a atualização do arquivo de output?"
 
-#: .\templates\admin\budget\budget\change_form.html:145
+#: templates/admin/budget/budget/change_form.html:145
 msgid "Update output file"
 msgstr "Atualizar arquivo de output"
 
-#: .\templates\admin\budget\budget\change_form.html:158
+#: templates/admin/budget/budget/change_form.html:158
 #, python-format
 msgid ""
 "\n"
@@ -659,13 +683,18 @@ msgstr ""
 "        e envie novamente o arquivo nesta seção.\n"
 "        "
 
-#: .\templates\admin\index.html:9
+#: templates/admin/index.html:9
 msgid "Latest budgets"
 msgstr "Últimos orçamentos"
 
-#: .\templates\admin\index.html:21
+#: templates/admin/index.html:20
 msgid "Add new budget"
 msgstr "Adicionar novo orçamento"
+
+#, fuzzy
+#~| msgid "Great things are on the way!"
+#~ msgid "Great things are on the way from"
+#~ msgstr "Ótimas coisas estão a caminho"
 
 #~ msgid "agencies data"
 #~ msgstr "dados orgânicos"

@@ -57,3 +57,14 @@ class CountryView(SingleObjectMixin, View):
 class CountriesExpensesView(View):
     def get(self, request):
         return render(request, 'frontend/countriesExpenses.html', context=None)
+
+
+class ExpensesAndRevenuesView(SingleObjectMixin, View):
+    model = Country
+    def get(self, request, slug):
+        country = self.get_object()
+        ctx = {
+            'country': country,
+        }
+        return render(request, 'frontend/expenses-and-revenues.html', context=ctx)
+
