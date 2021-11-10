@@ -10,7 +10,7 @@ function getExpensesRevenuesAPI() {
 
 // Create series
 function createSeries(field, name, width, dx) {
-      let series = chart.series.push(new am4charts.ColumnSeries());
+      var series = chart.series.push(new am4charts.ColumnSeries());
       series.dataFields.valueY = field;
       series.dataFields.categoryX = "year";
       series.name = name;
@@ -24,10 +24,10 @@ function createSeries(field, name, width, dx) {
       series.dx = dx;
       series.columns.template.width = width;
 }
-
+var chart;
 function plotChart(data){
+    chart = am4core.create("chartdiv", am4charts.XYChart);
     am4core.useTheme(am4themes_animated);
-    let chart = am4core.create("chartdiv", am4charts.XYChart);
     chart.data = data;
     chart.colors.list = [
         am4core.color("#0F69A3"),
@@ -37,7 +37,7 @@ function plotChart(data){
     ];
 
     // Create axes
-    let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+    var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
     categoryAxis.dataFields.category = "year";
     categoryAxis.renderer.grid.template.location = 0;
     categoryAxis.renderer.minGridDistance = 20;
@@ -47,7 +47,7 @@ function plotChart(data){
     categoryAxis.numberFormatter.numberFormat = "###";
     categoryAxis.renderer.grid.template.disabled = true;
 
-    let  valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+    let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
     valueAxis.min = 0;
     valueAxis.numberFormatter = new am4core.NumberFormatter();
     valueAxis.numberFormatter.numberFormat = "#,###.00";
@@ -60,4 +60,7 @@ function plotChart(data){
     createSeries("budget_expense", "Dotação Receita", 40, 40);
 }
 
-getExpensesRevenuesAPI();
+am4core.ready(function() {
+  getExpensesRevenuesAPI();
+});
+
