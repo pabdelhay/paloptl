@@ -1,0 +1,37 @@
+.pardal{
+    margin: 0 auto;
+    text-align: center;
+}
+.pardal__flag{
+
+    width: 300px;
+    height: auto;
+    margin: 0 auto;
+    display: inline-block;
+    border-radius: 10px;
+}
+
+.pardal__list{
+    list-style-type: none;
+}
+
+.pardal__list__item{
+    display: inline-block;
+    vertical-align: top;
+    width: auto;
+    background-color: #0088cc;
+    color: white;
+    margin: 3px;
+    border-radius: 10px;
+    padding: 20px;
+    cursor: pointer;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+#chartdiv {
+  width: 100%;
+  height: 500px;
+}

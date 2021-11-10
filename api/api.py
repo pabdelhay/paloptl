@@ -5,6 +5,7 @@ from django.conf import settings
 from django.db.models import F, Q
 from rest_framework import serializers
 from rest_framework.decorators import action
+from rest_framework.relations import PrimaryKeyRelatedField
 from rest_framework.response import Response
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
@@ -191,6 +192,28 @@ class ExpensePerYearCategoryFilterSerializer(serializers.Serializer):
 class ExpensePerYearFilterSerializer(serializers.Serializer):
     year = serializers.IntegerField()
 
+class CountryFilterSerializer(serializers.Serializer):
+    # country = serializers.IntegerField()
+    country = serializers.PrimaryKeyRelatedField(queryset=Country.objects.all())
+
+
+class BudgetsPerYearSerializer(serializers.Serializer):
+    # country = serializers.IntegerField()
+
+    year = serializers.IntegerField()
+    budget_expense = serializers.FloatField()
+    budget_revenue = serializers.FloatField()
+    budget_expense_group = serializers.CharField()
+    budget_revenue_group = serializers.CharField()
+
+    execution_revenue = serializers.FloatField()
+    execution_expense = serializers.FloatField()
+
+
+    # city = serializers.IntegerField()
+
+
+
 
 class BudgetViewset(ReadOnlyModelViewSet):
     model = Budget
@@ -261,6 +284,7 @@ class BudgetViewset(ReadOnlyModelViewSet):
             .exclude(Q(budget_aggregated__isnull=True) & Q(execution_aggregated__isnull=True))
         serializer = ExpenseSerializer(qs, many=True)
         return Response(serializer.data)
+
 
     @action(detail=True)
     def historical(self, request, pk=None):
@@ -333,6 +357,48 @@ class BudgetViewset(ReadOnlyModelViewSet):
     @action(detail=False)
     def teste(self, request, pk=None):
         return Response("ola teste")
+
+    @action(detail=False)
+    def budget_expense_revenue(self, request, pk=None):
+
+        params = CountryFilterSerializer(data=request.GET)
+        params.is_valid(raise_exception=True)
+        country = params.validated_data.get('country')
+
+        budget_stp = Budget.objects.filter(country=country).order_by('year')
+        #budget_stp = Budget.objects.filter(country=country).order_by('-year') decrescente
+        budget_list = list()
+        for i in budget_stp:
+           j = BudgetSummary.objects.get(budget=i)
+           budget_expense_flag = "functional"
+           if(j.expense_functional_budget == None):
+                budget_expense_value = j.expense_organic_budget
+                budget_expense_flag = "organic"
+           budget_revenue_flag = "nature"
+
+           if (j.revenue_nature_budget == None):
+               budget_revenue_value = j.revenue_source_budget
+               budget_revenue_flag = "source"
+
+
+
+
+
+
+
+           budget_list.append({'year': j.budget.year,
+                               'budget_expense': budget_expense_value,
+                               'budget_expense_group': budget_expense_flag,
+                               'budget_revenue': budget_revenue_value,
+                               'budget_revenue_group': budget_revenue_flag,
+
+                               'execution_revenue': j.revenue_nature_execution,
+                               'execution_expense': j.expense_functional_execution
+                               })
+
+        budget_list_s = BudgetsPerYearSerializer(budget_list, many=True)
+
+        return Response(budget_list_s.data)
 
     @action(detail=False)
     def budget_category_percentage(self, request, pk=None):

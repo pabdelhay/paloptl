@@ -54,6 +54,34 @@ class CountryView(SingleObjectMixin, View):
         return render(request, 'frontend/country-details.html', context=ctx)
 
 
+class CountryView2(SingleObjectMixin, View):
+    model = Country
+
+    def get(self, request, slug, **kwargs):
+
+        country = self.get_object()
+        countries = Country.objects.all()
+
+
+        ctx = {
+            'country': country,
+            'countries': countries
+        }
+        return render(request, 'frontend/hello.html', context=ctx)
+
+
+
+
+
+
 class CountriesExpensesView(View):
     def get(self, request):
         return render(request, 'frontend/countriesExpenses.html', context=None)
+
+class WelcomeView(View):
+
+    def get(self, request):
+        ctx = {
+            'name': "Pro-Palop"
+        }
+        return render(request, 'frontend/hello.html', context=ctx)

@@ -28,7 +28,7 @@ class BudgetAccountTestCase(TestCase):
         f0.execution_operation = 40
         f0.save()
 
-        # Test sibling
+        # Test sibling (irrmaos)
         inferred_budget_aggregated = f0.infer_aggregated_value('budget_aggregated')
         self.assertEqual(inferred_budget_aggregated, 30,
                          msg="Aggregated value should be sum of siblings")
@@ -60,7 +60,7 @@ class BudgetAccountTestCase(TestCase):
                          msg="Aggregated value should be sum of descendants, event there are descendants without "
                              "values set.")
 
-    def test_update_inferred_values(self):
+    def test_update_inferred_values(self): #criando no banco de dados
         f0 = Expense.objects.create(budget=self.budget, group=ExpenseGroupChoices.FUNCTIONAL, name="test function",
                                     code="f0")
         f0.budget_investment = 10
@@ -72,7 +72,7 @@ class BudgetAccountTestCase(TestCase):
 
         self.assertEqual(len(inferred_values.keys()), 2, msg="Only two inferred values should be created")
 
-    def test_upload_validate(self):
+    def test_upload_validate(self): #criando no banco de dados
         upload = Upload(budget=self.budget, category=UploadCategoryChoices.EXPENSE,
                         report=UploadReportChoices.OGE, uploaded_by=self.user)
 
