@@ -365,17 +365,17 @@ class BudgetViewset(ReadOnlyModelViewSet):
 
         for i in budget_stp:
             j = BudgetSummary.objects.get(budget=i)
-            budget_expense_flag = "functional"
+            budget_expense_flag = "funcional"
             budget_expense_value = j.expense_functional_budget
             if not j.expense_functional_budget:
                 budget_expense_value = j.expense_organic_budget
-                budget_expense_flag = "organic"
+                budget_expense_flag = "orgânico"
 
-            budget_revenue_flag = "nature"
+            budget_revenue_flag = "por natureza"
             budget_revenue_value = j.revenue_nature_budget
             if not j.revenue_nature_budget:
                 budget_revenue_value = j.revenue_source_budget
-                budget_revenue_flag = "source"
+                budget_revenue_flag = "por fonte"
 
             budget_list.append(
                 {
