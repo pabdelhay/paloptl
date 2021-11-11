@@ -1,0 +1,53 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+#chartdiv {
+    width: 100%;
+    height: 450px;
+}
+</style>
+<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+<script type="text/javascript">
+    let country = {};
+    country.id = {{country.id}};
+    country.currency = "{{country.currency }}";
+</script>
+<script src="{% static 'js/expenses-and-revenues.js' %}"></script>
+<div class="page-country-detail">
+    {% with bg_name="bg_"|add:country.slug|add:".png" %}
+    <div class="country-name-wrapper" style="background-image: url('{% static 'img/'|add:bg_name %}');">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1>{{ country.name }}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endwith %}
+    <div class="flag-wrapper">
+        <div class="row middle">
+            <div class="col-2 mr-0">
+                <img class="flag" src="{{ country.flag.url }}" alt="{{ country.slug }} flag" />
+            </div>
+            <div class="col-6">
+                <h3>
+                    <span class="arrow-right"></span>
+                    DESPESAS E RECEITAS
+                </h3>
+                <div class="header-currency">
+                    Grafico pra analise de execução de despesas e receitas, todos os valores em <strong class="budget-currency">{{ country.currency }}</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="container">
+    <div id="chartdiv"></div>
+</div>
+{% endblock %}
