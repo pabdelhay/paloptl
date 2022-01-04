@@ -978,7 +978,7 @@ h3 .arrow {
 }
 .page-country-detail .treemap-wrapper .budget_account-info .budget_account-info-box, .page-countries-expenses .treemap-wrapper .budget_account-info .budget_account-info-box {
   background-color: #eae6e5;
-  padding: 30px;
+  padding: 20px;
   margin-bottom: 7px;
 }
 .page-country-detail .treemap-wrapper .budget_account-info .budget_account-info-box h4, .page-countries-expenses .treemap-wrapper .budget_account-info .budget_account-info-box h4 {
@@ -1068,7 +1068,7 @@ h3 .arrow {
   background-color: #0f69a3;
 }
 .page-country-detail .treemap-wrapper .budget_account-info .treemap-legend-table .legend-square td, .page-countries-expenses .treemap-wrapper .budget_account-info .treemap-legend-table .legend-square td {
-  padding: 5px;
+  padding: 1px;
 }
 .page-country-detail .treemap-wrapper .budget_account-info .treemap-legend-table tr td, .page-countries-expenses .treemap-wrapper .budget_account-info .treemap-legend-table tr td {
   padding: 1px;

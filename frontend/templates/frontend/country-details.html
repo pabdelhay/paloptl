@@ -107,7 +107,7 @@
         fields.forEach(function(item, index){
             aggregated_data[item] = null;
         });
-        aggregated_data['label'] = "Orçamento " + get_budget_year_by_id(current_budget_id);
+        aggregated_data['label'] = "{% trans 'Budget' %} " + get_budget_year_by_id(current_budget_id);
         aggregated_data['name'] = "{{ country.name }}";
         aggregated_data['id'] = null;
         for(var i = 0; i < budget_data.length; i++){
@@ -308,7 +308,7 @@
         chart.legend = new am4charts.Legend();
         chart.legend.position = 'right';
         chart.legend.valign = 'bottom';
-        chart.legend.paddingLeft = 150;
+        chart.legend.paddingLeft = 20;
         chart.legend.paddingBottom = 30;
         chart.legend.labels.template.maxWidth = 95;
 
