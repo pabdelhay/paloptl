@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-04 12:28-0300\n"
+"POT-Creation-Date: 2022-01-04 12:47-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -158,7 +158,8 @@ msgstr "campo"
 #: .\frontend\templates\frontend\country-details.html:351
 #: .\frontend\templates\frontend\country-details.html:969
 #: .\frontend\templates\frontend\country-details.html:980
-#: .\frontend\templates\frontend\country-details.html:1144
+#: .\frontend\templates\frontend\country-details.html:1010
+#: .\frontend\templates\frontend\country-details.html:1146
 #: .\templates\admin\index.html:14
 msgid "Budget"
 msgstr "Orçamento"
@@ -748,7 +749,8 @@ msgstr "de"
 #: .\frontend\templates\frontend\country-details.html:907
 #: .\frontend\templates\frontend\country-details.html:973
 #: .\frontend\templates\frontend\country-details.html:984
-#: .\frontend\templates\frontend\country-details.html:1169
+#: .\frontend\templates\frontend\country-details.html:1019
+#: .\frontend\templates\frontend\country-details.html:1171
 msgid "Execution"
 msgstr "Execução"
 
@@ -788,6 +790,12 @@ msgstr "DADOS ORÇAMENTAIS"
 msgid "HOW TO NAVIGATE"
 msgstr "APRENDA A NAVEGAR"
 
+#: .\frontend\templates\frontend\country-details.html:834
+#: .\frontend\templates\frontend\country-details.html:847
+#: .\frontend\templates\frontend\country-details.html:860
+msgid "Loading data"
+msgstr "Carregando dados"
+
 #: .\frontend\templates\frontend\country-details.html:887
 msgid "Initial budget"
 msgstr "Orçamento inicial"
@@ -795,8 +803,8 @@ msgstr "Orçamento inicial"
 #: .\frontend\templates\frontend\country-details.html:892
 #: .\frontend\templates\frontend\country-details.html:902
 #: .\frontend\templates\frontend\country-details.html:912
-#: .\frontend\templates\frontend\country-details.html:1149
-#: .\frontend\templates\frontend\country-details.html:1174
+#: .\frontend\templates\frontend\country-details.html:1151
+#: .\frontend\templates\frontend\country-details.html:1176
 msgid "Not informed"
 msgstr "Não informado"
 
@@ -817,16 +825,68 @@ msgid "SECONDARY DATA"
 msgstr "DADOS SECUNDÁRIOS"
 
 #: .\frontend\templates\frontend\country-details.html:965
-#: .\frontend\templates\frontend\country-details.html:1156
-#: .\frontend\templates\frontend\country-details.html:1180
+#: .\frontend\templates\frontend\country-details.html:1158
+#: .\frontend\templates\frontend\country-details.html:1182
 msgid "in Investment"
 msgstr "em investimento"
 
 #: .\frontend\templates\frontend\country-details.html:977
-#: .\frontend\templates\frontend\country-details.html:1163
-#: .\frontend\templates\frontend\country-details.html:1187
+#: .\frontend\templates\frontend\country-details.html:1165
+#: .\frontend\templates\frontend\country-details.html:1189
 msgid "in Operation"
 msgstr "em Funcionamento"
+
+#: .\frontend\templates\frontend\country-details.html:999
+msgid "Sort by name"
+msgstr "Ordernar por nome"
+
+#: .\frontend\templates\frontend\country-details.html:1009
+msgid "Sort by budget"
+msgstr "Ordernar por dotação"
+
+#: .\frontend\templates\frontend\country-details.html:1018
+msgid "Sort by execution"
+msgstr "Ordernar por execução"
+
+#: .\frontend\templates\frontend\country-details.html:1027
+msgid "Sort by execution percentage"
+msgstr "Ordernar por porcentagem de execução"
+
+#: .\frontend\templates\frontend\country-details.html:1036
+msgid "Sort by budget in investment"
+msgstr "Ordenar por dotação em investimento"
+
+#: .\frontend\templates\frontend\country-details.html:1037
+msgid "Budget in investment"
+msgstr "Dotação em investimento"
+
+#: .\frontend\templates\frontend\country-details.html:1045
+msgid "Sort by execution in investment"
+msgstr "Ordenar por execução em investimento"
+
+#: .\frontend\templates\frontend\country-details.html:1046
+msgid "Execution in investment"
+msgstr "Execução em investimento"
+
+#: .\frontend\templates\frontend\country-details.html:1054
+msgid "Sort by budget in operation"
+msgstr "Ordenar por dotaçao em funcionamento"
+
+#: .\frontend\templates\frontend\country-details.html:1055
+msgid "Budget in operation"
+msgstr "Dotaçao em funcionamento"
+
+#: .\frontend\templates\frontend\country-details.html:1063
+msgid "Sort by execution in operation"
+msgstr "Ordenar por execução em funcionamento"
+
+#: .\frontend\templates\frontend\country-details.html:1064
+msgid "Execution in operation"
+msgstr "Execução em funcionamento"
+
+#: .\frontend\templates\frontend\country-details.html:1124
+msgid "Expand to all visualizations"
+msgstr "Expandir para todas as visualizações"
 
 #: .\frontend\templates\frontend\index.html:108
 msgid ""
