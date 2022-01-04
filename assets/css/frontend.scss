@@ -71,6 +71,11 @@ h4 {
   text-transform: uppercase;
 }
 
+.linebreak {
+  width: 100%;
+  content: '';
+}
+
 .loading {
   position: absolute;
   width: 200px;
@@ -873,20 +878,29 @@ h3 {
 
     }
     .budget-account-selector-row {
-      position: relative;
+      .selector-wrapper {
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
 
-      & > div {
-        display: inline-block;
-        border-right: 1px solid #d8d8d8;
-        padding-right: 10px;
-        margin-right: 10px;
-        margin-left: -5px;
-        &:last-child {
-          border-right: 0;
-          padding-right: 0;
-          margin-right: 0;
+        .budgets-selector {
+          display: flex;
+          justify-content: flex-end;
+          align-items: flex-end;
+          flex-wrap: wrap;
+          gap: 3px 10px;
+        }
+
+        .grouped {
+          display: flex;
+          gap: 0px;
+          a {
+            max-width: 90px;
+            padding: 2px 5px;
+          }
         }
       }
+
       a {
         cursor: pointer;
         background: #eae6e5;
@@ -927,12 +941,7 @@ h3 {
         }
       }
 
-      .budget-account-selector {
-        padding-right: 10px;
-        margin-right: 10px;
-      }
       .budget-selector, .year-selector {
-        margin-left: -4px;
         a {
           width: 40px;
           padding: 4px 10px;
@@ -941,11 +950,16 @@ h3 {
           }
         }
       }
-      .visualization-selector, .search-selector {
-        margin-left: -10px;
+      .visualization-selector {
+        border-left: 1px solid #d8d8d8;
+        margin-left: 15px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        max-width: 60px;
         a {
           width: 20px;
-          padding: 4px 2px;
+          padding: 1px 3px;
           background: none;
           border-right: 0;
           color: $icon_action_color;
