@@ -71,7 +71,7 @@ am4core.ready(async function () {
         bullet.dy = label_dy;
         bullet.fontSize = 11.5;
         bullet.label.verticalCenter = 'top';
-        bullet.label.text = "[bold]{valueY.formatNumber('#.# a')}";
+        bullet.label.text = "{valueY.formatNumber('#.# a')}";
         bullet.label.fill = am4core.color(`${label_color}`);
         bullet.label.truncate = false;
     }

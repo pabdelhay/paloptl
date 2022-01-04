@@ -93,7 +93,7 @@ class Upload(models.Model, DirtyFieldsMixin):
             - Headers
             - Check if each cell's value is according to BudgetUploadSerializer fields
             - Check if there are same category names for different codes
-        :return:
+        :return: bool
         """
         from api.api_admin import ExpenseUploadSerializer, RevenueUploadSerializer
 
@@ -237,7 +237,7 @@ class Upload(models.Model, DirtyFieldsMixin):
             Security  001            100
             Security  001            50
         Budget aggregated for Security will be 150. This value will override existent value on database.
-        :return:
+        :return: Upload
         """
         from api.api_admin import ExpenseUploadSerializer, RevenueUploadSerializer
         upload = self

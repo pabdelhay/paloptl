@@ -1,39 +1,75 @@
+{% load i18n %}
 <div class="row breadcrumb-row" id="anchor-{{ visualization }}">
     <div class="col-5">
         <div class="breadcrumb-wrapper"></div>
     </div>
     <div class="col-7 right budget-account-selector-row">
-        <div class="budget-account-selector">
-            <a href="#" class="budget-account-expenses" data-budget_account="expenses">Despesas
-            </a><a href="#" class="budget-account-revenues" data-budget_account="revenues">Receitas</a>
+        <div class="selector-wrapper">
+            <div class="budgets-selector">
+                <div class="grouped budget-account-selector">
+                    <a href="#" class="budget-account-expenses" data-budget_account="expenses">{% trans "Expenses" %}
+                    </a><a href="#" class="budget-account-revenues" data-budget_account="revenues">{% trans "Revenues" %}</a>
+                </div>
+                <div class="grouped group-selector">
+                    <a href="#" class="expenses-group" data-group="functional">{% trans "By Function" %}
+                    </a><a href="#" class="expenses-group" data-group="organic">{% trans "By Agency" %}
+                    </a><a href="#" class="revenues-group" data-group="nature">{% trans "By Nature" %}
+                    </a><a href="#" class="revenues-group" data-group="source">{% trans "By Source" %}</a>
+                </div>
+                <br class="linebreak"/>
+                <div class="grouped budget-selector">
+                    {% for budget in budgets %}<a href="#" {% if budget.id == last_budget.id %}class="active"{% endif %}data-budget_id="{{ budget.id }}">{{ budget.year }}</a>{% endfor %}
+                </div>
+            </div>
+            <div class="visualization-selector">
+                    <a href="#anchor-treemap" {% if visualization == 'treemap' %}class="active"{% endif %}><span class="material-icons" title="{% trans 'Treemap visualization' %}">apps</span></a>
+                    <a href="#anchor-history" {% if visualization == 'history' %}class="active"{% endif %}><span class="material-icons" title="{% trans 'Historical visualization' %}">timeline</span></a>
+                    <a href="#anchor-list" {% if visualization == 'list' %}class="active"{% endif %}><span class="material-icons" title="{% trans 'Table visualization' %}">reorder</span></a>
+                    <a href="#anchor-list" class="search-link"><span class="material-icons">search</span></a>
+{#                <div>#}
+{#                    <a href="#anchor-list" {% if visualization == 'list' %}class="active"{% endif %}><span class="material-icons" title="{% trans 'Table visualization' %}">reorder</span></a>#}
+{#                    <a href="#anchor-list" class="search-link"><span class="material-icons">search</span></a>#}
+{#                </div>#}
+            </div>
+
         </div>
-        <div class="group-selector">
-            <a href="#" class="expenses-group" data-group="functional">Por Função
-            </a><a href="#" class="expenses-group" data-group="organic">Por Órgão
-            </a><a href="#" class="revenues-group" data-group="nature">Por Natureza
-            </a><a href="#" class="revenues-group" data-group="source">Por Fonte</a>
-        </div>
-        <div class="budget-selector">
-            {% for budget in budgets %}<a href="#" {% if budget.id == last_budget.id %}class="active"{% endif %}data-budget_id="{{ budget.id }}">{{ budget.year }}</a>{% endfor %}
-        </div>
-        <div class="visualization-selector">
-                <a href="#anchor-treemap" {% if visualization == 'treemap' %}class="active"{% endif %}><span class="material-icons" title="Visualização em treemap">apps</span>
-            </a><a href="#anchor-history" {% if visualization == 'history' %}class="active"{% endif %}><span class="material-icons" title="Visualização em série histórica">timeline</span>
-            </a><a href="#anchor-list" {% if visualization == 'list' %}class="active"{% endif %}><span class="material-icons" title="Visualização em tabela">reorder</span></a>
-        </div>
-        <div class="search-selector">
-            <a href="#anchor-list" class="search-link"><span class="material-icons">search</span></a>
-        </div>
+<!--            <div>
+                <div class="budget-account-selector">
+                    <a href="#" class="budget-account-expenses" data-budget_account="expenses">{% trans "Expenses" %}
+                    </a><a href="#" class="budget-account-revenues" data-budget_account="revenues">{% trans "Revenues" %}</a>
+                </div>
+                <div class="group-selector">
+                    <a href="#" class="expenses-group" data-group="functional">{% trans "By Function" %}
+                    </a><a href="#" class="expenses-group" data-group="organic">{% trans "By Agency" %}
+                    </a><a href="#" class="revenues-group" data-group="nature">{% trans "By Nature" %}
+                    </a><a href="#" class="revenues-group" data-group="source">{% trans "By Source" %}</a>
+                </div>
+                <div class="budget-selector">
+                    {% for budget in budgets %}<a href="#" {% if budget.id == last_budget.id %}class="active"{% endif %}data-budget_id="{{ budget.id }}">{{ budget.year }}</a>{% endfor %}
+                </div>
+            </div>
+            <div>
+                <div class="visualization-selector">
+                    <a href="#anchor-treemap" {% if visualization == 'treemap' %}class="active"{% endif %}><span class="material-icons" title="{% trans 'Treemap visualization' %}">apps</span>
+                    </a><a href="#anchor-history" {% if visualization == 'history' %}class="active"{% endif %}><span class="material-icons" title="{% trans 'Historical visualization' %}">timeline</span>
+                    </a><a href="#anchor-list" {% if visualization == 'list' %}class="active"{% endif %}><span class="material-icons" title="{% trans 'Table visualization' %}">reorder</span></a>
+                </div>
+                <div class="search-selector">
+                    <a href="#anchor-list" class="search-link"><span class="material-icons">search</span></a>
+                </div>
+            </div>
+        </div>-->
+
     </div>
     <hr />
     {% if not hide_currency %}
     <div class="col-6">
-        Todos os valores em <strong class="budget-currency">{{ last_budget.get_currency_display }}</strong>
+        {% trans "All values in" %} <strong class="budget-currency">{{ last_budget.get_currency_display }}</strong>
     </div>
     {% endif %}
     {% if show_export %}
     <div class="col-6 right">
-        <a href="" class="download-link">Baixar dados em CSV <span class="material-icons">download</span></a>
+        <a href="" class="download-link">{% trans "Download CSV" %} <span class="material-icons">download</span></a>
     </div>
     {% endif %}
 </div>

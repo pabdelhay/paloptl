@@ -2,7 +2,7 @@
 {% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}{% get_countries as all_countries %}
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
     <head>
-        <title>{% block title %}PALOP-TL CSO online budget platform{% endblock %}</title>
+        <title>{% block title %}{% trans "PALOP-TL CSO online budget platform" %}{% endblock %}</title>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto&display=swap" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="{% static "css/font.css" %}">
         <link rel="stylesheet" type="text/css" href="{% static "css/simple-grid.css" %}">
@@ -57,7 +57,9 @@
                     <div class="col-11">
                         <h1>
                             <a href="{% url 'index' %}">
-                                <strong>Plataforma Orçamental Online</strong> da Sociedade Civil dos <strong>PALOP-TL</strong>
+                                {% blocktrans trimmed %}
+                                <strong>PALOP-TL</strong> Civil Society <strong>Online Budget Platform</strong>
+                                {% endblocktrans %}
                             </a>
                         </h1>
                     </div>
@@ -69,7 +71,9 @@
                                 <div></div>
                             </div>
                             <div class="dropdown-content">
-                                <div class="short-description">Escolha um país e<br>entenda seu orçamento</div>
+                                <div class="short-description">
+                                    {% blocktrans %}Choose a country to<br>understand its budget{% endblocktrans %}
+                                </div>
                                 {% for country in all_countries %}
                                     <a href="{% url 'country-details' country.slug %}">
                                         <img src="{{ country.flag.url }}"/> {{ country.name }}
@@ -119,14 +123,16 @@
                     </div>
                     <div class="col-5">
                         <div class="disclaimer">
-                        A Plataforma Online das Organizações da Sociedade Civil dos PALOP e Timor-Leste para
-                        Simplificação e Análise Orçamental foi produzida pelo Pro PALOP-TL ISC, e cofinanciada
-                        pela União Europeia e pelo Programa das Nações Unidas para o Desenvolvimento.<br>
-                        O seu conteúdo é da exclusiva responsabilidade do Pro PALOP-TL ISC e não pode, de modo
-                        algum, ser usado para refletir as posições da União Europeia.<br>
-                        As opiniões expressas nesta plataforma são exclusivas dos/as autoras/es e não
-                        representam necessariamente a opinião das Nações Unidas, nem do Programa das Nações
-                        Unidas para o Desenvolvimento ou dos Estados Membros das Nações Unidas.
+                            {% blocktrans trimmed %}
+                                The Online Platform for PALOP and Timor-Leste Civil Society Organizations for Budget
+                                Simplification and Analysis was produced by Pro PALOP-TL ISC, and co-financed by the
+                                European Union and the United Nations Development Programme.<br>
+                                Its contents are the sole responsibility of Pro PALOP-TL ISC and can in no way be used
+                                to reflect the positions of the European Union.<br>
+                                The opinions expressed on this platform are those of the authors alone and do not
+                                necessarily represent the views of the United Nations, the United Nations
+                                Development Programme, or the United Nations Member States.
+                            {% endblocktrans %}
                         </div>
                     </div>
                 </div>
@@ -135,7 +141,7 @@
             <div class="container">
                 <div class="row last-line middle">
                     <div class="col-3">{% include 'frontend/language-selector.component.html' %}</div>
-                    <div class="col-6 center">2020 ©PALOP-TL ISC Todos os direitos reservados</div>
+                    <div class="col-6 center">{% trans "2020 ©PALOP-TL ISC All rights reserved" %}</div>
                     <div class="col-3 right social">
                         <a target="_blank" href="{% get_social_network_url 'facebook' %}"><img src="{% static 'img/icon_facebook.png' %}" alt="facebook icon" /></a>
                         <a target="_blank" href="{% get_social_network_url 'youtube' %}"><img src="{% static 'img/icon_youtube.png' %}" alt="youtube icon" /></a>
