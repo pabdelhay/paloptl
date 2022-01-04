@@ -105,11 +105,11 @@ $(document).ready(function(){
                 <div class="col-6">
                     <div class="text">
                         {% blocktrans trimmed %}
-                        Nossa missão é <strong>derrubar</strong><br>
-                        todas as <strong>barreiras</strong> entre os<br>
-                        <strong>cidadãos</strong> e as informações<br>
-                        sobre <strong>finanças públicas</strong><br>
-                        dos países.
+                            Our mission is <strong>to break</strong><br>
+                            down all <strong>barriers</strong> between<br>
+                            <strong>citizens</strong> and information<br>
+                            on <strong>the countries' public</strong><br>
+                            finances.
                         {% endblocktrans %}
                     </div>
                 </div>
@@ -125,7 +125,7 @@ $(document).ready(function(){
                     {% endfor %}
                     </div>
                     <div class="short-description">
-                        {% blocktrans %}Escolha um país para entender seu orçamento{% endblocktrans %}
+                        {% blocktrans %}Choose a country to understand its budget{% endblocktrans %}
                     </div>
                 </div>
             </div>
@@ -135,7 +135,7 @@ $(document).ready(function(){
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h2><span class="arrow"></span>Sobre o Projeto</h2>
+                    <h2><span class="arrow"></span>{% trans "About the project" %}</h2>
                 </div>
             </div>
             <div class="row">
@@ -143,22 +143,22 @@ $(document).ready(function(){
                     <div class="description">
                         <div class="paragraph">
                             {% blocktrans trimmed %}
-                            Extraímos os dados de relatórios oficiais publicados em formatos fechados
-                            e os tornamos estruturados e abertos: <strong>prontos para análise</strong>.
+                                We extracted data from official reports published in closed formats and transform
+                                them into structured and open: <strong>ready for analysis</strong>.
                             {% endblocktrans %}
                         </div>
                         <div class="paragraph">
                             {% blocktrans trimmed %}
-                            Para dar visibilidade e incentivar avanços no tema, construímos o
-                            <strong>primeiro Índice de Transparência Orçamental com recorte focado nos PALOP-TL</strong>.
+                                In order to promote visibility and encourage advances in the agenda, we have built
+                                the <strong>first Budget Transparency Index with a focus on the PALOP-TL</strong>.
                             {% endblocktrans %}
                         </div>
                         <div class="paragraph">
                             {% blocktrans trimmed %}
-                            <strong>Crescimento modular</strong>: Novas perspectivas da transparência orçamental serão
-                            incorporadas na Plataforma e no Índice. As novas funcionalidades
-                            serão definidas a partir de <strong>sessões de <i>Design Thinking</i> com representantes
-                            da sociedade civíl</strong>.
+                                <strong>Modular growth</strong>: New perspectives on budget transparency will be
+                                incorporated into the Platform and Index. The new features will be defined
+                                <strong>through <i>Design Thinking</i> sessions with representatives of the civil
+                                society</strong>.
                             {% endblocktrans %}
                         </div>
                     </div>
@@ -167,23 +167,23 @@ $(document).ready(function(){
                     <div class="bullets">
                         <div class="bullet">
                             <span class="arrow-right"></span>
-                            {% trans "Base de dados abertas" %}
+                            {% trans "Open Database" %}
                         </div>
                         <div class="bullet">
                             <span class="arrow-right"></span>
-                            {% trans "Visualizações interativas" %}
+                            {% trans "Interactive views" %}
                         </div>
                         <div class="bullet">
                             <span class="arrow-right"></span>
-                            {% trans "Filtros de Consulta" %}
+                            {% trans "Search Filters" %}
                         </div>
                         <div class="bullet">
                             <span class="arrow-right"></span>
-                            {% trans "Séries Históricas" %}
+                            {% trans "Historical Series" %}
                         </div>
                         <div class="bullet">
                             <span class="arrow-right"></span>
-                            {% trans "Índice de Transparência" %}
+                            {% trans "Transparency Index" %}
                         </div>
                     </div>
                 </div>
@@ -196,13 +196,13 @@ $(document).ready(function(){
             <div class="row">
                 <div class="col-12">
                     <div class="ranking-header">
-                        <h2><span class="arrow"></span>{% trans "Índice PALOP-TL de Transparência Orçamental" %}</h2>
+                        <h2><span class="arrow"></span>{% trans "PALOP-TL Index of Budget Transparency" %}</h2>
                         <div class="short-description">
                             {% blocktrans trimmed %}
-                            Resume a qualidade da transparência no fornecimento dos dados básicos da receita e despesa
-                            que compõem esta plataforma.<br>
-                            Veja mais detalhes na <a class="scroll-to" href="#methodology">Metodologia</a>,
-                            disponível abaixo.
+                                It summarizes the quality of transparency in the provision of the basic revenue and
+                                expenditure data that make up this platform.<br>
+                                See more details in the <a class="scroll-to" href="#methodology">Methodology</a>,
+                                available below.
                             {% endblocktrans %}
                         </div>
                     </div>
@@ -213,8 +213,9 @@ $(document).ready(function(){
             <div class="row">
                 <div class="col-12">
                     {% blocktrans trimmed %}
-                    Clique no cabeçalho da tabela para ordenar o ranking por uma dimensão específica ou
-                    no ícone <span class="material-icons help" data-step="1">info_outlined</span> para saber mais sobre a dimensão.
+                        Click on the table heading to sort the ranking by a specific dimension,
+                        or on the <span class="material-icons help" data-step="1">info_outlined</span> icon to learn
+                        more about the dimension.
                     {% endblocktrans %}
                 </div>
             </div>
@@ -231,25 +232,25 @@ $(document).ready(function(){
                                     <th class="f-flag"></th>
                                     <th></th>
                                     <th class="f-dimension sortable header-open_data" data-dimension="score_open_data" title="Clique para ordernar por esta dimensão">
-                                        {% blocktrans trimmed %}Dados<br/>Abertos{% endblocktrans %}
+                                        {% trans "Open<br/>Data" %}
                                         <br/>
                                         <small>(0-100)</small>
                                         <span class="material-icons help" data-step="1" title="Saiba mais sobre esta dimensão">info_outlined</span>
                                     </th>
                                     <th class="f-dimension sortable header-score_reports" data-dimension="score_reports" title="Clique para ordernar por esta dimensão">
-                                        {% blocktrans trimmed %}Relatórios<br/>Orçamentais{% endblocktrans %}
+                                        {% trans "Budget<br/>Reports" %}
                                         <br/>
                                         <small>(0-100)</small>
                                         <span class="material-icons help" data-step="2" title="Saiba mais sobre esta dimensão">info_outlined</span>
                                     </th>
                                     <th class="f-dimension sortable header-data_quality" data-dimension="score_data_quality" title="Clique para ordernar por esta dimensão">
-                                        {% blocktrans trimmed %}Qualidade da<br/>Informação{% endblocktrans %}
+                                        {% trans "Information<br/>Quality" %}
                                         <br/>
                                         <small>(0-100)</small>
                                         <span class="material-icons help" data-step="3" title="Saiba mais sobre esta dimensão">info_outlined</span>
                                     </th>
                                     <th class="f-dimension sortable active" data-dimension="transparency_index" title="Clique para ordernar pelo ÍNDICE GERAL">
-                                        {% blocktrans trimmed %}Índice de Transparência<br/>Orçamental{% endblocktrans %}
+                                        {% trans "Budget Transparency<br/>Index" %}
                                         <br/>
                                         <small>(0-100)</small>
                                     </th>
@@ -266,7 +267,7 @@ $(document).ready(function(){
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <h2 id="methodology">{% trans "VEJA MAIS DETALHES SOBRE A METODOLOGIA E RESULTADOS DETALHADOS" %}</h2>
+                        <h2 id="methodology">{% trans "SEE MORE DETAILS ABOUT THE METHODOLOGY AND DETAILED RESULTS" %}</h2>
                         <div class="row">
                             <div class="col-7 covers">
                                 <a href="{% static 'reports/methodology_2021.pdf' %}" class="cover-wrapper" target="_blank">
@@ -283,7 +284,7 @@ $(document).ready(function(){
                                 </a>
                             </div>
                             <div class="col-5 results">
-                                <div class="result-title">{% trans "Resultado por país" %}<span class="arrow-right"></span> 2021</div>
+                                <div class="result-title">{% trans "Results by country" %}<span class="arrow-right"></span> 2021</div>
                                 {% for country in countries %}
                                     {% with report_path="reports/results_"|add:country.slug|add:"_2021.pdf" %}
                                     <div class="country-item">
@@ -303,7 +304,7 @@ $(document).ready(function(){
         </div>
         <div class="container countries-description">
             <div class="row">
-                <div class="col-12">{% trans "Escolha um país para entender seu orçamento." %}</div>
+                <div class="col-12">{% trans "Choose a country to understand how it spends its budget." %}</div>
             </div>
         </div>
     </div>
@@ -345,7 +346,7 @@ $(document).ready(function(){
 {{/each}}
 <tr class="ranking-row row-number-7 row-avg">
     <td class="f-position"></td>
-    <td class="f-flag" colspan="2">{% endverbatim %}{% trans "Média" %}{% verbatim %}</td>
+    <td class="f-flag" colspan="2">{% endverbatim %}{% trans "Average" %}{% verbatim %}</td>
     <td class="f-dimension f-dimension-1">{{parseInt average.score_open_data}}</td>
     <td class="f-dimension f-dimension-2">{{parseInt average.score_reports}}</td>
     <td class="f-dimension f-dimension-3">{{parseInt average.score_data_quality}}</td>

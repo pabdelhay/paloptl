@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-04 10:15-0300\n"
+"POT-Creation-Date: 2022-01-04 10:55-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -100,57 +100,57 @@ msgstr "Receitas por natureza"
 msgid "Revenues by source"
 msgstr "Receitas por fonte"
 
-#: .\apps\budget\admin.py:309
+#: .\apps\budget\admin.py:306
 #, python-brace-format
 msgid "Expenses: <strong>{total_expenses}</strong>"
 msgstr "Despesas: <strong>{total_expenses}</strong>"
 
-#: .\apps\budget\admin.py:310
+#: .\apps\budget\admin.py:307
 #, python-brace-format
 msgid "Revenues: <strong>{total_revenues}</strong>"
 msgstr "Receitas: <strong>{total_revenues}</strong>"
 
-#: .\apps\budget\admin.py:317
+#: .\apps\budget\admin.py:314
 msgid "uploads"
 msgstr "uploads"
 
-#: .\apps\budget\admin.py:327
+#: .\apps\budget\admin.py:324
 msgid "uploads with error"
 msgstr "uploads com error"
 
-#: .\apps\budget\admin.py:349
+#: .\apps\budget\admin.py:346
 msgid "Base info"
 msgstr "Informações básicas"
 
-#: .\apps\budget\admin.py:352
+#: .\apps\budget\admin.py:349 .\frontend\templates\frontend\index.html:186
 msgid "Transparency Index"
 msgstr "Índice de Transparência"
 
-#: .\apps\budget\admin.py:383 .\apps\budget\models\category.py:22
+#: .\apps\budget\admin.py:380 .\apps\budget\models\category.py:22
 #: .\apps\budget\models\categoryMap.py:17 .\apps\budget\models\upload.py:38
 #: .\apps\budget\models\upload_log.py:19
 msgid "category"
 msgstr "categoria"
 
-#: .\apps\budget\admin.py:388 .\apps\budget\models\category.py:14
+#: .\apps\budget\admin.py:385 .\apps\budget\models\category.py:14
 #: .\apps\budget\models\expense.py:24 .\apps\budget\models\revenue.py:23
 msgid "group"
 msgstr "grupo"
 
-#: .\apps\budget\admin.py:393 .\apps\budget\models\budget_account.py:20
+#: .\apps\budget\admin.py:390 .\apps\budget\models\budget_account.py:20
 #: .\apps\budget\models\category.py:12 .\apps\geo\models.py:8
 msgid "name"
 msgstr "nome"
 
-#: .\apps\budget\admin.py:400 .\apps\budget\models\upload_log.py:22
+#: .\apps\budget\admin.py:397 .\apps\budget\models\upload_log.py:22
 msgid "old value"
 msgstr "valor antigo"
 
-#: .\apps\budget\admin.py:407 .\apps\budget\models\upload_log.py:23
+#: .\apps\budget\admin.py:404 .\apps\budget\models\upload_log.py:23
 msgid "new value"
 msgstr "novo valor"
 
-#: .\apps\budget\admin.py:414 .\apps\budget\models\upload_log.py:21
+#: .\apps\budget\admin.py:411 .\apps\budget\models\upload_log.py:21
 msgid "field"
 msgstr "campo"
 
@@ -609,6 +609,10 @@ msgstr "Português"
 msgid "English"
 msgstr "Inglês"
 
+#: .\frontend\templates\frontend\base.html:5
+msgid "PALOP-TL CSO online budget platform"
+msgstr "Plataforma Orçamental Online da Sociedade Civil dos PALOP-TL"
+
 #: .\frontend\templates\frontend\base.html:60
 msgid ""
 "<strong>PALOP-TL</strong> Civil Society <strong>Online Budget Platform</"
@@ -704,127 +708,125 @@ msgid "Baixar dados em CSV"
 msgstr ""
 
 #: .\frontend\templates\frontend\index.html:107
-#: .\frontend\templates\pt\index.html:107
 msgid ""
+"Our mission is <strong>to break</strong><br> down all <strong>barriers</"
+"strong> between<br> <strong>citizens</strong> and information<br> on "
+"<strong>the countries' public</strong><br> finances."
+msgstr ""
 "Nossa missão é <strong>derrubar</strong><br> todas as <strong>barreiras</"
 "strong> entre os<br> <strong>cidadãos</strong> e as informações<br> sobre "
 "<strong>finanças públicas</strong><br> dos países."
-msgstr ""
 
 #: .\frontend\templates\frontend\index.html:128
-#: .\frontend\templates\pt\index.html:128
-msgid "Escolha um país para entender seu orçamento"
-msgstr ""
+msgid "Choose a country to understand its budget"
+msgstr "Escolha um país e entenda seu orçamento"
+
+#: .\frontend\templates\frontend\index.html:138
+msgid "About the project"
+msgstr "Sobre o projeto"
 
 #: .\frontend\templates\frontend\index.html:145
-#: .\frontend\templates\pt\index.html:145
 msgid ""
+"We extracted data from official reports published in closed formats and "
+"transform them into structured and open: <strong>ready for analysis</strong>."
+msgstr ""
 "Extraímos os dados de relatórios oficiais publicados em formatos fechados e "
 "os tornamos estruturados e abertos: <strong>prontos para análise</strong>."
-msgstr ""
 
 #: .\frontend\templates\frontend\index.html:151
-#: .\frontend\templates\pt\index.html:151
 msgid ""
+"In order to promote visibility and encourage advances in the agenda, we have "
+"built the <strong>first Budget Transparency Index with a focus on the PALOP-"
+"TL</strong>."
+msgstr ""
 "Para dar visibilidade e incentivar avanços no tema, construímos o "
 "<strong>primeiro Índice de Transparência Orçamental com recorte focado nos "
 "PALOP-TL</strong>."
-msgstr ""
 
 #: .\frontend\templates\frontend\index.html:157
-#: .\frontend\templates\pt\index.html:157
 msgid ""
+"<strong>Modular growth</strong>: New perspectives on budget transparency "
+"will be incorporated into the Platform and Index. The new features will be "
+"defined <strong>through <i>Design Thinking</i> sessions with representatives "
+"of the civil society</strong>."
+msgstr ""
 "<strong>Crescimento modular</strong>: Novas perspectivas da transparência "
 "orçamental serão incorporadas na Plataforma e no Índice. As novas "
 "funcionalidades serão definidas a partir de <strong>sessões de <i>Design "
 "Thinking</i> com representantes da sociedade civíl</strong>."
-msgstr ""
 
 #: .\frontend\templates\frontend\index.html:170
-#: .\frontend\templates\pt\index.html:170
-msgid "Base de dados abertas"
-msgstr ""
+msgid "Open Database"
+msgstr "Base de dados abertas"
 
 #: .\frontend\templates\frontend\index.html:174
-#: .\frontend\templates\pt\index.html:174
-msgid "Visualizações interativas"
-msgstr ""
+msgid "Interactive views"
+msgstr "Visualizações interativas"
 
 #: .\frontend\templates\frontend\index.html:178
-#: .\frontend\templates\pt\index.html:178
-msgid "Filtros de Consulta"
-msgstr ""
+msgid "Search Filters"
+msgstr "Filtros de Consulta"
 
 #: .\frontend\templates\frontend\index.html:182
-#: .\frontend\templates\pt\index.html:182
-msgid "Séries Históricas"
-msgstr ""
-
-#: .\frontend\templates\frontend\index.html:186
-#: .\frontend\templates\pt\index.html:186
-msgid "Índice de Transparência"
-msgstr ""
+msgid "Historical Series"
+msgstr "Séries Históricas"
 
 #: .\frontend\templates\frontend\index.html:199
-#: .\frontend\templates\pt\index.html:199
-msgid "Índice PALOP-TL de Transparência Orçamental"
-msgstr ""
+msgid "PALOP-TL Index of Budget Transparency"
+msgstr "Índice PALOP-TL de Transparência Orçamental"
 
 #: .\frontend\templates\frontend\index.html:201
-#: .\frontend\templates\pt\index.html:201
 msgid ""
-"Resume a qualidade da transparência no fornecimento dos dados básicos da "
-"receita e despesa que compõem esta plataforma.<br> Veja mais detalhes na <a "
-"class=\"scroll-to\" href=\"#methodology\">Metodologia</a>, disponível abaixo."
+"It summarizes the quality of transparency in the provision of the basic "
+"revenue and expenditure data that make up this platform.<br> See more "
+"details in the <a class=\"scroll-to\" href=\"#methodology\">Methodology</a>, "
+"available below."
 msgstr ""
+"Resume a qualidade da transparência no fornecimento dos dados básicos da "
+"receita e despesa que compõem esta plataforma.<br>Veja mais detalhes na <a "
+"class=\"scroll-to\" href=\"#methodology\">Metodologia</a>, disponível abaixo."
 
 #: .\frontend\templates\frontend\index.html:215
-#: .\frontend\templates\pt\index.html:215
 msgid ""
+"Click on the table heading to sort the ranking by a specific dimension, or "
+"on the <span class=\"material-icons help\" data-step=\"1\">info_outlined</"
+"span> icon to learn more about the dimension."
+msgstr ""
 "Clique no cabeçalho da tabela para ordenar o ranking por uma dimensão "
 "específica ou no ícone <span class=\"material-icons help\" data-step="
 "\"1\">info_outlined</span> para saber mais sobre a dimensão."
-msgstr ""
 
-#: .\frontend\templates\frontend\index.html:234
-#: .\frontend\templates\pt\index.html:234
-msgid "Dados<br/>Abertos"
-msgstr ""
+#: .\frontend\templates\frontend\index.html:235
+msgid "Open<br/>Data"
+msgstr "Dados<br/>Abertos"
 
-#: .\frontend\templates\frontend\index.html:240
-#: .\frontend\templates\pt\index.html:240
-msgid "Relatórios<br/>Orçamentais"
-msgstr ""
+#: .\frontend\templates\frontend\index.html:241
+msgid "Budget<br/>Reports"
+msgstr "Relatórios<br/>Orçamentais"
 
-#: .\frontend\templates\frontend\index.html:246
-#: .\frontend\templates\pt\index.html:246
-msgid "Qualidade da<br/>Informação"
-msgstr ""
+#: .\frontend\templates\frontend\index.html:247
+msgid "Information<br/>Quality"
+msgstr "Qualidade da<br/>Informação"
 
-#: .\frontend\templates\frontend\index.html:252
-#: .\frontend\templates\pt\index.html:252
-msgid "Índice de Transparência<br/>Orçamental"
-msgstr ""
+#: .\frontend\templates\frontend\index.html:253
+msgid "Budget Transparency<br/>Index"
+msgstr "Índice de Transparência<br/>Orçamental"
 
-#: .\frontend\templates\frontend\index.html:269
-#: .\frontend\templates\pt\index.html:269
-msgid "VEJA MAIS DETALHES SOBRE A METODOLOGIA E RESULTADOS DETALHADOS"
-msgstr ""
+#: .\frontend\templates\frontend\index.html:270
+msgid "SEE MORE DETAILS ABOUT THE METHODOLOGY AND DETAILED RESULTS"
+msgstr "VEJA MAIS DETALHES SOBRE A METODOLOGIA E RESULTADOS DETALHADOS"
 
-#: .\frontend\templates\frontend\index.html:286
-#: .\frontend\templates\pt\index.html:286
-msgid "Resultado por país"
-msgstr ""
+#: .\frontend\templates\frontend\index.html:287
+msgid "Results by country"
+msgstr "Resultado por país"
 
-#: .\frontend\templates\frontend\index.html:306
-#: .\frontend\templates\pt\index.html:306
-msgid "Escolha um país para entender seu orçamento."
-msgstr ""
+#: .\frontend\templates\frontend\index.html:307
+msgid "Choose a country to understand how it spends its budget."
+msgstr "Escolha um país para entender seu orçamento."
 
-#: .\frontend\templates\frontend\index.html:348
-#: .\frontend\templates\pt\index.html:348
-msgid "Média"
-msgstr ""
+#: .\frontend\templates\frontend\index.html:349
+msgid "Average"
+msgstr "Média"
 
 #: .\frontend\templates\pt\base.html:60
 msgid ""
@@ -851,6 +853,108 @@ msgstr ""
 
 #: .\frontend\templates\pt\base.html:142
 msgid "2020 ©PALOP-TL ISC Todos os direitos reservados"
+msgstr ""
+
+#: .\frontend\templates\pt\index.html:107
+msgid ""
+"Nossa missão é <strong>derrubar</strong><br> todas as <strong>barreiras</"
+"strong> entre os<br> <strong>cidadãos</strong> e as informações<br> sobre "
+"<strong>finanças públicas</strong><br> dos países."
+msgstr ""
+
+#: .\frontend\templates\pt\index.html:128
+msgid "Escolha um país para entender seu orçamento"
+msgstr ""
+
+#: .\frontend\templates\pt\index.html:145
+msgid ""
+"Extraímos os dados de relatórios oficiais publicados em formatos fechados e "
+"os tornamos estruturados e abertos: <strong>prontos para análise</strong>."
+msgstr ""
+
+#: .\frontend\templates\pt\index.html:151
+msgid ""
+"Para dar visibilidade e incentivar avanços no tema, construímos o "
+"<strong>primeiro Índice de Transparência Orçamental com recorte focado nos "
+"PALOP-TL</strong>."
+msgstr ""
+
+#: .\frontend\templates\pt\index.html:157
+msgid ""
+"<strong>Crescimento modular</strong>: Novas perspectivas da transparência "
+"orçamental serão incorporadas na Plataforma e no Índice. As novas "
+"funcionalidades serão definidas a partir de <strong>sessões de <i>Design "
+"Thinking</i> com representantes da sociedade civíl</strong>."
+msgstr ""
+
+#: .\frontend\templates\pt\index.html:170
+msgid "Base de dados abertas"
+msgstr ""
+
+#: .\frontend\templates\pt\index.html:174
+msgid "Visualizações interativas"
+msgstr ""
+
+#: .\frontend\templates\pt\index.html:178
+msgid "Filtros de Consulta"
+msgstr ""
+
+#: .\frontend\templates\pt\index.html:182
+msgid "Séries Históricas"
+msgstr ""
+
+#: .\frontend\templates\pt\index.html:186
+msgid "Índice de Transparência"
+msgstr ""
+
+#: .\frontend\templates\pt\index.html:199
+msgid "Índice PALOP-TL de Transparência Orçamental"
+msgstr "Índice de Transparência"
+
+#: .\frontend\templates\pt\index.html:201
+msgid ""
+"Resume a qualidade da transparência no fornecimento dos dados básicos da "
+"receita e despesa que compõem esta plataforma.<br> Veja mais detalhes na <a "
+"class=\"scroll-to\" href=\"#methodology\">Metodologia</a>, disponível abaixo."
+msgstr ""
+
+#: .\frontend\templates\pt\index.html:215
+msgid ""
+"Clique no cabeçalho da tabela para ordenar o ranking por uma dimensão "
+"específica ou no ícone <span class=\"material-icons help\" data-step="
+"\"1\">info_outlined</span> para saber mais sobre a dimensão."
+msgstr ""
+
+#: .\frontend\templates\pt\index.html:234
+msgid "Dados<br/>Abertos"
+msgstr ""
+
+#: .\frontend\templates\pt\index.html:240
+msgid "Relatórios<br/>Orçamentais"
+msgstr ""
+
+#: .\frontend\templates\pt\index.html:246
+msgid "Qualidade da<br/>Informação"
+msgstr ""
+
+#: .\frontend\templates\pt\index.html:252
+msgid "Índice de Transparência<br/>Orçamental"
+msgstr ""
+
+#: .\frontend\templates\pt\index.html:269
+msgid "VEJA MAIS DETALHES SOBRE A METODOLOGIA E RESULTADOS DETALHADOS"
+msgstr ""
+
+#: .\frontend\templates\pt\index.html:286
+msgid "Resultado por país"
+msgstr ""
+
+#: .\frontend\templates\pt\index.html:306
+msgid "Escolha um país para entender seu orçamento."
+msgstr ""
+
+#: .\frontend\templates\pt\index.html:348
+msgid "Média"
 msgstr ""
 
 #: .\templates\admin\base_site.html:40
