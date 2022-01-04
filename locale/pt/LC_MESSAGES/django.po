@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-04 11:42-0300\n"
+"POT-Creation-Date: 2022-01-04 12:23-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -154,7 +154,12 @@ msgstr "novo valor"
 msgid "field"
 msgstr "campo"
 
-#: .\apps\budget\apps.py:7 .\templates\admin\index.html:14
+#: .\apps\budget\apps.py:7
+#: .\frontend\templates\frontend\country-details.html:351
+#: .\frontend\templates\frontend\country-details.html:969
+#: .\frontend\templates\frontend\country-details.html:980
+#: .\frontend\templates\frontend\country-details.html:1144
+#: .\templates\admin\index.html:14
 msgid "Budget"
 msgstr "Orçamento"
 
@@ -187,10 +192,12 @@ msgid "Organic"
 msgstr "Orgânica"
 
 #: .\apps\budget\choices.py:22 .\apps\budget\choices.py:28
+#: .\frontend\templates\frontend\country-details.html:33
 msgid "Nature"
 msgstr "Natureza"
 
 #: .\apps\budget\choices.py:23 .\apps\budget\choices.py:29
+#: .\frontend\templates\frontend\country-details.html:34
 msgid "Source"
 msgstr "Fonte"
 
@@ -651,10 +658,12 @@ msgid "2020 ©PALOP-TL ISC All rights reserved"
 msgstr "2020 ©PALOP-TL ISC Todos os direitos reservados"
 
 #: .\frontend\templates\frontend\budget-selector.component.html:8
+#: .\frontend\templates\frontend\country-details.html:27
 msgid "Expenses"
 msgstr "Despesas"
 
 #: .\frontend\templates\frontend\budget-selector.component.html:9
+#: .\frontend\templates\frontend\country-details.html:28
 msgid "Revenues"
 msgstr "Receitas"
 
@@ -687,12 +696,109 @@ msgid "Table visualization"
 msgstr "Visualização em tabela"
 
 #: .\frontend\templates\frontend\budget-selector.component.html:32
+#: .\frontend\templates\frontend\country-details.html:823
 msgid "All values in"
 msgstr "Todos os valores em"
 
 #: .\frontend\templates\frontend\budget-selector.component.html:37
 msgid "Download CSV"
 msgstr "Baixar dados em CSV"
+
+#: .\frontend\templates\frontend\country-details.html:31
+msgid "Agency"
+msgstr "Órgão"
+
+#: .\frontend\templates\frontend\country-details.html:32
+msgid "Function"
+msgstr "Função"
+
+#: .\frontend\templates\frontend\country-details.html:37
+msgid "Budget Unit"
+msgstr "Unidade Orçamentária"
+
+#: .\frontend\templates\frontend\country-details.html:38
+msgid "Sub-function"
+msgstr "Sub-função"
+
+#: .\frontend\templates\frontend\country-details.html:39
+msgid "Especification"
+msgstr "Especificação"
+
+#: .\frontend\templates\frontend\country-details.html:40
+msgid "Detailed source"
+msgstr "Fonte detalhada"
+
+#: .\frontend\templates\frontend\country-details.html:149
+msgid "Execution not informed"
+msgstr "Execução não informada"
+
+#: .\frontend\templates\frontend\country-details.html:151
+msgid "No approved budget"
+msgstr "Sem dotação aprovada"
+
+#: .\frontend\templates\frontend\country-details.html:179
+msgid "By"
+msgstr "Por"
+
+#: .\frontend\templates\frontend\country-details.html:349
+msgid "of"
+msgstr "de"
+
+#: .\frontend\templates\frontend\country-details.html:352
+#: .\frontend\templates\frontend\country-details.html:907
+#: .\frontend\templates\frontend\country-details.html:973
+#: .\frontend\templates\frontend\country-details.html:984
+#: .\frontend\templates\frontend\country-details.html:1169
+msgid "Execution"
+msgstr "Execução"
+
+#: .\frontend\templates\frontend\country-details.html:820
+msgid "BUDGET DATA"
+msgstr "DADOS ORÇAMENTAIS"
+
+#: .\frontend\templates\frontend\country-details.html:827
+msgid "HOW TO NAVIGATE"
+msgstr "APRENDA A NAVEGAR"
+
+#: .\frontend\templates\frontend\country-details.html:887
+msgid "Initial budget"
+msgstr "Orçamento inicial"
+
+#: .\frontend\templates\frontend\country-details.html:892
+#: .\frontend\templates\frontend\country-details.html:902
+#: .\frontend\templates\frontend\country-details.html:912
+#: .\frontend\templates\frontend\country-details.html:1149
+#: .\frontend\templates\frontend\country-details.html:1174
+msgid "Not informed"
+msgstr "Não informado"
+
+#: .\frontend\templates\frontend\country-details.html:897
+msgid "Updated budget"
+msgstr "Orçamento atualizado"
+
+#: .\frontend\templates\frontend\country-details.html:946
+#: .\frontend\templates\frontend\country-details.html:947
+#: .\frontend\templates\frontend\country-details.html:948
+#: .\frontend\templates\frontend\country-details.html:949
+#: .\frontend\templates\frontend\country-details.html:950
+msgid "executed"
+msgstr "executado"
+
+#: .\frontend\templates\frontend\country-details.html:958
+msgid "SECONDARY DATA"
+msgstr "DADOS SECUNDÁRIOS"
+
+#: .\frontend\templates\frontend\country-details.html:965
+#: .\frontend\templates\frontend\country-details.html:1156
+#: .\frontend\templates\frontend\country-details.html:1180
+msgid "in Investment"
+msgstr "em investimento"
+
+#: .\frontend\templates\frontend\country-details.html:977
+#: .\frontend\templates\frontend\country-details.html:1163
+#: .\frontend\templates\frontend\country-details.html:1187
+msgid "in Operation"
+msgstr "em Funcionamento"
 
 #: .\frontend\templates\frontend\index.html:108
 msgid ""

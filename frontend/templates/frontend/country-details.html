@@ -20,24 +20,24 @@
     var budgets = {{ budgets_serialized|safe }};
     var skip_cache = {% if request.GET.no_cache %}true{% else %}false{% endif %};
     var breadcrumb = [
-        {'name': "Visualização por Função", 'id': null},
+        {'name': "Por Função", 'id': null},
         {'name': {{ last_budget.year }}, 'id': null},
     ];
     var budget_account_label_map = {
-        'expenses': "Despesas",
-        'revenues': "Receitas",
+        'expenses': "{% trans 'Expenses' %}",
+        'revenues': "{% trans 'Revenues' %}",
     }
     var group_label_map = {
-        'organic': "Órgão",
-        'functional': "Função",
-        'nature': "Natureza",
-        'source': "Fonte",
+        'organic': "{% trans 'Agency' %}",
+        'functional': "{% trans 'Function' %}",
+        'nature': "{% trans 'Nature' %}",
+        'source': "{% trans 'Source' %}",
     }
     var sub_group_label_map = {
-        'organic': "Unidade Orçamentária",
-        'functional': "Sub-função",
-        'nature': "Especificação",
-        'source': "Fonte detalhada",
+        'organic': "{% trans 'Budget Unit' %}",
+        'functional': "{% trans 'Sub-function' %}",
+        'nature': "{% trans 'Especification' %}",
+        'source': "{% trans 'Detailed source' %}",
     }
     am4core.useTheme(am4themes_animated);
 
@@ -146,9 +146,9 @@
 
         var execution_group = 0;
         var execution_percentage = 0;
-        var not_informed_text = "Execução não informada";
+        var not_informed_text = "{% trans 'Execution not informed' %}";
         if(!data['has_budget']){
-            not_informed_text = "Sem dotação aprovada";
+            not_informed_text = "{% trans 'No approved budget' %}";
         } else if(data['execution_aggregated']){
             var execution_percentage = data['execution_aggregated'] / data['budget_aggregated'];
             if(0 < execution_percentage && execution_percentage <= 0.2)
@@ -176,7 +176,7 @@
     function init_breadcrumb(plot=false){
         breadcrumb = []
         breadcrumb.push({name: budget_account_label_map[current_budget_account], id: null});
-        breadcrumb.push({name: "Por " + group_label_map[current_group], id: null});
+        breadcrumb.push({name: "{% trans 'By' %} " + group_label_map[current_group], id: null});
         breadcrumb.push({name: get_budget_year_by_id(current_budget_id), id: null});
         if(plot){
             plot_breadcrumb();
@@ -346,9 +346,10 @@
         }
         chart.data = data['data'];
         budget_account_label = get_current_budget_account_label();
-        $('.historical-title').html(budget_account_label + " de<br>" + data['name']);
-        createSeries('budget_aggregated', 'Dotação');
-        createSeries('execution_aggregated', 'Execução');
+        var title = budget_account_label + " {% trans 'of' %}<br>" + data['name'];
+        $('.historical-title').html(title);
+        createSeries('budget_aggregated', '{% trans "Budget" %}');
+        createSeries('execution_aggregated', '{% trans "Execution" %}');
     }
 
     function plot_datatable(data, order_by, order_dir){
@@ -816,14 +817,14 @@
             <div class="col-6">
                 <h3>
                     <span class="arrow-right"></span>
-                    DADOS ORÇAMENTAIS
+                    {% trans "BUDGET DATA" %}
                 </h3>
                 <div class="header-currency">
-                    Todos os valores em <strong class="budget-currency">{{ last_budget.get_currency_display }}</strong>
+                    {% trans "All values in" %} <strong class="budget-currency">{{ last_budget.get_currency_display }}</strong>
                 </div>
             </div>
             <div class="col-3 right">
-                <a href="#" class="tutorial">APRENDA A NAVEGAR</a>
+                <a href="#" class="tutorial">{% trans "HOW TO NAVIGATE" %}</a>
             </div>
         </div>
     </div>
@@ -883,32 +884,32 @@
         <div class="aggregated-data">
             <table class="primary-info" cellspacing="0" cellpadding="0">
                 <tr>
-                    <td>Dotação inicial</td>
+                    <td>{% endverbatim %}{% trans "Initial budget" %}{% verbatim %}</td>
                     <td class="money-display">
                         {{#if has_budget}}
                             {{formatCurrency initial_budget_aggregated}}
                         {{else}}
-                            {% endverbatim %}Não informada{% verbatim %}
+                            {% endverbatim %}{% trans "Not informed" %}{% verbatim %}
                         {{/if}}
                     </td>
                 </tr>
                 <tr>
-                    <td>Dotação atualizada</td>
+                    <td>{% endverbatim %}{% trans "Updated budget" %}{% verbatim %}</td>
                     <td class="money-display">
                         {{#if has_budget}}
                             {{formatCurrency budget_aggregated}}
                         {{else}}
-                            {% endverbatim %}Não informada{% verbatim %}
+                            {% endverbatim %}{% trans "Not informed" %}{% verbatim %}
                         {{/if}}
                     </td>
                 </tr>
                 <tr class="execution-aggregated">
-                    <td>Execução</td>
+                    <td>{% endverbatim %}{% trans "Execution" %}{% verbatim %}</td>
                     <td class="money-display">
                         {{#if execution_aggregated}}
                             {{formatCurrency execution_aggregated}}
                         {{else}}
-                            {% endverbatim %}Não informada{% verbatim %}
+                            {% endverbatim %}{% trans "Not informed" %}{% verbatim %}
                         {{/if}}
                     </td>
                 </tr>
@@ -942,11 +943,11 @@
                 </tr>
                 <tr>
                     <td class="group-0"><div class="execution-percentage">{{ not_informed_text }}</div></td>
-                    <td class="group-1"><div class="execution-percentage"><strong>{{formatPercent execution_percentage}}</strong><br>executado</div></td>
-                    <td class="group-2"><div class="execution-percentage"><strong>{{formatPercent execution_percentage}}</strong><br>executado</div></td>
-                    <td class="group-3"><div class="execution-percentage"><strong>{{formatPercent execution_percentage}}</strong><br>executado</div></td>
-                    <td class="group-4"><div class="execution-percentage"><strong>{{formatPercent execution_percentage}}</strong><br>executado</div></td>
-                    <td class="group-5"><div class="execution-percentage"><strong>{{formatPercent execution_percentage}}</strong><br>executado</div></td>
+                    <td class="group-1"><div class="execution-percentage"><strong>{{formatPercent execution_percentage}}</strong><br>{% endverbatim %}{% trans 'executed' %}{% verbatim %}</div></td>
+                    <td class="group-2"><div class="execution-percentage"><strong>{{formatPercent execution_percentage}}</strong><br>{% endverbatim %}{% trans 'executed' %}{% verbatim %}</div></td>
+                    <td class="group-3"><div class="execution-percentage"><strong>{{formatPercent execution_percentage}}</strong><br>{% endverbatim %}{% trans 'executed' %}{% verbatim %}</div></td>
+                    <td class="group-4"><div class="execution-percentage"><strong>{{formatPercent execution_percentage}}</strong><br>{% endverbatim %}{% trans 'executed' %}{% verbatim %}</div></td>
+                    <td class="group-5"><div class="execution-percentage"><strong>{{formatPercent execution_percentage}}</strong><br>{% endverbatim %}{% trans 'executed' %}{% verbatim %}</div></td>
                 </tr>
             </table>
         </div>
@@ -954,31 +955,33 @@
     <hr class="mt-0">
     <div class="budget_account-info-box secondary-info-wrapper">
         <div>
-            DADOS SECUNDÁRIOS <span class="arrow-down"></span>
+            {% endverbatim %}{% trans "SECONDARY DATA" %}{% verbatim %} <span class="arrow-down"></span>
         </div>
     </div>
     <div class="budget_account-info-box">
         <table class="secondary-info">
             <tr>
-                <td colspan="2" class="info-title">{{ budget_account_label }} em Investimento</td>
+                <td colspan="2" class="info-title">
+                    {{ budget_account_label }} {% endverbatim %}{% trans "in Investment" %}{% verbatim %}
+                </td>
             </tr>
             <tr>
-                <td>Dotação</td>
+                <td>{% endverbatim %}{% trans "Budget" %}{% verbatim %}</td>
                 <td class="money-display">{{formatCurrency budget_investment}}</td>
             </tr>
             <tr>
-                <td>Execução</td>
+                <td>{% endverbatim %}{% trans "Execution" %}{% verbatim %}</td>
                 <td class="money-display">{{formatCurrency execution_investment}}</td>
             </tr>
             <tr>
-                <td colspan="2" class="info-title">{{ budget_account_label }} em Funcionamento</td>
+                <td colspan="2" class="info-title">{{ budget_account_label }} {% endverbatim %}{% trans "in Operation" %}{% verbatim %}</td>
             </tr>
             <tr>
-                <td>Dotação</td>
+                <td>{% endverbatim %}{% trans "Budget" %}{% verbatim %}</td>
                 <td class="money-display">{{formatCurrency budget_operation}}</td>
             </tr>
             <tr>
-                <td>Execução</td>
+                <td>{% endverbatim %}{% trans "Execution" %}{% verbatim %}</td>
                 <td class="money-display">{{formatCurrency execution_operation}}</td>
             </tr>
         </table>
@@ -1130,56 +1133,58 @@
     <span class="arrow-right"></span>
 {{/each}}
 </script>
+{% endverbatim %}
 
+{% verbatim %}
 <script id="template-treemap-tooltip" type="text/x-handlebars-template">
 <div class="treemap-tooltip">
     <h5>{{ name }}</h5>
     <table>
         <tr>
-            <td>Dotação</td>
+            <td>{% endverbatim %}{% trans 'Budget' %}{% verbatim %}</td>
             <td class="money-display">
                 {{#if has_budget}}
                     {{formatCurrency budget_aggregated}}
                 {{else}}
-                    Não informada
+                    {% endverbatim %}{% trans 'Not informed' %}{% verbatim %}
                 {{/if}}
             </td>
             <td></td>
         </tr>
         {{#if budget_investment}}
         <tr class="secondary-info">
-            <td>em investimento</td>
+            <td>{% endverbatim %}{% trans 'in Investment' %}{% verbatim %}</td>
             <td class="money-display">{{formatCurrency budget_investment}}</td>
             <td></td>
         </tr>
         {{/if}}
         {{#if budget_operation}}
         <tr class="secondary-info">
-            <td>em funcionamento</td>
+            <td>{% endverbatim %}{% trans 'in Operation' %}{% verbatim %}</td>
             <td class="money-display">{{formatCurrency budget_operation}}</td>
             <td></td>
         </tr>
         {{/if}}
         <tr>
-            <td>Execução</td>
+            <td>{% endverbatim %}{% trans 'Execution' %}{% verbatim %}</td>
             {{#if execution_aggregated}}
             <td class="money-display">{{formatCurrency execution_aggregated}}</td>
             <td><span class="execution_percent">({{formatPercent execution_percentage}})</span></td>
             {{else}}
-            <td class="no-value">Não informada</td>
+            <td class="no-value">{% endverbatim %}{% trans 'Not informed' %}{% verbatim %}</td>
             <td></td>
             {{/if}}
         </tr>
         {{#if execution_investment}}
         <tr class="secondary-info">
-            <td>em investimento</td>
+            <td>{% endverbatim %}{% trans 'in Investment' %}{% verbatim %}</td>
             <td class="money-display">{{formatCurrency execution_investment}}</td>
             <td></td>
         </tr>
         {{/if}}
         {{#if execution_operation}}
         <tr class="secondary-info">
-            <td>em operação</td>
+            <td>{% endverbatim %}{% trans 'in Operation' %}{% verbatim %}</td>
             <td class="money-display">{{formatCurrency execution_operation}}</td>
             <td></td>
         </tr>
