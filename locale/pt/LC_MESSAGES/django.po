@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-04 10:55-0300\n"
+"POT-Creation-Date: 2022-01-04 11:42-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -122,7 +122,7 @@ msgstr "uploads com error"
 msgid "Base info"
 msgstr "Informações básicas"
 
-#: .\apps\budget\admin.py:349 .\frontend\templates\frontend\index.html:186
+#: .\apps\budget\admin.py:349 .\frontend\templates\frontend\index.html:187
 msgid "Transparency Index"
 msgstr "Índice de Transparência"
 
@@ -650,64 +650,51 @@ msgstr ""
 msgid "2020 ©PALOP-TL ISC All rights reserved"
 msgstr "2020 ©PALOP-TL ISC Todos os direitos reservados"
 
-#: .\frontend\templates\frontend\budget-selector.component.html:7
-#: .\frontend\templates\pt\budget-selector.component.html:7
-msgid "Despesas"
-msgstr ""
-
 #: .\frontend\templates\frontend\budget-selector.component.html:8
-#: .\frontend\templates\pt\budget-selector.component.html:8
-msgid "Receitas"
-msgstr ""
+msgid "Expenses"
+msgstr "Despesas"
 
-#: .\frontend\templates\frontend\budget-selector.component.html:11
-#: .\frontend\templates\pt\budget-selector.component.html:11
-msgid "Por Função"
-msgstr ""
+#: .\frontend\templates\frontend\budget-selector.component.html:9
+msgid "Revenues"
+msgstr "Receitas"
 
 #: .\frontend\templates\frontend\budget-selector.component.html:12
-#: .\frontend\templates\pt\budget-selector.component.html:12
-msgid "Por Órgão"
-msgstr ""
+msgid "By Function"
+msgstr "Por Função"
 
 #: .\frontend\templates\frontend\budget-selector.component.html:13
-#: .\frontend\templates\pt\budget-selector.component.html:13
-#, fuzzy
-#| msgid "Nature"
-msgid "Por Natureza"
-msgstr "Natureza"
+msgid "By Agency"
+msgstr "Por Órgão"
 
 #: .\frontend\templates\frontend\budget-selector.component.html:14
-#: .\frontend\templates\pt\budget-selector.component.html:14
-msgid "Por Fonte"
-msgstr ""
+msgid "By Nature"
+msgstr "Por Natureza"
 
-#: .\frontend\templates\frontend\budget-selector.component.html:20
-#: .\frontend\templates\pt\budget-selector.component.html:20
-msgid "Visualização em treemap"
-msgstr ""
+#: .\frontend\templates\frontend\budget-selector.component.html:15
+msgid "By Source"
+msgstr "Por Fonte"
 
 #: .\frontend\templates\frontend\budget-selector.component.html:21
-#: .\frontend\templates\pt\budget-selector.component.html:21
-msgid "Visualização em série histórica"
-msgstr ""
+msgid "Treemap visualization"
+msgstr "Visualização em treemap"
 
 #: .\frontend\templates\frontend\budget-selector.component.html:22
-#: .\frontend\templates\pt\budget-selector.component.html:22
-msgid "Visualização em tabela"
-msgstr ""
+msgid "Historical visualization"
+msgstr "Visualização em série histórica"
 
-#: .\frontend\templates\frontend\budget-selector.component.html:31
-#: .\frontend\templates\pt\budget-selector.component.html:31
-msgid "Todos os valores em"
-msgstr ""
+#: .\frontend\templates\frontend\budget-selector.component.html:23
+msgid "Table visualization"
+msgstr "Visualização em tabela"
 
-#: .\frontend\templates\frontend\budget-selector.component.html:36
-#: .\frontend\templates\pt\budget-selector.component.html:36
-msgid "Baixar dados em CSV"
-msgstr ""
+#: .\frontend\templates\frontend\budget-selector.component.html:32
+msgid "All values in"
+msgstr "Todos os valores em"
 
-#: .\frontend\templates\frontend\index.html:107
+#: .\frontend\templates\frontend\budget-selector.component.html:37
+msgid "Download CSV"
+msgstr "Baixar dados em CSV"
+
+#: .\frontend\templates\frontend\index.html:108
 msgid ""
 "Our mission is <strong>to break</strong><br> down all <strong>barriers</"
 "strong> between<br> <strong>citizens</strong> and information<br> on "
@@ -717,15 +704,15 @@ msgstr ""
 "strong> entre os<br> <strong>cidadãos</strong> e as informações<br> sobre "
 "<strong>finanças públicas</strong><br> dos países."
 
-#: .\frontend\templates\frontend\index.html:128
+#: .\frontend\templates\frontend\index.html:129
 msgid "Choose a country to understand its budget"
 msgstr "Escolha um país e entenda seu orçamento"
 
-#: .\frontend\templates\frontend\index.html:138
+#: .\frontend\templates\frontend\index.html:139
 msgid "About the project"
 msgstr "Sobre o projeto"
 
-#: .\frontend\templates\frontend\index.html:145
+#: .\frontend\templates\frontend\index.html:146
 msgid ""
 "We extracted data from official reports published in closed formats and "
 "transform them into structured and open: <strong>ready for analysis</strong>."
@@ -733,7 +720,7 @@ msgstr ""
 "Extraímos os dados de relatórios oficiais publicados em formatos fechados e "
 "os tornamos estruturados e abertos: <strong>prontos para análise</strong>."
 
-#: .\frontend\templates\frontend\index.html:151
+#: .\frontend\templates\frontend\index.html:152
 msgid ""
 "In order to promote visibility and encourage advances in the agenda, we have "
 "built the <strong>first Budget Transparency Index with a focus on the PALOP-"
@@ -743,7 +730,7 @@ msgstr ""
 "<strong>primeiro Índice de Transparência Orçamental com recorte focado nos "
 "PALOP-TL</strong>."
 
-#: .\frontend\templates\frontend\index.html:157
+#: .\frontend\templates\frontend\index.html:158
 msgid ""
 "<strong>Modular growth</strong>: New perspectives on budget transparency "
 "will be incorporated into the Platform and Index. The new features will be "
@@ -755,27 +742,27 @@ msgstr ""
 "funcionalidades serão definidas a partir de <strong>sessões de <i>Design "
 "Thinking</i> com representantes da sociedade civíl</strong>."
 
-#: .\frontend\templates\frontend\index.html:170
+#: .\frontend\templates\frontend\index.html:171
 msgid "Open Database"
 msgstr "Base de dados abertas"
 
-#: .\frontend\templates\frontend\index.html:174
+#: .\frontend\templates\frontend\index.html:175
 msgid "Interactive views"
 msgstr "Visualizações interativas"
 
-#: .\frontend\templates\frontend\index.html:178
+#: .\frontend\templates\frontend\index.html:179
 msgid "Search Filters"
 msgstr "Filtros de Consulta"
 
-#: .\frontend\templates\frontend\index.html:182
+#: .\frontend\templates\frontend\index.html:183
 msgid "Historical Series"
 msgstr "Séries Históricas"
 
-#: .\frontend\templates\frontend\index.html:199
+#: .\frontend\templates\frontend\index.html:200
 msgid "PALOP-TL Index of Budget Transparency"
 msgstr "Índice PALOP-TL de Transparência Orçamental"
 
-#: .\frontend\templates\frontend\index.html:201
+#: .\frontend\templates\frontend\index.html:202
 msgid ""
 "It summarizes the quality of transparency in the provision of the basic "
 "revenue and expenditure data that make up this platform.<br> See more "
@@ -786,7 +773,7 @@ msgstr ""
 "receita e despesa que compõem esta plataforma.<br>Veja mais detalhes na <a "
 "class=\"scroll-to\" href=\"#methodology\">Metodologia</a>, disponível abaixo."
 
-#: .\frontend\templates\frontend\index.html:215
+#: .\frontend\templates\frontend\index.html:216
 msgid ""
 "Click on the table heading to sort the ranking by a specific dimension, or "
 "on the <span class=\"material-icons help\" data-step=\"1\">info_outlined</"
@@ -796,35 +783,35 @@ msgstr ""
 "específica ou no ícone <span class=\"material-icons help\" data-step="
 "\"1\">info_outlined</span> para saber mais sobre a dimensão."
 
-#: .\frontend\templates\frontend\index.html:235
+#: .\frontend\templates\frontend\index.html:236
 msgid "Open<br/>Data"
 msgstr "Dados<br/>Abertos"
 
-#: .\frontend\templates\frontend\index.html:241
+#: .\frontend\templates\frontend\index.html:242
 msgid "Budget<br/>Reports"
 msgstr "Relatórios<br/>Orçamentais"
 
-#: .\frontend\templates\frontend\index.html:247
+#: .\frontend\templates\frontend\index.html:248
 msgid "Information<br/>Quality"
 msgstr "Qualidade da<br/>Informação"
 
-#: .\frontend\templates\frontend\index.html:253
+#: .\frontend\templates\frontend\index.html:254
 msgid "Budget Transparency<br/>Index"
 msgstr "Índice de Transparência<br/>Orçamental"
 
-#: .\frontend\templates\frontend\index.html:270
+#: .\frontend\templates\frontend\index.html:271
 msgid "SEE MORE DETAILS ABOUT THE METHODOLOGY AND DETAILED RESULTS"
 msgstr "VEJA MAIS DETALHES SOBRE A METODOLOGIA E RESULTADOS DETALHADOS"
 
-#: .\frontend\templates\frontend\index.html:287
+#: .\frontend\templates\frontend\index.html:291
 msgid "Results by country"
 msgstr "Resultado por país"
 
-#: .\frontend\templates\frontend\index.html:307
+#: .\frontend\templates\frontend\index.html:311
 msgid "Choose a country to understand how it spends its budget."
 msgstr "Escolha um país para entender seu orçamento."
 
-#: .\frontend\templates\frontend\index.html:349
+#: .\frontend\templates\frontend\index.html:353
 msgid "Average"
 msgstr "Média"
 
@@ -853,6 +840,52 @@ msgstr ""
 
 #: .\frontend\templates\pt\base.html:142
 msgid "2020 ©PALOP-TL ISC Todos os direitos reservados"
+msgstr ""
+
+#: .\frontend\templates\pt\budget-selector.component.html:7
+msgid "Despesas"
+msgstr ""
+
+#: .\frontend\templates\pt\budget-selector.component.html:8
+msgid "Receitas"
+msgstr ""
+
+#: .\frontend\templates\pt\budget-selector.component.html:11
+msgid "Por Função"
+msgstr ""
+
+#: .\frontend\templates\pt\budget-selector.component.html:12
+msgid "Por Órgão"
+msgstr ""
+
+#: .\frontend\templates\pt\budget-selector.component.html:13
+#, fuzzy
+#| msgid "Nature"
+msgid "Por Natureza"
+msgstr "Natureza"
+
+#: .\frontend\templates\pt\budget-selector.component.html:14
+msgid "Por Fonte"
+msgstr ""
+
+#: .\frontend\templates\pt\budget-selector.component.html:20
+msgid "Visualização em treemap"
+msgstr ""
+
+#: .\frontend\templates\pt\budget-selector.component.html:21
+msgid "Visualização em série histórica"
+msgstr ""
+
+#: .\frontend\templates\pt\budget-selector.component.html:22
+msgid "Visualização em tabela"
+msgstr ""
+
+#: .\frontend\templates\pt\budget-selector.component.html:31
+msgid "Todos os valores em"
+msgstr ""
+
+#: .\frontend\templates\pt\budget-selector.component.html:36
+msgid "Baixar dados em CSV"
 msgstr ""
 
 #: .\frontend\templates\pt\index.html:107
