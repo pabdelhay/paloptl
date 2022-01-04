@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-04 12:23-0300\n"
+"POT-Creation-Date: 2022-01-04 12:28-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -752,6 +752,34 @@ msgstr "de"
 msgid "Execution"
 msgstr "Execução"
 
+#: .\frontend\templates\frontend\country-details.html:429
+msgid "Search for"
+msgstr "Busque por"
+
+#: .\frontend\templates\frontend\country-details.html:440
+msgid "Expenses data not available for this year"
+msgstr "Dados de despesas não disponíveis neste ano"
+
+#: .\frontend\templates\frontend\country-details.html:444
+msgid "Functional data not available"
+msgstr "Dados funcionais não disponíveis"
+
+#: .\frontend\templates\frontend\country-details.html:448
+msgid "Organic data not available"
+msgstr "Dados orgânicos não disponíveis"
+
+#: .\frontend\templates\frontend\country-details.html:454
+msgid "Revenues data not available for this year"
+msgstr "Dados de receitas não disponíveis neste ano"
+
+#: .\frontend\templates\frontend\country-details.html:458
+msgid "Data by nature not available"
+msgstr "Dados por natureza não disponíveis"
+
+#: .\frontend\templates\frontend\country-details.html:462
+msgid "Data by source not available"
+msgstr "Dados por fonte não disponíveis"
+
 #: .\frontend\templates\frontend\country-details.html:820
 msgid "BUDGET DATA"
 msgstr "DADOS ORÇAMENTAIS"
@@ -1187,6 +1215,3 @@ msgstr "Adicionar novo orçamento"
 
 #~ msgid "agency's execution"
 #~ msgstr "execução orgânica"
-
-#~ msgid "functional data"
-#~ msgstr "dados funcionais"

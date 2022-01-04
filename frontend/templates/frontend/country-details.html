@@ -426,7 +426,7 @@
         });
     }
     function update_search_placeholders(){
-        var msg = "Busque por " + budget_account_label_map[current_budget_account].toLowerCase();
+        var msg = "{% trans 'Search for' %} " + budget_account_label_map[current_budget_account].toLowerCase();
         $('#search').attr('placeholder', msg);
         $('.search-link').attr('title', msg);
     }
@@ -437,29 +437,29 @@
         var budget_data = budgets[current_budget_id];
         var budget_account_map = {
             'expenses': {
-                msg: "Dados de despesas não disponíveis neste ano",
+                msg: "{% trans 'Expenses data not available for this year' %}",
                 sibling: 'revenues',
                 groups: {
                     'functional': {
-                        msg: "Dados funcionais não disponíveis",
+                        msg: "{% trans 'Functional data not available' %}",
                         sibling: 'organic'
                     },
                     'organic': {
-                        msg: "Dados orgânicos não disponíveis",
+                        msg: "{% trans 'Organic data not available' %}",
                         sibling: 'functional'
                     }
                 }
             },
             'revenues': {
-                msg: "Dados de receitas não disponíveis neste ano",
+                msg: "{% trans 'Revenues data not available for this year' %}",
                 sibling: 'expenses',
                 groups: {
                     'nature': {
-                        msg: "Dados por natureza não disponíveis",
+                        msg: "{% trans 'Data by nature not available' %}",
                         sibling: 'source'
                     },
                     'source': {
-                        msg: "Dados por fonte não disponíveis",
+                        msg: "{% trans 'Data by source not available' %}",
                         sibling: 'nature'
                     }
                 }
