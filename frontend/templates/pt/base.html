@@ -58,7 +58,7 @@
                         <h1>
                             <a href="{% url 'index' %}">
                                 {% blocktrans trimmed %}
-                                <strong>PALOP-TL</strong> Civil Society <strong>Online Budget Platform</strong>
+                                <strong>Plataforma Orçamental Online</strong> da Sociedade Civil dos <strong>PALOP-TL</strong>
                                 {% endblocktrans %}
                             </a>
                         </h1>
@@ -71,9 +71,7 @@
                                 <div></div>
                             </div>
                             <div class="dropdown-content">
-                                <div class="short-description">
-                                    {% blocktrans %}Choose a country to<br>understand its budget{% endblocktrans %}
-                                </div>
+                                <div class="short-description">{% blocktrans %}Escolha um país e<br>entenda seu orçamento{% endblocktrans %}</div>
                                 {% for country in all_countries %}
                                     <a href="{% url 'country-details' country.slug %}">
                                         <img src="{{ country.flag.url }}"/> {{ country.name }}
@@ -124,14 +122,14 @@
                     <div class="col-5">
                         <div class="disclaimer">
                             {% blocktrans trimmed %}
-                                The Online Platform for PALOP and Timor-Leste Civil Society Organizations for Budget
-                                Simplification and Analysis was produced by Pro PALOP-TL ISC, and co-financed by the
-                                European Union and the United Nations Development Programme.<br>
-                                Its contents are the sole responsibility of Pro PALOP-TL ISC and can in no way be used
-                                to reflect the positions of the European Union.<br>
-                                The opinions expressed on this platform are those of the authors alone and do not
-                                necessarily represent the views of the United Nations, the United Nations
-                                Development Programme, or the United Nations Member States.
+                            A Plataforma Online das Organizações da Sociedade Civil dos PALOP e Timor-Leste para
+                            Simplificação e Análise Orçamental foi produzida pelo Pro PALOP-TL ISC, e cofinanciada
+                            pela União Europeia e pelo Programa das Nações Unidas para o Desenvolvimento.<br>
+                            O seu conteúdo é da exclusiva responsabilidade do Pro PALOP-TL ISC e não pode, de modo
+                            algum, ser usado para refletir as posições da União Europeia.<br>
+                            As opiniões expressas nesta plataforma são exclusivas dos/as autoras/es e não
+                            representam necessariamente a opinião das Nações Unidas, nem do Programa das Nações
+                            Unidas para o Desenvolvimento ou dos Estados Membros das Nações Unidas.
                             {% endblocktrans %}
                         </div>
                     </div>
@@ -141,7 +139,7 @@
             <div class="container">
                 <div class="row last-line middle">
                     <div class="col-3">{% include 'frontend/language-selector.component.html' %}</div>
-                    <div class="col-6 center">{% trans "2020 ©PALOP-TL ISC All rights reserved" %}</div>
+                    <div class="col-6 center">{% trans "2020 ©PALOP-TL ISC Todos os direitos reservados" %}</div>
                     <div class="col-3 right social">
                         <a target="_blank" href="{% get_social_network_url 'facebook' %}"><img src="{% static 'img/icon_facebook.png' %}" alt="facebook icon" /></a>
                         <a target="_blank" href="{% get_social_network_url 'youtube' %}"><img src="{% static 'img/icon_youtube.png' %}" alt="youtube icon" /></a>

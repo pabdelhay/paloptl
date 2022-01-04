@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-16 11:02-0300\n"
+"POT-Creation-Date: 2022-01-04 10:15-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -88,68 +88,69 @@ msgstr "execução total"
 msgid "Expenses by function"
 msgstr "Despesas por função"
 
-#: .\apps\budget\admin.py:184
+#: .\apps\budget\admin.py:186
 msgid "Expenses by agency"
 msgstr "Despesas por orgão"
 
-#: .\apps\budget\admin.py:199
+#: .\apps\budget\admin.py:203
 msgid "Revenues by nature"
 msgstr "Receitas por natureza"
 
-#: .\apps\budget\admin.py:213
+#: .\apps\budget\admin.py:219
 msgid "Revenues by source"
 msgstr "Receitas por fonte"
 
-#: .\apps\budget\admin.py:298
+#: .\apps\budget\admin.py:309
 #, python-brace-format
 msgid "Expenses: <strong>{total_expenses}</strong>"
 msgstr "Despesas: <strong>{total_expenses}</strong>"
 
-#: .\apps\budget\admin.py:299
+#: .\apps\budget\admin.py:310
 #, python-brace-format
 msgid "Revenues: <strong>{total_revenues}</strong>"
 msgstr "Receitas: <strong>{total_revenues}</strong>"
 
-#: .\apps\budget\admin.py:305
+#: .\apps\budget\admin.py:317
 msgid "uploads"
 msgstr "uploads"
 
-#: .\apps\budget\admin.py:314
+#: .\apps\budget\admin.py:327
 msgid "uploads with error"
 msgstr "uploads com error"
 
-#: .\apps\budget\admin.py:336
+#: .\apps\budget\admin.py:349
 msgid "Base info"
 msgstr "Informações básicas"
 
-#: .\apps\budget\admin.py:339
+#: .\apps\budget\admin.py:352
 msgid "Transparency Index"
 msgstr "Índice de Transparência"
 
-#: .\apps\budget\admin.py:369 .\apps\budget\models\upload.py:38
+#: .\apps\budget\admin.py:383 .\apps\budget\models\category.py:22
+#: .\apps\budget\models\categoryMap.py:17 .\apps\budget\models\upload.py:38
 #: .\apps\budget\models\upload_log.py:19
 msgid "category"
 msgstr "categoria"
 
-#: .\apps\budget\admin.py:373 .\apps\budget\models\expense.py:24
-#: .\apps\budget\models\revenue.py:23
+#: .\apps\budget\admin.py:388 .\apps\budget\models\category.py:14
+#: .\apps\budget\models\expense.py:24 .\apps\budget\models\revenue.py:23
 msgid "group"
 msgstr "grupo"
 
-#: .\apps\budget\admin.py:377 .\apps\budget\models\budget_account.py:20
-#: .\apps\geo\models.py:8
+#: .\apps\budget\admin.py:393 .\apps\budget\models\budget_account.py:20
+#: .\apps\budget\models\category.py:12 .\apps\geo\models.py:8
 msgid "name"
 msgstr "nome"
 
-#: .\apps\budget\admin.py:383 .\apps\budget\models\upload_log.py:22
+#: .\apps\budget\admin.py:400 .\apps\budget\models\upload_log.py:22
 msgid "old value"
 msgstr "valor antigo"
 
-#: .\apps\budget\admin.py:389 .\apps\budget\models\upload_log.py:23
+#: .\apps\budget\admin.py:407 .\apps\budget\models\upload_log.py:23
 msgid "new value"
 msgstr "novo valor"
 
-#: .\apps\budget\admin.py:395 .\apps\budget\models\upload_log.py:21
+#: .\apps\budget\admin.py:414 .\apps\budget\models\upload_log.py:21
 msgid "field"
 msgstr "campo"
 
@@ -177,55 +178,55 @@ msgstr "Despesa"
 msgid "Revenue"
 msgstr "Receita"
 
-#: .\apps\budget\choices.py:17
+#: .\apps\budget\choices.py:17 .\apps\budget\choices.py:26
 msgid "Functional"
 msgstr "Funcional"
 
-#: .\apps\budget\choices.py:18
+#: .\apps\budget\choices.py:18 .\apps\budget\choices.py:27
 msgid "Organic"
 msgstr "Orgânica"
 
-#: .\apps\budget\choices.py:22
+#: .\apps\budget\choices.py:22 .\apps\budget\choices.py:28
 msgid "Nature"
 msgstr "Natureza"
 
-#: .\apps\budget\choices.py:23
+#: .\apps\budget\choices.py:23 .\apps\budget\choices.py:29
 msgid "Source"
 msgstr "Fonte"
 
-#: .\apps\budget\choices.py:33
+#: .\apps\budget\choices.py:39
 msgid "Validating"
 msgstr "Validando"
 
-#: .\apps\budget\choices.py:34
+#: .\apps\budget\choices.py:40
 msgid "Importing"
 msgstr "Importando"
 
-#: .\apps\budget\choices.py:35
+#: .\apps\budget\choices.py:41
 msgid "Success"
 msgstr "Sucesso"
 
-#: .\apps\budget\choices.py:36
+#: .\apps\budget\choices.py:42
 msgid "Validation error"
 msgstr "Erro de validação"
 
-#: .\apps\budget\choices.py:37
+#: .\apps\budget\choices.py:43
 msgid "Import error"
 msgstr "Erro de importação"
 
-#: .\apps\budget\choices.py:38
+#: .\apps\budget\choices.py:44
 msgid "Waiting reimport"
 msgstr "Aguardando reimportação"
 
-#: .\apps\budget\choices.py:54
+#: .\apps\budget\choices.py:60
 msgid "new category"
 msgstr "nova categoria"
 
-#: .\apps\budget\choices.py:55
+#: .\apps\budget\choices.py:61
 msgid "update"
 msgstr "atualização"
 
-#: .\apps\budget\models\budget.py:25
+#: .\apps\budget\models\budget.py:25 .\apps\budget\models\categoryMap.py:14
 #: .\apps\budget\models\transparency_index.py:12 .\apps\geo\models.py:14
 #: .\common\mixins.py:6
 msgid "country"
@@ -271,6 +272,7 @@ msgid "budgets"
 msgstr "orçamentos"
 
 #: .\apps\budget\models\budget_account.py:21
+#: .\apps\budget\models\categoryMap.py:12
 msgid "code"
 msgstr "código"
 
@@ -369,6 +371,26 @@ msgstr "valores agregados"
 #: .\apps\budget\models\budget_summary.py:35
 msgid "Aggregated values for Budget #{}"
 msgstr "Valores agregados para o Orçamento #{}"
+
+#: .\apps\budget\models\category.py:16
+#, fuzzy
+#| msgid "log type"
+msgid "type"
+msgstr "log"
+
+#: .\apps\budget\models\category.py:23
+#, fuzzy
+#| msgid "category"
+msgid "categories"
+msgstr "categoria"
+
+#: .\apps\budget\models\categoryMap.py:24
+msgid "Category Mappping"
+msgstr ""
+
+#: .\apps\budget\models\categoryMap.py:25
+msgid "Categories Mappping"
+msgstr ""
 
 #: .\apps\budget\models\expense.py:13
 msgid "function"
@@ -579,13 +601,257 @@ msgstr "bandeira"
 msgid "countries"
 msgstr "países"
 
-#: .\config\settings.py:139
+#: .\config\settings.py:135
 msgid "Portuguese"
 msgstr "Português"
 
-#: .\config\settings.py:140
+#: .\config\settings.py:136
 msgid "English"
 msgstr "Inglês"
+
+#: .\frontend\templates\frontend\base.html:60
+msgid ""
+"<strong>PALOP-TL</strong> Civil Society <strong>Online Budget Platform</"
+"strong>"
+msgstr ""
+"<strong>Plataforma Orçamental Online</strong> da Sociedade Civil dos "
+"<strong>PALOP-TL</strong>"
+
+#: .\frontend\templates\frontend\base.html:75
+msgid "Choose a country to<br>understand its budget"
+msgstr "Escolha um país e<br>entenda seu orçamento"
+
+#: .\frontend\templates\frontend\base.html:126
+msgid ""
+"The Online Platform for PALOP and Timor-Leste Civil Society Organizations "
+"for Budget Simplification and Analysis was produced by Pro PALOP-TL ISC, and "
+"co-financed by the European Union and the United Nations Development "
+"Programme.<br> Its contents are the sole responsibility of Pro PALOP-TL ISC "
+"and can in no way be used to reflect the positions of the European Union."
+"<br> The opinions expressed on this platform are those of the authors alone "
+"and do not necessarily represent the views of the United Nations, the United "
+"Nations Development Programme, or the United Nations Member States."
+msgstr ""
+"A Plataforma Online das Organizações da Sociedade Civil dos PALOP e Timor-"
+"Leste para Simplificação e Análise Orçamental foi produzida pelo Pro PALOP-"
+"TL ISC, e cofinanciada pela União Europeia e pelo Programa das Nações Unidas "
+"para o Desenvolvimento.<br> O seu conteúdo é da exclusiva responsabilidade "
+"do Pro PALOP-TL ISC e não pode, de modo algum, ser usado para refletir as "
+"posições da União Europeia.<br> As opiniões expressas nesta plataforma são "
+"exclusivas dos/as autoras/es e não representam necessariamente a opinião das "
+"Nações Unidas, nem do Programa das Nações Unidas para o Desenvolvimento ou "
+"dos Estados Membros das Nações Unidas."
+
+#: .\frontend\templates\frontend\base.html:144
+msgid "2020 ©PALOP-TL ISC All rights reserved"
+msgstr "2020 ©PALOP-TL ISC Todos os direitos reservados"
+
+#: .\frontend\templates\frontend\budget-selector.component.html:7
+#: .\frontend\templates\pt\budget-selector.component.html:7
+msgid "Despesas"
+msgstr ""
+
+#: .\frontend\templates\frontend\budget-selector.component.html:8
+#: .\frontend\templates\pt\budget-selector.component.html:8
+msgid "Receitas"
+msgstr ""
+
+#: .\frontend\templates\frontend\budget-selector.component.html:11
+#: .\frontend\templates\pt\budget-selector.component.html:11
+msgid "Por Função"
+msgstr ""
+
+#: .\frontend\templates\frontend\budget-selector.component.html:12
+#: .\frontend\templates\pt\budget-selector.component.html:12
+msgid "Por Órgão"
+msgstr ""
+
+#: .\frontend\templates\frontend\budget-selector.component.html:13
+#: .\frontend\templates\pt\budget-selector.component.html:13
+#, fuzzy
+#| msgid "Nature"
+msgid "Por Natureza"
+msgstr "Natureza"
+
+#: .\frontend\templates\frontend\budget-selector.component.html:14
+#: .\frontend\templates\pt\budget-selector.component.html:14
+msgid "Por Fonte"
+msgstr ""
+
+#: .\frontend\templates\frontend\budget-selector.component.html:20
+#: .\frontend\templates\pt\budget-selector.component.html:20
+msgid "Visualização em treemap"
+msgstr ""
+
+#: .\frontend\templates\frontend\budget-selector.component.html:21
+#: .\frontend\templates\pt\budget-selector.component.html:21
+msgid "Visualização em série histórica"
+msgstr ""
+
+#: .\frontend\templates\frontend\budget-selector.component.html:22
+#: .\frontend\templates\pt\budget-selector.component.html:22
+msgid "Visualização em tabela"
+msgstr ""
+
+#: .\frontend\templates\frontend\budget-selector.component.html:31
+#: .\frontend\templates\pt\budget-selector.component.html:31
+msgid "Todos os valores em"
+msgstr ""
+
+#: .\frontend\templates\frontend\budget-selector.component.html:36
+#: .\frontend\templates\pt\budget-selector.component.html:36
+msgid "Baixar dados em CSV"
+msgstr ""
+
+#: .\frontend\templates\frontend\index.html:107
+#: .\frontend\templates\pt\index.html:107
+msgid ""
+"Nossa missão é <strong>derrubar</strong><br> todas as <strong>barreiras</"
+"strong> entre os<br> <strong>cidadãos</strong> e as informações<br> sobre "
+"<strong>finanças públicas</strong><br> dos países."
+msgstr ""
+
+#: .\frontend\templates\frontend\index.html:128
+#: .\frontend\templates\pt\index.html:128
+msgid "Escolha um país para entender seu orçamento"
+msgstr ""
+
+#: .\frontend\templates\frontend\index.html:145
+#: .\frontend\templates\pt\index.html:145
+msgid ""
+"Extraímos os dados de relatórios oficiais publicados em formatos fechados e "
+"os tornamos estruturados e abertos: <strong>prontos para análise</strong>."
+msgstr ""
+
+#: .\frontend\templates\frontend\index.html:151
+#: .\frontend\templates\pt\index.html:151
+msgid ""
+"Para dar visibilidade e incentivar avanços no tema, construímos o "
+"<strong>primeiro Índice de Transparência Orçamental com recorte focado nos "
+"PALOP-TL</strong>."
+msgstr ""
+
+#: .\frontend\templates\frontend\index.html:157
+#: .\frontend\templates\pt\index.html:157
+msgid ""
+"<strong>Crescimento modular</strong>: Novas perspectivas da transparência "
+"orçamental serão incorporadas na Plataforma e no Índice. As novas "
+"funcionalidades serão definidas a partir de <strong>sessões de <i>Design "
+"Thinking</i> com representantes da sociedade civíl</strong>."
+msgstr ""
+
+#: .\frontend\templates\frontend\index.html:170
+#: .\frontend\templates\pt\index.html:170
+msgid "Base de dados abertas"
+msgstr ""
+
+#: .\frontend\templates\frontend\index.html:174
+#: .\frontend\templates\pt\index.html:174
+msgid "Visualizações interativas"
+msgstr ""
+
+#: .\frontend\templates\frontend\index.html:178
+#: .\frontend\templates\pt\index.html:178
+msgid "Filtros de Consulta"
+msgstr ""
+
+#: .\frontend\templates\frontend\index.html:182
+#: .\frontend\templates\pt\index.html:182
+msgid "Séries Históricas"
+msgstr ""
+
+#: .\frontend\templates\frontend\index.html:186
+#: .\frontend\templates\pt\index.html:186
+msgid "Índice de Transparência"
+msgstr ""
+
+#: .\frontend\templates\frontend\index.html:199
+#: .\frontend\templates\pt\index.html:199
+msgid "Índice PALOP-TL de Transparência Orçamental"
+msgstr ""
+
+#: .\frontend\templates\frontend\index.html:201
+#: .\frontend\templates\pt\index.html:201
+msgid ""
+"Resume a qualidade da transparência no fornecimento dos dados básicos da "
+"receita e despesa que compõem esta plataforma.<br> Veja mais detalhes na <a "
+"class=\"scroll-to\" href=\"#methodology\">Metodologia</a>, disponível abaixo."
+msgstr ""
+
+#: .\frontend\templates\frontend\index.html:215
+#: .\frontend\templates\pt\index.html:215
+msgid ""
+"Clique no cabeçalho da tabela para ordenar o ranking por uma dimensão "
+"específica ou no ícone <span class=\"material-icons help\" data-step="
+"\"1\">info_outlined</span> para saber mais sobre a dimensão."
+msgstr ""
+
+#: .\frontend\templates\frontend\index.html:234
+#: .\frontend\templates\pt\index.html:234
+msgid "Dados<br/>Abertos"
+msgstr ""
+
+#: .\frontend\templates\frontend\index.html:240
+#: .\frontend\templates\pt\index.html:240
+msgid "Relatórios<br/>Orçamentais"
+msgstr ""
+
+#: .\frontend\templates\frontend\index.html:246
+#: .\frontend\templates\pt\index.html:246
+msgid "Qualidade da<br/>Informação"
+msgstr ""
+
+#: .\frontend\templates\frontend\index.html:252
+#: .\frontend\templates\pt\index.html:252
+msgid "Índice de Transparência<br/>Orçamental"
+msgstr ""
+
+#: .\frontend\templates\frontend\index.html:269
+#: .\frontend\templates\pt\index.html:269
+msgid "VEJA MAIS DETALHES SOBRE A METODOLOGIA E RESULTADOS DETALHADOS"
+msgstr ""
+
+#: .\frontend\templates\frontend\index.html:286
+#: .\frontend\templates\pt\index.html:286
+msgid "Resultado por país"
+msgstr ""
+
+#: .\frontend\templates\frontend\index.html:306
+#: .\frontend\templates\pt\index.html:306
+msgid "Escolha um país para entender seu orçamento."
+msgstr ""
+
+#: .\frontend\templates\frontend\index.html:348
+#: .\frontend\templates\pt\index.html:348
+msgid "Média"
+msgstr ""
+
+#: .\frontend\templates\pt\base.html:60
+msgid ""
+"<strong>Plataforma Orçamental Online</strong> da Sociedade Civil dos "
+"<strong>PALOP-TL</strong>"
+msgstr ""
+
+#: .\frontend\templates\pt\base.html:74
+msgid "Escolha um país e<br>entenda seu orçamento"
+msgstr ""
+
+#: .\frontend\templates\pt\base.html:124
+msgid ""
+"A Plataforma Online das Organizações da Sociedade Civil dos PALOP e Timor-"
+"Leste para Simplificação e Análise Orçamental foi produzida pelo Pro PALOP-"
+"TL ISC, e cofinanciada pela União Europeia e pelo Programa das Nações Unidas "
+"para o Desenvolvimento.<br> O seu conteúdo é da exclusiva responsabilidade "
+"do Pro PALOP-TL ISC e não pode, de modo algum, ser usado para refletir as "
+"posições da União Europeia.<br> As opiniões expressas nesta plataforma são "
+"exclusivas dos/as autoras/es e não representam necessariamente a opinião das "
+"Nações Unidas, nem do Programa das Nações Unidas para o Desenvolvimento ou "
+"dos Estados Membros das Nações Unidas."
+msgstr ""
+
+#: .\frontend\templates\pt\base.html:142
+msgid "2020 ©PALOP-TL ISC Todos os direitos reservados"
+msgstr ""
 
 #: .\templates\admin\base_site.html:40
 msgid "Django administration"
@@ -663,7 +929,7 @@ msgstr ""
 msgid "Latest budgets"
 msgstr "Últimos orçamentos"
 
-#: .\templates\admin\index.html:21
+#: .\templates\admin\index.html:20
 msgid "Add new budget"
 msgstr "Adicionar novo orçamento"
 
