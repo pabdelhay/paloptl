@@ -1274,6 +1274,9 @@ h3 {
         }
       }
     }
+    #datatable-info {
+      overflow-x: auto;
+    }
     table.datatable-info {
       td {
         font-family: $font_money;
@@ -1281,7 +1284,7 @@ h3 {
       th, td {
         text-align: right;
         color: $main_color;
-        padding: 5px 10px;
+        padding: 8px 14px;
         line-height: 20px;
       }
       th {
@@ -1439,22 +1442,26 @@ h3 {
     background-repeat: no-repeat;
     background-position-x: left;
     background-position-y: bottom;
-    height: 400px;
     color: #FFFFFF;
     margin-top: 100px;
     h2 {
-      margin-top: 60px;
+      margin: 0 0 20px 0;
+      font-size: 40px;
       color: #FFF;
       .arrow {
         border-left-color: #FFF;
       }
     }
+    .text-wrapper {
+      padding: 60px 0;
+    }
     .img-wrapper {
       margin-top: 0;
       margin-bottom: 0;
-      img {
-        max-height: 400px;
-      }
+      overflow-x: hidden;
+      background-image: url(../img/transparency.png);
+      background-repeat: no-repeat;
+      background-position: center;
     }
   }
 }
