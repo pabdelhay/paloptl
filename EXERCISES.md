@@ -25,3 +25,23 @@
     ]
    
 ## 6. Colocar (5) numa api.
+
+
+
+# Guiné Bissau
+
+## 1. Todas as despesas organicas de Guiné em 2018
+
+## 2. Somatório de todas as despesas de Guiné em 2018
+
+## 3. Nova página
+
+TUDO dentro do directorio **/frontend/**
+ 
+    1. Criar VIEW em views.py 
+    2. Criar TEMPLATE (novo .html)
+    3. Criar URL em urls.py
+    
+## 4. Links para as páginas dos países
+    1. Fazer QUERYSET na view 
+    2. Fazer FOR no template

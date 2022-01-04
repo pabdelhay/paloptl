@@ -57,6 +57,11 @@ h4 {
   text-transform: uppercase;
 }
 
+.linebreak {
+  width: 100%;
+  content: "";
+}
+
 .loading {
   position: absolute;
   width: 200px;
@@ -784,20 +789,25 @@ h3 .arrow {
 .page-country-detail .breadcrumb-row .breadcrumb-wrapper .arrow-right:last-child, .page-countries-expenses .breadcrumb-row .breadcrumb-wrapper .arrow-right:last-child {
   display: none;
 }
-.page-country-detail .breadcrumb-row .budget-account-selector-row, .page-countries-expenses .breadcrumb-row .budget-account-selector-row {
-  position: relative;
+.page-country-detail .breadcrumb-row .budget-account-selector-row .selector-wrapper, .page-countries-expenses .breadcrumb-row .budget-account-selector-row .selector-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
-.page-country-detail .breadcrumb-row .budget-account-selector-row > div, .page-countries-expenses .breadcrumb-row .budget-account-selector-row > div {
-  display: inline-block;
-  border-right: 1px solid #d8d8d8;
-  padding-right: 10px;
-  margin-right: 10px;
-  margin-left: -5px;
+.page-country-detail .breadcrumb-row .budget-account-selector-row .selector-wrapper .budgets-selector, .page-countries-expenses .breadcrumb-row .budget-account-selector-row .selector-wrapper .budgets-selector {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 3px 10px;
 }
-.page-country-detail .breadcrumb-row .budget-account-selector-row > div:last-child, .page-countries-expenses .breadcrumb-row .budget-account-selector-row > div:last-child {
-  border-right: 0;
-  padding-right: 0;
-  margin-right: 0;
+.page-country-detail .breadcrumb-row .budget-account-selector-row .selector-wrapper .grouped, .page-countries-expenses .breadcrumb-row .budget-account-selector-row .selector-wrapper .grouped {
+  display: flex;
+  gap: 0px;
+}
+.page-country-detail .breadcrumb-row .budget-account-selector-row .selector-wrapper .grouped a, .page-countries-expenses .breadcrumb-row .budget-account-selector-row .selector-wrapper .grouped a {
+  max-width: 90px;
+  padding: 2px 5px;
 }
 .page-country-detail .breadcrumb-row .budget-account-selector-row a, .page-countries-expenses .breadcrumb-row .budget-account-selector-row a {
   cursor: pointer;
@@ -835,13 +845,6 @@ h3 .arrow {
 .page-country-detail .breadcrumb-row .budget-account-selector-row .budget-selector a, .page-country-detail .breadcrumb-row .budget-account-selector-row .year-selector a, .page-countries-expenses .breadcrumb-row .budget-account-selector-row .budget-selector a, .page-countries-expenses .breadcrumb-row .budget-account-selector-row .year-selector a {
   border-right: 1px solid #82aecb;
 }
-.page-country-detail .breadcrumb-row .budget-account-selector-row .budget-account-selector, .page-countries-expenses .breadcrumb-row .budget-account-selector-row .budget-account-selector {
-  padding-right: 10px;
-  margin-right: 10px;
-}
-.page-country-detail .breadcrumb-row .budget-account-selector-row .budget-selector, .page-country-detail .breadcrumb-row .budget-account-selector-row .year-selector, .page-countries-expenses .breadcrumb-row .budget-account-selector-row .budget-selector, .page-countries-expenses .breadcrumb-row .budget-account-selector-row .year-selector {
-  margin-left: -4px;
-}
 .page-country-detail .breadcrumb-row .budget-account-selector-row .budget-selector a, .page-country-detail .breadcrumb-row .budget-account-selector-row .year-selector a, .page-countries-expenses .breadcrumb-row .budget-account-selector-row .budget-selector a, .page-countries-expenses .breadcrumb-row .budget-account-selector-row .year-selector a {
   width: 40px;
   padding: 4px 10px;
@@ -849,20 +852,25 @@ h3 .arrow {
 .page-country-detail .breadcrumb-row .budget-account-selector-row .budget-selector a:last-child, .page-country-detail .breadcrumb-row .budget-account-selector-row .year-selector a:last-child, .page-countries-expenses .breadcrumb-row .budget-account-selector-row .budget-selector a:last-child, .page-countries-expenses .breadcrumb-row .budget-account-selector-row .year-selector a:last-child {
   border-right: 0;
 }
-.page-country-detail .breadcrumb-row .budget-account-selector-row .visualization-selector, .page-country-detail .breadcrumb-row .budget-account-selector-row .search-selector, .page-countries-expenses .breadcrumb-row .budget-account-selector-row .visualization-selector, .page-countries-expenses .breadcrumb-row .budget-account-selector-row .search-selector {
-  margin-left: -10px;
+.page-country-detail .breadcrumb-row .budget-account-selector-row .visualization-selector, .page-countries-expenses .breadcrumb-row .budget-account-selector-row .visualization-selector {
+  border-left: 1px solid #d8d8d8;
+  margin-left: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  max-width: 60px;
 }
-.page-country-detail .breadcrumb-row .budget-account-selector-row .visualization-selector a, .page-country-detail .breadcrumb-row .budget-account-selector-row .search-selector a, .page-countries-expenses .breadcrumb-row .budget-account-selector-row .visualization-selector a, .page-countries-expenses .breadcrumb-row .budget-account-selector-row .search-selector a {
+.page-country-detail .breadcrumb-row .budget-account-selector-row .visualization-selector a, .page-countries-expenses .breadcrumb-row .budget-account-selector-row .visualization-selector a {
   width: 20px;
-  padding: 4px 2px;
+  padding: 1px 3px;
   background: none;
   border-right: 0;
   color: #cacaca;
 }
-.page-country-detail .breadcrumb-row .budget-account-selector-row .visualization-selector a.active, .page-country-detail .breadcrumb-row .budget-account-selector-row .search-selector a.active, .page-countries-expenses .breadcrumb-row .budget-account-selector-row .visualization-selector a.active, .page-countries-expenses .breadcrumb-row .budget-account-selector-row .search-selector a.active {
+.page-country-detail .breadcrumb-row .budget-account-selector-row .visualization-selector a.active, .page-countries-expenses .breadcrumb-row .budget-account-selector-row .visualization-selector a.active {
   color: gray;
 }
-.page-country-detail .breadcrumb-row .budget-account-selector-row .visualization-selector a:hover, .page-country-detail .breadcrumb-row .budget-account-selector-row .search-selector a:hover, .page-countries-expenses .breadcrumb-row .budget-account-selector-row .visualization-selector a:hover, .page-countries-expenses .breadcrumb-row .budget-account-selector-row .search-selector a:hover {
+.page-country-detail .breadcrumb-row .budget-account-selector-row .visualization-selector a:hover, .page-countries-expenses .breadcrumb-row .budget-account-selector-row .visualization-selector a:hover {
   background: none !important;
   color: #6b6b6b;
 }
@@ -1149,13 +1157,16 @@ h3 .arrow {
   border: 1px solid #0f69a4;
   box-shadow: 0px 1px 5px 1px #0f69a4;
 }
+.page-country-detail .datatable-wrapper #datatable-info, .page-countries-expenses .datatable-wrapper #datatable-info {
+  overflow-x: auto;
+}
 .page-country-detail .datatable-wrapper table.datatable-info td, .page-countries-expenses .datatable-wrapper table.datatable-info td {
   font-family: RobotoMono;
 }
 .page-country-detail .datatable-wrapper table.datatable-info th, .page-country-detail .datatable-wrapper table.datatable-info td, .page-countries-expenses .datatable-wrapper table.datatable-info th, .page-countries-expenses .datatable-wrapper table.datatable-info td {
   text-align: right;
   color: #0f2843;
-  padding: 5px 10px;
+  padding: 8px 14px;
   line-height: 20px;
 }
 .page-country-detail .datatable-wrapper table.datatable-info th, .page-countries-expenses .datatable-wrapper table.datatable-info th {
@@ -1292,23 +1303,27 @@ h3 .arrow {
   background-repeat: no-repeat;
   background-position-x: left;
   background-position-y: bottom;
-  height: 400px;
   color: #FFFFFF;
   margin-top: 100px;
 }
 .page-country-detail .transparency-wrapper h2, .page-countries-expenses .transparency-wrapper h2 {
-  margin-top: 60px;
+  margin: 0 0 20px 0;
+  font-size: 40px;
   color: #FFF;
 }
 .page-country-detail .transparency-wrapper h2 .arrow, .page-countries-expenses .transparency-wrapper h2 .arrow {
   border-left-color: #FFF;
 }
+.page-country-detail .transparency-wrapper .text-wrapper, .page-countries-expenses .transparency-wrapper .text-wrapper {
+  padding: 60px 0;
+}
 .page-country-detail .transparency-wrapper .img-wrapper, .page-countries-expenses .transparency-wrapper .img-wrapper {
   margin-top: 0;
   margin-bottom: 0;
-}
-.page-country-detail .transparency-wrapper .img-wrapper img, .page-countries-expenses .transparency-wrapper .img-wrapper img {
-  max-height: 400px;
+  overflow-x: hidden;
+  background-image: url(../img/transparency.png);
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .page-countries-expenses {

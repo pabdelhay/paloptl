@@ -71,6 +71,11 @@ h4 {
   text-transform: uppercase;
 }
 
+.linebreak {
+  width: 100%;
+  content: '';
+}
+
 .loading {
   position: absolute;
   width: 200px;
@@ -873,20 +878,29 @@ h3 {
 
     }
     .budget-account-selector-row {
-      position: relative;
+      .selector-wrapper {
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
 
-      & > div {
-        display: inline-block;
-        border-right: 1px solid #d8d8d8;
-        padding-right: 10px;
-        margin-right: 10px;
-        margin-left: -5px;
-        &:last-child {
-          border-right: 0;
-          padding-right: 0;
-          margin-right: 0;
+        .budgets-selector {
+          display: flex;
+          justify-content: flex-end;
+          align-items: flex-end;
+          flex-wrap: wrap;
+          gap: 3px 10px;
+        }
+
+        .grouped {
+          display: flex;
+          gap: 0px;
+          a {
+            max-width: 90px;
+            padding: 2px 5px;
+          }
         }
       }
+
       a {
         cursor: pointer;
         background: #eae6e5;
@@ -927,12 +941,7 @@ h3 {
         }
       }
 
-      .budget-account-selector {
-        padding-right: 10px;
-        margin-right: 10px;
-      }
       .budget-selector, .year-selector {
-        margin-left: -4px;
         a {
           width: 40px;
           padding: 4px 10px;
@@ -941,11 +950,16 @@ h3 {
           }
         }
       }
-      .visualization-selector, .search-selector {
-        margin-left: -10px;
+      .visualization-selector {
+        border-left: 1px solid #d8d8d8;
+        margin-left: 15px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        max-width: 60px;
         a {
           width: 20px;
-          padding: 4px 2px;
+          padding: 1px 3px;
           background: none;
           border-right: 0;
           color: $icon_action_color;
@@ -1274,6 +1288,9 @@ h3 {
         }
       }
     }
+    #datatable-info {
+      overflow-x: auto;
+    }
     table.datatable-info {
       td {
         font-family: $font_money;
@@ -1281,7 +1298,7 @@ h3 {
       th, td {
         text-align: right;
         color: $main_color;
-        padding: 5px 10px;
+        padding: 8px 14px;
         line-height: 20px;
       }
       th {
@@ -1439,22 +1456,26 @@ h3 {
     background-repeat: no-repeat;
     background-position-x: left;
     background-position-y: bottom;
-    height: 400px;
     color: #FFFFFF;
     margin-top: 100px;
     h2 {
-      margin-top: 60px;
+      margin: 0 0 20px 0;
+      font-size: 40px;
       color: #FFF;
       .arrow {
         border-left-color: #FFF;
       }
     }
+    .text-wrapper {
+      padding: 60px 0;
+    }
     .img-wrapper {
       margin-top: 0;
       margin-bottom: 0;
-      img {
-        max-height: 400px;
-      }
+      overflow-x: hidden;
+      background-image: url(../img/transparency.png);
+      background-repeat: no-repeat;
+      background-position: center;
     }
   }
 }

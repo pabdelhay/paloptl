@@ -59,6 +59,14 @@ class CountriesExpensesView(View):
         return render(request, 'frontend/countriesExpenses.html', context=None)
 
 
+class TestView(View):
+    def get(self, request):
+        ctx = {
+            'countries': Country.objects.all()
+        }
+        return render(request, 'frontend/teste.html', context=ctx)
+
+
 class ExpensesAndRevenues(View, ):
     def get(self, request, *args, **kwargs):
         cn = {

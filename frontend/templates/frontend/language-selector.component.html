@@ -6,6 +6,10 @@
     <input name="next" type="hidden" value="{{ redirect_to }}">
     <input name="language" type="hidden" class="language-selector">
     <div class="language-selector">
-    {% for language in languages %}<div class="lang"><a href="#" data-language_code="{{ language.code }}" class="{% if language.code == LANGUAGE_CODE %}active{% endif %}">{{ language.name_local }}</a></div>{% endfor %}
+    {% for language in languages %}
+        <div class="lang">
+            <a href="#" data-language_code="{{ language.code }}" class="{% if language.code == LANGUAGE_CODE %}active{% endif %}">{{ language.name_local }}</a>
+        </div>
+    {% endfor %}
     </div>
 </form>
