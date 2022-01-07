@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-07 12:55-0300\n"
+"POT-Creation-Date: 2022-01-07 13:12-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -122,7 +122,7 @@ msgstr "uploads com error"
 msgid "Base info"
 msgstr "Informações básicas"
 
-#: .\apps\budget\admin.py:349 .\frontend\templates\frontend\index.html:187
+#: .\apps\budget\admin.py:349 .\frontend\templates\frontend\index.html:174
 msgid "Transparency Index"
 msgstr "Índice de Transparência"
 
@@ -894,7 +894,19 @@ msgstr "Execução em funcionamento"
 msgid "Expand to all visualizations"
 msgstr "Expandir para todas as visualizações"
 
-#: .\frontend\templates\frontend\index.html:108
+#: .\frontend\templates\frontend\index.html:40
+msgid "Next dimension"
+msgstr "Próxima dimensão"
+
+#: .\frontend\templates\frontend\index.html:41
+msgid "Previous dimension"
+msgstr "Dimensão anterior"
+
+#: .\frontend\templates\frontend\index.html:42
+msgid "Ready"
+msgstr "Pronto"
+
+#: .\frontend\templates\frontend\index.html:95
 msgid ""
 "Our mission is <strong>to break</strong><br> down all <strong>barriers</"
 "strong> between<br> <strong>citizens</strong> and information<br> on "
@@ -904,15 +916,15 @@ msgstr ""
 "strong> entre os<br> <strong>cidadãos</strong> e as informações<br> sobre "
 "<strong>finanças públicas</strong><br> dos países."
 
-#: .\frontend\templates\frontend\index.html:129
+#: .\frontend\templates\frontend\index.html:116
 msgid "Choose a country to understand its budget"
 msgstr "Escolha um país e entenda seu orçamento"
 
-#: .\frontend\templates\frontend\index.html:139
+#: .\frontend\templates\frontend\index.html:126
 msgid "About the project"
 msgstr "Sobre o projeto"
 
-#: .\frontend\templates\frontend\index.html:146
+#: .\frontend\templates\frontend\index.html:133
 msgid ""
 "We extracted data from official reports published in closed formats and "
 "transform them into structured and open: <strong>ready for analysis</strong>."
@@ -920,7 +932,7 @@ msgstr ""
 "Extraímos os dados de relatórios oficiais publicados em formatos fechados e "
 "os tornamos estruturados e abertos: <strong>prontos para análise</strong>."
 
-#: .\frontend\templates\frontend\index.html:152
+#: .\frontend\templates\frontend\index.html:139
 msgid ""
 "In order to promote visibility and encourage advances in the agenda, we have "
 "built the <strong>first Budget Transparency Index with a focus on the PALOP-"
@@ -930,7 +942,7 @@ msgstr ""
 "<strong>primeiro Índice de Transparência Orçamental com recorte focado nos "
 "PALOP-TL</strong>."
 
-#: .\frontend\templates\frontend\index.html:158
+#: .\frontend\templates\frontend\index.html:145
 msgid ""
 "<strong>Modular growth</strong>: New perspectives on budget transparency "
 "will be incorporated into the Platform and Index. The new features will be "
@@ -942,27 +954,27 @@ msgstr ""
 "funcionalidades serão definidas a partir de <strong>sessões de <i>Design "
 "Thinking</i> com representantes da sociedade civíl</strong>."
 
-#: .\frontend\templates\frontend\index.html:171
+#: .\frontend\templates\frontend\index.html:158
 msgid "Open Database"
 msgstr "Base de dados abertas"
 
-#: .\frontend\templates\frontend\index.html:175
+#: .\frontend\templates\frontend\index.html:162
 msgid "Interactive views"
 msgstr "Visualizações interativas"
 
-#: .\frontend\templates\frontend\index.html:179
+#: .\frontend\templates\frontend\index.html:166
 msgid "Search Filters"
 msgstr "Filtros de Consulta"
 
-#: .\frontend\templates\frontend\index.html:183
+#: .\frontend\templates\frontend\index.html:170
 msgid "Historical Series"
 msgstr "Séries Históricas"
 
-#: .\frontend\templates\frontend\index.html:200
+#: .\frontend\templates\frontend\index.html:187
 msgid "PALOP-TL Index of Budget Transparency"
 msgstr "Índice PALOP-TL de Transparência Orçamental"
 
-#: .\frontend\templates\frontend\index.html:202
+#: .\frontend\templates\frontend\index.html:189
 msgid ""
 "It summarizes the quality of transparency in the provision of the basic "
 "revenue and expenditure data that make up this platform.<br> See more "
@@ -973,7 +985,7 @@ msgstr ""
 "receita e despesa que compõem esta plataforma.<br>Veja mais detalhes na <a "
 "class=\"scroll-to\" href=\"#methodology\">Metodologia</a>, disponível abaixo."
 
-#: .\frontend\templates\frontend\index.html:216
+#: .\frontend\templates\frontend\index.html:203
 msgid ""
 "Click on the table heading to sort the ranking by a specific dimension, or "
 "on the <span class=\"material-icons help\" data-step=\"1\">info_outlined</"
@@ -983,35 +995,35 @@ msgstr ""
 "específica ou no ícone <span class=\"material-icons help\" data-step="
 "\"1\">info_outlined</span> para saber mais sobre a dimensão."
 
-#: .\frontend\templates\frontend\index.html:236
+#: .\frontend\templates\frontend\index.html:223
 msgid "Open<br/>Data"
 msgstr "Dados<br/>Abertos"
 
-#: .\frontend\templates\frontend\index.html:242
+#: .\frontend\templates\frontend\index.html:229
 msgid "Budget<br/>Reports"
 msgstr "Relatórios<br/>Orçamentais"
 
-#: .\frontend\templates\frontend\index.html:248
+#: .\frontend\templates\frontend\index.html:235
 msgid "Information<br/>Quality"
 msgstr "Qualidade da<br/>Informação"
 
-#: .\frontend\templates\frontend\index.html:254
+#: .\frontend\templates\frontend\index.html:241
 msgid "Budget Transparency<br/>Index"
 msgstr "Índice de Transparência<br/>Orçamental"
 
-#: .\frontend\templates\frontend\index.html:271
+#: .\frontend\templates\frontend\index.html:258
 msgid "SEE MORE DETAILS ABOUT THE METHODOLOGY AND DETAILED RESULTS"
 msgstr "VEJA MAIS DETALHES SOBRE A METODOLOGIA E RESULTADOS DETALHADOS"
 
-#: .\frontend\templates\frontend\index.html:291
+#: .\frontend\templates\frontend\index.html:278
 msgid "Results by country"
 msgstr "Resultado por país"
 
-#: .\frontend\templates\frontend\index.html:311
+#: .\frontend\templates\frontend\index.html:298
 msgid "Choose a country to understand how it spends its budget."
 msgstr "Escolha um país para entender seu orçamento."
 
-#: .\frontend\templates\frontend\index.html:353
+#: .\frontend\templates\frontend\index.html:340
 msgid "Average"
 msgstr "Média"
 
@@ -1212,6 +1224,70 @@ msgstr "CSV"
 #: .\frontend\tutorial.py:103
 msgid "All data is available for download in .csv format."
 msgstr "Todos os dados estão disponíveis para download em formato .csv."
+
+#: .\frontend\tutorial.py:110
+msgid "Open data"
+msgstr "Dados abertos"
+
+#: .\frontend\tutorial.py:112
+msgid ""
+"Data must be <strong>complete, primary</strong> (collected from source, made "
+"available by the institution that generates it), <strong>accessible</strong> "
+"(available online), <strong>non-discriminatory</strong> (anyone can access "
+"it, with no need for registration or identification), <strong>updated</"
+"strong> (defined according to the data type), in <strong>machine-processable "
+"and nonproprietary</strong> format (.csv for example), and under "
+"<strong>free license</strong> (not patented or copyrighted)."
+msgstr ""
+"Dados considerados abertos são <strong>completos, primários</strong> "
+"(coletados na fonte e com o menor nível de granularidade possível), "
+"<strong>acessíveis</strong> (disponíveis online), <strong>não "
+"discriminatórios</strong> (qualquer pessoa pode acessar sem qualquer "
+"necessidade de identificação), <strong>atualizados</strong>, em "
+"<strong>formato processável</strong> por máquinas, <strong>não "
+"proprietários</strong> (como .csv por exemplo) e sob <strong>licença livre</"
+"strong> (não patenteada/ sem copyright). Veja a metodologia para entender "
+"mais sobre a lógica de pontuação nesta dimensão."
+
+#: .\frontend\tutorial.py:121
+msgid "Budget Reports"
+msgstr "Relatórios Orçamentais"
+
+#: .\frontend\tutorial.py:123
+msgid ""
+"Accesses whether reports relating to the budget implementation cycle are "
+"<strong>produced and published</strong> in a timely manner. The reports "
+"evaluated are the <strong>Enacted Budget, the Execution Reports and the Year-"
+"End Report</strong> (or General State Accounts. See the methodology to "
+"understand more about the scoring logic in this dimension."
+msgstr ""
+"Avalia se os relatórios relativos ao ciclo de implementação do orçamento são "
+"<strong>elaborados e publicados no prazo</strong>. Os relatórios avaliados "
+"são <strong>Orçamento Promulgado, os Relatórios de Execução</strong> e o "
+"<strong>Relatório de Final de Ano</strong> (ou Contas Gerais do Estado). "
+"Veja a metodologia para entender mais sobre a lógica de pontuação nesta "
+"dimensão."
+
+#: .\frontend\tutorial.py:131
+msgid "Information Quality"
+msgstr "Qualidade da Informação"
+
+#: .\frontend\tutorial.py:133
+msgid ""
+"This dimension assesses whether the country presents the <strong>planned and "
+"executed budget</strong> according to the following classifications: "
+"<strong>revenue by economic nature</strong> (source of the income, such as "
+"taxes and transfers), <strong>expenditures by administrative classification</"
+"strong> (such as administrative bodies) or by <strong>functional "
+"classification</strong> (such as health and education."
+msgstr ""
+"Acessa em que medida o cidadão pode acompanhar desde a <strong>previsão do "
+"orçamento para o ano até a arrecadação e gasto efetivo dos valores</strong>. "
+"Atualmente avalia a disponibilidade de três tipos de classificação: "
+"<strong>receita por natureza econômica</strong> (origem da entrada de "
+"recurso, como impostos ou transferências), <strong>despesa por classificação "
+"administrativa</strong> (por órgãos da administração) e <strong>funcional</"
+"strong> (por temas de ação pública, como saúde e educação)."
 
 #: .\templates\admin\base_site.html:40
 msgid "Django administration"

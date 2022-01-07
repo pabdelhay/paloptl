@@ -6,13 +6,14 @@ from django.views import View
 from django.views.generic.detail import SingleObjectMixin
 
 from apps.geo.models import Country
-from frontend.tutorial import COUNTRY_DETAILS_TUTORIAL
+from frontend.tutorial import COUNTRY_DETAILS_TUTORIAL, INDEX_DIMENSIONS
 
 
 class IndexView(View):
     def get(self, request):
         ctx = {
-            'countries': Country.objects.all()
+            'countries': Country.objects.all(),
+            'index_dimensions': INDEX_DIMENSIONS
         }
         return render(request, 'frontend/index.html', context=ctx)
 

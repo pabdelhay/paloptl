@@ -103,3 +103,37 @@ COUNTRY_DETAILS_TUTORIAL = [
         'text': _("All data is available for download in .csv format."),
     }
 ]
+
+INDEX_DIMENSIONS = [
+    {
+        'element': '.header-open_data',
+        'title': _("Open data"),
+        'position': 'bottom',
+        'text': _("Data must be <strong>complete, primary</strong> (collected from source, made available by the "
+                   "institution that generates it), <strong>accessible</strong> (available online), "
+                   "<strong>non-discriminatory</strong> (anyone can access it, with no need for registration "
+                   "or identification), <strong>updated</strong> (defined according to the data type), "
+                   "in <strong>machine-processable and nonproprietary</strong> format (.csv for example), and under "
+                   "<strong>free license</strong> (not patented or copyrighted).")
+    },
+    {
+        'element': '.header-score_reports',
+        'title': _("Budget Reports"),
+        'position': 'bottom',
+        'text': _("Accesses whether reports relating to the budget implementation cycle are "
+                   "<strong>produced and published</strong> in a timely manner. The reports evaluated are "
+                   "the <strong>Enacted Budget, the Execution Reports and the Year-End Report</strong> "
+                   "(or General State Accounts. See the methodology to understand more about "
+                   "the scoring logic in this dimension.")
+    },
+    {
+        'element': '.header-data_quality',
+        'title': _("Information Quality"),
+        'position': 'bottom',
+        'text': _("This dimension assesses whether the country presents the <strong>planned and "
+                   "executed budget</strong> according to the following classifications: <strong>revenue by "
+                   "economic nature</strong> (source of the income, such as taxes and transfers), "
+                   "<strong>expenditures by administrative classification</strong> (such as administrative bodies) "
+                   "or by <strong>functional classification</strong> (such as health and education.")
+    }
+]
