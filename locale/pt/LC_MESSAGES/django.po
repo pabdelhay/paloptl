@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-04 16:43-0300\n"
+"POT-Creation-Date: 2022-01-07 12:49-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -157,10 +157,10 @@ msgstr "campo"
 #: .\apps\budget\apps.py:7
 #: .\frontend\templates\frontend\country-details.html:110
 #: .\frontend\templates\frontend\country-details.html:351
-#: .\frontend\templates\frontend\country-details.html:967
-#: .\frontend\templates\frontend\country-details.html:978
-#: .\frontend\templates\frontend\country-details.html:1008
-#: .\frontend\templates\frontend\country-details.html:1144
+#: .\frontend\templates\frontend\country-details.html:885
+#: .\frontend\templates\frontend\country-details.html:896
+#: .\frontend\templates\frontend\country-details.html:926
+#: .\frontend\templates\frontend\country-details.html:1062
 #: .\templates\admin\index.html:14
 msgid "Budget"
 msgstr "Orçamento"
@@ -177,11 +177,11 @@ msgstr ""
 msgid "CGE - Conta Geral do Estado"
 msgstr ""
 
-#: .\apps\budget\choices.py:12
+#: .\apps\budget\choices.py:12 .\frontend\tutorial.py:21
 msgid "Expense"
 msgstr "Despesa"
 
-#: .\apps\budget\choices.py:13
+#: .\apps\budget\choices.py:13 .\frontend\tutorial.py:28
 msgid "Revenue"
 msgstr "Receita"
 
@@ -382,16 +382,12 @@ msgid "Aggregated values for Budget #{}"
 msgstr "Valores agregados para o Orçamento #{}"
 
 #: .\apps\budget\models\category.py:16
-#, fuzzy
-#| msgid "log type"
 msgid "type"
-msgstr "log"
+msgstr "tipo"
 
 #: .\apps\budget\models\category.py:23
-#, fuzzy
-#| msgid "category"
 msgid "categories"
-msgstr "categoria"
+msgstr "categorias"
 
 #: .\apps\budget\models\categoryMap.py:24
 msgid "Category Mappping"
@@ -707,7 +703,7 @@ msgid "Table visualization"
 msgstr "Visualização em tabela"
 
 #: .\frontend\templates\frontend\budget-selector.component.html:67
-#: .\frontend\templates\frontend\country-details.html:823
+#: .\frontend\templates\frontend\country-details.html:741
 msgid "All values in"
 msgstr "Todos os valores em"
 
@@ -756,11 +752,11 @@ msgid "of"
 msgstr "de"
 
 #: .\frontend\templates\frontend\country-details.html:352
-#: .\frontend\templates\frontend\country-details.html:905
-#: .\frontend\templates\frontend\country-details.html:971
-#: .\frontend\templates\frontend\country-details.html:982
-#: .\frontend\templates\frontend\country-details.html:1017
-#: .\frontend\templates\frontend\country-details.html:1169
+#: .\frontend\templates\frontend\country-details.html:823
+#: .\frontend\templates\frontend\country-details.html:889
+#: .\frontend\templates\frontend\country-details.html:900
+#: .\frontend\templates\frontend\country-details.html:935
+#: .\frontend\templates\frontend\country-details.html:1087
 msgid "Execution"
 msgstr "Execução"
 
@@ -792,109 +788,109 @@ msgstr "Dados por natureza não disponíveis"
 msgid "Data by source not available"
 msgstr "Dados por fonte não disponíveis"
 
-#: .\frontend\templates\frontend\country-details.html:820
+#: .\frontend\templates\frontend\country-details.html:738
 msgid "BUDGET DATA"
 msgstr "DADOS ORÇAMENTAIS"
 
-#: .\frontend\templates\frontend\country-details.html:827
+#: .\frontend\templates\frontend\country-details.html:745
 msgid "HOW TO NAVIGATE"
 msgstr "APRENDA A NAVEGAR"
 
-#: .\frontend\templates\frontend\country-details.html:834
-#: .\frontend\templates\frontend\country-details.html:847
-#: .\frontend\templates\frontend\country-details.html:860
+#: .\frontend\templates\frontend\country-details.html:752
+#: .\frontend\templates\frontend\country-details.html:765
+#: .\frontend\templates\frontend\country-details.html:778
 msgid "Loading data"
 msgstr "Carregando dados"
 
-#: .\frontend\templates\frontend\country-details.html:885
+#: .\frontend\templates\frontend\country-details.html:803
 msgid "Initial budget"
 msgstr "Orçamento inicial"
 
-#: .\frontend\templates\frontend\country-details.html:890
-#: .\frontend\templates\frontend\country-details.html:900
-#: .\frontend\templates\frontend\country-details.html:910
-#: .\frontend\templates\frontend\country-details.html:1149
-#: .\frontend\templates\frontend\country-details.html:1174
+#: .\frontend\templates\frontend\country-details.html:808
+#: .\frontend\templates\frontend\country-details.html:818
+#: .\frontend\templates\frontend\country-details.html:828
+#: .\frontend\templates\frontend\country-details.html:1067
+#: .\frontend\templates\frontend\country-details.html:1092
 msgid "Not informed"
 msgstr "Não informado"
 
-#: .\frontend\templates\frontend\country-details.html:895
+#: .\frontend\templates\frontend\country-details.html:813
 msgid "Updated budget"
 msgstr "Orçamento atualizado"
 
-#: .\frontend\templates\frontend\country-details.html:944
-#: .\frontend\templates\frontend\country-details.html:945
-#: .\frontend\templates\frontend\country-details.html:946
-#: .\frontend\templates\frontend\country-details.html:947
-#: .\frontend\templates\frontend\country-details.html:948
+#: .\frontend\templates\frontend\country-details.html:862
+#: .\frontend\templates\frontend\country-details.html:863
+#: .\frontend\templates\frontend\country-details.html:864
+#: .\frontend\templates\frontend\country-details.html:865
+#: .\frontend\templates\frontend\country-details.html:866
 msgid "executed"
 msgstr "executado"
 
-#: .\frontend\templates\frontend\country-details.html:956
+#: .\frontend\templates\frontend\country-details.html:874
 msgid "SECONDARY DATA"
 msgstr "DADOS SECUNDÁRIOS"
 
-#: .\frontend\templates\frontend\country-details.html:963
-#: .\frontend\templates\frontend\country-details.html:1156
-#: .\frontend\templates\frontend\country-details.html:1180
+#: .\frontend\templates\frontend\country-details.html:881
+#: .\frontend\templates\frontend\country-details.html:1074
+#: .\frontend\templates\frontend\country-details.html:1098
 msgid "in Investment"
 msgstr "em investimento"
 
-#: .\frontend\templates\frontend\country-details.html:975
-#: .\frontend\templates\frontend\country-details.html:1163
-#: .\frontend\templates\frontend\country-details.html:1187
+#: .\frontend\templates\frontend\country-details.html:893
+#: .\frontend\templates\frontend\country-details.html:1081
+#: .\frontend\templates\frontend\country-details.html:1105
 msgid "in Operation"
 msgstr "em Funcionamento"
 
-#: .\frontend\templates\frontend\country-details.html:997
+#: .\frontend\templates\frontend\country-details.html:915
 msgid "Sort by name"
 msgstr "Ordernar por nome"
 
-#: .\frontend\templates\frontend\country-details.html:1007
+#: .\frontend\templates\frontend\country-details.html:925
 msgid "Sort by budget"
 msgstr "Ordernar por dotação"
 
-#: .\frontend\templates\frontend\country-details.html:1016
+#: .\frontend\templates\frontend\country-details.html:934
 msgid "Sort by execution"
 msgstr "Ordernar por execução"
 
-#: .\frontend\templates\frontend\country-details.html:1025
+#: .\frontend\templates\frontend\country-details.html:943
 msgid "Sort by execution percentage"
 msgstr "Ordernar por porcentagem de execução"
 
-#: .\frontend\templates\frontend\country-details.html:1034
+#: .\frontend\templates\frontend\country-details.html:952
 msgid "Sort by budget in investment"
 msgstr "Ordenar por dotação em investimento"
 
-#: .\frontend\templates\frontend\country-details.html:1035
+#: .\frontend\templates\frontend\country-details.html:953
 msgid "Budget in investment"
 msgstr "Dotação em investimento"
 
-#: .\frontend\templates\frontend\country-details.html:1043
+#: .\frontend\templates\frontend\country-details.html:961
 msgid "Sort by execution in investment"
 msgstr "Ordenar por execução em investimento"
 
-#: .\frontend\templates\frontend\country-details.html:1044
+#: .\frontend\templates\frontend\country-details.html:962
 msgid "Execution in investment"
 msgstr "Execução em investimento"
 
-#: .\frontend\templates\frontend\country-details.html:1052
+#: .\frontend\templates\frontend\country-details.html:970
 msgid "Sort by budget in operation"
 msgstr "Ordenar por dotaçao em funcionamento"
 
-#: .\frontend\templates\frontend\country-details.html:1053
+#: .\frontend\templates\frontend\country-details.html:971
 msgid "Budget in operation"
 msgstr "Dotaçao em funcionamento"
 
-#: .\frontend\templates\frontend\country-details.html:1061
+#: .\frontend\templates\frontend\country-details.html:979
 msgid "Sort by execution in operation"
 msgstr "Ordenar por execução em funcionamento"
 
-#: .\frontend\templates\frontend\country-details.html:1062
+#: .\frontend\templates\frontend\country-details.html:980
 msgid "Execution in operation"
 msgstr "Execução em funcionamento"
 
-#: .\frontend\templates\frontend\country-details.html:1122
+#: .\frontend\templates\frontend\country-details.html:1040
 msgid "Expand to all visualizations"
 msgstr "Expandir para todas as visualizações"
 
@@ -1018,6 +1014,186 @@ msgstr "Escolha um país para entender seu orçamento."
 #: .\frontend\templates\frontend\index.html:353
 msgid "Average"
 msgstr "Média"
+
+#: .\frontend\tutorial.py:6
+msgid "Visualizations"
+msgstr "Visualizações"
+
+#: .\frontend\tutorial.py:7
+msgid ""
+"You can browse the budget through the following views: <ul><li>Treemap</"
+"li><li>Historic Series</li><li>Table</li>"
+msgstr ""
+"É possível navegar no orçamento pelas seguintes visualizações: "
+"<ul><li>Treemap</li><li>Série histórica</li><li>Tabela</li>"
+
+#: .\frontend\tutorial.py:13
+msgid "Query filters"
+msgstr "Filtros de Consulta"
+
+#: .\frontend\tutorial.py:14
+msgid ""
+"Filters update the three visualizations synchronously. Choose here whether "
+"you want to see <strong>revenue</strong> or <strong>expense</strong> data, "
+"<strong>classification type</strong> and <strong>year</strong>."
+msgstr ""
+"Os filtros atualizam as três visualizações sincronicamente. Escolha aqui se "
+"deseja ver os dados de <strong>receitas</strong> ou <strong>despesas</"
+"strong>, o <strong>tipo de classificação</strong> e o <strong>ano</strong>. "
+"Se alguma das opções não estiver disponível para seleção, é porque "
+"infelizmente o governo não disponibilizou os dados."
+
+#: .\frontend\tutorial.py:22
+msgid ""
+"Expense data is presented in two classification groups: <strong>Function</"
+"strong> (government issues such as health and education) and "
+"<strong>Administrative bodies</strong> (such as Ministries)."
+msgstr ""
+"As despesas podem ser visualizadas por dois grupos de classificação: "
+"<strong>Função</strong> (temas de governo, como saúde e educação) e "
+"<strong>Órgão</strong> (como Ministérios, por exemplo)."
+
+#: .\frontend\tutorial.py:29
+msgid ""
+"Revenues are presented by <strong>economic nature</strong>. This "
+"classification indicates the actual event that led to the entry of the "
+"resource into public coffers (taxes or transfers, for example)"
+msgstr ""
+"As receitas estão disponíveis por <strong>natureza económica</strong>. Esta "
+"classificação indica o acontecimento real que ocasionou a entrada do recurso "
+"nos cofres públicos (impostos ou transferências por exemplo)"
+
+#: .\frontend\tutorial.py:36
+msgid "Year"
+msgstr "Ano"
+
+#: .\frontend\tutorial.py:37
+msgid "Data since 2016 is available on the platform."
+msgstr "Estão disponíveis dados desde 2016 na plataforma."
+
+#: .\frontend\tutorial.py:41
+msgid "Search"
+msgstr "Busca"
+
+#: .\frontend\tutorial.py:42
+msgid "You can search for a specific expense or income in this icon."
+msgstr "Você pode buscar por uma despesa ou receita específica neste ícone."
+
+#: .\frontend\tutorial.py:47
+msgid "Treemap"
+msgstr "Treemap"
+
+#: .\frontend\tutorial.py:48
+msgid ""
+"The size of the rectangles is proportional to the volume of resources "
+"foreseen in the budget of each rubric compared to the total budget. Click on "
+"the rectangles to refresh the chart and understand the details of how "
+"resources are distributed within a specific rubric."
+msgstr ""
+"O tamanho dos retângulos é proporcional ao volume de recursos previstos no "
+"orçamento da rubrica em relação ao orçamento total. Clique nos retângulos "
+"para atualizar o gráfico e entender os detalhes de como os recursos são "
+"distribuídos dentro de uma rubrica específica."
+
+#: .\frontend\tutorial.py:55
+msgid "Colors"
+msgstr "Cores"
+
+#: .\frontend\tutorial.py:56
+msgid ""
+"The colors of the rectangles indicate the percentage (%) of the forecasted "
+"budget that was actually spent or collected under the rubric. If this "
+"information is not available, it will be grayed out."
+msgstr ""
+"As cores dos retângulos indicam o percentual (%) do orçamento previsto que "
+"foi de fato gasto ou arrecadado na rubrica. Caso esta informação não esteja "
+"disponível, será atribuída a cor cinza."
+
+#: .\frontend\tutorial.py:63
+msgid "Secondary data"
+msgstr "Dados secundários"
+
+#: .\frontend\tutorial.py:64
+msgid ""
+"Some countries make available how much of the budget is directed towards "
+"maintenance of government services (current budget) investments (investment "
+"budget). If available, this information will show here."
+msgstr ""
+"Alguns países apresentam o quanto do orçamento de cada rubrica é direcionado "
+"para manutenção dos serviços do Governo (Orçamento de Funcionamento) e ou a "
+"investimentos (Orçamento de Investimento). Caso disponível, esta informação "
+"aparecerá aqui."
+
+#: .\frontend\tutorial.py:71
+msgid "Treemap data"
+msgstr "Dados no treemap"
+
+#: .\frontend\tutorial.py:72
+msgid ""
+"When <b>moving the cursor over the rectangles</b>, informational balloons "
+"will appear, specifying the absolute numbers of the allocation and the "
+"amount paid. Some countries report how much of the allocation is relative to "
+"the budget for government functioning and how much is relative to the "
+"investment budget. If available, these values will be displayed in the "
+"informational balloons and on the \"Secondary Data\" card, to the left of "
+"the treemap."
+msgstr ""
+"Ao <b>passar o cursor sobre os retângulos</b>, surgirão balões informativos, "
+"especificando os números absolutos da dotação e do valor pago. Alguns países "
+"informam o quanto da dotação é relativa ao orçamento para funcionamento do "
+"governo e o quanto é relativo ao orçamento de investimentos. Se disponíveis, "
+"estes valores serão apresentados nos balões informativos e no card \"Dados "
+"Secundários\", à esquerda do treemap."
+
+#: .\frontend\tutorial.py:81
+msgid "Historic Series"
+msgstr "Série Histórica"
+
+#: .\frontend\tutorial.py:82
+msgid ""
+"The second view is the historical series. It shows the evolution in the "
+"amount of endowment and amounts paid since 2016. The series is responsive to "
+"selections made in the treemap. Thus, it is possible to quickly analyze the "
+"history of each of the rubrics listed on the platform."
+msgstr ""
+"A segunda visualização é a série histórica. Ela apresenta a evolução no "
+"montante da dotação e dos valores pagos desde 2016. A série é responsiva às "
+"seleções feitas no treemap. Assim, é possível analisar rapidamente o "
+"histórico de cada uma das rubricas listadas na plataforma."
+
+#: .\frontend\tutorial.py:89
+msgid "Table"
+msgstr "Tabela"
+
+#: .\frontend\tutorial.py:90
+msgid ""
+"The last view is a table that summarizes all the information contained in "
+"the treemap. It is possible to detail the information of a given rubric, by "
+"clicking on the corresponding line."
+msgstr ""
+"A última visualização é uma tabela que resume todas as informações contidas "
+"no treemap. É possível detalhar as informações de determinada rubrica, ao "
+"clicar na linha referente."
+
+#: .\frontend\tutorial.py:96
+msgid "Update visualizations"
+msgstr "Atualizar visualizações"
+
+#: .\frontend\tutorial.py:97
+msgid ""
+"It is also possible to update the entire platform to present data referring "
+"to the rubric selected in the table."
+msgstr ""
+"É possível também atualizar toda a plataforma para apresentar os dados "
+"referentes à rubrica selecionada na tabela."
+
+#: .\frontend\tutorial.py:102
+msgid "CSV"
+msgstr "CSV"
+
+#: .\frontend\tutorial.py:103
+msgid "All data is available for download in .csv format."
+msgstr "Todos os dados estão disponíveis para download em formato .csv."
 
 #: .\templates\admin\base_site.html:40
 msgid "Django administration"

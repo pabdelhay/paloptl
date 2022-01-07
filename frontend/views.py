@@ -6,6 +6,7 @@ from django.views import View
 from django.views.generic.detail import SingleObjectMixin
 
 from apps.geo.models import Country
+from frontend.tutorial import COUNTRY_DETAILS_TUTORIAL
 
 
 class IndexView(View):
@@ -49,7 +50,8 @@ class CountryView(SingleObjectMixin, View):
             'budgets': budgets,
             'last_budget': last_budget,
             'budgets_serialized': json.dumps(budgets_serialized),
-            'treemap_colors_map': json.dumps(settings.TREEMAP_EXECUTION_COLORS_HOVER)
+            'treemap_colors_map': json.dumps(settings.TREEMAP_EXECUTION_COLORS_HOVER),
+            'tutorial': COUNTRY_DETAILS_TUTORIAL
         }
         return render(request, 'frontend/country-details.html', context=ctx)
 
