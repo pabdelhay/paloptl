@@ -45,9 +45,9 @@ COUNTRY_DETAILS_TUTORIAL = [
     {
         'element': '#chart-treemap',
         'title': _("Treemap"),
-        'text': _("The size of the rectangles is proportional to the volume of resources foreseen in "
-                  "the budget of each rubric compared to the total budget. Click on the rectangles to refresh the "
-                  "chart and understand the details of how resources are distributed within a specific rubric."),
+        'text': _("The size of the rectangles is proportional to the volume of resources foreseen in the budget of "
+                  "each rubric compared to the total actually paid or received. Click on the rectangles to refresh "
+                  "the chart and understand the details of how resources are distributed within a specific rubric."),
         'position': 'left'
     },
     {
@@ -67,35 +67,24 @@ COUNTRY_DETAILS_TUTORIAL = [
         'position': 'right'
     },
     {
-        'element': '#chart-treemap',
-        'title': _("Treemap data"),
-        'text': _("When <b>moving the cursor over the rectangles</b>, informational balloons will appear, "
-                  "specifying the absolute numbers of the allocation and the amount paid. Some countries report "
-                  "how much of the allocation is relative to the budget for government functioning and "
-                  "how much is relative to the investment budget. If available, these values will be displayed "
-                  "in the informational balloons and on the \"Secondary Data\" card, to the left of the treemap."),
-        'position': 'left'
-    },
-    {
         'element': '#historical-info',
         'title': _("Historic Series"),
-        'text': _("The second view is the historical series. It shows the evolution in the amount of endowment "
-                  "and amounts paid since 2016. The series is responsive to selections made in the treemap. "
-                  "Thus, it is possible to quickly analyze the history of each of the rubrics listed on the platform."),
+        'text': _("It shows the evolution of revenues and expenses since 2016. This chart is responsive to the "
+                  "queries defined in the treemap. Thus, it is possible to quickly analyze the history of "
+                  "each item listed on the platform."),
         'scrollTo': 'tooltip',
     },
     {
         'element': '#datatable-info',
         'title': _("Table"),
-        'text': _("The last view is a table that summarizes all the information contained in the treemap. "
-                  "It is possible to detail the information of a given rubric, by clicking on the corresponding line."),
+        'text': _("It summarizes all data presented in the treemap. Breakdown the information of a given item by "
+                  "clicking on it."),
         'scrollTo': 'tooltip',
     },
     {
         'element': '.expand-visualization',
         'title': _("Update visualizations"),
-        'text': _("It is also possible to update the entire platform to present data referring to the rubric "
-                  "selected in the table."),
+        'text': _("Click here to update all charts in order to display data of the item you are interested in."),
     },
     {
         'element': '.download-link',

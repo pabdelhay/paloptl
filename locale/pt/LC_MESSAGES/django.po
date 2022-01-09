@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-07 13:12-0300\n"
+"POT-Creation-Date: 2022-01-09 16:56-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1116,9 +1116,9 @@ msgstr "Treemap"
 #: .\frontend\tutorial.py:48
 msgid ""
 "The size of the rectangles is proportional to the volume of resources "
-"foreseen in the budget of each rubric compared to the total budget. Click on "
-"the rectangles to refresh the chart and understand the details of how "
-"resources are distributed within a specific rubric."
+"foreseen in the budget of each rubric compared to the total actually paid or "
+"received. Click on the rectangles to refresh the chart and understand the "
+"details of how resources are distributed within a specific rubric."
 msgstr ""
 "O tamanho dos retângulos é proporcional ao volume de recursos previstos no "
 "orçamento da rubrica em relação ao orçamento total. Clique nos retângulos "
@@ -1155,81 +1155,57 @@ msgstr ""
 "aparecerá aqui."
 
 #: .\frontend\tutorial.py:71
-msgid "Treemap data"
-msgstr "Dados no treemap"
-
-#: .\frontend\tutorial.py:72
-msgid ""
-"When <b>moving the cursor over the rectangles</b>, informational balloons "
-"will appear, specifying the absolute numbers of the allocation and the "
-"amount paid. Some countries report how much of the allocation is relative to "
-"the budget for government functioning and how much is relative to the "
-"investment budget. If available, these values will be displayed in the "
-"informational balloons and on the \"Secondary Data\" card, to the left of "
-"the treemap."
-msgstr ""
-"Ao <b>passar o cursor sobre os retângulos</b>, surgirão balões informativos, "
-"especificando os números absolutos da dotação e do valor pago. Alguns países "
-"informam o quanto da dotação é relativa ao orçamento para funcionamento do "
-"governo e o quanto é relativo ao orçamento de investimentos. Se disponíveis, "
-"estes valores serão apresentados nos balões informativos e no card \"Dados "
-"Secundários\", à esquerda do treemap."
-
-#: .\frontend\tutorial.py:81
 msgid "Historic Series"
 msgstr "Série Histórica"
 
-#: .\frontend\tutorial.py:82
+#: .\frontend\tutorial.py:72
 msgid ""
-"The second view is the historical series. It shows the evolution in the "
-"amount of endowment and amounts paid since 2016. The series is responsive to "
-"selections made in the treemap. Thus, it is possible to quickly analyze the "
-"history of each of the rubrics listed on the platform."
+"It shows the evolution of revenues and expenses since 2016. This chart is "
+"responsive to the queries defined in the treemap. Thus, it is possible to "
+"quickly analyze the history of each item listed on the platform."
 msgstr ""
 "A segunda visualização é a série histórica. Ela apresenta a evolução no "
 "montante da dotação e dos valores pagos desde 2016. A série é responsiva às "
 "seleções feitas no treemap. Assim, é possível analisar rapidamente o "
 "histórico de cada uma das rubricas listadas na plataforma."
 
-#: .\frontend\tutorial.py:89
+#: .\frontend\tutorial.py:79
 msgid "Table"
 msgstr "Tabela"
 
-#: .\frontend\tutorial.py:90
+#: .\frontend\tutorial.py:80
 msgid ""
-"The last view is a table that summarizes all the information contained in "
-"the treemap. It is possible to detail the information of a given rubric, by "
-"clicking on the corresponding line."
+"It summarizes all data presented in the treemap. Breakdown the information "
+"of a given item by clicking on it."
 msgstr ""
 "A última visualização é uma tabela que resume todas as informações contidas "
 "no treemap. É possível detalhar as informações de determinada rubrica, ao "
 "clicar na linha referente."
 
-#: .\frontend\tutorial.py:96
+#: .\frontend\tutorial.py:86
 msgid "Update visualizations"
 msgstr "Atualizar visualizações"
 
-#: .\frontend\tutorial.py:97
+#: .\frontend\tutorial.py:87
 msgid ""
-"It is also possible to update the entire platform to present data referring "
-"to the rubric selected in the table."
+"Click here to update all charts in order to display data of the item you are "
+"interested in."
 msgstr ""
-"É possível também atualizar toda a plataforma para apresentar os dados "
-"referentes à rubrica selecionada na tabela."
+"É possível também atualizar toda a plataforma para apresentar os dados referentes à rubrica selecionada na tabela."
 
-#: .\frontend\tutorial.py:102
+#: .\frontend\tutorial.py:91
 msgid "CSV"
 msgstr "CSV"
 
-#: .\frontend\tutorial.py:103
+#: .\frontend\tutorial.py:92
 msgid "All data is available for download in .csv format."
 msgstr "Todos os dados estão disponíveis para download em formato .csv."
 
-#: .\frontend\tutorial.py:110
+#: .\frontend\tutorial.py:99
 msgid "Open data"
 msgstr "Dados abertos"
 
-#: .\frontend\tutorial.py:112
+#: .\frontend\tutorial.py:101
 msgid ""
 "Data must be <strong>complete, primary</strong> (collected from source, made "
 "available by the institution that generates it), <strong>accessible</strong> "
@@ -1249,11 +1225,11 @@ msgstr ""
 "strong> (não patenteada/ sem copyright). Veja a metodologia para entender "
 "mais sobre a lógica de pontuação nesta dimensão."
 
-#: .\frontend\tutorial.py:121
+#: .\frontend\tutorial.py:110
 msgid "Budget Reports"
 msgstr "Relatórios Orçamentais"
 
-#: .\frontend\tutorial.py:123
+#: .\frontend\tutorial.py:112
 msgid ""
 "Accesses whether reports relating to the budget implementation cycle are "
 "<strong>produced and published</strong> in a timely manner. The reports "
@@ -1268,11 +1244,11 @@ msgstr ""
 "Veja a metodologia para entender mais sobre a lógica de pontuação nesta "
 "dimensão."
 
-#: .\frontend\tutorial.py:131
+#: .\frontend\tutorial.py:120
 msgid "Information Quality"
 msgstr "Qualidade da Informação"
 
-#: .\frontend\tutorial.py:133
+#: .\frontend\tutorial.py:122
 msgid ""
 "This dimension assesses whether the country presents the <strong>planned and "
 "executed budget</strong> according to the following classifications: "
@@ -1368,6 +1344,33 @@ msgstr "Últimos orçamentos"
 #: .\templates\admin\index.html:20
 msgid "Add new budget"
 msgstr "Adicionar novo orçamento"
+
+#~ msgid "Treemap data"
+#~ msgstr "Dados no treemap"
+
+#~ msgid ""
+#~ "When <b>moving the cursor over the rectangles</b>, informational balloons "
+#~ "will appear, specifying the absolute numbers of the allocation and the "
+#~ "amount paid. Some countries report how much of the allocation is relative "
+#~ "to the budget for government functioning and how much is relative to the "
+#~ "investment budget. If available, these values will be displayed in the "
+#~ "informational balloons and on the \"Secondary Data\" card, to the left of "
+#~ "the treemap."
+#~ msgstr ""
+#~ "Ao <b>passar o cursor sobre os retângulos</b>, surgirão balões "
+#~ "informativos, especificando os números absolutos da dotação e do valor "
+#~ "pago. Alguns países informam o quanto da dotação é relativa ao orçamento "
+#~ "para funcionamento do governo e o quanto é relativo ao orçamento de "
+#~ "investimentos. Se disponíveis, estes valores serão apresentados nos "
+#~ "balões informativos e no card \"Dados Secundários\", à esquerda do "
+#~ "treemap."
+
+#~ msgid ""
+#~ "It is also possible to update the entire platform to present data "
+#~ "referring to the rubric selected in the table."
+#~ msgstr ""
+#~ "É possível também atualizar toda a plataforma para apresentar os dados "
+#~ "referentes à rubrica selecionada na tabela."
 
 #, fuzzy
 #~| msgid "Nature"
