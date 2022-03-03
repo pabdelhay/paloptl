@@ -23,6 +23,8 @@ environ.Env.read_env(env_file=os.path.join(BASE_DIR, '.env'))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY', default='#thisisarandomstringandshouldbereplacedinenv')
 
+
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG', cast=bool, default=True)
 ENV = os.environ.get('ENV', 'production')
@@ -237,3 +239,5 @@ if SENTRY_DSN:
 
 en_formats.DATETIME_FORMAT = "d b Y H:i:s"
 pt_formats.DATETIME_FORMAT = "d b Y H:i:s"
+
+CURRENCY_KEY = "b9b4ceb0-9634-11ec-ac62-af9b6e9fcc16"

@@ -6,7 +6,9 @@ from django.views import View
 from django.views.generic.detail import SingleObjectMixin
 
 from apps.geo.models import Country
+from frontend.forms import CountryForm
 from frontend.tutorial import COUNTRY_DETAILS_TUTORIAL, INDEX_DIMENSIONS
+import requests
 
 
 class IndexView(View):
@@ -70,9 +72,34 @@ class TestView(View):
         return render(request, 'frontend/teste.html', context=ctx)
 
 
-class ExpensesAndRevenues(View, ):
+class ExpensesAndRevenues(View):
     def get(self, request, *args, **kwargs):
         cn = {
             "country": Country.objects.get(slug=self.kwargs.get("slug"))
         }
         return render(request, 'frontend/expenses-and-revenues.html', context=cn)
+
+
+class ExampleView(View):
+
+    def get(self, request):
+        base_currency = request.GET.get("cur", "USD")
+        url = f"http://127.0.0.1:8000/api/budgets/palop_base_currency/?cur={base_currency}"
+
+        get_res_url = requests.get(url)
+
+        ctx = {
+            'countries': Country.objects.all(),
+            'results': get_res_url.json()
+        }
+        return render(request, 'frontend/example.html', context=ctx)
+
+
+class BudgetCountryYear(View):
+    def get(self, request):
+
+        form = CountryForm()
+        ctx = {
+            'form': form,
+            }
+        return render(request, 'frontend/budget_country_year.html', context=ctx)

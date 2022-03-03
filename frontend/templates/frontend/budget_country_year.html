@@ -1,0 +1,38 @@
+
+{% extends 'frontend/base.html' %}
+{%load static %}
+{% block extrahead %}
+
+
+
+<!-- Resources -->
+<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+<script src="{% static 'js/budget_country_year.js' %}"> </script>
+<!-- Chart code -->
+
+
+<!-- HTML -->
+
+{% endblock %}
+
+
+{% block extrastyle %}
+
+<style>
+#chartdiv {
+  width: 100%;
+ height: 500px;
+}
+</style>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+{{form}}
+<div id="chartdiv"></div>
+{% endblock %}
