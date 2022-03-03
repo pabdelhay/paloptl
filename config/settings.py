@@ -98,13 +98,11 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 SECURE_SSL_REDIRECT = True if ENV != 'dev' else False
 
-
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 DATABASES = {
     'default': env.db()
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -122,7 +120,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
@@ -161,21 +158,20 @@ if AWS_STORAGE_BUCKET_NAME:
 if env('REDIS_URL', default=None):
     CACHES = {
         "default": {
-             "BACKEND": "redis_cache.RedisCache",
-             "LOCATION": env('REDIS_URL'),
+            "BACKEND": "redis_cache.RedisCache",
+            "LOCATION": env('REDIS_URL'),
         }
     }
-
 
 # Celery
 CELERY_BROKER_URL = os.environ.get("REDIS_URL", None)
 CELERY_TASK_SERIALIZER = 'json'
-#CELERY_TASK_IGNORE_RESULT = True
+# CELERY_TASK_IGNORE_RESULT = True
 CELERY_TASK_STORE_ERRORS_EVEN_IF_IGNORED = True
 CELERY_RESULT_BACKEND = os.environ.get("REDIS_URL", None)
 CELERY_TASK_ALWAYS_EAGER = ENV == 'dev'
-#CELERY_BROKER_POOL_LIMIT = 30
-#CELERY_BROKER_TRANSPORT_OPTIONS = {'socket_timeout': 3600}
+# CELERY_BROKER_POOL_LIMIT = 30
+# CELERY_BROKER_TRANSPORT_OPTIONS = {'socket_timeout': 3600}
 
 
 # Django-money
@@ -193,7 +189,7 @@ _FORMATTER.add_sign_definition(
 _FORMATTER.add_formatting_definition(
     'RAW_CURRENCY',
     group_size=3, group_separator=".", decimal_point=",",
-    positive_sign="",  trailing_positive_sign="",
+    positive_sign="", trailing_positive_sign="",
     negative_sign="-", trailing_negative_sign="",
     rounding_method=ROUND_HALF_EVEN
 )
@@ -237,3 +233,5 @@ if SENTRY_DSN:
 
 en_formats.DATETIME_FORMAT = "d b Y H:i:s"
 pt_formats.DATETIME_FORMAT = "d b Y H:i:s"
+
+FREECURRENCY_ACCESS_KEY = "b9b4ceb0-9634-11ec-ac62-af9b6e9fcc16"
