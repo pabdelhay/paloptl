@@ -5,7 +5,7 @@ from config.settings import CURRENCY_CHOICES
 
 
 def year_choices():
-    return list(list(Budget.objects.filter().order_by('year').distinct('year').values_list('year', 'year')))
+    return list(Budget.objects.order_by('year').distinct('year').values_list('year', 'year'))
 
 
 class BudgetPerYearForm(forms.Form):
