@@ -81,7 +81,6 @@ am4core.ready(function() {
     separatorLine.valign = "middle";
     separatorLine.strokeDasharray = "5,5";
 
-
     var dragText = container.createChild(am4core.Label);
     dragText.text = "Drag slices over the line";
     dragText.rotation = 90;
