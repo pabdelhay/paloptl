@@ -10,17 +10,6 @@ def money_display(amount, currency):
 def raw_money_display(amount):
     return Money(amount, settings.RAW_CURRENCY)
 
-def apply_exchange_euro(amount, currency):
-    api_key = settings.FIXED_ACESS_KEY_CURRENCY_CHANGE
-    url = f"http://data.fixer.io/api/latest?access_key={api_key}&symbols=USD,AOA,CVE,XOF,MZN,STD&format=1"
-    r = requests.get(url)
-    result = r.json()
-    
-    rate = result['rates'].get(currency)
-
-    return amount / rate
-
-
 def apply_exchange(base_currency):
     api_key = settings.FIXED_ACESS_KEY_CURRENCY_CHANGE
     url = f"https://freecurrencyapi.net/api/v2/latest?apikey={api_key}&base_currency={base_currency}"
