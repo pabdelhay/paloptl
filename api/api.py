@@ -207,8 +207,7 @@ class OutputExpensesRevenueYearFilterSerializer(serializers.Serializer):
     expense_group = serializers.CharField()
 
 
-def requests(country):
-    pass
+
 
 
 class BudgetViewset(ReadOnlyModelViewSet):
@@ -514,7 +513,7 @@ class BudgetViewset(ReadOnlyModelViewSet):
                 'group': "functional" if budget_summary.expense_functional_budget else "organic",
                 'currency': budget_summary.budget.currency})
         return Response(budgets_per_year)
-
+#my api starts here
     @action(detail=False)
     def transparency_index(self, request, pk=None):
 

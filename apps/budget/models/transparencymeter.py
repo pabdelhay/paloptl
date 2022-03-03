@@ -10,7 +10,7 @@ COUNTRY_CHOICES = (
 )
 
 
-class transparencymeter(models.Model):
+class TransparenciMeter(models.Model):
     country = models.CharField(max_length=2, choices=COUNTRY_CHOICES)
     year = models.SmallIntegerField(max_length=4)
 

@@ -79,7 +79,7 @@ class ExpensesAndRevenues(View, ):
         return render(request, 'frontend/expenses-and-revenues.html', context=cn)
 
 
-class NewPage(View):
+class TransparenciMeter(View):
     def get(self, request):
         ctx = {
             'countries': Country.objects.all(),

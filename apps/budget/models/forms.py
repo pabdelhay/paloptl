@@ -1,6 +1,6 @@
 from django import forms
 
-from apps.budget.models.transparencymeter import transparencymeter
+from apps.budget.models.transparencymeter import TransparenciMeter, TransparenciMeter
 
 COUNTRY_CHOICES = (
     ('AO', 'Angola'),
@@ -14,5 +14,5 @@ COUNTRY_CHOICES = (
 
 class TransForm(forms.ModelForm):
     class Meta:
-        model = transparencymeter
+        model = TransparenciMeter
         fields = "__all__"
