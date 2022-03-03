@@ -431,7 +431,7 @@ class BudgetViewset(ReadOnlyModelViewSet):
         base_currency = request.query_params.get('base_currency')
         aggregate_budgets_summery = []
         
-        #Melhorar a performance do codigo no acesso a API, generalizar base code,
+        #UpGreat code to new 
         #
 
         budget_summerys = BudgetSummary.objects.filter(budget__year=year)
