@@ -7,7 +7,6 @@ from rest_framework import serializers
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ReadOnlyModelViewSet
-
 from apps.budget.choices import ExpenseGroupChoices, RevenueGroupChoices
 from apps.budget.models import Budget, TransparencyIndex, Expense, Revenue, BudgetSummary, Category, CategoryMap
 from apps.geo.models import Country
@@ -485,54 +484,6 @@ class BudgetViewset(ReadOnlyModelViewSet):
             "category": categories,
             "data": agregateExpenses
         })
-
-    @action(detail=False)
-    def lupo(self, request, pk=None):
-        a = Expense.objects.filter(budget__country__name="Angola", budget__year=2019, level=0).aggregate(
-            total=Sum("budget_aggregated"))
-        return Response(a["total"])
-
-    @action(detail=False)
-    def exercicio5(self, request, pk=None):
-        year = request.query_params.get("year", 2020)
-        #
-        # rates = {
-        #     "USD": 1.118506,
-        #     "AOA": 556.272628,
-        #     "CVE": 110.083491,
-        #     "XOF": 654.900602,
-        #     "MZN": 71.394607,
-        #     "STD": 23150.811328
-        # }
-
-        dados = BudgetSummary.objects.filter(budget__year=year)
-        list = []
-
-        for db in dados:
-            dic = {}
-
-            dic["country"] = db.budget.country.name
-            func = db.expense_functional_budget
-            orga = db.expense_organic_budget
-            currency = db.budget.currency
-
-            if func != None:
-                ammount_in_euro = apply_exchange(func, currency, dic)
-                dic["bugdet_euro"] = ammount_in_euro
-                dic["bugdet_" + currency] = func
-                dic["group"] = "fuctional"
-
-
-            else:
-                ammount_in_euro = apply_exchange(orga, currency, dic)
-                dic["bugdet_euro"] = ammount_in_euro
-                dic["bugdet_" + currency] = orga
-                dic["group"] = "organic"
-
-            dic["year"] = year
-            list.append(dic)
-
-        return Response(list)
 
     @action(detail=False)
     def base_currency(self, request, pk=None):

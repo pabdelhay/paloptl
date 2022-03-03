@@ -130,7 +130,6 @@ am4core.ready(function() {
             slice2 = targetSlice;
         }
 
-
         dataItem1 = slice1.dataItem;
         dataItem2 = slice2.dataItem;
 
@@ -231,13 +230,6 @@ am4core.ready(function() {
 }); // end am4core.ready()
 
 
-
-
-
-
-
-
-
 function get_api_data(year, base_currency){
 
     $.get("/api/budgets/base_currency/?year="+year+"&"+"cur="+base_currency, function(data_internal){
@@ -247,29 +239,21 @@ function get_api_data(year, base_currency){
         chart1.data = data_copy;
         chart2.data = data_copy;
 
-
-
     });
 
 }
 
-
-
  $(document).ready(function(){
 
      $(document).on('change','#id_base_currency', function (env) {
-
-        get_api_data( $("#id_year").val(), $("#id_base_currency").val() );
-
-     });
-
+         get_api_data( $("#id_year").val(), $("#id_base_currency").val() );
+         });
 
      $(document).on('change','#id_year', function (env) {
-
         get_api_data( $("#id_year").val(), $("#id_base_currency").val() );
+        });
 
-     });
+     $("#id_year").trigger("change");
 
-      $("#id_year").trigger("change");
- });
+      });
 

@@ -80,21 +80,6 @@ class ExpensesAndRevenues(View):
         return render(request, 'frontend/expenses-and-revenues.html', context=cn)
 
 
-class ExampleView(View):
-
-    def get(self, request):
-        base_currency = request.GET.get("cur", "USD")
-        url = f"http://127.0.0.1:8000/api/budgets/palop_base_currency/?cur={base_currency}"
-
-        get_res_url = requests.get(url)
-
-        ctx = {
-            'countries': Country.objects.all(),
-            'results': get_res_url.json()
-        }
-        return render(request, 'frontend/example.html', context=ctx)
-
-
 class BudgetCountryYear(View):
     def get(self, request):
 
