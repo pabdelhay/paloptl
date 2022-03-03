@@ -78,10 +78,10 @@ class ExpensesAndRevenues(View, ):
         }
         return render(request, 'frontend/expenses-and-revenues.html', context=cn)
 
-class TesteView(View):
+class ChartBudgetYearView(View):
     def get(self, request):
         form = ExerciseAngolaForm()
         ctx = {
             'form': form
         }
-        return render(request, 'frontend/teste_view.html', context=ctx)
+        return render(request, 'frontend/chart-budget-per-year-and-currency.html', context=ctx)
