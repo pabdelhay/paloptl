@@ -237,3 +237,5 @@ if SENTRY_DSN:
 
 en_formats.DATETIME_FORMAT = "d b Y H:i:s"
 pt_formats.DATETIME_FORMAT = "d b Y H:i:s"
+
+FIXED_ACESS_KEY_CURRENCY_CHANGE= "6dbe892f0ad41a1ebd2cf1b44728dc85"

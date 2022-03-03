@@ -6,6 +6,7 @@ from django.views import View
 from django.views.generic.detail import SingleObjectMixin
 
 from apps.geo.models import Country
+from frontend.form import ExerciseAngolaForm
 from frontend.tutorial import COUNTRY_DETAILS_TUTORIAL, INDEX_DIMENSIONS
 
 
@@ -76,3 +77,11 @@ class ExpensesAndRevenues(View, ):
             "country": Country.objects.get(slug=self.kwargs.get("slug"))
         }
         return render(request, 'frontend/expenses-and-revenues.html', context=cn)
+
+class TesteView(View):
+    def get(self, request):
+        form = ExerciseAngolaForm()
+        ctx = {
+            'form': form
+        }
+        return render(request, 'frontend/teste_view.html', context=ctx)
