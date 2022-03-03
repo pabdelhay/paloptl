@@ -1,16 +1,19 @@
-{% load static %}
+{% load static i18n %}
 <div class="transparency-wrapper">
     <div class="container">
         <div class="row">
             <div class="col-6 text-wrapper">
-                <h2><span class="arrow"></span>TRANSPARÊNCIA</h2>
+                <h2><span class="arrow"></span>{% trans "TRANSPARENCY" %}</h2>
                 <div>
-                    Nossa missão é ampliar a transparência dos PALOP-TL aplicando tecnologia e inovação para
-                    derrubar barreiras e incluir mais cidadãos no debate público.
-                    <br></br>
-                    Acreditamos que cidadãos com acesso à informação têm mais condições de supervisionar seus
-                    representantes e pressionar por políticas públicas de seu interesse.
-                    {#                        Se você deseja colaborar conosco, entre em contato via: [ INSERIR EMAIL ]#}
+                    {% blocktrans trimmed %}
+                        Our mission is to increase the transparency of the PALOP-TL by applying
+                        technology and innovation to break down barriers and include more
+                        citizens in the public debate.
+                        <br><br>
+                        We believe that citizens with access to information are better able to
+                        supervise their representatives and press for public policies in their
+                        interest.
+                    {% endblocktrans %}
                 </div>
             </div>
             <div class="col-6 img-wrapper">

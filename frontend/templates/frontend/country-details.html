@@ -619,103 +619,21 @@
             tooltipClass: 'customIntro',
             showProgress: true,
             showBullets: false,
-            steps: [{
-                element: document.querySelector('.visualization-selector'),
-                title: 'Visualizações',
-                position: 'left',
-                intro: 'É possível navegar no orçamento pelas seguintes visualizações: ' +
-                    '<ul><li>Treemap</li><li>Série histórica</li><li>Tabela</li>'
-            }, {
-                element: document.querySelector('.budget-account-selector-row'),
-                title: 'Filtros de Consulta',
-                position: 'left',
-                intro: 'Os filtros atualizam as três visualizações sincronicamente. Escolha aqui se deseja ver os ' +
-                    'dados de <strong>receitas</strong> ou <strong>despesas</strong>, o <strong>tipo de ' +
-                    'classificação</strong> e o <strong>ano</strong>. Se alguma das opções não ' +
-                    'estiver disponível para seleção, é porque infelizmente o governo não disponibilizou os dados.'
-            }, {
-                element: document.querySelector('.budget-account-expenses'),
-                //position: 'bottom',
-                title: "Despesas",
-                intro: 'As despesas podem ser visualizadas por dois grupos de classificação: <strong>Função</strong> ' +
-                    '(temas de governo, como saúde e educação) e <strong>Órgão</strong> (como Ministérios, ' +
-                    'por exemplo).'
-            }, {
-                element: document.querySelector('.budget-account-revenues'),
-                position: 'bottom',
-                title: "Receitas",
-                intro: 'As receitas estão disponíveis por <strong>natureza económica</strong>. Esta classificação ' +
-                    'indica o acontecimento real que ocasionou a entrada do recurso nos cofres públicos ' +
-                    '(impostos ou transferências por exemplo)'
-            }, {
-                element: document.querySelector('.budget-selector'),
-                //position: 'bottom',
-                title: "Ano",
-                intro: 'Estão disponíveis dados desde 2016 na plataforma.'
-            }, {
-                element: document.querySelector('.search-selector'),
-                //position: 'bottom',
-                title: "Busca",
-                intro: 'Você pode buscar por uma despesa ou receita específica neste ícone.'
-            }, {
-                element: document.querySelector('#chart-treemap'),
-                title: "Treemap",
-                position: 'left',
-                intro: 'O tamanho dos retângulos é proporcional ao volume de recursos previstos no orçamento da ' +
-                    'rubrica em relação ao orçamento total. Clique nos retângulos para atualizar o gráfico e ' +
-                    'entender os detalhes de como os recursos são distribuídos dentro de uma rubrica específica.'
-            }, {
-                element: document.querySelector('.treemap-legend-table'),
-                position: 'left',
-                title: "Cores",
-                intro: 'As cores dos retângulos indicam o percentual (%) do orçamento previsto que foi de fato gasto ' +
-                    'ou arrecadado na rubrica. Caso esta informação não esteja disponível, será atribuída a cor cinza. '
-            }, {
-                element: document.querySelector('.secondary-info'),
-                position: 'right',
-                title: "Dados secundários",
-                intro: 'Alguns países apresentam o quanto do orçamento de cada rubrica é direcionado para manutenção ' +
-                    'dos serviços do Governo (Orçamento de Funcionamento) e ou a investimentos (Orçamento de ' +
-                    'Investimento). Caso disponível, esta informação aparecerá aqui.'
-            }, {
-                element: document.querySelector('#chart-treemap'),
-                position: 'left',
-                title: "Dados no treemap",
-                intro: 'Ao <b>passar o cursor sobre os retângulos</b>, surgirão balões informativos, especificando os números absolutos da ' +
-                    'dotação e do valor pago. Alguns países informam o quanto da dotação é relativa ao orçamento para ' +
-                    'funcionamento do governo e o quanto é relativo ao orçamento de investimentos. Se disponíveis, estes valores ' +
-                    'serão apresentados nos balões informativos e no card "Dados Secundários", à esquerda do treemap.'
-            },
+            steps: [
+            {% for t in tutorial %}
             {
-                element: document.querySelector('#historical-info'),
-                //position: 'bottom',
-                scrollTo: 'tooltip',
-                title: "Série histórica",
-                intro: 'A segunda visualização é a série histórica. Ela apresenta a evolução no montante da dotação e dos valores pagos ' +
-                    'desde 2016. A série é responsiva às seleções feitas no treemap. Assim, é possível analisar rapidamente o histórico ' +
-                    'de cada uma das rubricas listadas na plataforma.'
-            },
-            {
-                element: document.querySelector('#datatable-info'),
-                title: "Tabela",
-                //position: 'bottom',
-                scrollTo: 'tooltip',
-                intro: 'A última visualização é uma tabela que resume todas as informações contidas no treemap. É possível detalhar ' +
-                    'as informações de determinada rubrica, ao clicar na linha referente.'
-            },
-            {
-                element: document.querySelector('.expand-visualization'),
-                //position: 'bottom',
-                title: "Atualizar visualizações",
-                intro: 'É possível também atualizar toda a plataforma ' +
-                    'para apresentar os dados referentes à rubrica selecionada na tabela.'
-            },
-            {
-                element: document.querySelector('.download-link'),
-                //position: 'bottom',
-                title: "CSV",
-                intro: 'Todos os dados estão disponíveis para download em formato .csv.'
-            }]
+                'element': document.querySelector('{{ t.element }}'),
+                'title': '{{ t.title }}',
+                'intro': '{{ t.text|safe }}'
+                {% if t.position %}
+                    ,'position': '{{ t.position }}'
+                {% endif %}
+                {% if t.scrollTo %}
+                    ,'scrollTo': '{{ t.scrollTo }}'
+                {% endif %}
+            }{% if not forloop.last %},{% endif %}
+            {% endfor %}
+            ]
         }).start();
     }
 

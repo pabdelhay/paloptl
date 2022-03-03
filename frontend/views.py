@@ -6,12 +6,14 @@ from django.views import View
 from django.views.generic.detail import SingleObjectMixin
 
 from apps.geo.models import Country
+from frontend.tutorial import COUNTRY_DETAILS_TUTORIAL, INDEX_DIMENSIONS
 
 
 class IndexView(View):
     def get(self, request):
         ctx = {
-            'countries': Country.objects.all()
+            'countries': Country.objects.all(),
+            'index_dimensions': INDEX_DIMENSIONS
         }
         return render(request, 'frontend/index.html', context=ctx)
 
@@ -49,7 +51,8 @@ class CountryView(SingleObjectMixin, View):
             'budgets': budgets,
             'last_budget': last_budget,
             'budgets_serialized': json.dumps(budgets_serialized),
-            'treemap_colors_map': json.dumps(settings.TREEMAP_EXECUTION_COLORS_HOVER)
+            'treemap_colors_map': json.dumps(settings.TREEMAP_EXECUTION_COLORS_HOVER),
+            'tutorial': COUNTRY_DETAILS_TUTORIAL
         }
         return render(request, 'frontend/country-details.html', context=ctx)
 

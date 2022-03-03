@@ -37,41 +37,28 @@ function scroll_to(href){
 
 function ranking_help(step) {
     introJs().setOptions({
-        nextLabel: 'Próxima dimensão',
-        prevLabel: 'Dimensão anterior',
-        doneLabel: 'Pronto',
+        nextLabel: '{% trans "Next dimension" %}',
+        prevLabel: '{% trans "Previous dimension" %}',
+        doneLabel: '{% trans "Ready" %}',
         hidePrev: false,
         tooltipClass: 'customIntroRanking',
         showProgress: false,
         showBullets: true,
-        steps: [{
-            element: document.querySelector('.header-open_data'),
-            title: 'Dados Abertos',
-            position: 'bottom',
-            intro: 'Dados considerados abertos são <strong>completos, primários</strong> (coletados na fonte e com o menor nível de ' +
-                'granularidade possível), <strong>acessíveis</strong> (disponíveis online), <strong>não discriminatórios</strong> (qualquer pessoa pode ' +
-                'acessar sem qualquer necessidade de identificação), <strong>atualizados</strong>, em <strong>formato processável</strong> por máquinas, ' +
-                '<strong>não proprietários</strong> (como .csv por exemplo) e sob <strong>licença livre</strong> (não patenteada/ sem copyright). ' +
-                'Veja a metodologia para entender mais sobre a lógica de pontuação nesta dimensão.'
-        }, {
-            element: document.querySelector('.header-score_reports'),
-            title: 'Relatórios Orçamentais',
-            position: 'bottom',
-            intro: 'Avalia se os relatórios relativos ao ciclo de implementação do orçamento são <strong>elaborados ' +
-                'e publicados no prazo</strong>. Os relatórios avaliados são <strong>Orçamento Promulgado, os Relatórios de ' +
-                'Execução</strong> e o <strong>Relatório de Final de Ano</strong> (ou Contas Gerais do Estado). ' +
-                'Veja a metodologia para entender mais sobre a lógica de pontuação nesta dimensão.'
-        }, {
-            element: document.querySelector('.header-data_quality'),
-            title: 'Qualidade da Informação',
-            position: 'bottom',
-            intro: 'Acessa em que medida o cidadão pode acompanhar desde a <strong>previsão do orçamento ' +
-                'para o ano até a arrecadação e gasto efetivo dos valores</strong>. Atualmente avalia a ' +
-                'disponibilidade de três tipos de classificação: <strong>receita por natureza econômica</strong> ' +
-                '(origem da entrada de recurso, como impostos ou transferências), <strong>despesa por ' +
-                'classificação administrativa</strong> (por órgãos da administração) e <strong>funcional</strong> ' +
-                '(por temas de ação pública, como saúde e educação).'
-        }]
+        steps: [
+        {% for t in index_dimensions %}
+        {
+            'element': document.querySelector('{{ t.element }}'),
+            'title': '{{ t.title }}',
+            'intro': '{{ t.text|safe }}'
+            {% if t.position %}
+                ,'position': '{{ t.position }}'
+            {% endif %}
+            {% if t.scrollTo %}
+                ,'scrollTo': '{{ t.scrollTo }}'
+            {% endif %}
+        }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+        ]
     }).goToStepNumber(step).start();
 }
 
