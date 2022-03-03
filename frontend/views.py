@@ -1,6 +1,7 @@
 import json
 
 from django.conf import settings
+from django.db.models import Transform
 from django.shortcuts import render
 from django.views import View
 from django.views.generic.detail import SingleObjectMixin
@@ -76,3 +77,19 @@ class ExpensesAndRevenues(View, ):
             "country": Country.objects.get(slug=self.kwargs.get("slug"))
         }
         return render(request, 'frontend/expenses-and-revenues.html', context=cn)
+
+
+class NewPage(View):
+    def get(self, request):
+        ctx = {
+            'countries': Country.objects.all(),
+            'index_dimensions': INDEX_DIMENSIONS
+        }
+        return render(request, 'frontend/new.html', context=ctx)
+
+    def form_transform(request):
+        form = Transform()
+        context = {
+            'form': form
+            }
+        return render(request, 'apps/budget/models/forms.py', context=context)
