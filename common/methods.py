@@ -23,7 +23,7 @@ def apply_exchange_euro(amount, currency):
 
 def apply_exchange(base_currency):
     api_key = settings.FIXED_ACESS_KEY_CURRENCY_CHANGE
-    url = f"https://freecurrencyapi.net/api/v2/latest?apikey=b9b4ceb0-9634-11ec-ac62-af9b6e9fcc16&base_currency={base_currency}"
+    url = f"https://freecurrencyapi.net/api/v2/latest?apikey={api_key}&base_currency={base_currency}"
     r = requests.get(url)
     result = r.json()
     
