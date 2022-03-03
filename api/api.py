@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from apps.budget.choices import ExpenseGroupChoices, RevenueGroupChoices
-from apps.budget.models import Budget, TransparencyIndex, Expense, Revenue, BudgetSummary, Category, CategoryMap, budget
+from apps.budget.models import Budget, TransparencyIndex, Expense, Revenue, BudgetSummary, Category, CategoryMap
 from apps.geo.models import Country
 from common.methods import apply_change, apply_change_euro
 
