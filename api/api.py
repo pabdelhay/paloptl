@@ -1,6 +1,5 @@
 import operator
 from functools import reduce
-from django.db.models import Sum, Max, Min
 from django.conf import settings
 from django.db.models import F, Q
 from rest_framework import serializers
