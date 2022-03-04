@@ -120,6 +120,9 @@ class BudgetAccountInline(TabularInlinePaginated):
             title = _("Explicit given value differs from inferred value: {inferred}"
                       .format(inferred=raw_money_display(inferred_value)))
 
+        if not final_value:
+            return '-'
+
         html = f'<span class="{class_name}" title="{title}">{raw_money_display(final_value)}</span>'
 
         # Value different from initial.
