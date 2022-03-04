@@ -1,7 +1,7 @@
 let chart
 
 function getExpenses(year, currency){
-    url = '/api/budgets/total_expense/?year='+year+'&currency='+currency;
+    url = '/api/angola-bernardo/total_expense/?year='+year+'&currency='+currency;
     $('.year-text').text(year)
     $.get(url, function(data, status){
         if(status == 'success'){
