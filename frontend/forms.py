@@ -1,24 +1,14 @@
 from django import forms
 from django.conf import settings
 
-from apps.budget.models import BudgetSummary
+from apps.budget.models import Budget
 
 
-def year_choices():
-    big_data = BudgetSummary.objects.all()
-
-    dic_year = {}
-
-    for db in big_data:
-        dic_year[db.budget.year] = db.budget.year
-    list = []
-
-    for year in dic_year:
-        list_1 = [dic_year[year], dic_year[year]]
-        list.append(list_1)
-    return list
+def year_choice():
+    years = Budget.objects.order_by('year').values_list('year', 'year').distinct()
+    return years
 
 
-class CountryForm(forms.Form):
+class ExerciseAngolaForm(forms.Form):
     base_currency = forms.ChoiceField(choices=settings.CURRENCY_CHOICES)
-    year = forms.ChoiceField(choices=year_choices)
+    year = forms.ChoiceField(choices=year_choice)

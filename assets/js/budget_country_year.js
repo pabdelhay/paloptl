@@ -231,7 +231,7 @@ am4core.ready(function() {
 
 function get_api_data(year, base_currency){
 
-    $.get("/api/budgets/base_currency/?year="+year+"&"+"cur="+base_currency, function(data_internal){
+    $.get("/api/angola-lupossa/base_currency/?year="+year+"&"+"cur="+base_currency, function(data_internal){
 
         var data_copy = data.slice();
         data_copy.push.apply(data_copy, data_internal);

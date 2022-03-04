@@ -4,10 +4,11 @@ from django.views import View
 from frontend.forms import ExerciseAngolaForm
 
 
-class ChartBudgetYearView(View):
+class BudgetCountryYear(View):
     def get(self, request):
+
         form = ExerciseAngolaForm()
         ctx = {
-            'form': form
-        }
-        return render(request, 'frontend/students/chart-budget-per-year-and-currency.html', context=ctx)
+            'form': form,
+            }
+        return render(request, 'frontend/budget_country_year.html', context=ctx)

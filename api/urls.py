@@ -5,6 +5,7 @@ from rest_framework.routers import DefaultRouter
 from api.api import BudgetViewset
 from api.api_admin import AdminViewset
 from api.students.angola_estima import AngolaEstimaViewset
+from api.students.angola_lupossa import AngolaLupossaViewset
 
 router = DefaultRouter()
 
@@ -13,6 +14,7 @@ router.register(r'budgets', BudgetViewset, basename='budgets')
 
 # Students
 router.register(r'angola-estima', AngolaEstimaViewset, basename='angola_estima_api')
+router.register(r'angola-lupossa', AngolaLupossaViewset, basename='angola_lupossa_api')
 
 urlpatterns = [
     url(r'^', include(router.urls)),
