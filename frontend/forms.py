@@ -1,14 +1,13 @@
 from django import forms
-from django.conf import settings
 
 from apps.budget.models import Budget
+from config.settings import CURRENCY_CHOICES
 
 
-def year_choice():
-    years = Budget.objects.order_by('year').values_list('year', 'year').distinct()
-    return years
+def year_choices():
+    return list(Budget.objects.order_by('year').distinct('year').values_list('year', 'year'))
 
 
-class ExerciseAngolaForm(forms.Form):
-    base_currency = forms.ChoiceField(choices=settings.CURRENCY_CHOICES)
-    year = forms.ChoiceField(choices=year_choice)
+class BudgetPerYearForm(forms.Form):
+    base_currency = forms.ChoiceField(choices=CURRENCY_CHOICES)
+    year = forms.ChoiceField(choices=year_choices())
