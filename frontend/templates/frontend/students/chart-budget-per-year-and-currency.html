@@ -88,7 +88,9 @@
         labelBullet.label.horizontalCenter = "left";
         labelBullet.label.dx = 10;
         labelBullet.label.text = "{values.valueX.workingValue.formatNumber('#.0as')}";
+        labelBullet.label.truncate = false;
         labelBullet.locationX = 1;
+        
 
         // as by default columns of the same series are of the same color, we add adapter which takes colors from chart.colors color set
         series.columns.template.adapter.add("fill", function (fill, target) {
@@ -104,6 +106,7 @@
 {% endblock extrahead %}
 
 {% block content %}
+<hr>
 <div class="row">
     <script type="text/javascript">
 
@@ -113,6 +116,10 @@
 
         {{ form }}
     </div>
+    
+    <div class="row">
+        <h1 class="center">Orçamento Comparativo Anual de Países Por Moeda </h1>
+    </div>
     <br>
 
     <!-- HTML -->
@@ -121,5 +128,6 @@
     <div class="col-3"></div>
 
 </div>
+<hr>
 
 {% endblock %}
