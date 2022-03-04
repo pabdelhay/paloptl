@@ -21,7 +21,7 @@
 
 <script type="text/javascript">
     function get_api_data(year, base_currency){
-        $.get('/api/budgets/summary_budget_per_year_all_country/?year='+year+'&base_currency='+base_currency, function (data) {
+        $.get('/api/angola-estima/summary_budget_per_year_all_country/?year='+year+'&base_currency='+base_currency, function (data) {
             //console.table(data);
             chart.data = data;
         });
