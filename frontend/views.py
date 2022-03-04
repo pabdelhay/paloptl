@@ -1,9 +1,12 @@
 import json
+
 from django.conf import settings
 from django.shortcuts import render
 from django.views import View
 from django.views.generic.detail import SingleObjectMixin
+
 from apps.geo.models import Country
+from frontend.form import ExerciseAngolaForm
 from frontend.forms import CountryForm
 from frontend.tutorial import COUNTRY_DETAILS_TUTORIAL, INDEX_DIMENSIONS
 
@@ -69,7 +72,7 @@ class TestView(View):
         return render(request, 'frontend/teste.html', context=ctx)
 
 
-class ExpensesAndRevenues(View):
+class ExpensesAndRevenues(View, ):
     def get(self, request, *args, **kwargs):
         cn = {
             "country": Country.objects.get(slug=self.kwargs.get("slug"))

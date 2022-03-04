@@ -1,6 +1,6 @@
-import requests
 from django.conf import settings
 from djmoney.money import Money
+import requests
 
 
 def money_display(amount, currency):
