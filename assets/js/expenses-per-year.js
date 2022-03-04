@@ -3,6 +3,7 @@ let chart
 function getExpenses(year, currency){
     url = '/api/angola-bernardo/total_expense/?year='+year+'&currency='+currency;
     $('.year-text').text(year)
+    $('.currency-text').text(currency)
     $.get(url, function(data, status){
         if(status == 'success'){
             chart.data = data;
@@ -73,9 +74,12 @@ function createSeries(value, name) {
 
     var bullet = series.bullets.push(new am4charts.LabelBullet())
     bullet.interactionsEnabled = false
-    bullet.dy = 30;
+    bullet.dy = -10;
     bullet.label.text = '{valueY}'
-    bullet.label.fill = am4core.color('#ffffff')
+    bullet.label.fill = am4core.color('#000')
+    var bulletState = bullet.states.create("hover");
+    bulletState.properties.fillOpacity = 1;
+    bulletState.properties.strokeOpacity = 1;
 
     return series;
 }
@@ -85,6 +89,7 @@ function createSeries(value, name) {
 
 createSeries('expense', 'Expense');
 createSeries('revenue', 'Revenue');
+
 
 function arrangeColumns() {
 

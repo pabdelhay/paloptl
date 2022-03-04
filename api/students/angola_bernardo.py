@@ -45,6 +45,7 @@ class AngolaBernardoViewset(ReadOnlyModelViewSet):
                 'expense': expense_amount,
                 'revenue': revenue_amount,
                 'year': budget_summary.budget.year,
-                'group': "functional" if budget_summary.expense_functional_budget else "organic",
+                'expense_group': "functional" if budget_summary.expense_functional_budget else "organic",
+                'revenue_group': "nature" if budget_summary.revenue_nature_budget else "source",
                 'currency': budget_summary.budget.currency})
         return Response(budgets_per_year)
