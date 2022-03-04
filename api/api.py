@@ -499,13 +499,17 @@ class BudgetViewset(ReadOnlyModelViewSet):
             if budget_summary.budget.currency != base_currency:
                 if budget_summary.expense_functional_budget:
                     expense_amount = budget_summary.expense_functional_budget / rate
-                else:
+                elif budget_summary.expense_organic_budget:
                     expense_amount = budget_summary.expense_organic_budget / rate
+                else:
+                    expense_amount = 0
 
                 if budget_summary.revenue_nature_budget:
                     revenue_amount = budget_summary.revenue_nature_budget / rate
-                else:
+                elif budget_summary.revenue_source_budget:
                     revenue_amount = budget_summary.revenue_source_budget / rate
+                else:
+                    revenue_amount = 0
 
             else:
                 expense_amount = budget_summary.expense_organic_budget
