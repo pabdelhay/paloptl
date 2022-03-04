@@ -1,9 +1,8 @@
 import operator
 from functools import reduce
-from django.db.models import Sum
 
 from django.conf import settings
-from django.db.models import F, Q
+from django.db.models import F, Q, Sum
 from rest_framework import serializers
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -347,6 +346,10 @@ class BudgetViewset(ReadOnlyModelViewSet):
         return Response(serializer.initial_data)
 
     @action(detail=False)
+    def teste(self, request, pk=None):
+        return Response("ola teste")
+
+    @action(detail=False)
     def expenses_revenue_year_by_country(self, request, pk=None):
         """
             This is an API for a country's budget list.
@@ -482,10 +485,6 @@ class BudgetViewset(ReadOnlyModelViewSet):
             "category": categories,
             "data": agregateExpenses
         })
-
-    @action(detail=False)
-    def teste(self, request, pk=None):
-        return Response("ola teste")
 
     @action(detail=False)
     def total_expense(self, request, pk=None):
