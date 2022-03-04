@@ -18,8 +18,7 @@ function plot_chart(data) {
         am4core.useTheme(am4themes_animated);
 
         var container = am4core.create("chartdiv", am4core.Container);
-        container.wi
-        dth = am4core.percent(100);
+        container.width = am4core.percent(100);
         container.height = am4core.percent(100);
         container.layout = "horizontal";
 
@@ -46,6 +45,7 @@ function plot_chart(data) {
         series1.labels.template.bent = true;
         series1.labels.template.radius = 3;
         series1.labels.template.padding(0,0,0,0);
+
 
         var sliceTemplate1 = series1.slices.template;
         sliceTemplate1.cornerRadius = 5;
@@ -236,7 +236,7 @@ function plot_chart(data) {
 function get_api_data(year, base_currency){
 
     $.get("/api/angola-lupossa/base_currency/?year="+year+"&"+"cur="+base_currency, function(data_internal){
-
+       document.getElementById("title").innerHTML = "Orçamento Anual dos Países em "+  base_currency;
         var data_copy = data_default.slice();
         data_copy.push.apply(data_copy, data_internal);
         plot_chart(data_copy);
