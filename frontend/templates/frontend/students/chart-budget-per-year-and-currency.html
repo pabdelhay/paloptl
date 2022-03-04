@@ -20,8 +20,11 @@
 {% block extrahead %}
 
 <script type="text/javascript">
-    function get_api_data(year, base_currency){
-        $.get('/api/angola-estima/summary_budget_per_year_all_country/?year='+year+'&base_currency='+base_currency, function (data) {
+    function get_api_data(year, base_currency) {
+        $.get('/api/angola-estima/summary_budget_per_year_all_country/?year=' + year + '&base_currency=' + base_currency, function (data) {
+
+            $('.year-text').text(year)
+            $('.currency-text').text(base_currency)
             //console.table(data);
             chart.data = data;
         });
@@ -29,12 +32,12 @@
 
     $(document).ready(function () {
         //Bind
-        $(document).on('change', '#id_year', function(){
+        $(document).on('change', '#id_year', function () {
             get_api_data($(this).val(), $('#id_base_currency').val());
         });
 
         //Bind
-        $(document).on('change', '#id_base_currency', function(){
+        $(document).on('change', '#id_base_currency', function () {
             get_api_data($('#id_year').val(), $(this).val());
         });
 
@@ -54,14 +57,14 @@
         chart.padding(20, 20, 20, 20);
 
         chart.numberFormatter.bigNumberPrefixes = [
-            {"number": 1e+3, "suffix": "K"},
-            {"number": 1e+6, "suffix": "Mi"},
-            {"number": 1e+9, "suffix": "Bi"},
-            {"number": 1e+12, "suffix": "Tri"},
-            {"number": 1e+15, "suffix": "Qua"},
-            {"number": 1e+18, "suffix": "E"},
-            {"number": 1e+21, "suffix": "Z"},
-            {"number": 1e+24, "suffix": "Y"}
+            { "number": 1e+3, "suffix": "K" },
+            { "number": 1e+6, "suffix": "Mi" },
+            { "number": 1e+9, "suffix": "Bi" },
+            { "number": 1e+12, "suffix": "Tri" },
+            { "number": 1e+15, "suffix": "Qua" },
+            { "number": 1e+18, "suffix": "E" },
+            { "number": 1e+21, "suffix": "Z" },
+            { "number": 1e+24, "suffix": "Y" }
         ]
 
         chart.numberFormatter.numberFormat = "#,#.a";
@@ -90,7 +93,8 @@
         labelBullet.label.text = "{values.valueX.workingValue.formatNumber('#.0as')}";
         labelBullet.label.truncate = false;
         labelBullet.locationX = 1;
-        
+
+
 
         // as by default columns of the same series are of the same color, we add adapter which takes colors from chart.colors color set
         series.columns.template.adapter.add("fill", function (fill, target) {
@@ -98,7 +102,9 @@
         });
 
         categoryAxis.sortBySeries = series;
+
         
+
 
     }); // end am4core.ready()
 </script>
@@ -116,9 +122,10 @@
 
         {{ form }}
     </div>
-    
+
     <div class="row">
-        <h1 class="center">Orçamento Comparativo Anual de Países Por Moeda </h1>
+        <h1 class="center">Orçamento Anual Por País - <small class="year-text">20xx</small> <small>em</small> <small
+                class="currency-text" style="color: green;"></small></h1>
     </div>
     <br>
 
