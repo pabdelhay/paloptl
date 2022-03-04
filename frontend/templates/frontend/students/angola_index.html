@@ -1,0 +1,19 @@
+{% extends 'frontend/base.html' %}
+{%load static %}
+
+{% block extrastyle %}
+<style>
+    h2 { text-align: center; }
+    .links { text-align: center; }
+    .links a { font-size: 24px; margin-left: 20px; }
+</style>
+{% endblock %}
+
+{% block content %}
+    <h2>Exercícios da turma de Angola</h2>
+    <div class="links">
+    {% for student, view in views.items %}
+        <a href="{{ view }}">{{ student }}</a>
+    {% endfor %}
+    </div>
+{% endblock %}

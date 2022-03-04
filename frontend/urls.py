@@ -1,6 +1,7 @@
 from django.urls import path
 from django.views.generic import TemplateView
 
+from frontend.student_views import AngolaIndex
 from frontend.student_views.angola_bernardo import TotalExpensePerYear
 from frontend.student_views.angola_estima import ChartBudgetYearView
 from frontend.student_views.angola_lupossa import BudgetCountryYear
@@ -12,6 +13,7 @@ urlpatterns = [
     path('teste/', TestView.as_view(), name='test'),
     path('dataviz/', TemplateView.as_view(template_name="frontend/chart_sample.htm"), name='dataviz'),
     # Students
+    path('students/angola/', AngolaIndex.as_view(), name='chart-budget'),
     path('students/angola/chart-budget-per-year-and-currency/', ChartBudgetYearView.as_view(), name='chart-budget'),
     path('students/angola/budget_country_year/', BudgetCountryYear.as_view(), name='budget_country_year'),
     path('students/angola/total-expense-per-year/', TotalExpensePerYear.as_view(), name='total-expense-per-year'),
