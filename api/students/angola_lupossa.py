@@ -4,7 +4,7 @@ from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from api.api import BudgetSerializer
 from apps.budget.models import Budget, BudgetSummary
-from common.methods import exchange_base_currency, calculator_exchange, data_year_budget
+from common.students.angola_lupossa import exchange_base_currency, calculator_exchange, data_year_budget
 
 
 class AngolaLupossaViewset(ReadOnlyModelViewSet):
