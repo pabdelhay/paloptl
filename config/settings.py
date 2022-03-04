@@ -238,6 +238,4 @@ if SENTRY_DSN:
 
 en_formats.DATETIME_FORMAT = "d b Y H:i:s"
 pt_formats.DATETIME_FORMAT = "d b Y H:i:s"
-
 CURRENCY_KEY = "b9b4ceb0-9634-11ec-ac62-af9b6e9fcc16"
-
