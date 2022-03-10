@@ -12,7 +12,7 @@ function getExpenses(year, currency){
 }
 
 $(document).ready(function(){
-    getExpenses(new Date().getFullYear()-1, 'USD')
+    getExpenses($('#id_year').val(), $('#id_base_currency').val())
 
     $('#id_year').change(function(){
         year = $(this).val();
@@ -71,6 +71,11 @@ function createSeries(value, name) {
     series.events.on("hidden", arrangeColumns);
     series.events.on("shown", arrangeColumns);
 
+    if(value == 'expense'){
+        series.columns.template.tooltipText = "{name}:\n Group: {expense_group}\n Value : {expense}"
+    }else{
+        series.columns.template.tooltipText = "{name}:\n Group: {revenue_group}\n Value : {revenue}"
+    }
 
     var bullet = series.bullets.push(new am4charts.LabelBullet())
     bullet.interactionsEnabled = false
