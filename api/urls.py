@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from django.urls import include
+from api.students.angola_lue import AngolaLueViewset
 from rest_framework.routers import DefaultRouter
 
 from api.api import BudgetViewset
@@ -17,6 +18,7 @@ router.register(r'budgets', BudgetViewset, basename='budgets')
 router.register(r'angola-estima', AngolaEstimaViewset, basename='angola_estima_api')
 router.register(r'angola-lupossa', AngolaLupossaViewset, basename='angola_lupossa_api')
 router.register(r'angola-bernardo', AngolaBernardoViewset, basename='angola_bernardo_api')
+router.register(r'angola-lue', AngolaLueViewset, basename='angola_lue_api')
 
 urlpatterns = [
     url(r'^', include(router.urls)),

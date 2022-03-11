@@ -9,6 +9,7 @@ class AngolaIndex(View):
             'Bernardo': reverse('total-expense-per-year'),
             'Estima': reverse('chart-budget'),
             'Lupossa': reverse('budget_country_year'),
+            'Lue': reverse('transparency-index'),
         }
         ctx = {
             'views': views_per_student
