@@ -130,7 +130,8 @@ class BudgetAccount(MPTTModel, DirtyFieldsMixin):
         Updates the 'inferred_values' json field with values aggregated from siblings or descendants.
         :returns: dict (inferred_values)
         """
-        fields = ['budget_investment', 'budget_operation', 'budget_aggregated',
+        fields = ['initial_budget_investment', 'initial_budget_operation', 'initial_budget_aggregated',
+                  'budget_investment', 'budget_operation', 'budget_aggregated',
                   'execution_investment', 'execution_operation', 'execution_aggregated']
         self.inferred_values = {}
         for field in fields:

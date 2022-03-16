@@ -71,7 +71,7 @@ class Budget(CountryMixin, models.Model):
             for budget_account in budget_account_qs.all().order_by('-level'):
                 budget_account.update_inferred_values()
 
-        # Set inferred values for BudgetAggregated
+        # Set aggregated inferred values for BudgetSummary
         budget_summary, created = BudgetSummary.objects.get_or_create(budget=self)
         for budget_account_qs in budget_accounts:
             category_prefix = budget_account_qs.model._meta.model_name  # ['expense', 'revenue']

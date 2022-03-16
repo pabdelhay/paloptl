@@ -69,7 +69,8 @@
         });
     }
     function get_budget_data(budget_id, budget_account, group, callback){
-        var url = MEDIA_URL + 'budgets/{{ country.slug }}_' + budget_account + '_' + group + '_' + get_budget_year_by_id(budget_id) + '.json'
+        var avoid_cache_param = (new Date()).getTime();
+        var url = MEDIA_URL + 'budgets/{{ country.slug }}_' + budget_account + '_' + group + '_' + get_budget_year_by_id(budget_id) + '.json?nocache=' + avoid_cache_param;
         if(skip_cache){
             // If skip_cache, retrieve data from api.
             url = '/api/budgets/' + budget_id + '/' + budget_account + '/?group=' + group;
