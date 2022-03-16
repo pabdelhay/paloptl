@@ -6,8 +6,15 @@ from apps.budget.models import Budget
 class Command(BaseCommand):
     help = "Update all budgets: csv, json and inferred values."
 
+    def add_arguments(self, parser):
+        parser.add_argument('--country', type=str)
+
     def handle(self, *args, **options):
-        for budget in Budget.objects.all():
+        qs = Budget.objects.all()
+        if options['country']:
+            qs = qs.filter(country__slug=options['country'])
+
+        for budget in qs:
             print(f"Updating budget {str(budget)}... ", end='')
             budget.update_inferred_values()
             budget.update_json_files()
