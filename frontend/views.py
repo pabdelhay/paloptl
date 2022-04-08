@@ -77,3 +77,4 @@ class ExpensesAndRevenues(View, ):
             "country": Country.objects.get(slug=self.kwargs.get("slug"))
         }
         return render(request, 'frontend/expenses-and-revenues.html', context=cn)
+
