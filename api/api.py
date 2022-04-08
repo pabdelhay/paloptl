@@ -31,6 +31,17 @@ class BudgetSerializer(serializers.ModelSerializer):
         return obj.get_currency_display()
 
 
+class BudgetSummurySerializer(serializers.ModelSerializer):
+    currency_display = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Budget
+        fields = ('id', 'year', 'currency', 'currency_display', 'output_file')
+
+    def get_currency_display(self, obj):
+        return obj.get_currency_display()
+
+
 class BudgetAccountSerializer(serializers.ModelSerializer):
     children = serializers.SerializerMethodField()
     color = serializers.SerializerMethodField()

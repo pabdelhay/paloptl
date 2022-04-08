@@ -1,0 +1,38 @@
+{% extends 'frontend/base.html' %}
+{%load static %}
+
+{% block extrahead %}
+
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/radar.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+
+    <script src="{% static 'students/moz_ilidio.js' %}"> </script>
+{% endblock %}
+
+{% block extrastyle %}
+    <style>
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        }
+
+        #chartdiv {
+          width: 100%;
+          height: 250px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <p style="position: center">
+           {{ form.country }}
+    </p>
+
+    <br>
+    <br>
+
+    <div id="chartdiv"></div>
+
+{% endblock %}

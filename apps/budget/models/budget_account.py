@@ -15,14 +15,15 @@ class BudgetAccount(MPTTModel, DirtyFieldsMixin):
         pass
 
     budget = models.ForeignKey('budget.Budget', verbose_name=_("budget"), on_delete=models.CASCADE)
-    #group = models.CharField(verbose_name=_("group"), max_length=30, null=True, blank=True)
+    # group = models.CharField(verbose_name=_("group"), max_length=30, null=True, blank=True)
 
     name = models.CharField(verbose_name=_("name"), max_length=255)
     code = models.CharField(verbose_name=_("code"), max_length=20, null=True, blank=True)
     parent = TreeForeignKey('self', verbose_name=_("parent"), null=True, blank=True, related_name='children',
                             db_index=True, on_delete=models.CASCADE)
 
-    initial_budget_investment = models.FloatField(verbose_name=_("initial budget for investment"), null=True, blank=True)
+    initial_budget_investment = models.FloatField(verbose_name=_("initial budget for investment"), null=True,
+                                                  blank=True)
     initial_budget_operation = models.FloatField(verbose_name=_("initial budget for operation"), null=True, blank=True)
     initial_budget_aggregated = models.FloatField(verbose_name=_("initial budget"), null=True, blank=True)
 
@@ -42,7 +43,7 @@ class BudgetAccount(MPTTModel, DirtyFieldsMixin):
     last_update = models.DateTimeField(verbose_name=_("last update"), auto_now=True)
 
     class MPTTMeta:
-        order_insertion_by = ['name',]
+        order_insertion_by = ['name', ]
 
     class Meta:
         abstract = True
