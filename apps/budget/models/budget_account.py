@@ -16,7 +16,6 @@ class BudgetAccount(MPTTModel, DirtyFieldsMixin):
 
     budget = models.ForeignKey('budget.Budget', verbose_name=_("budget"), on_delete=models.CASCADE)
     #group = models.CharField(verbose_name=_("group"), max_length=30, null=True, blank=True)
-
     name = models.CharField(verbose_name=_("name"), max_length=255)
     code = models.CharField(verbose_name=_("code"), max_length=20, null=True, blank=True)
     parent = TreeForeignKey('self', verbose_name=_("parent"), null=True, blank=True, related_name='children',
