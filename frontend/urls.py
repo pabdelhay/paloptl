@@ -5,6 +5,7 @@ from frontend.student_views import AngolaIndex
 from frontend.student_views.angola_bernardo import TotalExpensePerYear
 from frontend.student_views.angola_estima import ChartBudgetYearView
 from frontend.student_views.angola_lupossa import BudgetCountryYear
+from frontend.student_views.mozambique_custodio import Mozambique_Custodio
 from frontend.views import IndexView, CountryView, CountriesExpensesView, ExpensesAndRevenues, TestView
 
 urlpatterns = [
@@ -18,6 +19,8 @@ urlpatterns = [
     path('students/angola/budget_country_year/', BudgetCountryYear.as_view(), name='budget_country_year'),
     path('students/angola/total-expense-per-year/', TotalExpensePerYear.as_view(), name='total-expense-per-year'),
 
+
+    path('students/mozambique/mozambique_custodio/', Mozambique_Custodio.as_view(), name='mozambique_custodio'),
     path('<slug>/', CountryView.as_view(), name='country-details'),
     path('<slug>/despesas-e-receitas/', ExpensesAndRevenues.as_view(), name='despesas-e-receitas'),
 ]

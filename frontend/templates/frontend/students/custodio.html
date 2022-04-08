@@ -1,0 +1,43 @@
+{% extends 'frontend/base.html' %}
+{%load static %}
+
+{% block extrastyle %}
+<style>
+    h2 { text-align: center; }
+    .links { text-align: center; }
+    .links a { font-size: 24px; margin-left: 20px; }
+
+ #chartdiv {
+  width: 100%;
+  height: 500px;
+</style>
+
+{% endblock %}
+
+{% block extrahead %}
+<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+<script src="{% static 'students/moz_custodio.js' %}"></script>
+<!-- Chart code -->
+<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+
+<script>
+
+</script>
+{% endblock %}
+
+{% block content %}
+    <h2>Percentagens anual dos Palops</h2>
+    <!-- HTML -->
+    <div id="chartdiv"></div>
+    <div>{{form.country}}</div>
+
+    <div class="links">
+    {% for student, view in views.items %}
+        <a href="{{ view }}">{{ student }}</a>
+    {% endfor %}
+    </div>
+{% endblock %}
