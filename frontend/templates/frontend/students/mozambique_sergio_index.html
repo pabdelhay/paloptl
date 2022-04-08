@@ -1,0 +1,32 @@
+{% extends 'frontend/base.html' %}
+{%load static %}
+
+{% block extrahead %}
+
+<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+<script type="text/javascript" src="{% static 'students/moz_sergio.js' %}"></script>
+
+{% endblock %}
+
+{% block content %}
+
+    <!-- Styles -->
+<style>
+#chartdiv {
+  width: 100%;
+  height: 500px;
+}
+</style>
+
+
+<div>
+    <div>Country:{{ form }}</div>
+
+</div>
+
+
+<div id="chartdiv"></div>
+
+{% endblock %}
