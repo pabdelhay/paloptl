@@ -72,7 +72,6 @@ $(document).ready(function(){
     getData();
 
     $(document).on('change', '#id_country', function (ev) {
-        alert('kkk');
         id = $('#id_country').val();
         console.log(id)
         getData(id);

@@ -1,13 +1,13 @@
 from django.shortcuts import render
 from django.views import View
 
-from frontend.forms import yearpercentForm
+from frontend.forms import YearPercentForm
 
 
-class Mozambique_Custodio(View):
+class MozambiqueCustodio(View):
     def get(self, request):
 
-        form = yearpercentForm()
+        form = YearPercentForm()
         ctx = {
             'form': form,
             }

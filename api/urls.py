@@ -7,8 +7,7 @@ from api.api_admin import AdminViewset
 from api.students.angola_bernardo import AngolaBernardoViewset
 from api.students.angola_estima import AngolaEstimaViewset
 from api.students.angola_lupossa import AngolaLupossaViewset
-from api.students.expenses import MozambiqueCustodioViewset
-from api.students.moz_custodio import ExpenseViewset
+
 
 router = DefaultRouter()
 
@@ -20,8 +19,7 @@ router.register(r'angola-estima', AngolaEstimaViewset, basename='angola_estima_a
 router.register(r'angola-lupossa', AngolaLupossaViewset, basename='angola_lupossa_api')
 router.register(r'angola-bernardo', AngolaBernardoViewset, basename='angola_bernardo_api')
 
-router.register(r'mozambique-custodio', ExpenseViewset, basename='mozambique_custodio_api')
-router.register(r'country-expense', MozambiqueCustodioViewset, basename='country_expense_api')
+
 
 urlpatterns = [
     url(r'^', include(router.urls)),

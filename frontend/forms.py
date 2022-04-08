@@ -14,6 +14,6 @@ class BudgetPerYearForm(forms.Form):
     year = forms.ChoiceField(choices=year_choices())
 
 
-class yearpercentForm(forms.Form):
+class YearPercentForm(forms.Form):
     country = forms.ModelChoiceField(queryset=Country.objects.all())
     year = forms.ChoiceField(choices=year_choices())
