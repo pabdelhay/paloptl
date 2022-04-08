@@ -1,6 +1,7 @@
 from django import forms
 
 from apps.budget.models import Budget
+from apps.geo.models import Country
 from config.settings import CURRENCY_CHOICES
 
 
@@ -11,3 +12,7 @@ def year_choices():
 class BudgetPerYearForm(forms.Form):
     base_currency = forms.ChoiceField(choices=CURRENCY_CHOICES)
     year = forms.ChoiceField(choices=year_choices())
+
+
+class Year(forms.Form):
+    years = forms.ModelChoiceField(queryset=Country.objects.all())

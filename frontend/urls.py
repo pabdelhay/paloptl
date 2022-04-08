@@ -2,6 +2,7 @@ from django.urls import path
 from django.views.generic import TemplateView
 
 from frontend.student_views import AngolaIndex
+from frontend.student_views import mozambique_jorge
 from frontend.student_views.angola_bernardo import TotalExpensePerYear
 from frontend.student_views.angola_estima import ChartBudgetYearView
 from frontend.student_views.angola_lupossa import BudgetCountryYear
@@ -17,6 +18,7 @@ urlpatterns = [
     path('students/angola/chart-budget-per-year-and-currency/', ChartBudgetYearView.as_view(), name='chart-budget'),
     path('students/angola/budget_country_year/', BudgetCountryYear.as_view(), name='budget_country_year'),
     path('students/angola/total-expense-per-year/', TotalExpensePerYear.as_view(), name='total-expense-per-year'),
+    path('student/mozambique/index', mozambique_jorge.IndexMozambique.as_view()),
 
     path('<slug>/', CountryView.as_view(), name='country-details'),
     path('<slug>/despesas-e-receitas/', ExpensesAndRevenues.as_view(), name='despesas-e-receitas'),
