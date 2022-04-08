@@ -6,7 +6,8 @@ from django.db.models import F, Q, Sum
 from rest_framework import serializers
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.viewsets import ReadOnlyModelViewSet
+from rest_framework.views import APIView
+from rest_framework.viewsets import ReadOnlyModelViewSet, ViewSet, GenericViewSet
 
 from apps.budget.choices import ExpenseGroupChoices, RevenueGroupChoices
 from apps.budget.models import Budget, TransparencyIndex, Expense, Revenue, BudgetSummary, Category, CategoryMap
@@ -211,6 +212,19 @@ class BudgetViewset(ReadOnlyModelViewSet):
     model = Budget
     serializer_class = BudgetSerializer
     queryset = Budget.objects.all()
+
+    @action(detail=False)
+    def myapi(self, request, pk=None):
+        n = request.query_params.get('country')
+        p = request.query_params.get('param')
+        result = [
+            {'year': 2020, 'percent': p, 'name': n},
+            {'year': 2019, 'percent': p, 'name': n},
+        ]
+        # Fazer queryset
+        # Adicionar um dicionario a lista para cada item do queryset
+        #    {'year': 2020, 'percent': 80},
+        return Response(result)
 
     @action(detail=False)
     def ranking(self, request, pk=None):
@@ -485,3 +499,11 @@ class BudgetViewset(ReadOnlyModelViewSet):
             "category": categories,
             "data": agregateExpenses
         })
+
+
+class TestViewset(APIView):
+    def get(self, request, format=None):
+        return Response("aa")
+
+    def post(self, request, format=None):
+        return Response("aa")
