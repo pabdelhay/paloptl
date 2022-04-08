@@ -111,16 +111,23 @@ function get_year_percent_get_parameter(data_api){
 }
 
 $(document).on('change', "#id_country", function (ev){
+
     var id = $('#id_country').val();
 
-        getOlaPython(id);
+        getListYearPercent(id);
 })
 
-function getOlaPython(id){
+function getListYearPercent(id){
+
     var url = '/api/mocambique-ilido/year_percent_get_parameter/?id='+id;
+
     $.get(url, function(result){
+
         get_year_percent_get_parameter(result)
+
     }).fail(function(){
-        alert("Error on fetching data."+result)
+
+        alert("Error on fetching data.")
+
     });
 }
