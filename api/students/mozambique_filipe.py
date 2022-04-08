@@ -11,16 +11,16 @@ class MozambiqueFilipeViewset(ReadOnlyModelViewSet):
     queryset = Budget.objects.all()
 
     @action(detail=False)
-    def currency(self, request, pk=None):
+    def budgetsummarydata(self, request, pk=None):
         country = request.query_params.get('country')
-        qs = BudgetSummary.objects.filter(budget__country__id=country)
+        queryset = BudgetSummary.objects.filter(budget__country__id=country)
         line = []
-        for ws in qs:
-            r = ws.expense_functional_budget
-            d = ws.expense_functional_execution
-            if d is not None:
-                year = ws.budget.year
-                percent = (d/r)*100
-                mycurrency = {"year": year, "country": country, "percent": percent}
-                line.append(mycurrency)
+        for BudgetSummaryPercentage in queryset:
+            revenue = BudgetSummaryPercentage.expense_functional_budget
+            expense = BudgetSummaryPercentage.expense_functional_execution
+            if expense is not None:
+                year = BudgetSummaryPercentage.budget.year
+                percent = (expense/revenue)*100
+                budgetsummaryresult = {"year": year, "country": country, "percent": percent}
+                line.append(budgetsummaryresult)
         return Response(line)

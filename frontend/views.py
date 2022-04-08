@@ -6,7 +6,7 @@ from django.views import View
 from django.views.generic.detail import SingleObjectMixin
 
 from apps.geo.models import Country
-from frontend.forms import BudgetPerYearForm
+
 from frontend.tutorial import COUNTRY_DETAILS_TUTORIAL, INDEX_DIMENSIONS
 
 
@@ -22,7 +22,7 @@ class IndexView(View):
 class CountryView(SingleObjectMixin, View):
     model = Country
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
         country = self.get_object()
         base_qs = country.budgets.filter(is_active=True)
         budgets = base_qs.order_by('year')
