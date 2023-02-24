@@ -18,7 +18,7 @@ function tagAvatarExist()
 
 async function LoadAvatarContent() 
 {
-    $("avatar-container").load("http://127.0.0.1:8000/avatar/interface/");
+    $("avatar-container").load("/avatar/interface/");
 }
 
 function AddAvatarComponent()

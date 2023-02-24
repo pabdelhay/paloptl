@@ -1,7 +1,7 @@
 
 class AvatarConfig 
 {
-  buildUrl = "http://127.0.0.1:8000/static/Build";
+  buildUrl = "/static/Build";
   loaderUrl = this.buildUrl + "/avatar.loader.js";
   config = {};
   avatarInstance;
