@@ -56,7 +56,8 @@ INSTALLED_APPS = [
     'apps.geo',
     'apps.budget',
     'frontend',
-    'common'
+    'common',
+    'avatar'
 ]
 
 MIDDLEWARE = [
@@ -145,6 +146,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, '.static')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'assets'),
+    os.path.join(BASE_DIR, 'avatar', 'static'),
 ]
 MEDIA_ROOT = os.path.join(BASE_DIR, '.media')
 MEDIA_URL = '/media/'

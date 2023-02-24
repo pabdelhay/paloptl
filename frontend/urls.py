@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from django.views.generic import TemplateView
 
 from frontend.student_views import AngolaIndex
@@ -6,6 +6,7 @@ from frontend.student_views.angola_bernardo import TotalExpensePerYear
 from frontend.student_views.angola_estima import ChartBudgetYearView
 from frontend.student_views.angola_lupossa import BudgetCountryYear
 from frontend.views import IndexView, CountryView, CountriesExpensesView, ExpensesAndRevenues, TestView
+
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
@@ -20,4 +21,5 @@ urlpatterns = [
 
     path('<slug>/', CountryView.as_view(), name='country-details'),
     path('<slug>/despesas-e-receitas/', ExpensesAndRevenues.as_view(), name='despesas-e-receitas'),
+    path('avatar/', include('avatar.urls')),
 ]
