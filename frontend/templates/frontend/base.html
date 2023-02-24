@@ -16,6 +16,11 @@
         <script src="{% static 'js/common.js' %}"></script>
         <script src="{% static 'js/handlebars-helpers.js' %}"></script>
         <script type="text/javascript">
+            var avatar_loader_url = '{% static "Build/avatar.loader.js" %}';
+            var avatar_data_url = '{% static "Build/avatar.data" %}';
+            var avatar_framework_url = '{% static "Build/avatar.framework.js" %}';
+            var avatar_code_url = '{% static "Build/avatar.wasm" %}';
+
             $(document).ready(function () {
                 $('.language-selector-form').find('a').on('click', function(ev){
                     ev.preventDefault();

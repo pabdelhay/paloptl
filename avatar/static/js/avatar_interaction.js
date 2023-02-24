@@ -1,16 +1,16 @@
 
 class AvatarConfig 
 {
-  buildUrl = "/static/Build";
-  loaderUrl = this.buildUrl + "/avatar.loader.js";
+  // buildUrl = "/static/Build";
+  loaderUrl = avatar_loader_url;
   config = {};
   avatarInstance;
   
   constructor() {
     this.config = {
-      dataUrl: this.buildUrl + "/avatar.data",
-      frameworkUrl: this.buildUrl + "/avatar.framework.js",
-      codeUrl: this.buildUrl + "/avatar.wasm",
+      dataUrl: avatar_data_url,
+      frameworkUrl: avatar_framework_url,
+      codeUrl: avatar_code_url,
       streamingAssetsUrl: "StreamingAssets",
       companyName: "Bonako",
       productName: "Ready Player Me WebGL",
