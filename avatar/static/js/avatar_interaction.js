@@ -1,7 +1,6 @@
 
 class AvatarConfig 
 {
-  // buildUrl = "/static/Build";
   loaderUrl = avatar_loader_url;
   config = {};
   avatarInstance;
