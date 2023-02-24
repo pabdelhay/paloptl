@@ -1,0 +1,42 @@
+
+
+avatar-tag, .pagina_avatar 
+{
+    width: 250px;
+    height: 350px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 999999999;
+}
+
+.pagina_avatar {
+    position: fixed;
+    display: none;
+}
+#botoes 
+{
+    position: absolute;
+    display: none;
+    bottom: 0;
+    right: -52%;
+}
+
+.button {
+    position: relative;
+    background-color: #343a40;
+    border: none;
+    color: white;
+    padding: 5px 22px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    z-index: 999999999;
+    top: 0;
+}
+
+#unity-canvas{
+    background: transparent !important;
+}
