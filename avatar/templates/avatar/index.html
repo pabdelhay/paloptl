@@ -10,13 +10,13 @@
 {% block content %}
     <body>
     <div id="unity-container" class="unity-desktop">
-        <canvas id="unity-canvas"></canvas>
+        <canvas id="unity-canvas" width=1060 height=700></canvas>
     </div>
     <script>
-        var avatar_loader_url = '{% static "Build/avatar-assistent.loader.js" %}';
-        var avatar_data_url = '{% static "Build/avatar-assistent.data" %}';
-        var avatar_framework_url = '{% static "Build/avatar-assistent.framework.js" %}';
-        var avatar_code_url = '{% static "Build/avatar-assistent.wasm" %}';
+        var avatar_loader_url = '{% static "Build/avatar.loader.js" %}';
+        var avatar_data_url = '{% static "Build/avatar.data" %}';
+        var avatar_framework_url = '{% static "Build/avatar.framework.js" %}';
+        var avatar_code_url = '{% static "Build/avatar.wasm" %}';
     </script>
     <script src="{% static 'js/avatar_interaction.js' %}"></script>
     </body>
