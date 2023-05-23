@@ -1,93 +1,186 @@
-var instanceUnity;
-var currentPage;
+var avatar;
 
-$(document).ready(function()
-{    
-    currentPage = getCurrentPage();
-
-    AddAvatarComponent();
-    LoadAvatarContent(); 
-    SetEventFunctions();
+$(document).ready(async function() {
+  avatar = new AvatarView();
+  avatar.start(); 
 });
 
-function tagAvatarExist()
+/*  classe avatar view */
+class AvatarView 
 {
-    let tag = document.getElementsByTagName('avatar-container'); 
-    return tag.length;
+  routeContainer = "/avatar/container/";
+  routeView = "/avatar/interface/";
+
+  constructor() {
+    this.loading = $("#loading");
+    this.loading.hide();
+  }
+  
+  async start()
+  {
+    this.loading.show();
+    this.getContainer().then(() => this.getAvatar());
+  }
+
+  async getContainer() {
+    try {
+      await $.get(this.routeContainer, (data) => {
+        $("body").append(data);
+        this.avatarContainer = $("avatar-container");
+        this.avatarContainer.hide();
+      });
+      return Promise.resolve();
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+  
+  async getAvatar() {
+    try {
+      const data = await $.ajax({url: this.routeView});
+      await $(this.avatarContainer).html(data).promise();
+      this.loadSucess();
+      return Promise.resolve();
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  loadSucess()
+  {
+    this.setEventActions();
+    const orientation = new AvatarOrientation();
+    orientation.init();
+  }
+
+  ShowAvatar()
+  {
+    $(this.loading).hide();
+    this.avatarContainer.show();
+    this.DisplayAvatarButtons(true);
+  }
+
+  DisplayAvatarButtons(value) {
+    this.hide.toggle(value);
+    this.show.toggle(!value);
+    $("#botoes").show();
+  }
+
+  setEventActions()
+  {
+    this.setHideEvents();
+    this.setShowEvents();
+  }
+  
+  setHideEvents() {
+    this.hide = $("#hide");  
+    this.hide.hover(() => $(".texto-oculto").show(), () => $(".texto-oculto").hide());
+    
+    this.hide.click(() => {
+      this.hide.hide();
+      this.show.show();
+      $(this.avatarContainer).fadeOut(200);
+      avatarConfig.Hide();
+    });
+  }
+
+  setShowEvents() {
+    this.show = $("#show");  
+    this.show.hover(() => $(".texto-oculto").show(), () => $(".texto-oculto").hide());
+    
+    this.show.click(() => {
+      avatarConfig.Show(); 
+      this.ShowAvatar();
+      this.hide.show();
+      this.show.hide();
+    });
+  }
 }
 
-async function LoadAvatarContent() 
-{
-    $("avatar-container").load("/avatar/interface/");
-}
-
-function AddAvatarComponent()
-{
-    $('body').append(`
-        <div class="pagina_avatar">
-            <avatar-container></avatar-container>
-            <div id="botoes">
-                <button class="button" id="hide">Hide Avatar</button>
-                <button class="button" id="show">Show Avatar</button>
-            </div>
-        </div>
-    `);
-}
-
-function getCurrentPage()
-{
-    var path = location.pathname;
-    if(path.length <= 1) return "home";
-    else return "tutorial";
-}  
-
-function SetEventFunctions()
-{
-    $("#hide").click(function()
+/* class orientation for move avatar on the screen */
+class AvatarOrientation {
+    constructor() {
+      this.currentOrientation = "left";
+      this.avatarPage = $(".pagina_avatar");    
+      this.avatarView = $("#avatar-views");  
+      this.buttonsActionAvatar = $("#botoes");
+      this.txtInfoButton = $('.texto-oculto');
+      this.imgButton = $(".imagem-centralizada");
+    }
+    
+    init()
     {
-        $("#hide").hide();
-        $("#show").show();
-        $("avatar-container").fadeOut(200);
-        Hide();
+      this.setEventNavegation();
+      this.orientationLeft();
+    }
+
+    setEventNavegation()
+    {
+        $("#move_left").on("click", () => this.moveAvatar("left"));
+        $("#move_right").on("click", () => this.moveAvatar("right"));
+
+        $(this.avatarView).on('mouseenter', () => {
+            $("#move_container").stop().slideToggle(200);
+        });
         
-    });
-
-    $("#show").click(function()
+        $(this.avatarView).on('mouseleave', () => {
+            $("#move_container").stop().slideToggle(200);
+        });
+    }
+  
+    orientationLeft() {
+      this.avatarPage.css('right', "auto");
+      this.buttonsActionAvatar.css({left: "100%", right: "auto"});
+      this.imgButton.css('order', "1");
+      this.txtInfoButton.css('order', "2");
+      $("#move_left").hide();
+      $("#move_right").show();
+    }
+  
+    orientationCenter() {
+      this.avatarPage.css('right', "50%");
+      this.buttonsActionAvatar.css({left: "100%", right: "auto"});
+      this.imgButton.css('order', "1");
+      this.txtInfoButton.css('order', "2");
+      $("#move_left, #move_right").show();
+    }
+  
+    orientationRight() {
+      this.avatarPage.css('right', "0%");
+      this.buttonsActionAvatar.css({left: "auto", right: "100%"});
+      this.imgButton.css('order', "2");
+      this.txtInfoButton.css('order', "1");
+      $("#move_right").hide();
+      $("#move_left").show();
+    }
+  
+    setDiretion(direction) {
+      if (direction === "left")
+        this.currentOrientation = (this.currentOrientation === "right") ? "center" : "left";
+      else if (direction === "right")
+        this.currentOrientation = (this.currentOrientation === "left") ? "center" : "right";
+    }
+  
+    setNewDirection() {
+      if (this.currentOrientation === "left") {
+        this.orientationLeft();
+      } else if (this.currentOrientation === "center") {
+        this.orientationCenter();
+      } else if (this.currentOrientation === "right") {
+        this.orientationRight();
+      }
+    }
+  
+    moveAvatar(direction) 
     {
-        $("#show").hide();
-        $("#hide").show();
-        $("avatar-container").fadeIn(200);
-        Show(); 
-    });
+      this.setDiretion(direction);
+      this.avatarPage.fadeOut(120);
+      setTimeout(() => {
+        this.setNewDirection();
+        this.avatarPage.fadeIn(120);
+      }, 250);
+    }
+  }
 
-    // start tutorial
-    $(document).on('click', '.tutorial', function(ev){
-        ev.preventDefault();
-        StartTutorial();
-    });
-    
-    // exit tutorial
-    $(document).on('click', '.introjs-overlay', function(ev){
-        ev.preventDefault();
-        CancelTutorial();
-        console.log("sxit tutorial");
-    });
-    
-    // exit tutorial
-    $(document).on('click', '.introjs-skipbutton', function(ev){
-        ev.preventDefault();
-        console.log("skip tutorial");
-        CancelTutorial();
-    });
 
-    // next tutorial 
-    $(document).on('click', '.introjs-nextbutton', function(ev){
-        ev.preventDefault();
-        NextTutorial();
-    });
-    // previous tutorial 
-    $(document).on('click', '.introjs-prevbutton', function(ev){
-        ev.preventDefault();
-        PreviousTutorial();
-    });
-}
+
