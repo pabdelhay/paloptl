@@ -162,8 +162,13 @@ if AWS_STORAGE_BUCKET_NAME:
 if env('REDIS_URL', default=None):
     CACHES = {
         "default": {
-             "BACKEND": "redis_cache.RedisCache",
-             "LOCATION": env('REDIS_URL'),
+            "BACKEND": "redis_cache.RedisCache",
+            "LOCATION": env('REDIS_URL'),
+            "OPTIONS": {
+                "CONNECTION_POOL_KWARGS": {
+                    "ssl_cert_reqs": "required",  # or ssl.CERT_REQUIRED if using code, not URL
+                },
+            },
         }
     }
 
