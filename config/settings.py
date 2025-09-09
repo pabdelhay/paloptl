@@ -1,6 +1,8 @@
 import os
+import ssl
 from decimal import ROUND_HALF_EVEN
 
+import certifi
 import environ
 import moneyed
 import sentry_sdk
@@ -166,7 +168,8 @@ if env('REDIS_URL', default=None):
             "LOCATION": env('REDIS_URL'),
             "OPTIONS": {
                 "CONNECTION_POOL_KWARGS": {
-                    "ssl_cert_reqs": "required",  # or ssl.CERT_REQUIRED if using code, not URL
+                    "ssl_cert_reqs": ssl.CERT_REQUIRED,
+                    "ssl_ca_certs": certifi.where(),
                 },
             },
         }
