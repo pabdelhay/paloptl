@@ -1,11 +1,11 @@
-from celery import task
+from config.celery import app
 from django.utils import timezone
 from django.utils.text import slugify
 
 from apps.geo.models import Country
 
 
-@task
+@app.task
 def test_celery():
     now = timezone.now()
     name = f"test country {now.hour}:{now.minute}"
