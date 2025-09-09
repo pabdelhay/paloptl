@@ -166,12 +166,12 @@ if env('REDIS_URL', default=None):
         "default": {
             "BACKEND": "redis_cache.RedisCache",
             "LOCATION": env('REDIS_URL'),
-            "OPTIONS": {
-                "CONNECTION_POOL_KWARGS": {
-                    "ssl_cert_reqs": ssl.CERT_REQUIRED,
-                    "ssl_ca_certs": certifi.where(),
-                },
-            },
+            # "OPTIONS": {
+            #     "CONNECTION_POOL_KWARGS": {
+            #         "ssl_cert_reqs": ssl.CERT_REQUIRED,
+            #         "ssl_ca_certs": certifi.where(),
+            #     },
+            # },
         }
     }
 
