@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.views import View
 from django.views.generic.detail import SingleObjectMixin
 
+from apps.budget.models import TransparencyIndex
 from apps.geo.models import Country
 from frontend.forms import BudgetPerYearForm
 from frontend.tutorial import COUNTRY_DETAILS_TUTORIAL, INDEX_DIMENSIONS
@@ -12,9 +13,34 @@ from frontend.tutorial import COUNTRY_DETAILS_TUTORIAL, INDEX_DIMENSIONS
 
 class IndexView(View):
     def get(self, request):
+        index_years = list(
+            TransparencyIndex.objects.values_list('year', flat=True)
+            .distinct()
+            .order_by('-year')
+        )
+        default_index_year = index_years[0] if index_years else None
+
+        country_report_downloads = []
+        if default_index_year is not None:
+            indexes_by_country_id = {
+                ti.country_id: ti
+                for ti in TransparencyIndex.objects.filter(year=default_index_year)
+            }
+            for c in Country.objects.all():
+                ti = indexes_by_country_id.get(c.pk)
+                country_report_downloads.append(
+                    {
+                        'country': c,
+                        'report_url': ti.report.url if ti and ti.report else '',
+                    }
+                )
+
         ctx = {
             'countries': Country.objects.all(),
-            'index_dimensions': INDEX_DIMENSIONS
+            'country_report_downloads': country_report_downloads,
+            'index_dimensions': INDEX_DIMENSIONS,
+            'index_years': index_years,
+            'default_index_year': default_index_year,
         }
         return render(request, 'frontend/index.html', context=ctx)
 

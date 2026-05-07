@@ -100,17 +100,9 @@ p {
   position: relative;
   width: 100%;
   box-sizing: border-box;
-  display: -ms-flexbox;
-  display: -webkit-box;
   display: flex;
-  -ms-flex: 0 1 auto;
-  -webkit-box-flex: 0;
   flex: 0 1 auto;
-  -ms-flex-direction: row;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
   flex-direction: row;
-  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
 }
 
@@ -193,71 +185,51 @@ p {
   .col-1 {
     width: 4.3333333333%;
   }
-
   .col-2 {
     width: 12.6666666667%;
   }
-
   .col-3 {
     width: 21%;
   }
-
   .col-4 {
     width: 29.3333333333%;
   }
-
   .col-5 {
     width: 37.6666666667%;
   }
-
   .col-6 {
     width: 46%;
   }
-
   .col-7 {
     width: 54.3333333333%;
   }
-
   .col-8 {
     width: 62.6666666667%;
   }
-
   .col-9 {
     width: 71%;
   }
-
   .col-10 {
     width: 79.3333333333%;
   }
-
   .col-11 {
     width: 87.6666666667%;
   }
-
   .col-12 {
     width: 96%;
   }
-
   .hidden-sm {
     display: block;
   }
 }
 .top {
-  -ms-flex-align: start;
-  -webkit-box-align: start;
   align-items: flex-start;
 }
 
 .middle {
-  -ms-flex-align: center;
-  -webkit-box-align: center;
   align-items: center;
 }
 
 .bottom {
-  -ms-flex-align: end;
-  -webkit-box-align: end;
   align-items: flex-end;
-}
-
-/*# sourceMappingURL=simple-grid.css.map */
+}/*# sourceMappingURL=simple-grid.css.map */

@@ -558,6 +558,46 @@ h3 {
         }
       }
     }
+
+    .ranking-year-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .ranking-year-label {
+      margin: 0;
+      white-space: nowrap;
+    }
+
+    .ranking-year-select {
+      min-width: 100px;
+      padding: 6px 10px;
+      font-family: inherit;
+      font-size: 14px;
+      border: 1px solid #0f2843;
+      border-radius: 4px;
+      background: #fff;
+      color: #0f2843;
+      cursor: pointer;
+      box-sizing: border-box;
+    }
+
+    .ranking-year-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 8px;
+
+      .ranking-year-instructions {
+        flex: 1;
+        min-width: 240px;
+      }
+    }
+
     .ranking-wrapper {
       width: 100%;
       margin-bottom: 60px;
@@ -726,9 +766,9 @@ h3 {
       .covers {
         margin-left: 0;
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
         .cover-wrapper {
-          width: 30%;
+          width: 35%;
           height: 350px;
           text-align: center;
           display: flex;
@@ -753,13 +793,30 @@ h3 {
       }
       .results {
         .result-title {
+          display: flex;
+          flex-wrap: nowrap;
+          align-items: center;
+          gap: 10px;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
           text-transform: uppercase;
           margin: 20px 0 20px 0 ;
           color: $main_color;
           font-weight: bold;
-          span {
-            top: 0px;
-            margin: 0 5px;
+          .result-title-text {
+            flex: 0 1 auto;
+            min-width: 0;
+            white-space: nowrap;
+            span {
+              top: 0px;
+              &.arrow-right {
+                margin-left: 16px;
+              }
+            }
+          }
+          .result-title-year-control {
+            flex: 0 0 auto;
+            gap: 0;
           }
         }
         .country-item {
@@ -772,6 +829,12 @@ h3 {
             font-size: 18px;
             font-weight: bold;
             text-transform: uppercase;
+          }
+          .country-no-report {
+            font-size: 14px;
+            font-weight: normal;
+            font-style: italic;
+            opacity: 0.75;
           }
         }
       }

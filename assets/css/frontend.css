@@ -136,16 +136,16 @@ a.tutorial:hover {
   color: #586460;
 }
 
-.menu {
-  position: relative;
-  display: inline-block;
-  /* Dropdown Content (Hidden by Default) */
-}
 .menu .dropbtn div {
   width: 35px;
   height: 5px;
   background-color: #0f2843;
   margin: 6px 0;
+}
+.menu {
+  position: relative;
+  display: inline-block;
+  /* Dropdown Content (Hidden by Default) */
 }
 .menu .dropdown-content {
   display: none;
@@ -470,12 +470,12 @@ h3 .arrow {
 .page-index .about .badget.right {
   float: right;
 }
-.page-index .ranking {
-  background-color: #f7f5f5;
-}
 .page-index .ranking .material-icons {
   font-size: 20px;
   width: 20px;
+}
+.page-index .ranking {
+  background-color: #f7f5f5;
 }
 .page-index .ranking .ranking-header {
   padding: 40px 0;
@@ -498,6 +498,40 @@ h3 .arrow {
 }
 .page-index .ranking .ranking-header .short-description a:hover {
   text-decoration: none;
+}
+.page-index .ranking .ranking-year-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.page-index .ranking .ranking-year-label {
+  margin: 0;
+  white-space: nowrap;
+}
+.page-index .ranking .ranking-year-select {
+  min-width: 100px;
+  padding: 6px 10px;
+  font-family: inherit;
+  font-size: 14px;
+  border: 1px solid #0f2843;
+  border-radius: 4px;
+  background: #fff;
+  color: #0f2843;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.page-index .ranking .ranking-year-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 8px;
+}
+.page-index .ranking .ranking-year-row .ranking-year-instructions {
+  flex: 1;
+  min-width: 240px;
 }
 .page-index .ranking .ranking-wrapper {
   width: 100%;
@@ -654,10 +688,10 @@ h3 .arrow {
 .page-index .ranking .downloads .covers {
   margin-left: 0;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 .page-index .ranking .downloads .covers .cover-wrapper {
-  width: 30%;
+  width: 35%;
   height: 350px;
   text-align: center;
   display: flex;
@@ -678,14 +712,31 @@ h3 .arrow {
   color: #FFF;
 }
 .page-index .ranking .downloads .results .result-title {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 10px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   text-transform: uppercase;
   margin: 20px 0 20px 0;
   color: #0f2843;
   font-weight: bold;
 }
-.page-index .ranking .downloads .results .result-title span {
+.page-index .ranking .downloads .results .result-title .result-title-text {
+  flex: 0 1 auto;
+  min-width: 0;
+  white-space: nowrap;
+}
+.page-index .ranking .downloads .results .result-title .result-title-text span {
   top: 0px;
-  margin: 0 5px;
+}
+.page-index .ranking .downloads .results .result-title .result-title-text span.arrow-right {
+  margin-left: 16px;
+}
+.page-index .ranking .downloads .results .result-title .result-title-year-control {
+  flex: 0 0 auto;
+  gap: 0;
 }
 .page-index .ranking .downloads .results .country-item {
   display: flex;
@@ -699,6 +750,12 @@ h3 .arrow {
   font-weight: bold;
   text-transform: uppercase;
 }
+.page-index .ranking .downloads .results .country-item .country-no-report {
+  font-size: 14px;
+  font-weight: normal;
+  font-style: italic;
+  opacity: 0.75;
+}
 .page-index .countries .flags-wrapper {
   position: relative;
   top: -18px;
@@ -711,11 +768,13 @@ h3 .arrow {
   padding: 0;
   margin: 0;
   width: 33.32%;
-  position: relative;
 }
 .page-index .countries .full-width .col img {
   width: 100%;
   height: 100%;
+}
+.page-index .countries .full-width .col {
+  position: relative;
 }
 .page-index .countries .full-width .col:hover .overlay {
   opacity: 1;
@@ -748,7 +807,6 @@ h3 .arrow {
 .page-country-detail .country-name-wrapper, .page-countries-expenses .country-name-wrapper {
   background-position-y: bottom;
   background-repeat: no-repeat;
-  -webkit-box-shadow: inset 680px 0px 160px 7px rgba(0, 0, 0, 0.65);
   box-shadow: inset 680px 0px 160px 7px rgba(0, 0, 0, 0.65);
 }
 .page-country-detail .country-name-wrapper h1, .page-countries-expenses .country-name-wrapper h1 {
@@ -1377,6 +1435,4 @@ h3 .arrow {
 .customIntroRanking {
   min-width: 550px !important;
   max-width: none;
-}
-
-/*# sourceMappingURL=frontend.css.map */
+}/*# sourceMappingURL=frontend.css.map */
