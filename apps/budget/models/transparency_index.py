@@ -25,6 +25,7 @@ class TransparencyIndex(CountryMixin, models.Model):
     transparency_index = models.SmallIntegerField(verbose_name=_("transparency index"), help_text="0 - 100",
                                                   null=True, blank=True, validators=[MinValueValidator(0),
                                                                                      MaxValueValidator(100)])
+    report = models.FileField(verbose_name=_("results report"), upload_to='results', null=True, blank=True)
 
     def __str__(self):
         return f'{self.country} - {self.year}'

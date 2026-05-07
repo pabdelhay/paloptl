@@ -181,7 +181,7 @@ class RankingSerializer(serializers.ModelSerializer):
     class Meta:
         model = TransparencyIndex
         fields = ('id', 'country', 'year', 'score_open_data', 'score_reports', 'score_data_quality',
-                  'transparency_index',)
+                  'transparency_index', 'report',)
 
 
 class ExpensePerYearCategoryFilterSerializer(serializers.Serializer):
@@ -247,7 +247,7 @@ class BudgetViewset(ReadOnlyModelViewSet):
             if last_transparency_index:
                 budget_list.append(last_transparency_index)
 
-        serializer = RankingSerializer(budget_list, many=True)
+        serializer = RankingSerializer(budget_list, many=True, context={'request': request})
         average_dict = get_average_dict(budget_list)
         budgets = sorted(serializer.data, key=lambda i: i['transparency_index'], reverse=True)
         return_data = {'budgets': budgets, 'average': average_dict}

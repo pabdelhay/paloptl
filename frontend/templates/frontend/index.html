@@ -6,15 +6,59 @@
 <script type="text/javascript">
 var ranking_budgets = [];
 var ranking_average = {};
-function get_ranking(callback) {
+var countryReportUnavailableTpl = '{% filter escapejs %}{% blocktrans trimmed with yr="__YEAR__" %}Not available for {{ yr }}{% endblocktrans %}{% endfilter %}';
+
+function countryReportUnavailableMsg(year) {
+    return countryReportUnavailableTpl.replace(/__YEAR__/g, year ? String(year) : '').trim();
+}
+
+function rankingUrlForYear(year) {
     var url = '/api/budgets/ranking/';
-    $.get(url, function (data) {
+    if (year) {
+        url += '?year=' + encodeURIComponent(year);
+    }
+    return url;
+}
+
+function get_ranking(year, callback) {
+    $.get(rankingUrlForYear(year), function (data) {
         ranking_budgets = data['budgets'];
         ranking_average = data['average'];
         callback(data);
     }).fail(function () {
         console.log("Error on fetching ranking data.");
     });
+}
+
+function updateCountryReportLinks(year, budgets) {
+    var bySlug = {};
+    if (budgets && budgets.length) {
+        budgets.forEach(function (b) {
+            if (b.country && b.country.slug) {
+                bySlug[b.country.slug] = b.report ? b.report : null;
+            }
+        });
+    }
+    $('.country-item[data-country-slug]').each(function () {
+        var slug = $(this).data('country-slug');
+        var url = Object.prototype.hasOwnProperty.call(bySlug, slug) ? bySlug[slug] : null;
+        var $link = $(this).find('.country-download-link');
+        var $missing = $(this).find('.country-no-report');
+        if (url) {
+            $link.attr('href', url).show().removeAttr('aria-hidden');
+            $missing.hide().attr('aria-hidden', 'true');
+        } else {
+            $link.attr('href', '#').hide().attr('aria-hidden', 'true');
+            $missing.text(countryReportUnavailableMsg(year)).show().removeAttr('aria-hidden');
+        }
+    });
+}
+function currentRankingYear() {
+    var $sel = $('.ranking-year-select-linked').first();
+    if ($sel.length && $sel.val()) {
+        return $sel.val();
+    }
+    return null;
 }
 
 function plot_ranking(){
@@ -68,8 +112,20 @@ $(document).ready(function(){
         sort_ranking(dimension);
     });
 
-    get_ranking(function(data){
-        plot_ranking()
+    function loadRankingAndDownloads() {
+        var year = currentRankingYear();
+        get_ranking(year, function () {
+            plot_ranking();
+            updateCountryReportLinks(year, ranking_budgets);
+        });
+    }
+
+    loadRankingAndDownloads();
+
+    $(document).on('change', '.ranking-year-select-linked', function () {
+        var val = $(this).val();
+        $('.ranking-year-select-linked').val(val);
+        loadRankingAndDownloads();
     });
 
     $(document).on('click', '.scroll-to', function(ev){
@@ -199,12 +255,24 @@ $(document).ready(function(){
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-12">
-                    {% blocktrans trimmed %}
-                        Click on the table heading to sort the ranking by a specific dimension,
-                        or on the <span class="material-icons help" data-step="1">info_outlined</span> icon to learn
-                        more about the dimension.
-                    {% endblocktrans %}
+                <div class="col-12 ranking-year-row">
+                    <div class="ranking-year-instructions">
+                        {% blocktrans trimmed %}
+                            Click on the table heading to sort the ranking by a specific dimension,
+                            or on the <span class="material-icons help" data-step="1">info_outlined</span> icon to learn
+                            more about the dimension.
+                        {% endblocktrans %}
+                    </div>
+                    {% if index_years %}
+                    <div class="ranking-year-control">
+                        <label class="ranking-year-label" for="ranking-year-select">{% trans "Year" %}</label>
+                        <select id="ranking-year-select" class="ranking-year-select ranking-year-select-linked" name="ranking_year">
+                            {% for y in index_years %}
+                            <option value="{{ y }}"{% if y == default_index_year %} selected{% endif %}>{{ y }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -257,37 +325,44 @@ $(document).ready(function(){
                     <div class="col-12">
                         <h2 id="methodology">{% trans "SEE MORE DETAILS ABOUT THE METHODOLOGY AND DETAILED RESULTS" %}</h2>
                         <div class="row">
-                            {% with year="2021" %}
-                            <div class="col-7 covers">
-                                <a href="{% static 'reports/methodology_'|add:year|add:'_'|add:LANGUAGE_CODE|add:'.pdf' %}" class="cover-wrapper" target="_blank">
-                                    <img src="{% static 'img/reports/report-cover-methodology-'|add:year|add:'-'|add:LANGUAGE_CODE|add:'.jpg' %}"/><br>
+                            <div class="col-5 covers">
+                                <a id="dl-methodology" href="{% static 'reports/methodology_'|add:LANGUAGE_CODE|add:'.pdf' %}" class="cover-wrapper" target="_blank">
+                                    <img id="dl-methodology-img" src="{% static 'img/reports/report-cover-methodology-'|add:LANGUAGE_CODE|add:'.jpg' %}"/><br>
                                     <span class="download-link">Download</span>
                                 </a>
-                                <a href="{% static 'reports/evaluation_questionnaire_'|add:year|add:'_'|add:LANGUAGE_CODE|add:'.pdf' %}" class="cover-wrapper" target="_blank" >
-                                    <img src="{% static 'img/reports/report-cover-questions-'|add:year|add:'-'|add:LANGUAGE_CODE|add:'.jpg' %}"/><br>
-                                    <span class="download-link">Download</span>
-                                </a>
-                                <a href="{% static 'reports/detailed_results_'|add:year|add:'_'|add:LANGUAGE_CODE|add:'.pdf' %}" class="cover-wrapper" target="_blank" >
-                                    <img src="{% static 'img/reports/report-cover-results-'|add:year|add:'-'|add:LANGUAGE_CODE|add:'.jpg' %}"/><br>
+                                <a id="dl-questionnaire" href="{% static 'reports/evaluation_questionnaire_'|add:LANGUAGE_CODE|add:'.pdf' %}" class="cover-wrapper" target="_blank" >
+                                    <img id="dl-questionnaire-img" src="{% static 'img/reports/report-cover-questions-'|add:LANGUAGE_CODE|add:'.jpg' %}"/><br>
                                     <span class="download-link">Download</span>
                                 </a>
                             </div>
-                            {% endwith %}
-                            {% with year="2021" %}
-                            <div class="col-5 results">
-                                <div class="result-title">{% trans "Results by country" %}<span class="arrow-right"></span> 2021</div>
-                                {% for country in countries %}
-                                    {% with report_path="reports/results_"|add:country.slug|add:"_"|add:year|add:"_"|add:LANGUAGE_CODE|add:".pdf" %}
-                                    <div class="country-item">
-                                        <div class="country-name">{{ country.name }}</div>
-                                        <div>
-                                            <a href="{% static report_path %}" target="_blank" class="download-link">Download</a>
+                            {% if default_index_year %}
+                            <div class="col-7 results">
+                                <div class="result-title">
+                                    <span class="result-title-text">{% trans "Results by country" %}<span class="arrow-right"></span></span>
+                                    {% if index_years %}
+                                    <div class="ranking-year-control result-title-year-control">
+                                        <select id="ranking-year-select-results" class="ranking-year-select ranking-year-select-linked" name="ranking_year_results" aria-label="{% trans 'Year' %}">
+                                            {% for y in index_years %}
+                                            <option value="{{ y }}"{% if y == default_index_year %} selected{% endif %}>{{ y }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% for row in country_report_downloads %}
+                                    <div class="country-item" data-country-slug="{{ row.country.slug }}">
+                                        <div class="country-name">{{ row.country.name }}</div>
+                                        <div class="country-download-cell">
+                                            <a {% if row.report_url %}href="{{ row.report_url }}"{% else %}href="#"{% endif %}
+                                               target="_blank"
+                                               class="download-link country-download-link"
+                                               {% if not row.report_url %}style="display: none;" aria-hidden="true"{% endif %}>{% trans "Download" %}</a>
+                                            <span class="country-no-report"{% if row.report_url %} style="display: none;" aria-hidden="true"{% endif %}>{% blocktrans trimmed with yr=default_index_year %}Not available for {{ yr }}{% endblocktrans %}</span>
                                         </div>
                                     </div>
-                                    {% endwith %}
                                 {% endfor %}
                             </div>
-                            {% endwith %}
+                            {% endif %}
                         </div>
                     </div>
                 </div>
