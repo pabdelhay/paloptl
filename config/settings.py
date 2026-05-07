@@ -1,6 +1,8 @@
 import os
+import ssl
 from decimal import ROUND_HALF_EVEN
 
+import certifi
 import environ
 import moneyed
 import sentry_sdk
@@ -162,8 +164,14 @@ if AWS_STORAGE_BUCKET_NAME:
 if env('REDIS_URL', default=None):
     CACHES = {
         "default": {
-             "BACKEND": "redis_cache.RedisCache",
-             "LOCATION": env('REDIS_URL'),
+            "BACKEND": "redis_cache.RedisCache",
+            "LOCATION": env('REDIS_URL'),
+            # "OPTIONS": {
+            #     "CONNECTION_POOL_KWARGS": {
+            #         "ssl_cert_reqs": ssl.CERT_REQUIRED,
+            #         "ssl_ca_certs": certifi.where(),
+            #     },
+            # },
         }
     }
 

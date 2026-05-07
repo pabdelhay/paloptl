@@ -1,13 +1,13 @@
 import re
 
-from celery import task
+from config.celery import app
 from django.utils.translation import gettext_lazy as _
 from sentry_sdk import capture_exception
 
 from apps.budget.choices import UploadStatusChoices
 
 
-@task
+@app.task
 def import_file(upload_id):
     from apps.budget.models import Upload
     upload = Upload.objects.get(id=upload_id)
@@ -82,7 +82,7 @@ def import_file(upload_id):
     return upload
 
 
-@task
+@app.task
 def make_budget_csv_file(budget_id):
     """
     Make a CSV file with all data from budget.
@@ -93,7 +93,7 @@ def make_budget_csv_file(budget_id):
     budget.update_csv_file()
 
 
-@task
+@app.task
 def reimport_budget_uploads(budget_id, include_uploads_with_error=False):
     """
     - Remove all BudgetAccount data from a Budget
