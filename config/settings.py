@@ -39,6 +39,7 @@ INTERNAL_IPS = [
 # Application definition
 INSTALLED_APPS = [
     'test_without_migrations',
+    'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -138,6 +139,8 @@ LANGUAGES = [
     ('pt', _('Portuguese')),
     ('en', _('English')),
 ]
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'pt'
+MODELTRANSLATION_LANGUAGES = ('pt', 'en')
 # Locale
 LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 

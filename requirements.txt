@@ -8,6 +8,7 @@ django-debug-toolbar==2.2
 django-dirtyfields==1.7.0
 django-dotenv==1.4.2
 django-environ==0.4.5
+django-modeltranslation==0.15.2
 django-money==1.1
 django-mptt==0.11.0
 django-redis-cache==2.1.1

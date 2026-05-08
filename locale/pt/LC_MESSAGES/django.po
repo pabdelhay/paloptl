@@ -2,13 +2,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-09 16:56-0300\n"
+"POT-Creation-Date: 2026-05-08 18:54-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,125 +42,129 @@ msgstr ""
 msgid "Profiles"
 msgstr ""
 
-#: .\apps\budget\admin.py:34
+#: .\apps\budget\admin.py:35
 msgid "Errors"
 msgstr "Erros"
 
-#: .\apps\budget\admin.py:117
+#: .\apps\budget\admin.py:118
 msgid "Value inferred from descendants or siblings."
 msgstr "Valor inferido dos descendentes ou irmãos."
 
-#: .\apps\budget\admin.py:120
+#: .\apps\budget\admin.py:121
 #, python-brace-format
 msgid "Explicit given value differs from inferred value: {inferred}"
 msgstr ""
 "Valor explicitamente passado difere da soma dos descendentes: {inferred}"
 
-#: .\apps\budget\admin.py:128
+#: .\apps\budget\admin.py:132
 msgid "Showing updated value. Initial value was"
 msgstr "Mostrando valor atualizado. Valor inicial era"
 
-#: .\apps\budget\admin.py:159
+#: .\apps\budget\admin.py:163
 msgid "investment budget"
 msgstr "orçamento de investimento"
 
-#: .\apps\budget\admin.py:160
+#: .\apps\budget\admin.py:164
 msgid "operation budget"
 msgstr "orçamento de operação"
 
-#: .\apps\budget\admin.py:161
+#: .\apps\budget\admin.py:165
 msgid "total budget"
 msgstr "orçamento total"
 
-#: .\apps\budget\admin.py:162
+#: .\apps\budget\admin.py:166
 msgid "investment execution"
 msgstr "execução de investimento"
 
-#: .\apps\budget\admin.py:163
+#: .\apps\budget\admin.py:167
 msgid "operation execution"
 msgstr "execução de operação"
 
-#: .\apps\budget\admin.py:164
+#: .\apps\budget\admin.py:168
 msgid "total execution"
 msgstr "execução total"
 
-#: .\apps\budget\admin.py:170
+#: .\apps\budget\admin.py:174
 msgid "Expenses by function"
 msgstr "Despesas por função"
 
-#: .\apps\budget\admin.py:186
+#: .\apps\budget\admin.py:190
 msgid "Expenses by agency"
 msgstr "Despesas por orgão"
 
-#: .\apps\budget\admin.py:203
+#: .\apps\budget\admin.py:207
 msgid "Revenues by nature"
 msgstr "Receitas por natureza"
 
-#: .\apps\budget\admin.py:219
+#: .\apps\budget\admin.py:223
 msgid "Revenues by source"
 msgstr "Receitas por fonte"
 
-#: .\apps\budget\admin.py:306
+#: .\apps\budget\admin.py:310
 #, python-brace-format
 msgid "Expenses: <strong>{total_expenses}</strong>"
 msgstr "Despesas: <strong>{total_expenses}</strong>"
 
-#: .\apps\budget\admin.py:307
+#: .\apps\budget\admin.py:311
 #, python-brace-format
 msgid "Revenues: <strong>{total_revenues}</strong>"
 msgstr "Receitas: <strong>{total_revenues}</strong>"
 
-#: .\apps\budget\admin.py:314
+#: .\apps\budget\admin.py:318
 msgid "uploads"
 msgstr "uploads"
 
-#: .\apps\budget\admin.py:324
+#: .\apps\budget\admin.py:328
 msgid "uploads with error"
 msgstr "uploads com error"
 
-#: .\apps\budget\admin.py:346
+#: .\apps\budget\admin.py:350
 msgid "Base info"
 msgstr "Informações básicas"
 
-#: .\apps\budget\admin.py:349 .\frontend\templates\frontend\index.html:174
+#: .\apps\budget\admin.py:353 .\frontend\templates\frontend\index.html:229
 msgid "Transparency Index"
 msgstr "Índice de Transparência"
 
-#: .\apps\budget\admin.py:380 .\apps\budget\models\category.py:22
+#: .\apps\budget\admin.py:356
+msgid "Results report"
+msgstr "Relatório de resultados"
+
+#: .\apps\budget\admin.py:395 .\apps\budget\models\category.py:22
 #: .\apps\budget\models\categoryMap.py:17 .\apps\budget\models\upload.py:38
 #: .\apps\budget\models\upload_log.py:19
 msgid "category"
 msgstr "categoria"
 
-#: .\apps\budget\admin.py:385 .\apps\budget\models\category.py:14
+#: .\apps\budget\admin.py:400 .\apps\budget\models\category.py:14
 #: .\apps\budget\models\expense.py:24 .\apps\budget\models\revenue.py:23
 msgid "group"
 msgstr "grupo"
 
-#: .\apps\budget\admin.py:390 .\apps\budget\models\budget_account.py:20
+#: .\apps\budget\admin.py:405 .\apps\budget\models\budget_account.py:20
 #: .\apps\budget\models\category.py:12 .\apps\geo\models.py:8
 msgid "name"
 msgstr "nome"
 
-#: .\apps\budget\admin.py:397 .\apps\budget\models\upload_log.py:22
+#: .\apps\budget\admin.py:412 .\apps\budget\models\upload_log.py:22
 msgid "old value"
 msgstr "valor antigo"
 
-#: .\apps\budget\admin.py:404 .\apps\budget\models\upload_log.py:23
+#: .\apps\budget\admin.py:419 .\apps\budget\models\upload_log.py:23
 msgid "new value"
 msgstr "novo valor"
 
-#: .\apps\budget\admin.py:411 .\apps\budget\models\upload_log.py:21
+#: .\apps\budget\admin.py:426 .\apps\budget\models\upload_log.py:21
 msgid "field"
 msgstr "campo"
 
 #: .\apps\budget\apps.py:7
-#: .\frontend\templates\frontend\country-details.html:110
-#: .\frontend\templates\frontend\country-details.html:351
-#: .\frontend\templates\frontend\country-details.html:885
-#: .\frontend\templates\frontend\country-details.html:896
-#: .\frontend\templates\frontend\country-details.html:926
-#: .\frontend\templates\frontend\country-details.html:1062
+#: .\frontend\templates\frontend\country-details.html:111
+#: .\frontend\templates\frontend\country-details.html:352
+#: .\frontend\templates\frontend\country-details.html:886
+#: .\frontend\templates\frontend\country-details.html:897
+#: .\frontend\templates\frontend\country-details.html:927
+#: .\frontend\templates\frontend\country-details.html:1063
 #: .\templates\admin\index.html:14
 msgid "Budget"
 msgstr "Orçamento"
@@ -234,6 +238,30 @@ msgstr "nova categoria"
 #: .\apps\budget\choices.py:61
 msgid "update"
 msgstr "atualização"
+
+#: .\apps\budget\models\attachment.py:6
+msgid "title"
+msgstr "título"
+
+#: .\apps\budget\models\attachment.py:7 .\apps\budget\models\upload.py:36
+msgid "file"
+msgstr "arquivo"
+
+#: .\apps\budget\models\attachment.py:9
+msgid "thumbnail"
+msgstr "prévia"
+
+#: .\apps\budget\models\attachment.py:11
+msgid "is visible"
+msgstr "visível"
+
+#: .\apps\budget\models\attachment.py:17
+msgid "attachment"
+msgstr "anexo"
+
+#: .\apps\budget\models\attachment.py:18
+msgid "attachments"
+msgstr "anexos"
 
 #: .\apps\budget\models\budget.py:25 .\apps\budget\models\categoryMap.py:14
 #: .\apps\budget\models\transparency_index.py:12 .\apps\geo\models.py:14
@@ -378,6 +406,7 @@ msgid "aggregated values"
 msgstr "valores agregados"
 
 #: .\apps\budget\models\budget_summary.py:35
+#, python-brace-format
 msgid "Aggregated values for Budget #{}"
 msgstr "Valores agregados para o Orçamento #{}"
 
@@ -458,14 +487,14 @@ msgid "score - data quality"
 msgstr "pontuação - qualidade dos dados"
 
 #: .\apps\budget\models\transparency_index.py:25
-#: .\apps\budget\models\transparency_index.py:33
 #: .\apps\budget\models\transparency_index.py:34
+#: .\apps\budget\models\transparency_index.py:35
 msgid "transparency index"
 msgstr "índice de transparência"
 
-#: .\apps\budget\models\upload.py:36
-msgid "file"
-msgstr "arquivo"
+#: .\apps\budget\models\transparency_index.py:28
+msgid "results report"
+msgstr "relatório de resultados"
 
 #: .\apps\budget\models\upload.py:40
 msgid "report"
@@ -606,11 +635,11 @@ msgstr "bandeira"
 msgid "countries"
 msgstr "países"
 
-#: .\config\settings.py:135
+#: .\config\settings.py:139
 msgid "Portuguese"
 msgstr "Português"
 
-#: .\config\settings.py:136
+#: .\config\settings.py:140
 msgid "English"
 msgstr "Inglês"
 
@@ -703,7 +732,7 @@ msgid "Table visualization"
 msgstr "Visualização em tabela"
 
 #: .\frontend\templates\frontend\budget-selector.component.html:67
-#: .\frontend\templates\frontend\country-details.html:741
+#: .\frontend\templates\frontend\country-details.html:742
 msgid "All values in"
 msgstr "Todos os valores em"
 
@@ -735,178 +764,184 @@ msgstr "Especificação"
 msgid "Detailed source"
 msgstr "Fonte detalhada"
 
-#: .\frontend\templates\frontend\country-details.html:149
+#: .\frontend\templates\frontend\country-details.html:150
 msgid "Execution not informed"
 msgstr "Execução não informada"
 
-#: .\frontend\templates\frontend\country-details.html:151
+#: .\frontend\templates\frontend\country-details.html:152
 msgid "No approved budget"
 msgstr "Sem dotação aprovada"
 
-#: .\frontend\templates\frontend\country-details.html:179
+#: .\frontend\templates\frontend\country-details.html:180
 msgid "By"
 msgstr "Por"
 
-#: .\frontend\templates\frontend\country-details.html:349
+#: .\frontend\templates\frontend\country-details.html:350
 msgid "of"
 msgstr "de"
 
-#: .\frontend\templates\frontend\country-details.html:352
-#: .\frontend\templates\frontend\country-details.html:823
-#: .\frontend\templates\frontend\country-details.html:889
-#: .\frontend\templates\frontend\country-details.html:900
-#: .\frontend\templates\frontend\country-details.html:935
-#: .\frontend\templates\frontend\country-details.html:1087
+#: .\frontend\templates\frontend\country-details.html:353
+#: .\frontend\templates\frontend\country-details.html:824
+#: .\frontend\templates\frontend\country-details.html:890
+#: .\frontend\templates\frontend\country-details.html:901
+#: .\frontend\templates\frontend\country-details.html:936
+#: .\frontend\templates\frontend\country-details.html:1088
 msgid "Execution"
 msgstr "Execução"
 
-#: .\frontend\templates\frontend\country-details.html:429
+#: .\frontend\templates\frontend\country-details.html:430
 msgid "Search for"
 msgstr "Busque por"
 
-#: .\frontend\templates\frontend\country-details.html:440
+#: .\frontend\templates\frontend\country-details.html:441
 msgid "Expenses data not available for this year"
 msgstr "Dados de despesas não disponíveis neste ano"
 
-#: .\frontend\templates\frontend\country-details.html:444
+#: .\frontend\templates\frontend\country-details.html:445
 msgid "Functional data not available"
 msgstr "Dados funcionais não disponíveis"
 
-#: .\frontend\templates\frontend\country-details.html:448
+#: .\frontend\templates\frontend\country-details.html:449
 msgid "Organic data not available"
 msgstr "Dados orgânicos não disponíveis"
 
-#: .\frontend\templates\frontend\country-details.html:454
+#: .\frontend\templates\frontend\country-details.html:455
 msgid "Revenues data not available for this year"
 msgstr "Dados de receitas não disponíveis neste ano"
 
-#: .\frontend\templates\frontend\country-details.html:458
+#: .\frontend\templates\frontend\country-details.html:459
 msgid "Data by nature not available"
 msgstr "Dados por natureza não disponíveis"
 
-#: .\frontend\templates\frontend\country-details.html:462
+#: .\frontend\templates\frontend\country-details.html:463
 msgid "Data by source not available"
 msgstr "Dados por fonte não disponíveis"
 
-#: .\frontend\templates\frontend\country-details.html:738
+#: .\frontend\templates\frontend\country-details.html:739
 msgid "BUDGET DATA"
 msgstr "DADOS ORÇAMENTAIS"
 
-#: .\frontend\templates\frontend\country-details.html:745
+#: .\frontend\templates\frontend\country-details.html:746
 msgid "HOW TO NAVIGATE"
 msgstr "APRENDA A NAVEGAR"
 
-#: .\frontend\templates\frontend\country-details.html:752
-#: .\frontend\templates\frontend\country-details.html:765
-#: .\frontend\templates\frontend\country-details.html:778
+#: .\frontend\templates\frontend\country-details.html:753
+#: .\frontend\templates\frontend\country-details.html:766
+#: .\frontend\templates\frontend\country-details.html:779
 msgid "Loading data"
 msgstr "Carregando dados"
 
-#: .\frontend\templates\frontend\country-details.html:803
+#: .\frontend\templates\frontend\country-details.html:804
 msgid "Initial budget"
 msgstr "Orçamento inicial"
 
-#: .\frontend\templates\frontend\country-details.html:808
-#: .\frontend\templates\frontend\country-details.html:818
-#: .\frontend\templates\frontend\country-details.html:828
-#: .\frontend\templates\frontend\country-details.html:1067
-#: .\frontend\templates\frontend\country-details.html:1092
+#: .\frontend\templates\frontend\country-details.html:809
+#: .\frontend\templates\frontend\country-details.html:819
+#: .\frontend\templates\frontend\country-details.html:829
+#: .\frontend\templates\frontend\country-details.html:1068
+#: .\frontend\templates\frontend\country-details.html:1093
 msgid "Not informed"
 msgstr "Não informado"
 
-#: .\frontend\templates\frontend\country-details.html:813
+#: .\frontend\templates\frontend\country-details.html:814
 msgid "Updated budget"
 msgstr "Orçamento atualizado"
 
-#: .\frontend\templates\frontend\country-details.html:862
 #: .\frontend\templates\frontend\country-details.html:863
 #: .\frontend\templates\frontend\country-details.html:864
 #: .\frontend\templates\frontend\country-details.html:865
 #: .\frontend\templates\frontend\country-details.html:866
+#: .\frontend\templates\frontend\country-details.html:867
 msgid "executed"
 msgstr "executado"
 
-#: .\frontend\templates\frontend\country-details.html:874
+#: .\frontend\templates\frontend\country-details.html:875
 msgid "SECONDARY DATA"
 msgstr "DADOS SECUNDÁRIOS"
 
-#: .\frontend\templates\frontend\country-details.html:881
-#: .\frontend\templates\frontend\country-details.html:1074
-#: .\frontend\templates\frontend\country-details.html:1098
+#: .\frontend\templates\frontend\country-details.html:882
+#: .\frontend\templates\frontend\country-details.html:1075
+#: .\frontend\templates\frontend\country-details.html:1099
 msgid "in Investment"
 msgstr "em investimento"
 
-#: .\frontend\templates\frontend\country-details.html:893
-#: .\frontend\templates\frontend\country-details.html:1081
-#: .\frontend\templates\frontend\country-details.html:1105
+#: .\frontend\templates\frontend\country-details.html:894
+#: .\frontend\templates\frontend\country-details.html:1082
+#: .\frontend\templates\frontend\country-details.html:1106
 msgid "in Operation"
 msgstr "em Funcionamento"
 
-#: .\frontend\templates\frontend\country-details.html:915
+#: .\frontend\templates\frontend\country-details.html:916
 msgid "Sort by name"
 msgstr "Ordernar por nome"
 
-#: .\frontend\templates\frontend\country-details.html:925
+#: .\frontend\templates\frontend\country-details.html:926
 msgid "Sort by budget"
 msgstr "Ordernar por dotação"
 
-#: .\frontend\templates\frontend\country-details.html:934
+#: .\frontend\templates\frontend\country-details.html:935
 msgid "Sort by execution"
 msgstr "Ordernar por execução"
 
-#: .\frontend\templates\frontend\country-details.html:943
+#: .\frontend\templates\frontend\country-details.html:944
 msgid "Sort by execution percentage"
 msgstr "Ordernar por porcentagem de execução"
 
-#: .\frontend\templates\frontend\country-details.html:952
+#: .\frontend\templates\frontend\country-details.html:953
 msgid "Sort by budget in investment"
 msgstr "Ordenar por dotação em investimento"
 
-#: .\frontend\templates\frontend\country-details.html:953
+#: .\frontend\templates\frontend\country-details.html:954
 msgid "Budget in investment"
 msgstr "Dotação em investimento"
 
-#: .\frontend\templates\frontend\country-details.html:961
+#: .\frontend\templates\frontend\country-details.html:962
 msgid "Sort by execution in investment"
 msgstr "Ordenar por execução em investimento"
 
-#: .\frontend\templates\frontend\country-details.html:962
+#: .\frontend\templates\frontend\country-details.html:963
 msgid "Execution in investment"
 msgstr "Execução em investimento"
 
-#: .\frontend\templates\frontend\country-details.html:970
+#: .\frontend\templates\frontend\country-details.html:971
 msgid "Sort by budget in operation"
 msgstr "Ordenar por dotaçao em funcionamento"
 
-#: .\frontend\templates\frontend\country-details.html:971
+#: .\frontend\templates\frontend\country-details.html:972
 msgid "Budget in operation"
 msgstr "Dotaçao em funcionamento"
 
-#: .\frontend\templates\frontend\country-details.html:979
+#: .\frontend\templates\frontend\country-details.html:980
 msgid "Sort by execution in operation"
 msgstr "Ordenar por execução em funcionamento"
 
-#: .\frontend\templates\frontend\country-details.html:980
+#: .\frontend\templates\frontend\country-details.html:981
 msgid "Execution in operation"
 msgstr "Execução em funcionamento"
 
-#: .\frontend\templates\frontend\country-details.html:1040
+#: .\frontend\templates\frontend\country-details.html:1041
 msgid "Expand to all visualizations"
 msgstr "Expandir para todas as visualizações"
 
-#: .\frontend\templates\frontend\index.html:40
+#: .\frontend\templates\frontend\index.html:8
+#: .\frontend\templates\frontend\index.html:359
+#, python-format
+msgid "Not available for %(yr)s"
+msgstr ""
+
+#: .\frontend\templates\frontend\index.html:83
 msgid "Next dimension"
 msgstr "Próxima dimensão"
 
-#: .\frontend\templates\frontend\index.html:41
+#: .\frontend\templates\frontend\index.html:84
 msgid "Previous dimension"
 msgstr "Dimensão anterior"
 
-#: .\frontend\templates\frontend\index.html:42
+#: .\frontend\templates\frontend\index.html:85
 msgid "Ready"
 msgstr "Pronto"
 
-#: .\frontend\templates\frontend\index.html:95
+#: .\frontend\templates\frontend\index.html:150
 msgid ""
 "Our mission is <strong>to break</strong><br> down all <strong>barriers</"
 "strong> between<br> <strong>citizens</strong> and information<br> on "
@@ -916,15 +951,15 @@ msgstr ""
 "strong> entre os<br> <strong>cidadãos</strong> e as informações<br> sobre "
 "<strong>finanças públicas</strong><br> dos países."
 
-#: .\frontend\templates\frontend\index.html:116
+#: .\frontend\templates\frontend\index.html:171
 msgid "Choose a country to understand its budget"
 msgstr "Escolha um país e entenda seu orçamento"
 
-#: .\frontend\templates\frontend\index.html:126
+#: .\frontend\templates\frontend\index.html:181
 msgid "About the project"
 msgstr "Sobre o projeto"
 
-#: .\frontend\templates\frontend\index.html:133
+#: .\frontend\templates\frontend\index.html:188
 msgid ""
 "We extracted data from official reports published in closed formats and "
 "transform them into structured and open: <strong>ready for analysis</strong>."
@@ -932,7 +967,7 @@ msgstr ""
 "Extraímos os dados de relatórios oficiais publicados em formatos fechados e "
 "os tornamos estruturados e abertos: <strong>prontos para análise</strong>."
 
-#: .\frontend\templates\frontend\index.html:139
+#: .\frontend\templates\frontend\index.html:194
 msgid ""
 "In order to promote visibility and encourage advances in the agenda, we have "
 "built the <strong>first Budget Transparency Index with a focus on the PALOP-"
@@ -942,7 +977,7 @@ msgstr ""
 "<strong>primeiro Índice de Transparência Orçamental com recorte focado nos "
 "PALOP-TL</strong>."
 
-#: .\frontend\templates\frontend\index.html:145
+#: .\frontend\templates\frontend\index.html:200
 msgid ""
 "<strong>Modular growth</strong>: New perspectives on budget transparency "
 "will be incorporated into the Platform and Index. The new features will be "
@@ -954,27 +989,27 @@ msgstr ""
 "funcionalidades serão definidas a partir de <strong>sessões de <i>Design "
 "Thinking</i> com representantes da sociedade civíl</strong>."
 
-#: .\frontend\templates\frontend\index.html:158
+#: .\frontend\templates\frontend\index.html:213
 msgid "Open Database"
 msgstr "Base de dados abertas"
 
-#: .\frontend\templates\frontend\index.html:162
+#: .\frontend\templates\frontend\index.html:217
 msgid "Interactive views"
 msgstr "Visualizações interativas"
 
-#: .\frontend\templates\frontend\index.html:166
+#: .\frontend\templates\frontend\index.html:221
 msgid "Search Filters"
 msgstr "Filtros de Consulta"
 
-#: .\frontend\templates\frontend\index.html:170
+#: .\frontend\templates\frontend\index.html:225
 msgid "Historical Series"
 msgstr "Séries Históricas"
 
-#: .\frontend\templates\frontend\index.html:187
+#: .\frontend\templates\frontend\index.html:242
 msgid "PALOP-TL Index of Budget Transparency"
 msgstr "Índice PALOP-TL de Transparência Orçamental"
 
-#: .\frontend\templates\frontend\index.html:189
+#: .\frontend\templates\frontend\index.html:244
 msgid ""
 "It summarizes the quality of transparency in the provision of the basic "
 "revenue and expenditure data that make up this platform.<br> See more "
@@ -985,45 +1020,55 @@ msgstr ""
 "receita e despesa que compõem esta plataforma.<br>Veja mais detalhes na <a "
 "class=\"scroll-to\" href=\"#methodology\">Metodologia</a>, disponível abaixo."
 
-#: .\frontend\templates\frontend\index.html:203
+#: .\frontend\templates\frontend\index.html:259
 msgid ""
 "Click on the table heading to sort the ranking by a specific dimension, or "
 "on the <span class=\"material-icons help\" data-step=\"1\">info_outlined</"
 "span> icon to learn more about the dimension."
 msgstr ""
 "Clique no cabeçalho da tabela para ordenar o ranking por uma dimensão "
-"específica ou no ícone <span class=\"material-icons help\" data-step="
-"\"1\">info_outlined</span> para saber mais sobre a dimensão."
+"específica ou no ícone <span class=\"material-icons help\" data-"
+"step=\"1\">info_outlined</span> para saber mais sobre a dimensão."
 
-#: .\frontend\templates\frontend\index.html:223
+#: .\frontend\templates\frontend\index.html:267
+#: .\frontend\templates\frontend\index.html:343 .\frontend\tutorial.py:36
+msgid "Year"
+msgstr "Ano"
+
+#: .\frontend\templates\frontend\index.html:290
 msgid "Open<br/>Data"
 msgstr "Dados<br/>Abertos"
 
-#: .\frontend\templates\frontend\index.html:229
+#: .\frontend\templates\frontend\index.html:296
 msgid "Budget<br/>Reports"
 msgstr "Relatórios<br/>Orçamentais"
 
-#: .\frontend\templates\frontend\index.html:235
+#: .\frontend\templates\frontend\index.html:302
 msgid "Information<br/>Quality"
 msgstr "Qualidade da<br/>Informação"
 
-#: .\frontend\templates\frontend\index.html:241
+#: .\frontend\templates\frontend\index.html:308
 msgid "Budget Transparency<br/>Index"
 msgstr "Índice de Transparência<br/>Orçamental"
 
-#: .\frontend\templates\frontend\index.html:258
+#: .\frontend\templates\frontend\index.html:325
 msgid "SEE MORE DETAILS ABOUT THE METHODOLOGY AND DETAILED RESULTS"
 msgstr "VEJA MAIS DETALHES SOBRE A METODOLOGIA E RESULTADOS DETALHADOS"
 
-#: .\frontend\templates\frontend\index.html:278
+#: .\frontend\templates\frontend\index.html:333
+#: .\frontend\templates\frontend\index.html:358
+msgid "Download"
+msgstr "Baixar"
+
+#: .\frontend\templates\frontend\index.html:340
 msgid "Results by country"
 msgstr "Resultado por país"
 
-#: .\frontend\templates\frontend\index.html:298
+#: .\frontend\templates\frontend\index.html:372
 msgid "Choose a country to understand how it spends its budget."
 msgstr "Escolha um país para entender seu orçamento."
 
-#: .\frontend\templates\frontend\index.html:340
+#: .\frontend\templates\frontend\index.html:414
 msgid "Average"
 msgstr "Média"
 
@@ -1092,10 +1137,6 @@ msgstr ""
 "As receitas estão disponíveis por <strong>natureza económica</strong>. Esta "
 "classificação indica o acontecimento real que ocasionou a entrada do recurso "
 "nos cofres públicos (impostos ou transferências por exemplo)"
-
-#: .\frontend\tutorial.py:36
-msgid "Year"
-msgstr "Ano"
 
 #: .\frontend\tutorial.py:37
 msgid "Data since 2016 is available on the platform."
@@ -1191,7 +1232,8 @@ msgid ""
 "Click here to update all charts in order to display data of the item you are "
 "interested in."
 msgstr ""
-"É possível também atualizar toda a plataforma para apresentar os dados referentes à rubrica selecionada na tabela."
+"É possível também atualizar toda a plataforma para apresentar os dados "
+"referentes à rubrica selecionada na tabela."
 
 #: .\frontend\tutorial.py:91
 msgid "CSV"

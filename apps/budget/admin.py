@@ -6,10 +6,11 @@ from django.utils import timezone
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 from django_admin_inline_paginator.admin import TabularInlinePaginated
+from modeltranslation.admin import TranslationAdmin
 from tabulate import tabulate
 
 from apps.budget.choices import UploadStatusChoices, ExpenseGroupChoices, RevenueGroupChoices, UploadCategoryChoices
-from apps.budget.models import Upload, Budget, UploadLog, BudgetSummary, Expense, Revenue, Category, CategoryMap
+from apps.budget.models import Upload, Budget, UploadLog, BudgetSummary, Expense, Revenue, Category, CategoryMap, Attachment
 from apps.budget.models.transparency_index import TransparencyIndex
 from apps.budget.tasks import import_file, reimport_budget_uploads
 from common.admin import CountryPermissionMixin
@@ -354,6 +355,24 @@ class TransparencyIndexAdmin(CountryPermissionMixin, admin.ModelAdmin):
         }),
         (_("Results report"), {
             'fields': ('report',),
+        }),
+    )
+
+
+@admin.register(Attachment)
+class AttachmentAdmin(TranslationAdmin):
+    list_display = ('title', 'is_visible', 'file', 'thumbnail')
+    list_editable = ('is_visible',)
+    list_filter = ('is_visible',)
+    search_fields = ('title',)
+    fieldsets = (
+        (None, {
+            'fields': (
+                ('title_pt', 'title_en'),
+                ('file_pt', 'file_en'),
+                ('thumbnail_pt', 'thumbnail_en'),
+                'is_visible',
+            ),
         }),
     )
 

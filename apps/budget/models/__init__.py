@@ -7,3 +7,4 @@ from .transparency_index import TransparencyIndex
 from .budget_summary import BudgetSummary
 from .category import Category
 from .categoryMap import CategoryMap
+from .attachment import Attachment

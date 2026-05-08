@@ -2,16 +2,32 @@ import json
 
 from django.conf import settings
 from django.shortcuts import render
+from django.utils.translation import get_language
 from django.views import View
 from django.views.generic.detail import SingleObjectMixin
 
-from apps.budget.models import TransparencyIndex
+from apps.budget.models import Attachment, TransparencyIndex
 from apps.geo.models import Country
 from frontend.forms import BudgetPerYearForm
 from frontend.tutorial import COUNTRY_DETAILS_TUTORIAL, INDEX_DIMENSIONS
 
 
 class IndexView(View):
+    @staticmethod
+    def get_visible_attachments():
+        language = (get_language() or settings.LANGUAGE_CODE).split('-')[0]
+        supported_languages = [code for code, _label in settings.LANGUAGES]
+        if language not in supported_languages:
+            language = settings.MODELTRANSLATION_DEFAULT_LANGUAGE
+
+        file_field = f'file_{language}'
+        return (
+            Attachment.objects.filter(is_visible=True)
+            .exclude(**{file_field: ''})
+            .exclude(**{f'{file_field}__isnull': True})
+            .order_by('id')
+        )
+
     def get(self, request):
         index_years = list(
             TransparencyIndex.objects.values_list('year', flat=True)
@@ -36,6 +52,7 @@ class IndexView(View):
                 )
 
         ctx = {
+            'attachments': self.get_visible_attachments(),
             'countries': Country.objects.all(),
             'country_report_downloads': country_report_downloads,
             'index_dimensions': INDEX_DIMENSIONS,
