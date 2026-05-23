@@ -343,7 +343,7 @@ class BudgetAdmin(CountryPermissionMixin, admin.ModelAdmin):
 
 @admin.register(TransparencyIndex)
 class TransparencyIndexAdmin(CountryPermissionMixin, admin.ModelAdmin):
-    list_display = ('country', 'year', 'score_open_data', 'score_reports', 'score_data_quality', 'transparency_index', 'report_pt', 'report_en', )
+    list_display = ('country', 'year', 'score_open_data', 'score_reports', 'score_data_quality', 'transparency_index', 'report', 'report_pt', 'report_en', )
     list_editable = ('score_open_data', 'score_reports', 'score_data_quality', 'transparency_index', 'report_pt', 'report_en',)
     list_filter = ('year', 'country',)
     fieldsets = (
