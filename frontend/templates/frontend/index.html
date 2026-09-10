@@ -324,9 +324,9 @@ $(document).ready(function(){
                     <div class="col-12">
                         <h2 id="methodology">{% trans "SEE MORE DETAILS ABOUT THE METHODOLOGY AND DETAILED RESULTS" %}</h2>
                         <div class="row">
-                            <div class="col-5 covers">
+                            <div class="col-7 covers">
                                 {% for attachment in attachments %}
-                                    <a href="{{ attachment.file.url }}" class="cover-wrapper" target="_blank">
+                                    <a href="{{ attachment.file.url }}" class="cover-wrapper"{% if attachment.title %} data-tooltip="{{ attachment.title }}"{% endif %} target="_blank">
                                         {% if attachment.thumbnail %}
                                             <img src="{{ attachment.thumbnail.url }}" alt="{{ attachment.title }}"/><br>
                                         {% endif %}
@@ -335,7 +335,7 @@ $(document).ready(function(){
                                 {% endfor %}
                             </div>
                             {% if default_index_year %}
-                            <div class="col-7 results">
+                            <div class="col-5 results">
                                 <div class="result-title">
                                     <span class="result-title-text">{% trans "Results by country" %}<span class="arrow-right"></span></span>
                                     {% if index_years %}

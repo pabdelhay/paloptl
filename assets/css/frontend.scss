@@ -766,32 +766,89 @@ h3 {
       .covers {
         margin-left: 0;
         display: flex;
-        justify-content: space-around;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: flex-end;
+        gap: 16px 12px;
+        min-width: 0;
+        box-sizing: border-box;
         .cover-wrapper {
-          width: 35%;
-          height: 350px;
+          flex: 0 0 130px;
+          width: 130px;
+          max-width: 130px;
+          height: auto;
           text-align: center;
           display: flex;
           flex-direction: column;
           align-content: flex-start;
           align-items: center;
           justify-content: flex-end;
+          box-sizing: border-box;
+          position: relative;
           img {
-            width: 90%;
-            transition: width .4s;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            transition: transform .4s;
+          }
+          .download-link {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 3px 14px;
+            max-width: 100%;
+            box-sizing: border-box;
+            white-space: nowrap;
+          }
+          &[data-tooltip]::before,
+          &[data-tooltip]::after {
+            opacity: 0;
+            pointer-events: none;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: opacity .2s ease;
+            z-index: 5;
+          }
+          &[data-tooltip]::before {
+            content: attr(data-tooltip);
+            bottom: calc(100% + 10px);
+            max-width: 220px;
+            padding: 8px 12px;
+            border-radius: 4px;
+            background-color: $main_color;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 1.35;
+            white-space: normal;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(15, 40, 67, 0.25);
+          }
+          &[data-tooltip]::after {
+            content: "";
+            bottom: calc(100% + 4px);
+            border: 6px solid transparent;
+            border-top-color: $main_color;
           }
           &:hover {
             img {
-              width: 100%;
+              transform: scale(1.05);
             }
             span.download-link {
               background-color: $second_color;
               color: #FFF;
             }
+            &[data-tooltip]::before,
+            &[data-tooltip]::after {
+              opacity: 1;
+            }
           }
         }
       }
       .results {
+        min-width: 0;
+        position: relative;
+        z-index: 1;
         .result-title {
           display: flex;
           flex-wrap: nowrap;

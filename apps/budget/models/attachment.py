@@ -9,6 +9,7 @@ class Attachment(models.Model):
         verbose_name=_("thumbnail"), upload_to='attachments/thumbnails', null=True, blank=True
     )
     is_visible = models.BooleanField(verbose_name=_("is visible"), default=True)
+    order = models.PositiveIntegerField(verbose_name=_("order"), default=0, db_index=True)
 
     def __str__(self):
         return self.title or str(self.pk)
@@ -16,4 +17,4 @@ class Attachment(models.Model):
     class Meta:
         verbose_name = _("attachment")
         verbose_name_plural = _("attachments")
-        ordering = ['id']
+        ordering = ['order', 'id']

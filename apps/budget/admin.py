@@ -1,4 +1,5 @@
 from admin_honeypot.models import LoginAttempt
+from adminsortable2.admin import SortableAdminMixin
 from django.contrib import admin, messages
 from django.contrib.admin import TabularInline
 from django.urls import reverse
@@ -360,7 +361,7 @@ class TransparencyIndexAdmin(CountryPermissionMixin, admin.ModelAdmin):
 
 
 @admin.register(Attachment)
-class AttachmentAdmin(TranslationAdmin):
+class AttachmentAdmin(SortableAdminMixin, TranslationAdmin):
     list_display = ('title', 'is_visible', 'file', 'thumbnail')
     list_editable = ('is_visible',)
     list_filter = ('is_visible',)

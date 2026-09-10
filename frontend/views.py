@@ -25,7 +25,7 @@ class IndexView(View):
             Attachment.objects.filter(is_visible=True)
             .exclude(**{file_field: ''})
             .exclude(**{f'{file_field}__isnull': True})
-            .order_by('id')
+            .order_by('order', 'id')
         )
 
     def get(self, request):

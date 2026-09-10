@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_admin_inline_paginator',
+    'adminsortable2',
     'debug_toolbar',
     'rest_framework',
     'rest_framework_recursive',

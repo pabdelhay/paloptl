@@ -136,16 +136,16 @@ a.tutorial:hover {
   color: #586460;
 }
 
+.menu {
+  position: relative;
+  display: inline-block;
+  /* Dropdown Content (Hidden by Default) */
+}
 .menu .dropbtn div {
   width: 35px;
   height: 5px;
   background-color: #0f2843;
   margin: 6px 0;
-}
-.menu {
-  position: relative;
-  display: inline-block;
-  /* Dropdown Content (Hidden by Default) */
 }
 .menu .dropdown-content {
   display: none;
@@ -470,12 +470,12 @@ h3 .arrow {
 .page-index .about .badget.right {
   float: right;
 }
+.page-index .ranking {
+  background-color: #f7f5f5;
+}
 .page-index .ranking .material-icons {
   font-size: 20px;
   width: 20px;
-}
-.page-index .ranking {
-  background-color: #f7f5f5;
 }
 .page-index .ranking .ranking-header {
   padding: 40px 0;
@@ -688,28 +688,85 @@ h3 .arrow {
 .page-index .ranking .downloads .covers {
   margin-left: 0;
   display: flex;
-  justify-content: space-around;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-end;
+  gap: 16px 12px;
+  min-width: 0;
+  box-sizing: border-box;
 }
 .page-index .ranking .downloads .covers .cover-wrapper {
-  width: 35%;
-  height: 350px;
+  flex: 0 0 130px;
+  width: 130px;
+  max-width: 130px;
+  height: auto;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-content: flex-start;
   align-items: center;
   justify-content: flex-end;
+  box-sizing: border-box;
+  position: relative;
 }
 .page-index .ranking .downloads .covers .cover-wrapper img {
-  width: 90%;
-  transition: width 0.4s;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  transition: transform 0.4s;
+}
+.page-index .ranking .downloads .covers .cover-wrapper .download-link {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 3px 14px;
+  max-width: 100%;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+.page-index .ranking .downloads .covers .cover-wrapper[data-tooltip]::before, .page-index .ranking .downloads .covers .cover-wrapper[data-tooltip]::after {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: opacity 0.2s ease;
+  z-index: 5;
+}
+.page-index .ranking .downloads .covers .cover-wrapper[data-tooltip]::before {
+  content: attr(data-tooltip);
+  bottom: calc(100% + 10px);
+  max-width: 220px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  background-color: #0f2843;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.35;
+  white-space: normal;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(15, 40, 67, 0.25);
+}
+.page-index .ranking .downloads .covers .cover-wrapper[data-tooltip]::after {
+  content: "";
+  bottom: calc(100% + 4px);
+  border: 6px solid transparent;
+  border-top-color: #0f2843;
 }
 .page-index .ranking .downloads .covers .cover-wrapper:hover img {
-  width: 100%;
+  transform: scale(1.05);
 }
 .page-index .ranking .downloads .covers .cover-wrapper:hover span.download-link {
   background-color: #04588c;
   color: #FFF;
+}
+.page-index .ranking .downloads .covers .cover-wrapper:hover[data-tooltip]::before, .page-index .ranking .downloads .covers .cover-wrapper:hover[data-tooltip]::after {
+  opacity: 1;
+}
+.page-index .ranking .downloads .results {
+  min-width: 0;
+  position: relative;
+  z-index: 1;
 }
 .page-index .ranking .downloads .results .result-title {
   display: flex;
@@ -768,13 +825,11 @@ h3 .arrow {
   padding: 0;
   margin: 0;
   width: 33.32%;
+  position: relative;
 }
 .page-index .countries .full-width .col img {
   width: 100%;
   height: 100%;
-}
-.page-index .countries .full-width .col {
-  position: relative;
 }
 .page-index .countries .full-width .col:hover .overlay {
   opacity: 1;
@@ -807,6 +862,7 @@ h3 .arrow {
 .page-country-detail .country-name-wrapper, .page-countries-expenses .country-name-wrapper {
   background-position-y: bottom;
   background-repeat: no-repeat;
+  -webkit-box-shadow: inset 680px 0px 160px 7px rgba(0, 0, 0, 0.65);
   box-shadow: inset 680px 0px 160px 7px rgba(0, 0, 0, 0.65);
 }
 .page-country-detail .country-name-wrapper h1, .page-countries-expenses .country-name-wrapper h1 {
@@ -1435,4 +1491,6 @@ h3 .arrow {
 .customIntroRanking {
   min-width: 550px !important;
   max-width: none;
-}/*# sourceMappingURL=frontend.css.map */
+}
+
+/*# sourceMappingURL=frontend.css.map */
